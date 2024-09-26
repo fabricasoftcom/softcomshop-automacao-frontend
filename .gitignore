@@ -5,6 +5,9 @@ cypress/videos/
 # Node.js dependencies
 node_modules/
 
+# Allure
+allure_results/
+
 # Log files
 npm-debug.log*
 yarn-debug.log*
