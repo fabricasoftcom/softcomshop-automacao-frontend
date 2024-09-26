@@ -35,11 +35,14 @@ jobs:
 
       - name: Deploy Allure report to Github Pages
         run: |
-          git config --global user.name "Roberto Filho"
+          git config --global user.name "RobertoFilho0100"
           git config --global user.email "robertocorreiafilho0100@gmail.com"
-          git add allure-report
+          git checkout gh-pages || git checkout --orphan gh-pages
+          git reset --hard
+          cp -r allure-report/*
+          git add .
           git commit -m "Update Allure report" || echo "No changes to commit"
-          git push origin gh-pages
+          git push origin gh-pages --force
 
       - name: Send Success Message to Discord
         if: ${{ success() }}
