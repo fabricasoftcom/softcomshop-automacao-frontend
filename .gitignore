@@ -2,10 +2,6 @@
 cypress/screenshots/
 cypress/videos/
 
-# Allure results and reports
-allure-results/
-allure-report/
-
 # Node.js dependencies
 node_modules/
 
