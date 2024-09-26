@@ -1,4 +1,4 @@
-import LoginLocators from "../../locators/loginLocators";
+import LoginLocators from "../../locators/LoginLocators";
 
 
 class LoginPage {
