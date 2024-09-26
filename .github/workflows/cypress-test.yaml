@@ -42,7 +42,7 @@ jobs:
           git config --global user.email "robertocorreiafilho0100@gmail.com"
           git checkout gh-pages || git checkout --orphan gh-pages
           git reset --hard
-          cp -r allure-report/* ./
+          find allure-report -type f -exec cp {} ./ \;
           ls -l
           git add .
           git commit -m "Update Allure report" || echo "No changes to commit"
