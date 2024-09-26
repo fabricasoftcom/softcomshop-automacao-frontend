@@ -1,0 +1,99 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install pytz
+          npm install
+
+      - name: Install Allure
+        run: |
+          npm install -g allure-commandline --save-dev
+
+      - name: Run Cypress tests with Allure
+        run: npx cypress run
+
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report/index.html
+
+      - name: Send Success Message to Discord
+        if: ${{ success() }}
+        run: |
+          REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
+          curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
+          -H "Content-Type: application/json" \
+          -d '{
+                "content": "✅ Todos os testes passaram com sucesso! 🎉\n\nBaixe o relatório em HTML e abra no seu navegador para verificar os detalhes. 👀",
+                "embeds": [{
+                  "title": "Allure Test Report",
+                  "description": "A execução dos testes foi concluída com sucesso! :tada:",
+                  "color": 3066993,
+                  "fields": [{
+                    "name": ":calendar: Data de Execução",
+                    "value": "'"$REPORT_TIME"'"
+                  }]
+                }]
+              }'
+
+      - name: Upload Report to Discord
+        if: ${{ success() }}
+        run: |
+          curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
+          -H "Content-Type: multipart/form-data" \
+          -F "file=@allure-report/index.html"
+
+      - name: Send Failure Message to Discord
+        if: ${{ failure() }}
+        run: |
+          REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
+          curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
+          -H "Content-Type: application/json" \
+          -d '{
+                "content": "❌ Houveram falhas durante a execução dos testes. 👀\n\nBaixe o relatório em HTML e abra no seu navegador para verificar os detalhes.",
+                "embeds": [{
+                  "title": "Allure Test Report",
+                  "description": "Por favor, verifique o relatório para detalhes sobre as falhas. :warning:",
+                  "color": 15158332,
+                  "fields": [{
+                    "name": ":calendar: Data de Execução",
+                    "value": "'"$REPORT_TIME"'"
+                  }]
+                }]
+              }'
+
+      - name: Upload Report on Failure to Discord
+        if: ${{ failure() }}
+        run: |
+          curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
+          -H "Content-Type: multipart/form-data" \
+          -F "file=@allure-report/index.html"
