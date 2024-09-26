@@ -18,16 +18,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: |
-          pip install pytz
-          npm install
 
       - name: Install Allure
         run: |
@@ -42,26 +32,21 @@ jobs:
 
       - name: Deploy Allure report to Github Pages
         run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "your_email@example.com"
+          git config --global user.name "Roberto Filho"
+          git config --global user.email "robertocorreiafilho0100@gmail.com"
           git add allure-report
           git commit -m "Update Allure report" || echo "No changes to commit"
           git push origin gh-pages
-
-      - name: Upload Allure report
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-report
-          path: allure-report/index.html
 
       - name: Send Success Message to Discord
         if: ${{ success() }}
         run: |
           REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
+          REPORT_URL="https://robertofilho0100.github.io/automacao-frontend-softcomshop/allure-report/index.html"
           curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
           -H "Content-Type: application/json" \
           -d '{
-                "content": "✅ Todos os testes passaram com sucesso! 🎉\n\nBaixe o relatório em HTML e abra no seu navegador para verificar os detalhes. 👀",
+                "content": "✅ Todos os testes passaram com sucesso! 🎉\n\nVerifique o relatório em: '"$REPORT_URL"'",
                 "embeds": [{
                   "title": "Allure Test Report",
                   "description": "A execução dos testes foi concluída com sucesso! :tada:",
@@ -73,13 +58,6 @@ jobs:
                 }]
               }'
 
-      - name: Upload Report to Discord
-        if: ${{ success() }}
-        run: |
-          curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
-          -H "Content-Type: multipart/form-data" \
-          -F "file=@allure-report/index.html"
-
       - name: Send Failure Message to Discord
         if: ${{ failure() }}
         run: |
@@ -87,7 +65,7 @@ jobs:
           curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
           -H "Content-Type: application/json" \
           -d '{
-                "content": "❌ Houveram falhas durante a execução dos testes. 👀\n\nBaixe o relatório em HTML e abra no seu navegador para verificar os detalhes.",
+                "content": "❌ Houveram falhas durante a execução dos testes. 👀\n\nVerifique o relatório em: '"$REPORT_URL"'",
                 "embeds": [{
                   "title": "Allure Test Report",
                   "description": "Por favor, verifique o relatório para detalhes sobre as falhas. :warning:",
@@ -98,10 +76,3 @@ jobs:
                   }]
                 }]
               }'
-
-      - name: Upload Report on Failure to Discord
-        if: ${{ failure() }}
-        run: |
-          curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
-          -H "Content-Type: multipart/form-data" \
-          -F "file=@allure-report/index.html"
