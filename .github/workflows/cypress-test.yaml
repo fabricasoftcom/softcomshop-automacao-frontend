@@ -65,7 +65,7 @@ jobs:
         if: ${{ success() }}
         run: |
           REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
-          REPORT_URL="https://robertofilho0100.github.io/automacao-frontend-softcomshop/allure-report"
+          REPORT_URL="https://robertofilho0100.github.io/automacao-frontend-softcomshop"
           curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
           -H "Content-Type: application/json" \
           -d '{
@@ -85,7 +85,7 @@ jobs:
         if: ${{ failure() }}
         run: |
           REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
-          REPORT_URL="https://robertofilho0100.github.io/automacao-frontend-softcomshop/allure-report"
+          REPORT_URL="https://robertofilho0100.github.io/automacao-frontend-softcomshop"
           curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
           -H "Content-Type: application/json" \
           -d '{
