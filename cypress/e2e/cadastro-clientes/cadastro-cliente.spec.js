@@ -1,7 +1,6 @@
 import { beforeEach } from 'mocha';
 import ClientePage from '../../support/pages/Cliente/ClientePage';
 import { generateRandomCustomer } from '../../support/factory/generateRandomData';
-import 'allure-cypress';
 
 describe('Cadastro de cliente', () => {
     beforeEach(() => {
