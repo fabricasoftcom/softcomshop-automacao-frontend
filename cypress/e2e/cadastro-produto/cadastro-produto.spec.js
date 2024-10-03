@@ -1,6 +1,7 @@
 import { generateRandomProduct } from "../../support/factory/generateRandomData";
 import ProdutoPage from "../../support/pages/Produto/ProdutoPage";
 import VinculoFiscalPage from "../../support/pages/VinculoFiscal/VinculoFiscalPage";
+import 'allure-cypress';
 
 describe('Cadastro de produtos', () => {
     beforeEach(() => {

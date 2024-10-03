@@ -1,4 +1,5 @@
 import LoginPage from "../../support/pages/Login/LoginPage";
+import 'allure-cypress';
 
 describe('Login com credenciais validas', () => {
   it('Login deve ser realizado com sucesso usando credenciais validas', () => {
