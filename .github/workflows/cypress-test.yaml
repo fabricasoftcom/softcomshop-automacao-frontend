@@ -33,7 +33,7 @@ jobs:
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
         run: |
-          OUTPUT=$(percy exec -- npx cypress run --verbose)
+          OUTPUT=$(npx percy exec -- npx cypress run --verbose)
           echo "$OUTPUT"
           BUILD_URL=$(echo "$OUTPUT" | grep -oP 'https://percy\.io/\S+')
           if [ -n "$BUILD_URL" ]; then
