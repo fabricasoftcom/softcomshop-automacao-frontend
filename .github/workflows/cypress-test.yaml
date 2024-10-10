@@ -33,15 +33,11 @@ jobs:
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
         run: |
-          OUTPUT=$(npx percy exec -- npx cypress run --verbose)
+          OUTPUT=$(npx percy exec -- npx cypress run)
           echo "$OUTPUT"
+          BUILD_URL=$(echo "$OUTPUT" | grep -o 'https://percy.io/[^ ]*')
           BUILD_URL=$(echo "$OUTPUT" | grep -oP 'https://percy\.io/\S+')
-          if [ -n "$BUILD_URL" ]; then
-            echo "A URL da build do Percy é: $BUILD_URL"
-            echo "PERCY_BUILD_URL=$BUILD_URL" >> $GITHUB_ENV
-          else
-            echo "URL da build do Percy não encontrada."
-          fi
+          echo "PERCY_BUILD_URL=$BUILD_URL" >> $GITHUB_ENV
 
       - name: Generate Allure Report
         if: always()
