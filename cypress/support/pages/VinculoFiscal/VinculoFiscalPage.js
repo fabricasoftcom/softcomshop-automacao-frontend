@@ -5,7 +5,6 @@ class VinculoFiscalPage {
     }
 
     selecionarEmpresaMatriz() {
-        cy.xpath('//*[@id="detalhes-fiscais"]/div/div/div[2]/div/div/div[1]/a').click()
         cy.contains('Informações Fiscais').should('be.visible')
     }
 

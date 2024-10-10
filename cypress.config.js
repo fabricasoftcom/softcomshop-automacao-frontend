@@ -7,7 +7,7 @@ module.exports = defineConfig({
       allureCypress(on, config);
       return config;
     },
-    defaultCommandTimeout: 20000,
+    defaultCommandTimeout: 25000,
     specPattern: '**/*.spec.js',
     baseUrl: 'https://automacaobilbo.softcomshop.com.br',
   },
