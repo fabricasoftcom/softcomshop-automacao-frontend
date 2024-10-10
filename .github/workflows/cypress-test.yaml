@@ -26,12 +26,11 @@ jobs:
         run: |
           npm install -g allure-commandline --save-dev
 
-      - name: Percy Test
-        uses: percy/exec-action@v.0.3.1
-        with:
-          command: "cypress run"
+      - name: Run Cypress tests with Percy
         env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }} 
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+        run: |
+          npx percy exec -- npx cypress run 
 
       - name: Generate Allure Report
         if: always()
@@ -65,7 +64,6 @@ jobs:
           PUBLISH_DIR: allure-history
 
       - name: Send Success Message to Discord
-        PERCY_BUILD_URL=$PERCY_BUILD_URL
         if: ${{ success() }}
         run: |
           REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
@@ -86,7 +84,6 @@ jobs:
               }'
 
       - name: Send Failure Message to Discord
-        PERCY_BUILD_URL=$PERCY_BUILD_URL
         if: ${{ failure() }}
         run: |
           REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
