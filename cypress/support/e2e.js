@@ -17,10 +17,7 @@
 import './commands';
 import 'allure-cypress';
 import 'cypress-xpath';
-<<<<<<< HEAD
 import '@percy/cypress';
-=======
 import '@shelex/cypress-allure-plugin';
->>>>>>> e1e3dd77b969c31cb237cf851954e6cd18fb8576
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
