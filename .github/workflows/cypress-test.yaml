@@ -26,9 +26,12 @@ jobs:
         run: |
           npm install -g allure-commandline --save-dev
 
-      - name: Run Cypress tests with Allure
-        run: npx cypress run
-        continue-on-error: true
+      - name: Percy Test
+        uses: percy/exec-action@v.0.3.1
+        with:
+          command: "cypress run"
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }} 
 
       - name: Generate Allure Report
         if: always()
@@ -62,6 +65,7 @@ jobs:
           PUBLISH_DIR: allure-history
 
       - name: Send Success Message to Discord
+        PERCY_BUILD_URL=$PERCY_BUILD_URL
         if: ${{ success() }}
         run: |
           REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
@@ -69,7 +73,7 @@ jobs:
           curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
           -H "Content-Type: application/json" \
           -d '{
-                "content": "✅ Todos os testes passaram com sucesso! 🎉\n\nVerifique o relatório em: '"$REPORT_URL"'",
+                "content": "✅ Todos os testes passaram com sucesso! 🎉\n\nVerifique o relatório em: '"$REPORT_URL"'\n\nVerifique o relatório da build do Percy em: '"$PERCY_BUILD_URL"'",
                 "embeds": [{
                   "title": "Allure Test Report",
                   "description": "A execução dos testes foi concluída com sucesso! :tada:",
@@ -89,7 +93,7 @@ jobs:
           curl -X POST ${{ secrets.DISCORD_WEBHOOK }} \
           -H "Content-Type: application/json" \
           -d '{
-                "content": "❌ Houveram falhas durante a execução dos testes. 👀\n\nVerifique o relatório em: '"$REPORT_URL"'",
+                "content": "❌ Houveram falhas durante a execução dos testes. 👀\n\nVerifique o relatório em: '"$REPORT_URL"'\n\nVerifique o relatório da build do Percy em: '"$PERCY_BUILD_URL"'",
                 "embeds": [{
                   "title": "Allure Test Report",
                   "description": "Por favor, verifique o relatório para detalhes sobre as falhas. :warning:",

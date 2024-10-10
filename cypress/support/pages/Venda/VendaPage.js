@@ -4,6 +4,7 @@ class VendaPage {
     }
   
     informarVendedor() {
+      cy.percySnapshot();
       cy.get('#auto_icon_funcionario_id').click()
       cy.xpath('//*[@id="div_auto_funcionario_id"]/div/div[2]/ul/li[1]/a').click()
     }

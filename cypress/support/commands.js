@@ -32,5 +32,5 @@ Cypress.Commands.add('login', () => {
         LoginPage.clicarLogin();
         cy.contains('Início').should('be.visible')
         cy.url().should('include', '/home')
-    })
+    });
 })

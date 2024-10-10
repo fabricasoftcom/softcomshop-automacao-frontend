@@ -4,6 +4,7 @@ class ProdutoPage {
     }
   
     preencherDetalhesDoProduto(produto) {
+      cy.percySnapshot();
       cy.get('#nome').type(produto.nome);
       cy.get('#auto_icon_grupo_id').click()
       cy.xpath('//*[@id="div_auto_grupo_id"]/div/div[2]/ul/li[2]/a')
