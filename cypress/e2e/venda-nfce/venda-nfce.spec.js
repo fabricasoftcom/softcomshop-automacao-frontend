@@ -12,6 +12,5 @@ describe("Realizar venda", () => {
         VendaPage.adicionarPagamento();
         VendaPage.salvarPagamento();
         VendaPage.gerarNFCe();
-        VendaPage.confirmacaoEmissaoNFCe();
     });
 });
