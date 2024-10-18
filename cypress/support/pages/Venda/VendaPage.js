@@ -16,12 +16,12 @@ class VendaPage {
     adicionarProduto() {
       cy.get('#auto_icon_produto_empresa_grade_id_').click();
       cy.xpath("//strong[@class='autocomplete-color-primary'][contains(.,'coca-cola lata 350ml')]").click()
-
     }
 
     adicionarPagamento() {
       cy.wait(10000)
       cy.get('#btn-gerar-pagamento').should('be.visible')
+      cy.wait(2000)
       cy.get('#btn-gerar-pagamento').click()
       cy.wait(5000)
       cy.get('#auto_icon_forma_pagamento_id').click()
