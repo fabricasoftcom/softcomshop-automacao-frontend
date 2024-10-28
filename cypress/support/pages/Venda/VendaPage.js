@@ -19,13 +19,9 @@ class VendaPage {
     }
 
     adicionarPagamento() {
-      cy.wait(10000)
       cy.get('#btn-gerar-pagamento').should('be.visible')
-      cy.wait(2000)
       cy.get('#btn-gerar-pagamento').click()
-      cy.wait(3000)
       cy.get('#btn-gerar-pagamento').click()
-      cy.wait(5000)
       cy.get('#auto_icon_forma_pagamento_id').click()
       cy.xpath('//*[@id="div_auto_forma_pagamento_id"]/div/div[2]/ul/li[4]/a').click()
       cy.get('#auto_icon_cartao_credito_id').click()
