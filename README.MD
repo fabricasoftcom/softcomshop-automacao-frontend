@@ -61,7 +61,7 @@ Para executar todos os testes de uma vez, basta rodar o comando:
 ---
 
 ## 🎉 Pronto para Automatizar!
-
+---
 Agora que seu ambiente está configurado, você está pronto para executar e criar testes no Softcomshop. Caso tenha alguma dúvida ou precise de ajuda, consulte a documentação do Cypress ou entre em contato com a equipe.
 ---
 ## 📘 Guia de GitFlow para Nomenclatura de Branches
