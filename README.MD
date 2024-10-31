@@ -122,7 +122,7 @@ git checkout -b bugfix/ajustar-teste-autenticacao
 
 ---
 
-## 🎯 Dicas para um Git Flow Eficiente
+## 🎯 Dicas para um GitFlow Eficiente
 
 - Sempre inicie suas branches a partir da branch `develop`.
 - Use **nomes descritivos** para as branches, facilitando o entendimento do propósito da tarefa.
@@ -132,7 +132,3 @@ Seguindo esse padrão, garantimos um fluxo de trabalho eficiente, seguro e organ
 
 ### 5. Estrutura do Projeto
 ---
-
-
-
-### OBS: 
