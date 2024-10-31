@@ -64,7 +64,7 @@ Para executar todos os testes de uma vez, basta rodar o comando:
 
 Agora que seu ambiente está configurado, você está pronto para executar e criar testes no Softcomshop. Caso tenha alguma dúvida ou precise de ajuda, consulte a documentação do Cypress ou entre em contato com a equipe.
 ---
-##📘 Guia de GitFlow para Nomenclatura de Branches
+## 📘 Guia de GitFlow para Nomenclatura de Branches
 Este projeto utiliza uma convenção de nomenclatura de branches para manter o repositório organizado e facilitar o entendimento do propósito de cada branch. Seguindo essas diretrizes, você contribuirá para um desenvolvimento mais organizado e acessível para toda a equipe.
 
 🔄 Estrutura de Branches
