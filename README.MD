@@ -126,7 +126,7 @@ git checkout -b bugfix/ajustar-teste-autenticacao
 
 - Sempre inicie suas branches a partir da branch `develop`.
 - Use **nomes descritivos** para as branches, facilitando o entendimento do propósito da tarefa.
-- Após concluir a tarefa, faça **merge na branch `develop`** para manter o fluxo contínuo de desenvolvimento.
+- Após concluir a tarefa, faça **abertura de PR para a branch `develop`** para manter o fluxo contínuo de desenvolvimento.
 
 Seguindo esse padrão, garantimos um fluxo de trabalho eficiente, seguro e organizado 😉!
 
