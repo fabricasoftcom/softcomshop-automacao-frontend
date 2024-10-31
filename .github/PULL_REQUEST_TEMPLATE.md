@@ -11,7 +11,7 @@
 
 ## 🔗 Relacionados
 
-<!-- Se este PR estiver relacionado a um caso, referencie aqui. Ex: Caso #1234 -->
+<!-- Se este PR estiver relacionado a um caso, referencie aqui. Ex: Caso #12345 -->
 
 ## 📸 Capturas de Tela (se aplicável)
 
