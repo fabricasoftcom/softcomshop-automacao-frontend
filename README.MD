@@ -14,9 +14,9 @@ Este guia descreve como executar e escrever testes para o Frontend do Softcomsho
 ---
 ## Passo a Passo
 
-### 1. Clone este repositório na sua máquina em um diretório de fácil acesso. Ex: ```C:\Projetos```
+### 1. Clonando o repositorio
 ---
-Acesse o diretório que foi criado e execute o seguinte comando:
+Acesse um diretório de fácil acesso no seu disco (Ex: ```C:\Projetos```) e clone o repositório executando o seguinte comando:
 
   ```bash
   git clone https://github.com/fabricasoftcom/softcomshop-automacao-frontend.git
@@ -54,4 +54,3 @@ Para executar todos os testes, basta executar o seguinte comando no terminal:
 
 
 ### OBS: 
-Qualquer dependência instalada deve ser instalada dentro do ambiente virtual. Além disso, o desenvolvedor deve validar se a dependência foi corretamente adicionada no arquivo `requirements.txt`, que deve estar presente no seu repositório.
