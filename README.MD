@@ -65,6 +65,37 @@ Para executar todos os testes de uma vez, basta rodar o comando:
 Agora que seu ambiente está configurado, você está pronto para executar e criar testes no Softcomshop. Caso tenha alguma dúvida ou precise de ajuda, consulte a documentação do Cypress ou entre em contato com a equipe.
 
 ---
+## 📁 Estrutura do Projeto
+
+### **cypress/e2e**
+   - **Descrição**: Esta pasta contém os testes de ponta a ponta, onde cada arquivo representa um cenário ou conjunto de cenários que validam funcionalidades específicas da aplicação.
+   - **Exemplo de Estrutura**:
+     - `login.spec.js`: Cenários de teste para login.
+     - `cadastro.spec.js`: Cenários de teste para cadastro de usuários.
+   
+### **cypress/support/pages**
+   - **Descrição**: Esta pasta organiza as classes que representam cada página da aplicação, centralizando as interações com elementos da interface. Aqui, aplicamos o padrão Page Objects, encapsulando as ações de cada página para que os testes no Cypress chamem esses métodos em vez de comandos repetidos.
+   - **Função**: Facilita a reutilização de interações comuns e separa a lógica dos testes das ações específicas da interface.
+   - **Exemplo de Estrutura**:
+     - `LoginPage.js`: Métodos de login como `preencherUsuario()`, `preencherSenha()` e `clicarLogin()`.
+     - `CadastroPage.js`: Métodos para preenchimento e submissão do formulário de cadastro.
+
+### **cypress/support/locators**
+   - **Descrição**: Local de mapeamento dos elementos de cada página. Para cada página da aplicação, criamos uma classe que define e exporta os seletors dos elementos de forma centralizada, facilitando o gerenciamento de mudanças na interface.
+   - **Função**: Permite uma modificação centralizada dos locators quando necessário, sem impacto direto nas classes de página ou testes.
+   - **Exemplo de Estrutura**:
+     - `LoginLocators.js`: Exporta seletors como `usuarioInput`, `senhaInput`, e `botaoLogin`.
+     - `CadastroLocators.js`: Exporta seletors para os campos do formulário de cadastro.
+
+### **cypress/support/factory**
+   - **Descrição**: Responsável pela geração e manipulação de dados de teste para os cenários de automação. Este diretório armazena as fábricas de dados, facilitando a criação de dados dinâmicos, como usuários, produtos, e outras entidades necessárias para a execução dos testes.
+   - **Função**: Permite a configuração e geração de dados personalizados para diferentes cenários de teste, aumentando a flexibilidade e robustez dos testes.
+   - **Exemplo de Estrutura**:
+     - `UserFactory.js`: Gera dados de usuários com atributos aleatórios para testes de cadastro.
+     - `ProductFactory.js`: Cria dados de produtos com propriedades variáveis para testes de fluxo de compras.
+
+---
+
 ## 📘 Guia de GitFlow para Nomenclatura de Branches
 Este projeto utiliza uma convenção de nomenclatura de branches para manter o repositório organizado e facilitar o entendimento do propósito de cada branch. Seguindo essas diretrizes, você contribuirá para um desenvolvimento mais organizado e acessível para toda a equipe.
 
@@ -129,6 +160,4 @@ git checkout -b bugfix/ajustar-teste-autenticacao
 - Após concluir a tarefa, faça **abertura de PR para a branch `develop`** para manter o fluxo contínuo de desenvolvimento.
 
 Seguindo esse padrão, garantimos um fluxo de trabalho eficiente, seguro e organizado 😉!
-
-### 5. Estrutura do Projeto
 ---
