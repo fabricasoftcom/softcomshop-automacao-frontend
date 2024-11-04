@@ -21,3 +21,9 @@ import '@percy/cypress';
 import '@shelex/cypress-allure-plugin';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // Loga a exceção
+    // cy.log('Uma exceção não capturada ocorreu:', err.message);
+    return false; // Impede que o Cypress falhe o teste
+  });

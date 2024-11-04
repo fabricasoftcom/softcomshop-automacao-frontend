@@ -1,6 +1,7 @@
+import listagemprodutopage from "./listagemprodutopage";
 class ProdutoPage {
     visit() {
-      cy.visit('/produto/novo');
+      listagemprodutopage.acessarCadastroNovoProduto();
     }
   
     preencherDetalhesDoProduto(produto) {
