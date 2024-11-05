@@ -102,17 +102,23 @@ describe('Testes da Listagem de Contas a Receber', () => {
     ListagemContasAReceberPage.validarTituloModalExcluir();
   });
 
-  it('Deve confirmar a exclusão e verificar a remoção da parcela', () => {
-    ListagemContasAReceberPage.selecionarOpcaoExcluir();
-    ListagemContasAReceberPage.confirmarExclusao(); // Confirma a exclusão
+  it('Deve realizar a exclusão com sucesso e validar que o tamanho da tabela diminuiu', () => {
+    // Captura o número inicial total de linhas na tabela antes da exclusão
+    ListagemContasAReceberPage.obterNumeroLinhasTabela().then((numeroLinhasInicial) => {
 
-    // Verifica que uma notificação de sucesso foi exibida
-    ListagemContasAReceberPage.verificarNotificacaoSucesso();
+      // Abre o dropdown de ações e seleciona a opção "Excluir"
+      ListagemContasAReceberPage.selecionarOpcaoExcluir();
 
-    // Verifica que a linha da parcela foi removida da tabela
-    ListagemContasAReceberPage.verificarRemocaoDaLinha();
+      // Confirma a exclusão no modal
+      ListagemContasAReceberPage.confirmarExclusao();
+
+      // Verifica a notificação de sucesso
+      ListagemContasAReceberPage.verificarNotificacaoSucesso();
+
+      // Valida que o número total de linhas na tabela diminuiu
+      ListagemContasAReceberPage.obterNumeroLinhasTabela().should('be.lt', numeroLinhasInicial);
+    });
   });
-
   it('Deve cancelar a exclusão e verificar que a parcela permanece na tabela', () => {
     ListagemContasAReceberPage.selecionarOpcaoExcluir();
     ListagemContasAReceberPage.cancelarExclusao(); // Cancela a exclusão

@@ -65,7 +65,7 @@ class ListagemContasAReceberPage {
   // Verifica o modal de erro ao tentar baixar sem selecionar
   verificarModalErroBaixar() {
     cy.get(ListagemContasAReceberLocators.modalTituloErroBaixar)
-      .should('contain', 'Erro')
+      .should('contain', 'Nenhuma parcela foi selecionada!')
       .and('be.visible');
   }
 
@@ -149,63 +149,63 @@ class ListagemContasAReceberPage {
       .should('contain', 'Deseja realmente cancelar está parcela?');
   }
 
- // Valida que o título do modal de confirmação de cancelamento é exibido corretamente
- validarTituloModalCancelar() {
-  cy.get(ListagemContasAReceberLocators.modalTituloCancelar)
-    .should('contain', 'Deseja realmente cancelar está parcela?');
-}
+  // Valida que o título do modal de confirmação de cancelamento é exibido corretamente
+  validarTituloModalCancelar() {
+    cy.get(ListagemContasAReceberLocators.modalTituloCancelar)
+      .should('contain', 'Deseja realmente cancelar está parcela?');
+  }
 
-// Preenche o campo de motivo no modal de cancelamento com o texto fornecido
-preencherMotivoCancelar(motivo) {
-  cy.get(ListagemContasAReceberLocators.modalCampoMotivo).type(motivo);
-}
+  // Preenche o campo de motivo no modal de cancelamento com o texto fornecido
+  preencherMotivoCancelar(motivo) {
+    cy.get(ListagemContasAReceberLocators.modalCampoMotivo).type(motivo);
+  }
 
-// Clica no botão "Sim, tenho certeza!" para confirmar o cancelamento
-confirmarCancelamento() {
-  cy.get(ListagemContasAReceberLocators.modalBotaoConfirmar).click();
-}
+  // Clica no botão "Sim, tenho certeza!" para confirmar o cancelamento
+  confirmarCancelamento() {
+    cy.get(ListagemContasAReceberLocators.modalBotaoConfirmar).click();
+  }
 
-// Clica no botão "Não, deseja voltar!" para cancelar a ação de cancelamento
-cancelarAcao() {
-  cy.get(ListagemContasAReceberLocators.modalBotaoCancelar).click();
-}
+  // Clica no botão "Não, deseja voltar!" para cancelar a ação de cancelamento
+  cancelarAcao() {
+    cy.get(ListagemContasAReceberLocators.modalBotaoCancelar).click();
+  }
 
-// Verifica se uma notificação de sucesso foi exibida na tela
-verificarNotificacaoSucesso() {
-  cy.get(ListagemContasAReceberLocators.notificacaoSucesso).should('be.visible');
-}
+  // Verifica se uma notificação de sucesso foi exibida na tela
+  verificarNotificacaoSucesso() {
+    cy.get(ListagemContasAReceberLocators.notificacaoSucesso).should('be.visible');
+  }
 
-// Valida que o status da parcela foi atualizado para "Cancelada" na primeira linha da tabela
-verificarStatusCancelado() {
-  cy.get(ListagemContasAReceberLocators.celulaStatusPrimeiraLinha)
-    .should('contain', 'Cancelada');
-}
+  // Valida que o status da parcela foi atualizado para "Cancelada" na primeira linha da tabela
+  verificarStatusCancelado() {
+    cy.get(ListagemContasAReceberLocators.celulaStatusPrimeiraLinha)
+      .should('contain', 'Cancelada');
+  }
 
-// Verifica se o modal de confirmação de cancelamento foi fechado
-verificarModalFechado() {
-  cy.get(ListagemContasAReceberLocators.modalTituloCancelar).should('not.exist');
-}
+  // Verifica se o modal de confirmação de cancelamento foi fechado
+  verificarModalFechado() {
+    cy.get(ListagemContasAReceberLocators.modalTituloCancelar).should('not.exist');
+  }
 
- // Valida o título do modal de exclusão
- validarTituloModalExcluir() {
-  cy.get(ListagemContasAReceberLocators.modalTituloExcluir)
-    .should('contain', 'Você está prestes a excluir um item.');
-}
+  // Valida o título do modal de exclusão
+  validarTituloModalExcluir() {
+    cy.get(ListagemContasAReceberLocators.modalTituloExcluir)
+      .should('contain', 'Você está prestes a excluir um item.');
+  }
 
-// Clica no botão "Excluir" no modal de confirmação
-confirmarExclusao() {
-  cy.get(ListagemContasAReceberLocators.modalBotaoConfirmarExcluir).click();
-}
+  // Clica no botão "Excluir" no modal de confirmação
+  confirmarExclusao() {
+    cy.get(ListagemContasAReceberLocators.modalBotaoConfirmarExcluir).click();
+  }
 
-// Clica no botão "Voltar" no modal de confirmação para cancelar a exclusão
-cancelarExclusao() {
-  cy.get(ListagemContasAReceberLocators.modalBotaoCancelarExcluir).click();
-}
+  // Clica no botão "Voltar" no modal de confirmação para cancelar a exclusão
+  cancelarExclusao() {
+    cy.get(ListagemContasAReceberLocators.modalBotaoCancelarExcluir).click();
+  }
 
-// Verifica que a linha da parcela foi removida da tabela após a exclusão
-verificarRemocaoDaLinha() {
-  cy.get(ListagemContasAReceberLocators.linhaTabela).should('not.exist');
-}
+  // Verifica que a linha da parcela foi removida da tabela após a exclusão
+  verificarRemocaoDaLinha() {
+    cy.get(ListagemContasAReceberLocators.linhaTabela).should('not.exist');
+  }
   // Verifica que o modal foi fechado corretamente (título não está presente)
   verificarModalFechado() {
     cy.get(ListagemContasAReceberLocators.modalTituloExcluir).should('not.exist');
@@ -215,57 +215,60 @@ verificarRemocaoDaLinha() {
   verificarLinhaPresente() {
     cy.get(ListagemContasAReceberLocators.linhaTabela).should('exist');
   }
-    // Verifica que o status da primeira parcela foi atualizado para "Baixada"
-    verificarStatusBaixado() {
-      cy.get(ListagemContasAReceberLocators.celulaStatusPrimeiraLinha)
-        .should('contain', 'Baixada');
-    }
-    marcarPrimeiraParcela() {
-      cy.get(ListagemContasAReceberLocators.checkboxPrimeiraLinha)
-        .check({ force: true })
-        .should('be.checked');
-    }
-  
-    clicarBaixarSelecionados() {
-      cy.get(ListagemContasAReceberLocators.baixarSelecionadosBtn)
-        .should('be.visible')
-        .click();
-    }
-  
-    // Verifica o título do popup de confirmação de baixa
-    validarTituloPopupBaixa() {
-      cy.get(ListagemContasAReceberLocators.modalTituloBaixar)
-        .should('contain', 'Você está prestes a realizar a baixa de 1 parcela.');
-    }
-  
-    // Seleciona uma opção no dropdown de conta para a baixa
-    selecionarContaParaBaixa(conta) {
-      cy.get(ListagemContasAReceberLocators.dropdownContaBaixa)
-        .select(conta); // Seleciona a conta especificada
-    }
-  
-    // Clica no botão de confirmação "Sim, pode realizar a baixa!"
-    confirmarBaixa() {
-      cy.get(ListagemContasAReceberLocators.botaoConfirmarBaixa).click();
-    }
-  
-    // Clica no botão de cancelamento "Não, desejo cancelar!"
-    cancelarBaixa() {
-      cy.get(ListagemContasAReceberLocators.botaoCancelarBaixa).click();
-    }
-    //Valida a exibição do modal de sucesso para o baixar selecionados
-    validarModalSucesso() {
-      cy.get(ListagemContasAReceberLocators.modalTituloSucesso)
-        .should('contain', 'Parcela(s) baixada(s)!');
-      
-      cy.get(ListagemContasAReceberLocators.modalMensagemSucesso)
-        .should('contain', 'Baixa(s) realizada(s) com sucesso!');
-    }
-    // Verifica que o modaltitulobaixar foi fechado corretamente após cancelar a ação
+  // Verifica que o status da primeira parcela foi atualizado para "Baixada"
+  verificarStatusBaixado() {
+    cy.get(ListagemContasAReceberLocators.celulaStatusPrimeiraLinha)
+      .should('contain', 'Baixada');
+  }
+  marcarPrimeiraParcela() {
+    cy.get(ListagemContasAReceberLocators.checkboxPrimeiraLinha)
+      .check({ force: true })
+      .should('be.checked');
+  }
+
+  clicarBaixarSelecionados() {
+    cy.get(ListagemContasAReceberLocators.baixarSelecionadosBtn)
+      .should('be.visible')
+      .click();
+  }
+
+  // Verifica o título do popup de confirmação de baixa
+  validarTituloPopupBaixa() {
+    cy.get(ListagemContasAReceberLocators.modalTituloBaixar)
+      .should('contain', 'Você está prestes a realizar a baixa de 1 parcela.');
+  }
+
+  // Seleciona uma opção no dropdown de conta para a baixa
+  selecionarContaParaBaixa(conta) {
+    cy.get(ListagemContasAReceberLocators.dropdownContaBaixa)
+      .select(conta); // Seleciona a conta especificada
+  }
+
+  // Clica no botão de confirmação "Sim, pode realizar a baixa!"
+  confirmarBaixa() {
+    cy.get(ListagemContasAReceberLocators.botaoConfirmarBaixa).click();
+  }
+
+  // Clica no botão de cancelamento "Não, desejo cancelar!"
+  cancelarBaixa() {
+    cy.get(ListagemContasAReceberLocators.botaoCancelarBaixa).click();
+  }
+  //Valida a exibição do modal de sucesso para o baixar selecionados
+  validarModalSucesso() {
+    cy.get(ListagemContasAReceberLocators.modalTituloSucesso)
+      .should('contain', 'Parcela(s) baixada(s)!');
+
+    cy.get(ListagemContasAReceberLocators.modalMensagemSucesso)
+      .should('contain', 'Baixa(s) realizada(s) com sucesso!');
+  }
+  // Verifica que o modaltitulobaixar foi fechado corretamente após cancelar a ação
   verificarModalFechado() {
     cy.get(ListagemContasAReceberLocators.modalTituloBaixar).should('not.exist');
   }
-
+  // Método para obter o número total de linhas na tabela
+  obterNumeroLinhasTabela() {
+    return cy.get(`${ListagemContasAReceberLocators.tabelaCompleta} tr`).its('length');
+  }
 
   desmarcarTodasLinhas() {
     cy.get(ListagemContasAReceberLocators.checkboxSelecionarTodos).uncheck();

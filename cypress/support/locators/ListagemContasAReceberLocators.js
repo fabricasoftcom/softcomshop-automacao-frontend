@@ -76,7 +76,8 @@ const ListagemContasAReceberLocators = {
 
       // Toastify de sucesso (usado para ambas as confirmações)
   notificacaoSucesso: '.Toastify__toast--success',
-
+  // Locator da tabela de listagem
+  tabelaCompleta:'.table tbody',
   // Locator para a célula de status da primeira linha
   celulaStatusPrimeiraLinha: '.table tbody tr:first-child td:nth-of-type(9)' // Exemplo de posição para a célula de status
 };
