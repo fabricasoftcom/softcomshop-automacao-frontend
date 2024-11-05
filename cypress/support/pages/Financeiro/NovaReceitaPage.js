@@ -6,7 +6,7 @@ import ListagemContasAReceberPage from "./ListagemContasAReceberPage";
 class NovaReceitaPage {
   abrirModal() {
     menulateralfinanceiropage.acessarListagemContasReceberReceita();
-    ListagemContasAReceberPage.clicarNovoCadastro();
+    ListagemContasAReceberPage.abrirNovoCadastro();
     cy.get(NovaReceitaLocators.modalContent, { timeout: 30000 }).should('be.visible');
   }
 

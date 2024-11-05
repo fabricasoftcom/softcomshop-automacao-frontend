@@ -62,11 +62,6 @@ class menulateralfinanceiropage{
         this.acessarContasPagar();
         cy.get('button[class="btn btn-warning btn-sm"]').contains('Novo cadastro').click();
     }
-    //acessar cadastro de novo contas a receber receita
-    aacessarCadastroNovoContasReceberReceita(){
-        this.acessarContasReceberReceita();
-        cy.get('button[class="btn btn-warning btn-sm"]').contains('Novo cadastro').click();
-    }
     //acessar cadastro de nova categoria
     acessarCadastroNovaCategoria(){
         this.acessarCategorias();
