@@ -269,7 +269,14 @@ class ListagemContasAReceberPage {
   obterNumeroLinhasTabela() {
     return cy.get(`${ListagemContasAReceberLocators.tabelaCompleta} tr`).its('length');
   }
-
+  verificarStatusPago() {
+    // Verifica se a célula de status na primeira linha contém o texto "Pago"
+    cy.get(ListagemContasAReceberLocators.celulaStatusPrimeiraLinha).should('contain.text', 'Pago');
+  }
+  // Verifica se a célula de status na primeira linha contém o texto "parcial"
+  verificarStatusParcial() {
+    cy.get(ListagemContasAReceberLocators.celulaStatusPrimeiraLinha).should('contain.text', 'Parcial');
+  }
   desmarcarTodasLinhas() {
     cy.get(ListagemContasAReceberLocators.checkboxSelecionarTodos).uncheck();
   }
