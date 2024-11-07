@@ -4,79 +4,151 @@ describe('Testes do Modal de Recebimento', () => {
   beforeEach(() => {
     cy.login();
     RecebimentoPage.visit();
-    RecebimentoPage.verificarTituloModal();
   });
 
-//   it('Deve verificar os dados principais do modal', () => {
-//     RecebimentoPage.verificarDadosPrincipais();
-//   });
+  //   it('Deve verificar os dados principais do modal', () => {
+  //     RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
+  //     RecebimentoPage.verificarDadosPrincipais();
+  //   });
+  //   it('Deve preencher todas as informações de pagamento, clicar em voltar e verificar que o status permanece "Baixar"', () => {
+  //     RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
+  //     // Preenche o campo "Conta" com uma conta válida (ex.: "CAIXA")
+  //     RecebimentoPage.preencherConta();
 
-it('Deve preencher as informações de pagamento, salvar e verificar status Pago', () => {
-    RecebimentoPage.preencherConta(); // Preenche com "CAIXA"
-    RecebimentoPage.preencherFormaPagamento(); // Preenche com "ESPÉCIE"
+  //     // Preenche o campo "Forma de Pagamento" com uma forma válida (ex.: "ESPÉCIE")
+  //     RecebimentoPage.preencherFormaPagamento();
+
+  //     // Verifica os campos "Valor Pago" e "Valor Pendente" para confirmar que estão desabilitados
+  //     RecebimentoPage.verificarCamposPagoEPendente();
+
+  //     // Preenche os campos de Juros/Multa e Desconto com valores de teste
+  //     RecebimentoPage.preencherJurosMulta('2,00');
+  //     RecebimentoPage.preencherDesconto('1,00');
+
+  //     // Verifica o campo "Valor Final" como desabilitado para alterações
+  //     RecebimentoPage.verificarCampoValorFinal();
+
+  //     // Captura o valor final e o usa para preencher o campo "Valor Recebido"
+  //     RecebimentoPage.obterValorFinal().then((valorFinal) => {
+  //       // Preenche a data de recebimento com a data atual
+  //       RecebimentoPage.preencherDataRecebimentoComDataAtual();
+
+  //       // Preenche o campo "Valor Recebido" com o valor final para simular o pagamento completo
+  //       RecebimentoPage.preencherValorRecebido(valorFinal);
+
+  //       // Clica no botão "Voltar" em vez de salvar, retornando à listagem
+  //       RecebimentoPage.clicarVoltar();
+
+  //       // Verifica se o modal foi fechado
+  //       cy.get('.modal-content').should('not.exist');
+
+  //       // Valida que o status da linha permanece como "Baixar", indicando que a operação não foi concluída
+  //       RecebimentoPage.verificarStatusRegistroBaixar();
+  //     });
+  //   });
+  // it('Deve preencher as informações de pagamento, salvar e verificar status Pago', () => {
+  //   RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
+  //     RecebimentoPage.preencherConta(); // Preenche com "CAIXA"
+  //     RecebimentoPage.preencherFormaPagamento(); // Preenche com "ESPÉCIE"
+  //     RecebimentoPage.verificarCamposPagoEPendente();
+  //     RecebimentoPage.preencherJurosMulta('2,00');
+  //     RecebimentoPage.preencherDesconto('1,00');
+  //     RecebimentoPage.verificarCampoValorFinal();
+
+  //     // Captura o valor final e usa esse valor no campo "Valor Recebido"
+  //     RecebimentoPage.obterValorFinal().then((valorFinal) => {
+  //       RecebimentoPage.preencherDataRecebimentoComDataAtual();
+  //       RecebimentoPage.preencherValorRecebido(valorFinal);
+  //       RecebimentoPage.clicarSalvar();
+
+  //       // Verifica o Toast de sucesso
+  //       RecebimentoPage.verificarToastSucesso();
+
+  //       // Fecha o modal e verifica o status "Pago"
+  //       RecebimentoPage.verificarStatusRegistroPago();
+  //     });
+  //   });
+  it('Deve preencher as informações de pagamento com baixa parcial de 20% e salvar', () => {
+    RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
+    RecebimentoPage.preencherConta();
+    RecebimentoPage.preencherFormaPagamento();
     RecebimentoPage.verificarCamposPagoEPendente();
     RecebimentoPage.preencherJurosMulta('2,00');
     RecebimentoPage.preencherDesconto('1,00');
     RecebimentoPage.verificarCampoValorFinal();
 
-    // Captura o valor final e usa esse valor no campo "Valor Recebido"
     RecebimentoPage.obterValorFinal().then((valorFinal) => {
+      // Remove "R$", substitui vírgula por ponto e calcula 20% do valor final
+      const valorVintePorcento = (parseFloat(valorFinal.replace('R$', '').replace(',', '.').trim()) * 0.20)
+                                  .toFixed(2)
+                                  .replace('.', ',');
+
       RecebimentoPage.preencherDataRecebimentoComDataAtual();
-      RecebimentoPage.preencherValorRecebido(valorFinal);
+      RecebimentoPage.preencherValorRecebido(valorVintePorcento);
       RecebimentoPage.clicarSalvar();
-
-      // Verifica o Toast de sucesso
       RecebimentoPage.verificarToastSucesso();
-
-      // Fecha o modal e verifica o status "Pago"
-      RecebimentoPage.verificarStatusRegistroPago();
+      RecebimentoPage.verificarStatusRegistroParcial();
     });
   });
-// it('Deve preencher as informações de pagamento com baixa parcial de 20% e salvar', () => {
-//     // Preenche os campos obrigatórios no modal
-//     RecebimentoPage.preencherConta(); // Conta configurada como "CAIXA"
-//     RecebimentoPage.preencherFormaPagamento(); // Forma de pagamento configurada como "ESPÉCIE"
-    
-//     // Verifica se os campos "Valor Pago" e "Valor Pendente" estão desabilitados
-//     RecebimentoPage.verificarCamposPagoEPendente();
-    
-//     // Preenche os campos de juros e desconto
-//     RecebimentoPage.preencherJurosMulta('2,00');
-//     RecebimentoPage.preencherDesconto('1,00');
-    
-//     // Verifica se o campo de valor final está desabilitado
-//     RecebimentoPage.verificarCampoValorFinal();
+  // it('Deve localizar e clicar no botão "PARCIAL" da primeira linha com status PARCIAL', () => {
+  //   // Chama o método que localiza e clica no botão "PARCIAL" da primeira linha com status "PARCIAL"
+  //   RecebimentoPage.clicarPrimeiraLinhaComStatusParcial();
 
-//     // Obtém o valor final e calcula 20% para preencher no campo "Valor Recebido"
-//     RecebimentoPage.obterValorFinal().then((valorFinal) => {
-//       // Remove qualquer símbolo de vírgula e converte para um valor numérico, depois calcula 20%
-//       const valorNumerico = Number(valorFinal.replace(',', '.'));
-//       const valorVintePorcento = (valorNumerico * 0.20).toFixed(2).replace('.', ',');
+  //   // Preenche o campo "Conta" com "CAIXINHA" ou "CAIXA"
+  //   RecebimentoPage.preencherConta();
 
-//       // Exibe o valor calculado no log do Cypress
-//       cy.log(`Valor calculado para 20% do valor final: ${valorVintePorcento}`);
+  //   // Preenche o campo "Forma de Pagamento" com "ESPÉCIE"
+  //   RecebimentoPage.preencherFormaPagamento();
 
-//       // Preenche a data de recebimento com a data atual
-//       RecebimentoPage.preencherDataRecebimentoComDataAtual();
-      
-//       // Preenche o campo de valor recebido com 20% do valor final
-//       RecebimentoPage.preencherValorRecebido(valorVintePorcento);
-      
-//       // Salva o recebimento e verifica o toast de sucesso
-//       RecebimentoPage.clicarSalvar();
-//       RecebimentoPage.verificarToastSucesso();
+  //   // Verifica os campos "Valor Pago" e "Valor Pendente" para confirmar que estão desabilitados
+  //   RecebimentoPage.verificarCamposPagoEPendente();
 
-//       // Fecha o modal e verifica se o status do registro está como "Parcial" na listagem
-//       RecebimentoPage.verificarStatusRegistroParcial();
-//     });
-//   });
-//   it('Deve expandir os detalhes de pagamento e verificar tabela vazia', () => {
-//     RecebimentoPage.expandirDetalhesPagamento();
-//     RecebimentoPage.verificarTabelaDetalhesPagamentoVazia();
-//   });
+  //   // Verifica o campo "Valor Final" como desabilitado para alterações
+  //   RecebimentoPage.verificarCampoValorFinal();
 
-//   it('Deve retornar para a tela anterior ao clicar em "Voltar"', () => {
-//     RecebimentoPage.clicarVoltar();
-//     cy.url().should('not.include', '/modal-recebimento');
-//   });
+  //   // Captura o valor final e o usa para preencher o campo "Valor Recebido"
+  //   RecebimentoPage.obterValorFinal().then((valorFinal) => {
+  //     // Preenche a data de recebimento com a data atual
+  //     RecebimentoPage.preencherDataRecebimentoComDataAtual();
+
+  //     // Preenche o campo "Valor Recebido" com o valor final para baixa completa
+  //     RecebimentoPage.preencherValorRecebido(valorFinal);
+
+  //     // Clica no botão "Salvar" para finalizar a baixa
+  //     RecebimentoPage.clicarSalvar();
+
+  //     // Verifica o Toast de sucesso para confirmação
+  //     RecebimentoPage.verificarToastSucesso();
+  //   });    
+  // });
+
+  //   it('Deve expandir os detalhes de pagamento e verificar tabela vazia', () => {
+  //     RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
+  //     RecebimentoPage.expandirDetalhesPagamento();
+  //     RecebimentoPage.verificarTabelaDetalhesPagamentoVazia();
+  //   });
+
+  it('Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status "Baixar"', () => {
+    // Chama o método que localiza e clica no botão "PARCIAL" da primeira linha com status "PARCIAL"
+    RecebimentoPage.clicarPrimeiraLinhaComStatusParcial();
+
+    // Clica em "Desfazer baixa"
+    RecebimentoPage.desfazerBaixa();
+
+    // Verifica a exibição da confirmação e o título correto
+    RecebimentoPage.verificarTituloConfirmacaoDesfazerBaixa();
+
+    // Confirma o desfazer da baixa
+    RecebimentoPage.confirmarDesfazerBaixa();
+
+    // Fecha o modal de recebimento
+    RecebimentoPage.fecharModal();
+
+    // Verifica que o status da parcela é atualizado para "Baixar"
+    RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
+
+    // Verifica o Toast de sucesso
+    RecebimentoPage.verificarToastSucesso();
+  });
+
 });

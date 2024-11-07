@@ -24,7 +24,7 @@ const RecebimentoLocators = {
     detalhesPagamentoTable: '.card-body .table tbody',
 
     // Botões
-    voltarBtn: '.modal-content .btn-default', // Garante que seja o botão "Voltar" do modal
+    voltarBtn: '.modal-content .btn-default:contains("Voltar")', // Garante que seja o botão "Voltar" do modal
     salvarBtn: '.modal-content .btn-primary', // Garante que seja o botão "Salvar" do modal
 
     // Autocomplete
@@ -37,6 +37,25 @@ const RecebimentoLocators = {
 
     // Toast de Sucesso
     toastSucesso: '.Toastify__toast--success',  // Classe específica para o Toast de sucesso
+    
+// Locators específicos para o modal de Recebimento
+detalhesPagamentoTitulo: '.accordion .card-header h5',
+detalhesPagamentoBotaoDesfazerBaixa: '.btn-danger.btn-xs', // Botão "Desfazer baixa"
+botaoFecharModal: 'button.close',  // Botão para fechar o modal de recebimento
+
+// Locators para colunas do cabeçalho da tabela de detalhes de pagamento
+tabelaCabecalhoConta: '.table thead th:nth-child(1)',
+tabelaCabecalhoPagamento: '.table thead th:nth-child(2)',
+tabelaCabecalhoValorPago: '.table thead th:nth-child(3)',
+tabelaCabecalhoAcrescimo: '.table thead th:nth-child(4)',
+tabelaCabecalhoDesconto: '.table thead th:nth-child(5)',
+tabelaCabecalhoData: '.table thead th:nth-child(6)',
+
+  // Locators para a confirmação swal2 do desfazer baixa
+  confirmacaoTitulo: '#swal2-title',
+  botaoConfirmarDesfazer: '.swal2-confirm',
+  botaoCancelarDesfazer: '.swal2-cancel'
+
 
 };
 
