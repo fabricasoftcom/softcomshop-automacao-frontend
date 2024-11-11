@@ -1,11 +1,5 @@
 class menutlateralfiscalpage{
     //Acessar o menu lateral 'fiscal'
-   //para ele é preciso mais parametros na busca do menu lateral por ja possuir parametros usados em outros menus
-    // expandirClicarMenuFIscal(function(submenu,opcaoClick)=>{
-    //     cy.get('#side-menu > :nth-child(7) > :nth-child(1)').click({ force: true });
-    //     cy.get(submenu).click({ force: true });
-    //     cy.get(opcaoClick).click({ force: true });
-    // });
     expandirClicarMenuFIscal(submenu,opcaoClick){
         cy.get('#side-menu > :nth-child(7) > :nth-child(1)').click({ force: true });
         cy.get(submenu).click({ force: true });

@@ -1,15 +1,9 @@
-import menulateralservicopage from "../../pages/menulateral/menulateralservicopage";
-import loginpage from "../../pages/login/loginpage";
-import userpassfactory from "../../factories/userpassfactory";
+import menulateralservicopage from "../../support/pages/menulateral/menulateralservicopage";
 
 describe('Acessar opções do menu lateral de Serviços e NFSe', () =>{
     beforeEach(function () {
-        loginpage.acessarUrlFazerlogin(userpassfactory.userfab());
+        cy.login();
     })
-
-    afterEach(() => {
-        cy.wait(10000);
-      })
 
     it('T001- Listagem de Clientes', ()=>{
         menulateralservicopage.acessarListagemClientes();

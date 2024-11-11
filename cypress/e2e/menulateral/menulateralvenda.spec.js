@@ -1,15 +1,9 @@
-import menulateralvendapage from "../../pages/menulateral/menulateralvendapage";
-import loginpage from "../../pages/login/loginpage";
-import userpassfactory from "../../factories/userpassfactory";
+import menulateralvendapage from "../../support/pages/menulateral/menulateralvendapage";
 
 describe('Acessar opções do menu lateral de Vendas', () =>{
     beforeEach(function () {
-        loginpage.acessarUrlFazerlogin(userpassfactory.userfab());
+        cy.login();
     })
-
-    afterEach(() => {
-        cy.wait(10000);
-      })
 
     it('T001- Listagem de Clientes',()=>{
         menulateralvendapage.acessarListagemClientes();

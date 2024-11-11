@@ -10,6 +10,7 @@ module.exports = defineConfig({
     defaultCommandTimeout: 25000,
     specPattern:[
       "./cypress/e2e/setup/_beforeConfigPadrao.cy.js",
+      "./cypress/e2e/financeiro/nova-receita.spec.js",
       //"./cypress/e2e/**/*.{feature,cy.js}",
       "**/*.spec.js"
     ],

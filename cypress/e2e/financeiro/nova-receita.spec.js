@@ -49,6 +49,10 @@ describe('Cadastro de Nova Receita', () => {
   
     // Valida o sucesso
     cy.contains('Sucesso').should('be.visible');
+
+    // //avaliar, apenas algumas formas de pagamento geram registro em tela.
+    // cy.get('table tbody').should('be.visible');
+    // cy.contains(descricaoTeste).should('exist');
   }
   it('Valida erro ao tentar criar receita com tipo "Duplicata" para cliente "Consumidor"', () => {
   

@@ -1,15 +1,10 @@
-import relatoriospage from "../../pages/relatorios/relatoriospage";
-import loginpage from "../../pages/login/loginpage";
-import userpassfactory from "../../factories/userpassfactory";
+import relatoriospage from "../../support/pages/relatorios/relatoriospage";
 
 describe('Acessar relatorio: ', ()=>{
     beforeEach(function () {
-        loginpage.acessarUrlFazerlogin(userpassfactory.userfab());
+        cy.login();
+        relatoriospage.acessarMenuRelatorios();
     })
-    afterEach(() => {
-        cy.wait(10000);
-      })
-
       it('T001- Vendas > Periodo', ()=>{
         relatoriospage.acessarRelatorioVendasPeriodo();
       })

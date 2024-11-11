@@ -1,60 +1,62 @@
-class menulateralconfiguracoespage{
-    //acessar listagem de empresas
-    acessarListagemEmpresas(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#empresa');
+import MenulateralConfiguracoesLocators from "../../locators/ConfiguracoesLocators";
+
+class MenulateralConfiguracoesPage {
+
+    // Acessa o menu Configurações e clica na opção de submenu especificada
+    acessarMenuConfiguracoes(opcao) {
+        cy.expandirClicarMenuUmNivel('Configurações', opcao);
+    }
+
+    // Ações de navegação para cada submenu
+
+    acessarListagemEmpresas() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.listagemEmpresas);
         cy.url().should('include', '/cadastro/empresa');
     }
-    //acessar listagem de funcionario
-    acessarListagemFuncionarios(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#funcionários');
+
+    acessarListagemFuncionarios() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.listagemFuncionarios);
         cy.url().should('include', '/cadastro/funcionario');
     }
-    //acessar listagem de usuario
-    acessarListagemUsuarios(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#usuários');
+
+    acessarListagemUsuarios() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.listagemUsuarios);
     }
-    //acessar listagem de perfis de acesso
-    acessarListagemPerfisAcesso(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#perfis_de_acesso');
+
+    acessarListagemPerfisAcesso() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.listagemPerfisAcesso);
     }
-    //acessar listagem de formas de pagamentos
-    acessarListagemFormasPagamentos(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#formas_de_pagamentos');
+
+    acessarListagemFormasPagamentos() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.listagemFormasPagamentos);
     }
-    //acessar listagem de cartões
-    acessarListagemCartoes(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#cartões');
+
+    acessarListagemCartoes() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.listagemCartoes);
     }
-    //acessar MOdulos
-    acessarModulos(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#módulos');
+
+    acessarModulos() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.modulos);
     }
-    //acessar scheme
-    acessarScheme(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#scheme');
+
+    acessarScheme() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.scheme);
     }
-    //acessar sincronização
-    acessarSincronizacao(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#sincronização');
+
+    acessarSincronizacao() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.sincronizacao);
     }
-    //acessar configurações de etiquetas
-    acessarConfiguracoesEtiquetas(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#sincronização');
+
+    acessarNotificacoes() {
+        this.acessarMenuConfiguracoes(MenulateralConfiguracoesLocators.notificacoes);
     }
-    //atualizar permissões
-    //não fiz porque ele executa uma rota de atualização de permissões mas não abre nenhuma tela especifica
-    
-    //acessar configurações de notificações
-    acessarNotificacoes(){
-        cy.expandirClicarMenuUmNivel('Configurações', '#notificações');
-    }
-    //acessar cadastro de nova empresa
-    acessarCadastroNovaEmpresa(){
+
+    // Acessa a tela de cadastro de nova empresa
+    acessarCadastroNovaEmpresa() {
         this.acessarListagemEmpresas();
-        cy.get('#btn-novo').click();
-        cy.url().should('include','/novo');
+        cy.get(MenulateralConfiguracoesLocators.btnNovoCadastro).click();
+        cy.url().should('include', '/novo');
     }
-    
 }
 
-export default new menulateralconfiguracoespage;
+export default new MenulateralConfiguracoesPage();

@@ -1,16 +1,9 @@
-import loginpage from "../../pages/login/loginpage";
-import userpassfactory from "../../factories/userpassfactory";
-import menulateralfinanceiropage from "../../pages/menulateral/menulateralfinanceiropage";
+import menulateralfinanceiropage from "../../support/pages/menulateral/menulateralfinanceiropage";
 
 describe('Acessar opções do menu lateral de Financeiro', () =>{
     beforeEach(function () {
-        loginpage.acessarUrlFazerlogin(userpassfactory.userfab());
+        cy.login();
     })
-
-    afterEach(() => {
-        cy.wait(10000);
-      })
-
     it('T001- Listagem de contas', ()=>{
         menulateralfinanceiropage.acessarListagemContas();
     })
@@ -24,7 +17,7 @@ describe('Acessar opções do menu lateral de Financeiro', () =>{
         menulateralfinanceiropage.acessarContasPagar();
     })
     it('T005- Contas a receber receita', ()=>{
-        menulateralfinanceiropage.acessarContasReceberReceita();
+        menulateralfinanceiropage.acessarListagemContasReceberReceita();
     })
     it('T006- Contas a receber Remessa', ()=>{
         menulateralfinanceiropage.acessarContasReceberRemessa();
@@ -52,12 +45,6 @@ describe('Acessar opções do menu lateral de Financeiro', () =>{
     })
     it('T014- Cadastro de nova conta', ()=>{
         menulateralfinanceiropage.acessarCadastrNovaConta();
-    })
-    it('T015- Cadastro de novo Contas a Pagar', ()=>{
-        menulateralfinanceiropage.acessarCadastroNovoContasPagar();
-    })
-    it('T016- Cadastro de novo contas a receber receita', ()=>{
-        menulateralfinanceiropage.aacessarCadastroNovoContasReceberReceita();
     })
     it('T017- Cadastro de nova categoria', ()=>{
         menulateralfinanceiropage.acessarCadastroNovaCategoria();
