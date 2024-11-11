@@ -1,43 +1,61 @@
-class menulateralservico{
-    //acessar listagem de clientes
-    acessarListagemClientes(){
-        cy.expandirClicarMenuUmNivel('Serviços e NFS-e','#clientes');
+// MenulateralServicoPage.js
+import MenulateralServicoLocators from "../../locators/MenulateralServicoLocators";
+
+class MenulateralServicoPage {
+
+    // Expande o menu de "Serviços e NFS-e" e clica em um submenu de um único nível
+    acessarMenuServicoUmNivel(submenu) {
+        cy.expandirClicarMenuUmNivel('Serviços e NFS-e', submenu);
     }
-    //acessar listgem de servicos
-    acessarListagemServico(){
-        cy.expandirClicarMenuUmNivel('Serviços e NFS-e','#serviço');
+
+    // Expande o menu de "Serviços e NFS-e" e clica em um submenu de dois níveis
+    acessarMenuServicoDoisNiveis(menu, opcao) {
+        cy.expandirClicarMenuDoisNiveis('Serviços e NFS-e', menu, opcao);
     }
-    //acessar listagem de vinculo fiscais de servico
-    acessarListagemVinculoServico(){
-        cy.expandirClicarMenuUmNivel('Serviços e NFS-e', '#vinculos_fiscais_de_serviço');
+
+    // Métodos para acessar cada item do menu "Serviços e NFS-e"
+
+    acessarListagemClientes() {
+        this.acessarMenuServicoUmNivel(MenulateralServicoLocators.clientes);
     }
-    //acessar listagem NFSe
-    acessarListagemNFse(){
-        cy.expandirClicarMenuDoisNiveis('Serviços e NFS-e', '#nfs-e', '.active > .nav > :nth-child(1) > #nfs-e');
+
+    acessarListagemServico() {
+        this.acessarMenuServicoUmNivel(MenulateralServicoLocators.servico);
     }
-    //acessar configurações NFSe
-    acessarConfiguracoesNFSe(){
-        cy.expandirClicarMenuDoisNiveis('Serviços e NFS-e', '#nfs-e', 'a[href*="serie/nfse"]');
+
+    acessarListagemVinculoServico() {
+        this.acessarMenuServicoUmNivel(MenulateralServicoLocators.vinculosFiscaisServico);
     }
-    //acessar Ordem de serviço
-    acessarlistagemOrdemServico(){
-        cy.expandirClicarMenuUmNivel('Serviços e NFS-e', '#ordem_de_serviço');
+
+    acessarListagemNFse() {
+        this.acessarMenuServicoDoisNiveis(MenulateralServicoLocators.nfsE, MenulateralServicoLocators.nfsEListagem);
     }
-    //acessar cadastro de novo Cliente
-    acessarCadastroNovoCliente(){
+
+    acessarConfiguracoesNFSe() {
+        this.acessarMenuServicoDoisNiveis(MenulateralServicoLocators.nfsE, MenulateralServicoLocators.configuracoesNfsE);
+    }
+
+    acessarListagemOrdemServico() {
+        this.acessarMenuServicoUmNivel(MenulateralServicoLocators.ordemServico);
+    }
+
+    // Métodos para acessar o cadastro de novos itens
+
+    acessarCadastroNovoCliente() {
         this.acessarListagemClientes();
-        cy.get('#btn-novo').click();
+        cy.get(MenulateralServicoLocators.btnNovo).click();
     }
-    //acessar cadastro de novo NFSe
-    acessarCadastroNovaNFSe(){
+
+    acessarCadastroNovaNFSe() {
         this.acessarListagemNFse();
-        cy.get('span').contains('Novo Cadastro').click();
-        cy.get('a[href*="/nfse/cadastro-avulsa"]').contains('Avulsa').click({force: true});
+        cy.get(MenulateralServicoLocators.novoCadastroNFSe).click();
+        cy.get(MenulateralServicoLocators.cadastroAvulsa).click({ force: true });
     }
-    //acessar cadastro de nova Ordem de servico
-    acessarCadastroNovaOrdemServico(){
-        this.acessarlistagemOrdemServico();
-        cy.get('a[href*="ordem-servico/novo"]').contains('Novo Cadastro').click({force:true});
+
+    acessarCadastroNovaOrdemServico() {
+        this.acessarListagemOrdemServico();
+        cy.get(MenulateralServicoLocators.novoCadastroOrdemServico).click({ force: true });
     }
 }
-export default new menulateralservico;
+
+export default new MenulateralServicoPage();

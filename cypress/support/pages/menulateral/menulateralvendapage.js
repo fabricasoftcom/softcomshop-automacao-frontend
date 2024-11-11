@@ -1,69 +1,83 @@
-class menulateralvendapage{
-    //acessar listagem de clientes
-    acessarListagemClientes(){
-        cy.expandirClicarMenuUmNivel('Vendas e NF-e','#clientes');
+// MenulateralVendaPage.js
+import MenulateralVendaLocators from "../../locators/MenulateralVendaLocators";
+
+class MenulateralVendaPage {
+
+    // Expande o menu "Vendas e NF-e" e clica em um submenu de um único nível
+    acessarMenuVendaUmNivel(submenu) {
+        cy.expandirClicarMenuUmNivel('Vendas e NF-e', submenu);
     }
-    //acessar listagem de orçamento
-    acessarListagemOrcamento(){
-        cy.expandirClicarMenuUmNivel('Vendas e NF-e','#orçamento');
+
+    // Expande o menu "Vendas e NF-e" e clica em um submenu de dois níveis
+    acessarMenuVendaDoisNiveis(menu, opcao) {
+        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e', menu, opcao);
     }
-    //acessar listagem de vendas
-    acessarListagemVendas(){
-        cy.expandirClicarMenuUmNivel('Vendas e NF-e','#vendas');
+
+    // Métodos para acessar cada item do menu "Vendas e NF-e"
+
+    acessarListagemClientes() {
+        this.acessarMenuVendaUmNivel(MenulateralVendaLocators.clientes);
     }
-    //acessar listagem NFCe
-    acessarListagemNFCe(){
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nfc-e',':nth-child(1) > #nfc-e');
+
+    acessarListagemOrcamento() {
+        this.acessarMenuVendaUmNivel(MenulateralVendaLocators.orcamento);
     }
-    //acessar inutilizar NFCe 
-    acessarInutilizarNFCe(){
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nfc-e','#inutilizar');
+
+    acessarListagemVendas() {
+        this.acessarMenuVendaUmNivel(MenulateralVendaLocators.vendas);
     }
-    //acessar download xml NFCe
-    acessarDownloadXmlNFCe(){
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nfc-e','#download_xml');
+
+    acessarListagemNFCe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfce, MenulateralVendaLocators.nfceListagem);
     }
-    //acessar configuracoes NFCe
-    acessarConfiguracoesNFCe(){
-        // cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nfc-e','#configurações');
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nfc-e','a[href*="serie/nfce"]');
+
+    acessarInutilizarNFCe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfce, MenulateralVendaLocators.nfceInutilizar);
     }
-    //acessar listagem NFe
-    acessarListagemNFe(){
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nf-e','#nota_fiscal');
+
+    acessarDownloadXmlNFCe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfce, MenulateralVendaLocators.nfceDownloadXml);
     }
-    //acessar inutilizar NFe 
-    acessarInutilizarNFe(){
-        //cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nf-e','#inutilizar');
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nf-e','.active > .nav > :nth-child(2) > #inutilizar');
+
+    acessarConfiguracoesNFCe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfce, MenulateralVendaLocators.nfceConfiguracoes);
     }
-    //acessar download xml NFe
-    acessarDownloadXmlNFe(){
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nf-e','.active > .nav > :nth-child(3) > #download_xml');
+
+    acessarListagemNFe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfe, MenulateralVendaLocators.nfeListagem);
     }
-    //acessar configuracoes NFe
-    acessarConfiguracoesNFe(){
-        cy.expandirClicarMenuDoisNiveis('Vendas e NF-e','#nf-e','.active > .nav > :nth-child(4) > #configurações');
+
+    acessarInutilizarNFe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfe, MenulateralVendaLocators.nfeInutilizar);
     }
-    //acessar o PDV web
-    acessarPdvWeb(){
-        cy.expandirClicarMenuUmNivel('Vendas e NF-e', '#pdv');
+
+    acessarDownloadXmlNFe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfe, MenulateralVendaLocators.nfeDownloadXml);
     }
-    //acessar Pesquisa preço
-    acessarPesquisaPreco(){
-        cy.expandirClicarMenuUmNivel('Vendas e NF-e', '#menu_pesquisa_preco');
+
+    acessarConfiguracoesNFe() {
+        this.acessarMenuVendaDoisNiveis(MenulateralVendaLocators.nfe, MenulateralVendaLocators.nfeConfiguracoes);
     }
-    //acessar cadastro de novo Orcamento
-    acessarCadastroNovoOrcamento(){
+
+    acessarPdvWeb() {
+        this.acessarMenuVendaUmNivel(MenulateralVendaLocators.pdvWeb);
+    }
+
+    acessarPesquisaPreco() {
+        this.acessarMenuVendaUmNivel(MenulateralVendaLocators.pesquisaPreco);
+    }
+
+    // Métodos para acessar o cadastro de novos itens
+
+    acessarCadastroNovoOrcamento() {
         this.acessarListagemOrcamento();
-        cy.get('#btn-novo').click();
+        cy.get(MenulateralVendaLocators.btnNovo).click();
     }
-    //acessar cadastro de novo Nfe
-    acessarCadastroNovaNfe(){
+
+    acessarCadastroNovaNfe() {
         this.acessarListagemNFe();
-        cy.get('#btn-novo').click();
+        cy.get(MenulateralVendaLocators.btnNovo).click();
     }
-
-
 }
-export default new menulateralvendapage;
+
+export default new MenulateralVendaPage();

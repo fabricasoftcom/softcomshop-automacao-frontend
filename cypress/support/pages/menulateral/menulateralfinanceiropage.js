@@ -1,75 +1,92 @@
-class menulateralfinanceiropage{
-    //acessar listagem de contas
-    acessarListagemContas(){
-        cy.expandirClicarMenuUmNivel('Financeiro','#contas');
+// MenulateralFinanceiroPage.js
+import MenulateralFinanceiroLocators from "../../locators/MenulateralFinanceiroLocators";
+
+class MenulateralFinanceiroPage {
+
+    // Acessa o menu Financeiro e clica na opção de submenu especificada
+    acessarMenuFinanceiro(opcao) {
+        cy.expandirClicarMenuUmNivel('Financeiro', opcao);
     }
-    //acessar transferencia de contas
-    acessarTransferenciaContas(){
-        cy.expandirClicarMenuUmNivel('Financeiro','#transferência_entre_contas');
+
+    // Acessa o menu Financeiro com dois subníveis e clica na opção desejada
+    acessarMenuFinanceiroDoisNiveis(menu, subMenu) {
+        cy.expandirClicarMenuDoisNiveis('Financeiro', menu, subMenu);
     }
-    //acessar Lançamento Conta
-    acessarLancamentoConta(){
-        cy.expandirClicarMenuUmNivel('Financeiro', '#lançamento_conta');
+
+    // Métodos para cada item do menu
+
+    acessarListagemContas() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.listagemContas);
     }
-    //acessar Contas a pagar
-    acessarContasPagar(){
-        cy.expandirClicarMenuUmNivel('Financeiro', '#contas_a_pagar');
+
+    acessarTransferenciaContas() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.transferenciaContas);
     }
-    //acessar contas a receber receita
-    acessarListagemContasReceberReceita(){
-        cy.expandirClicarMenuDoisNiveis('Financeiro','#contas_a_receber', '#receita');
+
+    acessarLancamentoConta() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.lancamentoConta);
     }
-    //acessar contas a receber Exportar Remessa
-    acessarContasReceberRemessa(){
-        cy.expandirClicarMenuDoisNiveis('Financeiro','#contas_a_receber', '#exportar_remessa');
+
+    acessarContasPagar() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.contasPagar);
     }
-    //acessar contas a receber - Receber retorno
-    acessarContasReceberRetorno(){
-        cy.expandirClicarMenuDoisNiveis('Financeiro','#contas_a_receber', '#receber_retorno');
+
+    acessarListagemContasReceberReceita() {
+        this.acessarMenuFinanceiroDoisNiveis(MenulateralFinanceiroLocators.contasReceber, MenulateralFinanceiroLocators.receita);
     }
-    //acessar Categorias
-    acessarCategorias(){
-        cy.expandirClicarMenuUmNivel('Financeiro','#categorias');
+
+    acessarContasReceberRemessa() {
+        this.acessarMenuFinanceiroDoisNiveis(MenulateralFinanceiroLocators.contasReceber, MenulateralFinanceiroLocators.exportarRemessa);
     }
-    //acessar FLuxo
-    acessarFluxo(){
-        cy.expandirClicarMenuUmNivel('Financeiro','#fluxo');
+
+    acessarContasReceberRetorno() {
+        this.acessarMenuFinanceiroDoisNiveis(MenulateralFinanceiroLocators.contasReceber, MenulateralFinanceiroLocators.receberRetorno);
     }
-    //acessar DRE
-    acessarDRE(){
-        cy.expandirClicarMenuUmNivel('Financeiro','#dre');
+
+    acessarCategorias() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.categorias);
     }
-    //acessar Extrato
-    acessarExtrato(){
-        cy.expandirClicarMenuUmNivel('Financeiro','#extrato');
+
+    acessarFluxo() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.fluxo);
     }
-    //acessar painel PIX
-    acessarPainelPix(){
-        cy.expandirClicarMenuUmNivel('Financeiro','#painel_pix');
+
+    acessarDRE() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.dre);
     }
-    //acessar estorno PIX
-    acessarEstornoPix(){
-        cy.expandirClicarMenuUmNivel('Financeiro', '#estorno_pix');
+
+    acessarExtrato() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.extrato);
     }
-    //acessar cadastro de nova conta (corrente)
-    acessarCadastrNovaConta(){
+
+    acessarPainelPix() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.painelPix);
+    }
+
+    acessarEstornoPix() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.estornoPix);
+    }
+
+    // Métodos para cadastro de novas entidades
+
+    acessarCadastroNovaConta() {
         this.acessarListagemContas();
-        cy.get('a[href*="/integracao-bancaria/conta/novo"]').click({force:true});
-        cy.get('a[href*="/integracao-bancaria/conta/novo/conta-corrente"]').click({force:true});
+        cy.get(MenulateralFinanceiroLocators.novaConta).click({ force: true });
+        cy.get(MenulateralFinanceiroLocators.novaContaCorrente).click({ force: true });
     }
-    //acessar cadastro de novo contas a pagar
-    acessarCadastroNovoContasPagar(){
+
+    acessarCadastroNovoContasPagar() {
         this.acessarContasPagar();
-        cy.get('button[class="btn btn-warning btn-sm"]').contains('Novo cadastro').click();
+        cy.get(MenulateralFinanceiroLocators.btnNovoCadastro).contains('Novo cadastro').click();
     }
-    //acessar cadastro de nova categoria
-    acessarCadastroNovaCategoria(){
+
+    acessarCadastroNovaCategoria() {
         this.acessarCategorias();
-        cy.get('button[class="btn btn-warning "]').contains('Nova Categoria de Receita').click();
-        cy.get('button[class="btn btn-default "]').contains('Voltar').click();
-        cy.get('button[class="btn btn-warning "]').contains('Nova Categoria de Despesa').click();
-   
+        cy.get(MenulateralFinanceiroLocators.novaCategoriaReceita).click();
+        cy.get(MenulateralFinanceiroLocators.voltarCategoria).click();
+        cy.get(MenulateralFinanceiroLocators.novaCategoriaDespesa).click();
     }
 
 }
-export default new menulateralfinanceiropage;
+
+export default new MenulateralFinanceiroPage();

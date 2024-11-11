@@ -1,39 +1,59 @@
 const ListagemContasAPagarLocators = {
-    // Botões principais
-    novoCadastroBtn: 'button:contains("Novo cadastro")',
-    baixarSelecionadosBtn: 'button:contains("Baixar selecionados")',
-  
-    // Filtros
-    seletorPeriodo: '#1731327095430',
-    seletorTipoData: '#1731327095436',
-    campoBuscaConta: '#autocomplete_bank_account',
-    botaoBuscarConta: '#autocomplete_bank_account_addon',
-    
-    // Tabela de despesas
-    checkboxSelecionarTodos: '.receive_check_all',
-    linhaTabela: 'table tbody tr',
-    checkboxLinha: '.receive_check',
-    celulaDataVencimento: 'td:nth-child(2)',
-    celulaDescricao: 'td:nth-child(3)',
-    celulaFornecedor: 'td:nth-child(4)',
-    celulaCategoria: 'td:nth-child(5)',
-    celulaValorParcela: 'td:nth-child(6)',
-    celulaValorPago: 'td:nth-child(7)',
-    celulaValorPendente: 'td:nth-child(8)',
-    celulaStatus: 'td:nth-child(9)',
-    botaoBaixar: 'button:contains("Baixar")',
-    
-    // Dropdown de ações
-    dropdownAcao: '.dropdown-toggle',
-    opcaoEditar: '.dropdown-menu a:contains("Editar")',
-    opcaoExcluir: '.dropdown-menu a:contains("Excluir")',
-  
-    // Modal e notificações
-    modalConfirmarBaixa: '.modal-content .btn-primary',
+  // Botões principais
+  novoCadastroButton: '.btn-warning.btn-sm:contains("Novo cadastro")',
+  baixarSelecionadosButton: '.btn-success.btn-sm:contains("Baixar selecionados")',
+  buscarButton: '.btn-warning i.fa-search',
+
+  // Filtros (usando seletores não dinâmicos)
+  periodoSelect: '.col-md-2 .form-group select.form-control', // Filtro de período (coluna 1)
+  tipoDataSelect: '.col-md-2:nth-of-type(3) select.form-control', // Filtro de tipo de data (coluna 3)
+  contaBancariaAutocomplete: 'input[name="autocomplete_bank_account"]',
+  dataSearchInput: 'input.daterangepicker-date_search',
+  calendarioButton: '.btn-daterangepicker-date_search',
+
+  // Tabela de despesas
+  tabela: 'table.table',
+  linhaTabela: 'table tbody tr',
+  checkboxTodos: 'input.receive_check_all',
+  checkboxLinha: 'input.receive_check',
+  colunaDataVencimento: 'td:nth-child(2)',
+  colunaDescricao: 'td:nth-child(3)',
+  colunaFornecedor: 'td:nth-child(4)',
+  colunaCategoria: 'td:nth-child(5)',
+  colunaStatus: 'td:nth-child(9)',
+
+  // Ações na tabela
+  dropdownAcoes: 'button.dropdown-toggle',
+  baixarOpcao: 'button:contains("Baixar")',
+  excluirOpcao: 'a:contains("Excluir")',
+    opcoesDropdown: '.dropdown-menu.show li a',
+
+  // Totalizadores
+  totalizadores: '.row .col-md-3 div > small',
+
+    // Modal SweetAlert
+    modalConfirmacao: '.swal2-popup',
+    selectContaBaixa: '#conta_baixa_lote',
+    botaoConfirmarBaixa: 'button.swal2-confirm',
+      // Modal de sucesso após confirmação
+  modalSucessoPagamento: '.swal2-popup.swal2-icon-success',
+  tituloModalSucesso: '#swal2-title',
+  mensagemModalSucesso: '#swal2-html-container',
+  botaoFecharModalSucesso: 'button.swal2-confirm',
+    // Modal de confirmação para cancelar
+    modalTitulo: '.swal2-title',
+    inputMotivoCancelamento: '#reason',
+    botaoConfirmarCancelamento: '.swal2-confirm',
+    botaoVoltarCancelamento: '.swal2-cancel',
     notificacaoSucesso: '.Toastify__toast--success',
-    quantidadeLancamentos: 'h6:contains("Quantidade de Lançamentos")',
-    quantidadeLancamentosSelecionados: '#installment_selected'
-  };
-  
-  export default ListagemContasAPagarLocators;
-  
+      // Modal de confirmação de exclusão
+  modalTitulo: '.swal2-title',
+  botaoConfirmarExclusao: '.swal2-confirm',
+  botaoCancelarExclusao: '.swal2-cancel',
+
+  // Notificações
+  notificacaoSucesso: '.Toastify__toast--success',
+  notificacaoErro: '.Toastify__toast--error'
+};
+
+export default ListagemContasAPagarLocators;

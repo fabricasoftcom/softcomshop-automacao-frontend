@@ -44,7 +44,7 @@ describe('Acessar opções do menu lateral de Financeiro', () =>{
         menulateralfinanceiropage.acessarEstornoPix();
     })
     it('T014- Cadastro de nova conta', ()=>{
-        menulateralfinanceiropage.acessarCadastrNovaConta();
+        menulateralfinanceiropage.acessarCadastroNovaConta();
     })
     it('T017- Cadastro de nova categoria', ()=>{
         menulateralfinanceiropage.acessarCadastroNovaCategoria();

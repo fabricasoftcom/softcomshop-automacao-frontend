@@ -1,101 +1,118 @@
-class menulateralprodutopage{
-    //acessa a listagem de fornecedores
-    acessarListagemFornecedores(){
-        cy.expandirClicarMenuUmNivel('Compras e Estoque','#fornecedor');
-    }
-    //acessa a listagem de atributos
-    acessarListagemAtributos(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#produtos','#atributos');
-    }
-    //acessa a listagem de atributos
-    acessarListagemVinculosFiscais(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#produtos','#vinculos_fiscais');
-    }
-    //acessa o atualizador de dados Fiscais
-    acessarAtualizadosDadosFiscais(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#produtos','#atualizar_dados_fiscais');
-    }
-    //Acessa a listagem de Produtos
-    acessarListagemProdutos(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#produtos','#produto');
-    }
-    //acessar listagem do gestor de promoções
-    acessarListagemGestorPromocoes(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#produtos','#gestor_de_promoções');
-    }
-    //accessar listagem do gestor de preços 
-    acessarListagemGestorPrecos(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#produtos','#gestor_de_preços');
-    }
-    //accessar listagem Nuvem Fiscal 
-    acessarListagemNuvemFiscal(){
-        cy.expandirClicarMenuUmNivel('Compras e Estoque','#nuvem_fiscal');
-    }
-    //accessar listagem Ordem de Fornecimento 
-    acessarListagemOrdemFornecimento(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#gestão_de_compras','#ordem_de_fornecimento');
-    }
-    //accessar listagem de COmpras
-    acessarListagemCompras(){
-        cy.expandirClicarMenuDoisNiveis('Compras e Estoque','#gestão_de_compras','#compras');
-    }
-    //accessar listagem movimentações
-    acessarListagemMovimentacoes(){
-        cy.expandirClicarMenuUmNivel('Compras e Estoque','#movimentações');
-    }
-    //acessar listagem de produção
-    acessarListagemProducao(){
-        cy.expandirClicarMenuUmNivel('Compras e Estoque','#produção');
-    }
-    //acessar listagem de balanços
-    acessarListagemBalanco(){
-        cy.expandirClicarMenuUmNivel('Compras e Estoque','#balanço');
-    }
-    //acessar cadastro de novo Atributos
-    acessarCadastroNovoAtributo(){
-        this.acessarListagemAtributos();
-        cy.get('#btn-novo').click();
-    }
-    //acessar cadastro de novo VinculosFiscais
-    acessarCadastroNovoVinculosFiscais(){
-        this.acessarListagemVinculosFiscais();
-        cy.get('#btn-novo').click();
-    }
-    //acessar cadastro de novo GestorPromocoes
-    acessarCadastroNovoGestorPromocoes(){
-        this.acessarListagemGestorPromocoes();
-        cy.get('#btn-novo').click();
-    }
-    //acessar cadastro de novo GestorPrecos
-    acessarCadastroNovoGestorPrecos(){
-        this.acessarListagemGestorPrecos();
-        cy.get('#btn-novo').click();
-    }
-    //acessar cadastro de nova OrdemFornecimento
-    acessarCadastroNovaOrdemFornecimento(){
-        this.acessarListagemOrdemFornecimento();
-        cy.get('#btn-novo').click();
-    }
-    //acessar cadastro de novo Compra
-    acessarCadastroNovaCompra(){
-        this.acessarListagemCompras();
-        cy.get('#btn-novo').click();
-    }
-    //acessar o cadastro de nova Movimentacoes
-    acessarCadastroNovaMovimentacoes(){
-        this.acessarListagemMovimentacoes();
-        cy.get('#btn-novo').click();
-    }
-    //acessar o cadastro de novo Producao
-    acessarCadastroNovaProducao(){
-        this.acessarListagemProducao();
-        cy.get('#btn-novo').click();
-    }
-    //acessar o cadastro de novo Balanco
-    acessarCadastroNovoBalanco(){
-        this.acessarListagemBalanco();
-        cy.get('#btn-novo').click();
+// MenulateralProdutoPage.js
+import MenulateralProdutoLocators from "../../locators/MenulateralProdutoLocators";
+
+class MenulateralProdutoPage {
+
+    // Expande o menu e acessa um item de um único nível
+    acessarMenuProdutoUmNivel(submenu) {
+        cy.expandirClicarMenuUmNivel('Compras e Estoque', submenu);
     }
 
+    // Expande o menu e acessa um item de dois níveis
+    acessarMenuProdutoDoisNiveis(menu, opcao) {
+        cy.expandirClicarMenuDoisNiveis('Compras e Estoque', menu, opcao);
+    }
+
+    // Métodos para acessar cada item do menu de Compras e Estoque
+
+    acessarListagemFornecedores() {
+        this.acessarMenuProdutoUmNivel(MenulateralProdutoLocators.fornecedor);
+    }
+
+    acessarListagemAtributos() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.atributos);
+    }
+
+    acessarListagemVinculosFiscais() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.vinculosFiscais);
+    }
+
+    acessarAtualizadosDadosFiscais() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.atualizarDadosFiscais);
+    }
+
+    acessarListagemProdutos() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.produto);
+    }
+
+    acessarListagemGestorPromocoes() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.gestorPromocoes);
+    }
+
+    acessarListagemGestorPrecos() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.gestorPrecos);
+    }
+
+    acessarListagemNuvemFiscal() {
+        this.acessarMenuProdutoUmNivel(MenulateralProdutoLocators.nuvemFiscal);
+    }
+
+    acessarListagemOrdemFornecimento() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.gestaoCompras, MenulateralProdutoLocators.ordemFornecimento);
+    }
+
+    acessarListagemCompras() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.gestaoCompras, MenulateralProdutoLocators.compras);
+    }
+
+    acessarListagemMovimentacoes() {
+        this.acessarMenuProdutoUmNivel(MenulateralProdutoLocators.movimentacoes);
+    }
+
+    acessarListagemProducao() {
+        this.acessarMenuProdutoUmNivel(MenulateralProdutoLocators.producao);
+    }
+
+    acessarListagemBalanco() {
+        this.acessarMenuProdutoUmNivel(MenulateralProdutoLocators.balanco);
+    }
+
+    // Métodos para acessar o cadastro de novos itens
+
+    acessarCadastroNovoAtributo() {
+        this.acessarListagemAtributos();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovoVinculosFiscais() {
+        this.acessarListagemVinculosFiscais();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovoGestorPromocoes() {
+        this.acessarListagemGestorPromocoes();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovoGestorPrecos() {
+        this.acessarListagemGestorPrecos();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovaOrdemFornecimento() {
+        this.acessarListagemOrdemFornecimento();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovaCompra() {
+        this.acessarListagemCompras();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovaMovimentacoes() {
+        this.acessarListagemMovimentacoes();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovaProducao() {
+        this.acessarListagemProducao();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
+
+    acessarCadastroNovoBalanco() {
+        this.acessarListagemBalanco();
+        cy.get(MenulateralProdutoLocators.btnNovo).click();
+    }
 }
-export default new menulateralprodutopage;
+
+export default new MenulateralProdutoPage();
