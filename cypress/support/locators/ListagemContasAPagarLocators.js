@@ -22,6 +22,10 @@ const ListagemContasAPagarLocators = {
   colunaCategoria: 'td:nth-child(5)',
   colunaStatus: 'td:nth-child(9)',
 
+  modalExclusao: '.swal2-popup',
+  botaoConfirmarExcluir: '.swal2-confirm',
+  
+  linhaComStatusPago: '.table tbody tr:contains("Pago")',
   // Ações na tabela
   dropdownAcoes: 'button.dropdown-toggle',
   baixarOpcao: 'button:contains("Baixar")',

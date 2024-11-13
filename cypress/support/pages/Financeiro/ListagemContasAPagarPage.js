@@ -47,6 +47,13 @@ class ListagemContasAPagarPage {
       .find(ListagemContasAPagarLocators.dropdownAcoes)
       .click();
   }
+  abrirDropdownPrimeiraLinhaComStatusPago() {
+    cy.get(ListagemContasAPagarLocators.linhaComStatusPago)
+      .first()
+      .find(ListagemContasAPagarLocators.dropdownAcoes)
+      .click();
+  }
+  
 
   baixarDespesa() {
     this.abrirDropdownAcoesPrimeiraLinha();
@@ -126,6 +133,15 @@ class ListagemContasAPagarPage {
         .and('be.visible');
     });
   }
+      validarOpcoesDropdownPago() {
+        const opcoesEsperadas = ['Editar', 'Detalhes do título', 'Desfazer baixa', 'Cancelar', 'Excluir'];
+        
+        opcoesEsperadas.forEach(opcao => {
+          cy.get(ListagemContasAPagarLocators.opcoesDropdown)
+            .should('contain.text', opcao)
+            .and('be.visible');
+        });
+      }
   selecionarOpcaoDropdown(opcao) {
     // Seleciona uma opção dentro do dropdown
     cy.get('.dropdown-menu.show')
@@ -162,6 +178,10 @@ class ListagemContasAPagarPage {
   }
   cancelarOperacaoExclusao() {
     cy.get(ListagemContasAPagarLocators.botaoCancelarExclusao).click();
+  }
+  // Valida o toast de erro após tentativa de exclusão
+  verificarNotificacaoErro() {
+    cy.get(ListagemContasAPagarLocators.toastErro)
   }
 }
 

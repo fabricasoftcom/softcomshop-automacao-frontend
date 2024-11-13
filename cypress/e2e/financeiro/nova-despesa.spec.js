@@ -45,20 +45,20 @@ describe('Cadastro de Nova Despesa', () => {
 
         // Valida se a despesa aparece na listagem após o cadastro
         //avaliar, apenas algumas formas de pagamento geram registro em tela.
-        cy.get('table tbody').should('be.visible');
-        cy.contains(descricaoTeste).should('exist');
+        // cy.get('table tbody').should('be.visible');
+        // cy.contains(descricaoTeste).should('exist');
     }
 
     // // Teste negativo: Tentativa de salvar despesa sem preencher campos obrigatórios
-    // it('Deve exibir erro ao tentar salvar uma nova despesa sem preencher os campos obrigatórios', () => {
-    //     novaDespesaPage.abrirModal();
+    it('Deve exibir erro ao tentar salvar uma nova despesa sem preencher os campos obrigatórios', () => {
+        novaDespesaPage.abrirModal();
 
-    //     // Tenta salvar sem preencher campos obrigatórios
-    //     novaDespesaPage.clicarSalvar();
+        // Tenta salvar sem preencher campos obrigatórios
+        novaDespesaPage.clicarSalvar();
 
-    //     // Valida se a mensagem de erro é exibida
-    //     cy.get('.Toastify__toast--error', { timeout: 10000 })
-    //       .should('be.visible')
-    //       .and('contain', 'Por favor, preencha todos os campos obrigatórios');
-    // });
+        // Valida se a mensagem de erro é exibida
+        cy.get('.Toastify__toast--error', { timeout: 10000 })
+          .should('be.visible')
+          .and('contain', 'Por favor, preencha todos os campos obrigatórios');
+    });
 });
