@@ -12,7 +12,8 @@ class ListagemContasAPagarPage {
     cy.get('h5').contains('Despesa').should('be.visible');
   }
 
-  // Ações de filtro
+  // ---------------------- Ações de Filtro ----------------------
+
   filtrarPorPeriodo(periodo = 'TODAY', tipoData = 'VENCIMENTO') {
     cy.get(ListagemContasAPagarLocators.periodoSelect).select(periodo);
     cy.get(ListagemContasAPagarLocators.tipoDataSelect).select(tipoData);
@@ -24,7 +25,8 @@ class ListagemContasAPagarPage {
     cy.get(ListagemContasAPagarLocators.tipoDataSelect).should('have.value', tipoData);
   }
 
-  // Ações na tabela
+  // ---------------------- Ações na Tabela ----------------------
+
   selecionarTodasLinhas() {
     cy.get(ListagemContasAPagarLocators.checkboxTodos).check();
   }
@@ -37,35 +39,109 @@ class ListagemContasAPagarPage {
       .check({ force: true });
   }
 
-  clicarBaixarSelecionados() {
-    cy.get(ListagemContasAPagarLocators.baixarSelecionadosButton).click();
-  }
-
-  abrirDropdownAcoesPrimeiraLinha() {
+  abrirDropdownPrimeiraLinhaComStatusBaixar() {
     cy.get(ListagemContasAPagarLocators.linhaTabela)
+      .filter(':contains("Baixar")')
       .first()
       .find(ListagemContasAPagarLocators.dropdownAcoes)
       .click();
   }
+
   abrirDropdownPrimeiraLinhaComStatusPago() {
     cy.get(ListagemContasAPagarLocators.linhaComStatusPago)
       .first()
       .find(ListagemContasAPagarLocators.dropdownAcoes)
       .click();
   }
-  
 
-  baixarDespesa() {
-    this.abrirDropdownAcoesPrimeiraLinha();
-    cy.get(ListagemContasAPagarLocators.baixarOpcao).click();
+  validarOpcoesDropdown() {
+    const opcoesEsperadas = ['Editar', 'Detalhes do título', 'Cancelar', 'Excluir'];
+    opcoesEsperadas.forEach(opcao => {
+      cy.get(ListagemContasAPagarLocators.opcoesDropdown)
+        .should('contain.text', opcao)
+        .and('be.visible');
+    });
   }
 
+  validarOpcoesDropdownPago() {
+    const opcoesEsperadas = ['Editar', 'Detalhes do título', 'Desfazer baixa', 'Cancelar', 'Excluir'];
+    opcoesEsperadas.forEach(opcao => {
+      cy.get(ListagemContasAPagarLocators.opcoesDropdown)
+        .should('contain.text', opcao)
+        .and('be.visible');
+    });
+  }
+
+  selecionarOpcaoDropdown(opcao) {
+    cy.get(ListagemContasAPagarLocators.opcoesDropdown)
+      .contains(opcao)
+      .click();
+  }
   abrirNovoCadastro() {
     cy.get(ListagemContasAPagarLocators.novoCadastroButton).click();
+    // Verificar se a página/modal de cadastro foi carregada corretamente
     cy.get('.modal-title').contains('Nova Despesa').should('be.visible');
   }
 
-  // Validações
+  // ---------------------- Ações de Baixa ----------------------
+
+  clicarBaixarSelecionados() {
+    cy.get(ListagemContasAPagarLocators.baixarSelecionadosButton).click();
+  }
+
+  confirmarPagamentoComConta(conta) {
+    cy.get(ListagemContasAPagarLocators.modalConfirmacao).should('be.visible');
+    cy.get(ListagemContasAPagarLocators.selectContaBaixa).select(conta);
+    cy.get(ListagemContasAPagarLocators.botaoConfirmarBaixa).click();
+  }
+
+  verificarModalSucessoPagamento() {
+    cy.get(ListagemContasAPagarLocators.modalSucessoPagamento).should('be.visible');
+    cy.get(ListagemContasAPagarLocators.tituloModalSucesso).should('contain.text', 'Parcela(s) baixada(s)!');
+    cy.get(ListagemContasAPagarLocators.mensagemModalSucesso).should('contain.text', 'Baixa(s) realizada(s) com sucesso!');
+    cy.get(ListagemContasAPagarLocators.botaoFecharModalSucesso).click({ force: true });
+  }
+
+  // ---------------------- Ações de Cancelamento ----------------------
+
+  validarModalConfirmacaoCancelamento() {
+    cy.get(ListagemContasAPagarLocators.modalTitulo)
+      .should('contain.text', 'Deseja realmente cancelar está parcela?');
+  }
+
+  preencherMotivoCancelamento(motivo) {
+    cy.get(ListagemContasAPagarLocators.inputMotivoCancelamento).type(motivo);
+  }
+
+  confirmarCancelamento() {
+    cy.get(ListagemContasAPagarLocators.botaoConfirmarCancelamento).click();
+  }
+
+  cancelarOperacao() {
+    cy.get(ListagemContasAPagarLocators.botaoVoltarCancelamento).click();
+  }
+
+  // ---------------------- Ações de Exclusão ----------------------
+
+  validarModalConfirmacaoExclusao() {
+    cy.get(ListagemContasAPagarLocators.modalTitulo)
+      .should('contain.text', 'Você está prestes a excluir um item.');
+  }
+
+  confirmarExclusao() {
+    cy.get(ListagemContasAPagarLocators.botaoConfirmarExclusao).click();
+  }
+
+  cancelarOperacaoExclusao() {
+    cy.get(ListagemContasAPagarLocators.botaoCancelarExclusao).click();
+  }
+
+  verificarNotificacaoErro() {
+    cy.get(ListagemContasAPagarLocators.notificacaoErro).should('be.visible');
+  }
+
+  // ---------------------- Validações ----------------------
+
   validarTabelaVisivel() {
     cy.get(ListagemContasAPagarLocators.tabela).should('be.visible');
   }
@@ -82,8 +158,7 @@ class ListagemContasAPagarPage {
 
   validarTotalizadores() {
     const textosEsperados = ['Vencidas', 'A Pagar', 'Pagas', 'Total do Período'];
-  
-    cy.get('.row .col-md-3 div > small').should(($els) => {
+    cy.get(ListagemContasAPagarLocators.totalizadores).should(($els) => {
       textosEsperados.forEach((texto, index) => {
         expect($els.eq(index)).to.contain.text(texto);
       });
@@ -91,97 +166,51 @@ class ListagemContasAPagarPage {
   }
 
   verificarNotificacaoSucesso() {
-    cy.get(ListagemContasAPagarLocators.notificacaoSucesso);
+    cy.get(ListagemContasAPagarLocators.notificacaoSucesso).should('be.visible');
   }
-  confirmarPagamentoComConta(conta) {
-    // Aguarda o modal ser exibido
-    cy.get(ListagemContasAPagarLocators.modalConfirmacao).should('be.visible');
 
-    // Seleciona a conta no dropdown do modal
-    cy.get(ListagemContasAPagarLocators.selectContaBaixa).select(conta);
-
-    // Clica no botão "Sim, pode realizar a baixa!"
-    cy.get(ListagemContasAPagarLocators.botaoConfirmarBaixa).click();
+  validarAusenciaNotificacaoSucesso() {
+    cy.get(ListagemContasAPagarLocators.notificacaoSucesso).should('not.exist');
   }
-   // Método para verificar o modal de sucesso após a baixa
-   verificarModalSucessoPagamento() {
-    // Verifica se o modal de sucesso é exibido
-    cy.get(ListagemContasAPagarLocators.modalSucessoPagamento).should('be.visible');
-    cy.get(ListagemContasAPagarLocators.tituloModalSucesso).should('contain.text', 'Parcela(s) baixada(s)!');
-    cy.get(ListagemContasAPagarLocators.mensagemModalSucesso).should('contain.text', 'Baixa(s) realizada(s) com sucesso!');
 
-    // Fecha o modal de sucesso clicando no botão "OK"
-    cy.get(ListagemContasAPagarLocators.botaoFecharModalSucesso).click({force: true});
-  }
-  abrirDropdownPrimeiraLinhaComStatusBaixar() {
-    // Localiza a primeira linha que possui o status "Baixar" e clica no dropdown
+  //-----------------------novos metodos----------------------------------
+  clicarBotaoBaixarNaPrimeiraLinha() {
     cy.get(ListagemContasAPagarLocators.linhaTabela)
       .filter(':contains("Baixar")')
       .first()
       .within(() => {
-        cy.get(ListagemContasAPagarLocators.dropdownAcoes).click();
+        cy.get(ListagemContasAPagarLocators.botaoBaixar).click();
       });
   }
-  
-  validarOpcoesDropdown() {
-    const opcoesEsperadas = ['Editar', 'Detalhes do título', 'Cancelar', 'Excluir'];
-  
-    // Verifica se todas as opções esperadas estão presentes no dropdown aberto
-    opcoesEsperadas.forEach(opcao => {
-      cy.get(ListagemContasAPagarLocators.opcoesDropdown)
-        .should('contain.text', opcao)
-        .and('be.visible');
-    });
+  clicarBotaoParcialNaPrimeiraLinha() {
+    cy.get(ListagemContasAPagarLocators.linhaTabela)
+      .filter(':contains("Parcial")')
+      .first()
+      .within(() => {
+        cy.get(ListagemContasAPagarLocators.botaoParcial).click();
+      });
   }
-      validarOpcoesDropdownPago() {
-        const opcoesEsperadas = ['Editar', 'Detalhes do título', 'Desfazer baixa', 'Cancelar', 'Excluir'];
-        
-        opcoesEsperadas.forEach(opcao => {
-          cy.get(ListagemContasAPagarLocators.opcoesDropdown)
-            .should('contain.text', opcao)
-            .and('be.visible');
-        });
-      }
-  selecionarOpcaoDropdown(opcao) {
-    // Seleciona uma opção dentro do dropdown
-    cy.get('.dropdown-menu.show')
-      .contains(opcao)
-      .click();
+  clicarBotaoPagoNaPrimeiraLinha() {
+    cy.get(ListagemContasAPagarLocators.linhaTabela)
+      .filter(':contains("Pago")')
+      .first()
+      .within(() => {
+        cy.get(ListagemContasAPagarLocators.botaoPago).click();
+      });
   }
-  validarModalConfirmacaoCancelamento() {
-    cy.get(ListagemContasAPagarLocators.modalTitulo)
-      .should('contain.text', 'Deseja realmente cancelar está parcela?');
+  verificarStatusParcial() {
+    cy.get(ListagemContasAPagarLocators.linhaTabela)
+      .find(ListagemContasAPagarLocators.colunaStatus)
+      .filter(':contains("Parcial")')
+      .first()
+      .should('contain.text', 'Parcial');
   }
-  
-  preencherMotivoCancelamento(motivo) {
-    cy.get(ListagemContasAPagarLocators.inputMotivoCancelamento)
-      .type(motivo);
-  }
-  
-  confirmarCancelamento() {
-    cy.get(ListagemContasAPagarLocators.botaoConfirmarCancelamento)
-      .click();
-  }
-  validarModalConfirmacaoExclusao() {
-    cy.get(ListagemContasAPagarLocators.modalTitulo)
-      .should('contain.text', 'Você está prestes a excluir um item.');
-  }
-  
-  confirmarExclusao() {
-    cy.get(ListagemContasAPagarLocators.botaoConfirmarExclusao).click();
-  }
-  cancelarOperacao() {
-    cy.get(ListagemContasAPagarLocators.botaoVoltarCancelamento).click();
-  }
-  validarAusenciaNotificacaoSucesso() {
-    cy.get(ListagemContasAPagarLocators.notificacaoSucesso).should('not.exist');
-  }
-  cancelarOperacaoExclusao() {
-    cy.get(ListagemContasAPagarLocators.botaoCancelarExclusao).click();
-  }
-  // Valida o toast de erro após tentativa de exclusão
-  verificarNotificacaoErro() {
-    cy.get(ListagemContasAPagarLocators.toastErro)
+  verificarStatusBaixar() {
+    cy.get(ListagemContasAPagarLocators.linhaTabela)
+      .find(ListagemContasAPagarLocators.colunaStatus)
+      .filter(':contains("Baixar")')
+      .first()
+      .should('contain.text', 'Baixar');
   }
 }
 

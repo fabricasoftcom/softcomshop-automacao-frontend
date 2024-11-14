@@ -16,46 +16,53 @@ const ListagemContasAPagarLocators = {
   linhaTabela: 'table tbody tr',
   checkboxTodos: 'input.receive_check_all',
   checkboxLinha: 'input.receive_check',
+  
+  // Colunas da tabela
   colunaDataVencimento: 'td:nth-child(2)',
   colunaDescricao: 'td:nth-child(3)',
   colunaFornecedor: 'td:nth-child(4)',
   colunaCategoria: 'td:nth-child(5)',
   colunaStatus: 'td:nth-child(9)',
 
-  modalExclusao: '.swal2-popup',
-  botaoConfirmarExcluir: '.swal2-confirm',
-  
-  linhaComStatusPago: '.table tbody tr:contains("Pago")',
   // Ações na tabela
   dropdownAcoes: 'button.dropdown-toggle',
-  baixarOpcao: 'button:contains("Baixar")',
+  opcoesDropdown: '.dropdown-menu.show li a',
   excluirOpcao: 'a:contains("Excluir")',
-    opcoesDropdown: '.dropdown-menu.show li a',
+  baixarOpcao: 'button:contains("Baixar")',
+  linhaComStatusPago: '.table tbody tr:contains("Pago")',
+  botaoBaixar: 'button.btn-xs.btn-warning:contains("Baixar")',
+  botaoParcial: 'button.btn-xs.btn-success:contains("Parcial")',
+  botaoPago: 'button.btn.btn-xs.btn-primary:contains("Pago")',
 
   // Totalizadores
   totalizadores: '.row .col-md-3 div > small',
 
-    // Modal SweetAlert
-    modalConfirmacao: '.swal2-popup',
-    selectContaBaixa: '#conta_baixa_lote',
-    botaoConfirmarBaixa: 'button.swal2-confirm',
-      // Modal de sucesso após confirmação
+  // Modal SweetAlert (genérico)
+  modalConfirmacao: '.swal2-popup',
+  modalTitulo: '.swal2-title',
+  botaoConfirmarBaixa: 'button.swal2-confirm',
+  botaoCancelar: 'button.swal2-cancel',
+  
+  // Modal para operações de baixa
+  selectContaBaixa: '#conta_baixa_lote',
+  botaoConfirmarBaixaLote: '.swal2-confirm',
+
+  // Modal de sucesso após confirmação
   modalSucessoPagamento: '.swal2-popup.swal2-icon-success',
   tituloModalSucesso: '#swal2-title',
   mensagemModalSucesso: '#swal2-html-container',
   botaoFecharModalSucesso: 'button.swal2-confirm',
-    // Modal de confirmação para cancelar
-    modalTitulo: '.swal2-title',
-    inputMotivoCancelamento: '#reason',
-    botaoConfirmarCancelamento: '.swal2-confirm',
-    botaoVoltarCancelamento: '.swal2-cancel',
-    notificacaoSucesso: '.Toastify__toast--success',
-      // Modal de confirmação de exclusão
-  modalTitulo: '.swal2-title',
+
+  // Modal de confirmação de cancelamento
+  inputMotivoCancelamento: '#reason',
+  botaoConfirmarCancelamento: '.swal2-confirm',
+  botaoVoltarCancelamento: '.swal2-cancel',
+
+  // Modal de confirmação de exclusão
   botaoConfirmarExclusao: '.swal2-confirm',
   botaoCancelarExclusao: '.swal2-cancel',
 
-  // Notificações
+  // Notificações Toastify
   notificacaoSucesso: '.Toastify__toast--success',
   notificacaoErro: '.Toastify__toast--error'
 };
