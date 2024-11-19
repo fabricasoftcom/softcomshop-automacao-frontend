@@ -12,6 +12,7 @@ class RelatoriosPage {
     acessarRelatorio(linkLocator) {
         this.acessarMenuRelatorios();
         cy.get(linkLocator).click();
+        cy.intercept('GET', '/relatorio/*')
     }
 
     // Vendas

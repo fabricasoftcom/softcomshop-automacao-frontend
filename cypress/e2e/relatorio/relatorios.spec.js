@@ -12,7 +12,7 @@ describe('Acessar relatorio: ', ()=>{
         relatoriospage.acessarRelatorioVendasMaisVendidos();
       })
       it('T003- Vendas > Forma Pagamento', ()=>{
-        relatoriospage.acessarRelatorioVendasFromaPagamento();
+        relatoriospage.acessarRelatorioVendasFormaPagamento();
       })
       it('T004- Vendas > Gerente de vendas', ()=>{
         relatoriospage.acessarRelatorioVendasGerenteVendas();

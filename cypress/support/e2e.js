@@ -19,11 +19,38 @@ import 'allure-cypress';
 import 'cypress-xpath';
 import '@percy/cypress';
 import '@shelex/cypress-allure-plugin';
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+// Variáveis globais para rastrear erros
+let testFailed = false;
+let errorMessages = [];
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // Loga a exceção
-    // cy.log('Uma exceção não capturada ocorreu:', err.message);
-    return false; // Impede que o Cypress falhe o teste
+// Antes de cada teste, intercepta as requisições
+beforeEach(() => {
+  testFailed = false; // Reseta o estado de falha
+  errorMessages = []; // Reseta as mensagens de erro
+
+  // Intercepta todas as requisições para monitorar respostas
+  cy.intercept('**', (req) => {
+    req.on('response', (res) => {
+      if (res.statusCode === 500) {
+        testFailed = true; // Marca que o teste falhou
+        const errorMessage = `Erro 500 detectado na URL: ${res.url}`;
+        errorMessages.push(errorMessage);
+        cy.log(errorMessage);
+      }
+    });
   });
+});
+
+// Após cada teste, força o estado de falha se necessário
+afterEach(function () {
+  if (testFailed) {
+    // Marca o teste explicitamente como "falhou"
+    const errorDetail = errorMessages.join('\n');
+    this.currentTest.state = 'failed';
+    this.currentTest.err = new Error(`Erros detectados durante o teste:\n${errorDetail}`);
+  }
+
+  // Reseta os rastreadores de erros para o próximo teste
+  testFailed = false;
+  errorMessages = [];
+});
