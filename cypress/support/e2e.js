@@ -19,10 +19,21 @@ import 'allure-cypress';
 import 'cypress-xpath';
 import '@percy/cypress';
 import '@shelex/cypress-allure-plugin';
+
+// Listener para capturar exceções JavaScript não tratadas
+Cypress.on('uncaught:exception', (err) => {
+  // Ignora erros que não são relevantes para o teste
+  if (err.message.includes('500')) {
+    console.error('Erro 500 detectado durante execução:', err.message);
+    return false; // Permite que o teste continue após capturar o erro
+  }
+
+  return true; // Deixa o Cypress tratar outros tipos de erros
+});
+
 // Variáveis globais para rastrear erros
 let testFailed = false;
 let errorMessages = [];
-
 // Antes de cada teste, intercepta as requisições
 beforeEach(() => {
   testFailed = false; // Reseta o estado de falha

@@ -26,6 +26,9 @@ const ListagemContasLocators = {
     paginaAnterior: '.pagination .page-item[aria-label="« Anterior"]',
     proximaPagina: '.pagination .page-item[aria-label="Próxima »"]',
     paginaAtiva: '.pagination .page-item.active',
+
+    //sem organização
+    paginaCadastroTitulo:'h5:contains("Conta")'
   };
   
   export default ListagemContasLocators;  
