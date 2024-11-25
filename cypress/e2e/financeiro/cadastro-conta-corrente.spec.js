@@ -4,12 +4,12 @@ describe('Cadastro de Conta Corrente', () => {
   // Lista fixa dos bancos extraídos
   const bancos = [
     { codigo: '001', nome: 'Banco do Brasil' },
-    // { codigo: '033', nome: 'Santander' },
-    // { codigo: '104', nome: 'Caixa Econômica' },
-    // { codigo: '237', nome: 'Bradesco' },
-    // { codigo: '341', nome: 'Itaú' },
-    // { codigo: '748', nome: 'Sicredi' },
-    // { codigo: '756', nome: 'Sicoob' },
+    { codigo: '033', nome: 'Santander' },
+    { codigo: '104', nome: 'Caixa Econômica' },
+    { codigo: '237', nome: 'Bradesco' },
+    { codigo: '341', nome: 'Itaú' },
+    { codigo: '748', nome: 'Sicredi' },
+    { codigo: '756', nome: 'Sicoob' },
   ];
 
   beforeEach(() => {
@@ -25,14 +25,16 @@ describe('Cadastro de Conta Corrente', () => {
       // Gera os dados dinâmicos para a conta
       const agenciaAleatoria = gerarNumeroAleatorio(1000, 9999).toString();
       const agenciaDVAleatorio = gerarNumeroAleatorio(0, 9).toString();
+      const contaAleatoria = gerarNumeroAleatorio(1000, 99999).toString();
+      const contaDVAleatorio = gerarNumeroAleatorio(0, 9).toString();
       const dataHoraAtual = obterDataHoraAtual();
 
       const dadosConta = {
         descricao: `${nome} (${codigo}) - ${dataHoraAtual}`,
         agencia: agenciaAleatoria,
         agenciaDV: agenciaDVAleatorio,
-        conta: '567890',
-        contaDV: '2',
+        conta: contaAleatoria, 
+        contaDV: contaDVAleatorio,
         saldoInicial: '1000,00',
         dataSaldo: '01/01/2024',
         limiteCredito: '5000,00',
@@ -64,11 +66,12 @@ describe('Cadastro de Conta Corrente', () => {
     contaCorrenteCadastroPage.preencherFormulario(dadosConta);
 
     // Configurações adicionais
-    contaCorrenteCadastroPage.alternarContaPadrao(true);
-    contaCorrenteCadastroPage.alternarCobrancaBancaria(true);
+    //contaCorrenteCadastroPage.alternarContaPadrao(true);
+    //contaCorrenteCadastroPage.alternarCobrancaBancaria(true);
 
     // Avança para o próximo passo
     contaCorrenteCadastroPage.avancarParaProximoPasso();
+    contaCorrenteCadastroPage.verificarMensagemSucesso();
   }
 
   const gerarNumeroAleatorio = (min, max) => {

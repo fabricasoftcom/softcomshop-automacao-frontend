@@ -10,16 +10,16 @@ const ContaCorrenteCadastroLocator = {
   contaCorrente: 'input[id="bank_account_number"]',
   contaDV: 'input[id="bank_account_dv"]',
   saldoInicial: '#openingBalance',
-  dataSaldoInicial: '#opening_balance_date',
+  dataSaldoInicial: '.input-group > #opening_balance_date',
   limiteCredito: '#limitValue',
-  observacao: '#note',
+  observacao: '#div_note > #note',
   
   // Switches
   contaPadraoSwitch: '#div_patternBankAccount .switchery',
   cobrancaBancariaSwitch: '#div_usingBankCollection .switchery',
 
   // Botões
-  botaoProximo: '.btn-primary.btn-sm',
+  botaoProximo: '.btn-primary:contains("Próximo")',
   botaoVoltar: '.btn-default.btn-sm',
 
   // Mensagens e Confirmações

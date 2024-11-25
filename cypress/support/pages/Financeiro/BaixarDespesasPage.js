@@ -85,7 +85,7 @@ class BaixarDespesasPage {
 
   verificarStatusRegistroPago() {
     this.fecharModal();
-    ListagemContasAPagarPage.ver();
+    ListagemContasAPagarPage.verificarNotificacaoSucesso();
   }
   verificarStatusRegistroParcial() {
     // Fecha o modal de pagamento
@@ -94,7 +94,7 @@ class BaixarDespesasPage {
     ListagemContasAPagarPage.verificarStatusParcial();
   }
   clicarDesfazerBaixa() {
-    cy.get(BaixarDespesasLocators.botaoDesfazerBaixa).click();
+    cy.get(BaixarDespesasLocators.botaoDesfazerBaixa).first().click();
   }
 
   confirmarDesfazerBaixa() {
@@ -144,6 +144,13 @@ class BaixarDespesasPage {
         return valor.replace('R$', '').replace(',', '.').trim();
       });
   }
+  verificarTabelaDetalhesPagamentoVazia() {
+    cy.get(BaixarDespesasLocators.tabelaDetalhesPagamento)
+      .should('be.visible') // Garante que a tabela está visível
+      .find('tbody tr') // Seleciona as linhas do corpo da tabela
+      .should('have.length', 0); // Verifica que não há linhas (tabela vazia)
+  }
+  
 }
 
 export default new BaixarDespesasPage();

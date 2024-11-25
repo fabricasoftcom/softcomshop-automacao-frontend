@@ -36,9 +36,11 @@ const BaixarDespesaLocators = {
   confirmacaoTitulo: '#swal2-title',
   botaoConfirmarDesfazer: 'button.swal2-confirm',
   botaoCancelarDesfazer: 'button.swal2-cancel',
+  tabelaDetalhesPagamento: '.modal table',
 
   // Notificação de sucesso
   toastSucesso: '.Toastify__toast--success'
+  
 };
 
 export default BaixarDespesaLocators;

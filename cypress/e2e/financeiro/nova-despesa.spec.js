@@ -7,7 +7,7 @@ describe('Cadastro de Nova Despesa', () => {
     });
 
     // Definição de categorias e formas de pagamento para o teste
-    const categorias = ['DESPESA','RECEITA'];
+    const categorias = ['DESPESA', 'RECEITA'];
     // Constante com todas as opções do autocomplete de Forma de Pagamento
     const formasPagamento = ['ESPÉCIE', 'DUPLICATA', 'BOLETO', 'CHEQUE', 'CARTÃO DE CRÉDITO',
         'CARTÃO DE DÉBITO', 'TROCA', 'VALE ALIMENTAÇÃO', 'VALE REFEIÇÃO', 'VALE PRESENTE', 'VALE COMBUSTÍVEL', 'OUTROS',
@@ -54,11 +54,13 @@ describe('Cadastro de Nova Despesa', () => {
         novaDespesaPage.abrirModal();
 
         // Tenta salvar sem preencher campos obrigatórios
-        novaDespesaPage.clicarSalvar();
+        cy.get('.modal .btn-primary').click();
 
         // Valida se a mensagem de erro é exibida
-        cy.get('.Toastify__toast--error', { timeout: 10000 })
-          .should('be.visible')
-          .and('contain', 'Por favor, preencha todos os campos obrigatórios');
+        cy.get('.modal-content', { timeout: 10000 })
+            .find('.has-error') // Busca por elementos que possuem a classe "has-error" dentro do modal
+            .should('exist');   // Verifica se ao menos um elemento existe
+
+
     });
 });

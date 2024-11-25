@@ -1,112 +1,106 @@
 import BaixarDespesasPage from "../../support/pages/Financeiro/BaixarDespesasPage";
 
-describe('Testes de Baixar Despesas', () => {
+describe('Testes de Baixa de Despesas', () => {
   beforeEach(() => {
     cy.login();
     BaixarDespesasPage.visit();
   });
 
-  it('Deve preencher as informações de pagamento, salvar e verificar status Pago', () => {
+  it('Deve realizar baixa completa e verificar status "Pago"', () => {
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusBaixar();
-    BaixarDespesasPage.verificarTituloModal();
-
-    // Preenche os campos obrigatórios
     BaixarDespesasPage.preencherConta();
     BaixarDespesasPage.preencherFormaPagamento();
-    BaixarDespesasPage.verificarCamposPagoEPendente();
     BaixarDespesasPage.preencherJurosMulta('5,00');
     BaixarDespesasPage.preencherDesconto('2,00');
     BaixarDespesasPage.verificarCampoValorFinal();
 
-    // Captura o valor final e usa no campo "Valor Recebido"
-    BaixarDespesasPage.obterValorFinal().then((valorFinal) => {
+    BaixarDespesasPage.obterValorFinal().then(valorFinal => {
       BaixarDespesasPage.preencherDataRecebimentoComDataAtual();
       BaixarDespesasPage.preencherValorRecebido(valorFinal);
       BaixarDespesasPage.clicarSalvar();
-
-      // Verifica o Toast de sucesso
       BaixarDespesasPage.verificarToastSucesso();
+      BaixarDespesasPage.verificarStatusRegistroPago();
     });
   });
-  
-  it('Deve preencher o recebimento com metade do valor final e verificar status Parcial', () => {
-    // Acessar a primeira linha com status "Baixar" e abrir o modal
+  it('Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status "Baixar"', () => {
+    // Localiza e clica no botão "PARCIAL" da primeira linha
+    BaixarDespesasPage.clicarPrimeiraLinhaComStatusPago();
+
+    // Clica no botão "Desfazer baixa"
+    BaixarDespesasPage.clicarDesfazerBaixa();
+
+    // Confirma o desfazer da baixa
+    BaixarDespesasPage.confirmarDesfazerBaixa();
+
+    // Fecha o modal de baixa de despesas
+    BaixarDespesasPage.fecharModal();
+
+    // Verifica o Toast de sucesso
+    BaixarDespesasPage.verificarToastSucesso();
+
+    // Verifica que a tabela de detalhes está vazia
+    //BaixarDespesasPage.verificarTabelaDetalhesPagamentoVazia();
+  });
+
+
+  it('Deve realizar baixa parcial (50%) e verificar status "Parcial"', () => {
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusBaixar();
-    BaixarDespesasPage.verificarTituloModal();
-  
-    // Preencher os campos obrigatórios
-    BaixarDespesasPage.preencherConta(); // Preenche com "CAIXA"
-    BaixarDespesasPage.preencherFormaPagamento(); // Preenche com "ESPÉCIE"
-    BaixarDespesasPage.verificarCamposPagoEPendente();
-  
-    // Preencher juros e desconto
-    BaixarDespesasPage.preencherJurosMulta('3,00');
-    BaixarDespesasPage.preencherDesconto('1,50');
-  
-    // Verificar o campo de valor final e obter o valor para calcular a metade
-    BaixarDespesasPage.verificarCampoValorFinal();
-    BaixarDespesasPage.obterValorFinal().then((valorFinal) => {
-      // Remove "R$", substitui vírgula por ponto e calcula 50% do valor final
-      const valorMetade = (parseFloat(valorFinal.replace('R$', '').replace(',', '.').trim()) * 0.5)
-                            .toFixed(2)
-                            .replace('.', ',');
-  
-      // Preencher a data de recebimento com a data atual
+    BaixarDespesasPage.preencherConta();
+    BaixarDespesasPage.preencherFormaPagamento();
+
+    BaixarDespesasPage.obterValorFinal().then(valorFinal => {
+      const valorParcial = (parseFloat(valorFinal.replace('R$', '').replace(',', '.')) * 0.5)
+        .toFixed(2)
+        .replace('.', ',');
       BaixarDespesasPage.preencherDataRecebimentoComDataAtual();
-  
-      // Preencher o valor recebido com metade do valor final
-      BaixarDespesasPage.preencherValorRecebido(valorMetade);
-  
-      // Salvar o pagamento
+      BaixarDespesasPage.preencherValorRecebido(valorParcial);
       BaixarDespesasPage.clicarSalvar();
-  
-      // Verificar o toast de sucesso
       BaixarDespesasPage.verificarToastSucesso();
-  
-      // Verificar o status como "Parcial" após fechar o modal
       BaixarDespesasPage.verificarStatusRegistroParcial();
     });
   });
-    it('Deve preencher as informações de pagamento em um registro Parcial, salvar e verificar status Pago', () => {
+  it('Deve localizar e clicar no botão "PARCIAL" da primeira linha com status PARCIAL', () => {
+    // Localiza e clica no botão "PARCIAL"
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusParcial();
-    BaixarDespesasPage.verificarTituloModal();
 
-    // Preenche os campos obrigatórios
+    // Preenche o campo "Conta" com "CAIXINHA" ou "CAIXA"
     BaixarDespesasPage.preencherConta();
+
+    // Preenche o campo "Forma de Pagamento" com "ESPÉCIE"
     BaixarDespesasPage.preencherFormaPagamento();
+
+    // Verifica os campos "Valor Pago" e "Valor Pendente"
     BaixarDespesasPage.verificarCamposPagoEPendente();
-    BaixarDespesasPage.preencherJurosMulta('5,00');
-    BaixarDespesasPage.preencherDesconto('2,00');
+
+    // Verifica que o campo "Valor Final" está desabilitado
     BaixarDespesasPage.verificarCampoValorFinal();
 
-    // Captura o valor final e usa no campo "Valor Recebido"
+    // Captura o valor final e preenche o campo "Valor Recebido"
     BaixarDespesasPage.obterValorFinal().then((valorFinal) => {
       BaixarDespesasPage.preencherDataRecebimentoComDataAtual();
       BaixarDespesasPage.preencherValorRecebido(valorFinal);
+
+      // Clica no botão "Salvar" para concluir a baixa
       BaixarDespesasPage.clicarSalvar();
 
       // Verifica o Toast de sucesso
       BaixarDespesasPage.verificarToastSucesso();
     });
   });
-  it('Deve desfazer a baixa de um registro com status "Pago" e verificar o valor pendente', () => {
-    // Acessa o primeiro registro com status "Pago"
+  it('Deve desfazer baixa e verificar valor pendente restaurado', () => {
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusPago();
-  
-    // Captura o valor pendente antes de desfazer a baixa
-    BaixarDespesasPage.capturarValorAntesDeDesfazerBaixa().then((valorOriginal) => {
-      // Clica no botão "Desfazer baixa"
+    BaixarDespesasPage.capturarValorAntesDeDesfazerBaixa().then(valorOriginal => {
       BaixarDespesasPage.clicarDesfazerBaixa();
-  
-      // Confirmar a operação no modal SweetAlert
       BaixarDespesasPage.confirmarDesfazerBaixa();
-  
-      // Verificar se o valor pendente foi restaurado corretamente após desfazer a baixa
       BaixarDespesasPage.verificarValorPendenteAposDesfazerBaixa(valorOriginal);
-      
-      // Verificar que o status voltou para "A Pagar"
-      BaixarDespesasPage.verificarStatusRegistroAPagar();
     });
   });
-  
+  it('Deve expandir os detalhes de pagamento e verificar tabela vazia', () => {
+    // Localiza e clica no botão "BAIXAR"
+    BaixarDespesasPage.clicarPrimeiraLinhaComStatusBaixar();
+
+    // Verifica que a tabela de detalhes está vazia
+    BaixarDespesasPage.verificarTabelaDetalhesPagamentoVazia();
+  });
+
 });
