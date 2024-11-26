@@ -20,26 +20,32 @@ import 'cypress-xpath';
 import '@percy/cypress';
 import '@shelex/cypress-allure-plugin';
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  // Loga a exceção
-  cy.log('Uma exceção não capturada ocorreu:', err.message);
-  return false; // Impede que o Cypress falhe o teste
+Cypress.on('uncaught:exception', (err) => {
+  // Loga exceções específicas para depuração
+  if (err.message.includes('Erro esperado específico')) {
+    cy.log(`Exceção ignorada: ${err.message}`);
+    return false; // Ignora o erro esperado
+  }
+
+  // Para outros erros, deixa o Cypress processar normalmente
+  return true;
 });
 
 // Variáveis globais para rastrear erros
 let testFailed = false;
 let errorMessages = [];
-// Antes de cada teste, intercepta as requisições
+
+// Antes de cada teste
 beforeEach(() => {
   testFailed = false; // Reseta o estado de falha
   errorMessages = []; // Reseta as mensagens de erro
 
-  // Intercepta todas as requisições para monitorar respostas
-  cy.intercept('**', (req) => {
+  // Intercepta requisições para monitorar falhas
+  cy.intercept({ method: 'POST', url: '/api/**' }, (req) => {
     req.on('response', (res) => {
-      if (res.statusCode === 500) {
-        testFailed = true; // Marca que o teste falhou
-        const errorMessage = `Erro 500 detectado na URL: ${res.url}`;
+      if (res.statusCode >= 400) { // Captura erros 4xx e 5xx
+        testFailed = true;
+        const errorMessage = `Erro ${res.statusCode} detectado na URL: ${res.url}`;
         errorMessages.push(errorMessage);
         cy.log(errorMessage);
       }
@@ -47,16 +53,10 @@ beforeEach(() => {
   });
 });
 
-// Após cada teste, força o estado de falha se necessário
+// Após cada teste
 afterEach(function () {
   if (testFailed) {
-    // Marca o teste explicitamente como "falhou"
-    const errorDetail = errorMessages.join('\n');
-    this.currentTest.state = 'failed';
-    this.currentTest.err = new Error(`Erros detectados durante o teste:\n${errorDetail}`);
+    // Lança erro detalhado para forçar falha no teste
+    throw new Error(`Erros detectados durante o teste:\n${errorMessages.join('\n')}`);
   }
-
-  // Reseta os rastreadores de erros para o próximo teste
-  testFailed = false;
-  errorMessages = [];
 });
