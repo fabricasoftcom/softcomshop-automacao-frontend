@@ -3,12 +3,12 @@ import contaCorrenteCadastroPage from "../../support/pages/Financeiro/ContaCorre
 describe('Cadastro de Conta Corrente', () => {
   const bancos = [
     { codigo: '001', nome: 'Banco do Brasil' },
-     { codigo: '033', nome: 'Santander' },
+    { codigo: '033', nome: 'Santander' },
     { codigo: '104', nome: 'Caixa Econômica' },
-    { codigo: '237', nome: 'Bradesco' },
-    { codigo: '341', nome: 'Itaú' },
-    { codigo: '748', nome: 'Sicredi' },
-    { codigo: '756', nome: 'SICOOB' },
+    { codigo: '237', nome: 'Banco Bradesco S.A.' },
+    { codigo: '341', nome: 'Itaú Unibanco S.A.' },
+    { codigo: '748', nome: 'Sicredi S.A.' },
+    { codigo: '756', nome: 'BANCOOB/SICOOB' },
   ];
 
   beforeEach(() => {
@@ -57,16 +57,17 @@ describe('Cadastro de Conta Corrente', () => {
         ultimoNumeroRemessa: '5678',
         //modalidadeCarteira: 'Cobrança Simples',  // Modalidade padrão
         variacaoCarteira: gerarNumeroAleatorio(1, 99).toString(),
-        codigoTransmissao:gerarNumeroAleatorio(1, 10).toFixed(2),
-        modalidadeJuros: '1', // Valor dia atraso
+        posto: '04',
+        codigoTransmissao: gerarNumeroAleatorio(1, 10).toFixed(2),
+        //modalidadeJuros: '1', // Valor dia atraso
         valorJuros: gerarNumeroAleatorio(1, 10).toFixed(2),
-        modalidadeMulta: '1', // Valor dia atraso
+        //modalidadeMulta: '1', // Valor dia atraso
         valorMulta: gerarNumeroAleatorio(1, 10).toFixed(2),
-        modalidadeProtesto: '1', // Protestar dias corridos
+        //modalidadeProtesto: '1', // Protestar dias corridos
         diasProtesto: gerarNumeroAleatorio(1, 30).toString(),
-        modalidadeBaixa: '1', // Baixar / Devolver
+        //modalidadeBaixa: '1', // Baixar / Devolver
         diasBaixa: gerarNumeroAleatorio(1, 30).toString(),
-        modalidadeDesconto: '1', // Valor fixo até a data informada
+        //modalidadeDesconto: '1', // Valor fixo até a data informada
         valorDesconto: gerarNumeroAleatorio(1, 10).toFixed(2),
         //modalidadeEspecie: '02', 
         //codigoAceite: 'A', // Aceite
@@ -120,24 +121,24 @@ describe('Cadastro de Conta Corrente', () => {
 
 
 
-//Funções do .spec
-function gerarDadosConta(nome, codigo) {
-  const agenciaAleatoria = gerarNumeroAleatorio(1000, 9999).toString();
-  const agenciaDVAleatorio = gerarNumeroAleatorio(0, 9).toString();
-  const contaAleatoria = gerarNumeroAleatorio(1000, 99999).toString();
-  const contaDVAleatorio = gerarNumeroAleatorio(0, 9).toString();
-  const dataHoraAtual = obterDataHoraAtual();
+  //Funções do .spec
+  function gerarDadosConta(nome, codigo) {
+    const agenciaAleatoria = gerarNumeroAleatorio(1000, 9999).toString();
+    const agenciaDVAleatorio = gerarNumeroAleatorio(0, 9).toString();
+    const contaAleatoria = gerarNumeroAleatorio(1000, 99999).toString();
+    const contaDVAleatorio = gerarNumeroAleatorio(0, 9).toString();
+    const dataHoraAtual = obterDataHoraAtual();
 
-  return {
-    descricao: `${nome} (${codigo}) - ${dataHoraAtual}`,
-    agencia: agenciaAleatoria,
-    agenciaDV: agenciaDVAleatorio,
-    conta: contaAleatoria,
-    contaDV: contaDVAleatorio,
-    saldoInicial: '1000,00',
-    dataSaldo: '01/01/2024',
-    limiteCredito: '5000,00',
-    observacao: `
+    return {
+      descricao: `${nome} (${codigo}) - ${dataHoraAtual}`,
+      agencia: agenciaAleatoria,
+      agenciaDV: agenciaDVAleatorio,
+      conta: contaAleatoria,
+      contaDV: contaDVAleatorio,
+      saldoInicial: '1000,00',
+      dataSaldo: '01/01/2024',
+      limiteCredito: '5000,00',
+      observacao: `
         Banco: ${nome} (Código: ${codigo})
         Agência: ${agenciaAleatoria}
         Agência DV: ${agenciaDVAleatorio}
@@ -147,17 +148,17 @@ function gerarDadosConta(nome, codigo) {
         Data do Saldo: 01/01/2024
         Criado em: ${dataHoraAtual}
       `,
-  };
-}
+    };
+  }
 
-function gerarNumeroAleatorio(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+  function gerarNumeroAleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-function obterDataHoraAtual() {
-  const now = new Date();
-  const data = now.toLocaleDateString('pt-BR');
-  const hora = now.toLocaleTimeString('pt-BR');
-  return `${data} ${hora}`;
-}
+  function obterDataHoraAtual() {
+    const now = new Date();
+    const data = now.toLocaleDateString('pt-BR');
+    const hora = now.toLocaleTimeString('pt-BR');
+    return `${data} ${hora}`;
+  }
 });

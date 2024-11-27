@@ -31,7 +31,13 @@ Cypress.Commands.add('login', () => {
         LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
         LoginPage.clicarLogin();
         cy.contains('Início').should('be.visible')
-        cy.url().should('include', '/home')
+        cy.url().should('include', '/ta-em-ordem')
+    });
+    //cy.wait(10000)
+    cy.get('body').then(($body) => {
+      if ($body.find('.sweet-alert').length) {
+        cy.get('button[class="confirm"]').contains('OK').click();
+      }
     });
 })
 //temp, navegação do menu lateral:

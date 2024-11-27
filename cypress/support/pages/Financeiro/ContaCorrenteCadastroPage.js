@@ -1,140 +1,3 @@
-// import contaCorrenteCadastroLocator from '../../locators/ContaCorrenteCadastroLocator';
-// import contaCadastroPage from './ContaCadastroPage';
-
-// class ContaCorrenteCadastroPage {
-//   visit() {
-//     contaCadastroPage.visit();
-//     contaCadastroPage.selecionarTipoConta('Conta Corrente');
-//   }
-
-//   validarPassoAtual(nomePasso) {
-//     cy.get(contaCorrenteCadastroLocator.stepAtivo).should('contain.text', nomePasso);
-//   }
-
-//   preencherBancoPorNome(nomeBanco) {
-//     cy.get(contaCorrenteCadastroLocator.bancoAutocomplete).clear().type(nomeBanco);
-//     cy.get(contaCorrenteCadastroLocator.bancoListaResultados).contains(nomeBanco).click();
-//   }
-
-//   preencherFormulario(dadosConta) {
-//     const {
-//       descricao,
-//       agencia,
-//       agenciaDV,
-//       conta,
-//       contaDV,
-//       saldoInicial,
-//       dataSaldo,
-//       limiteCredito,
-//       observacao,
-//     } = dadosConta;
-
-//     cy.get(contaCorrenteCadastroLocator.descricao).clear().type(descricao);
-//     cy.get(contaCorrenteCadastroLocator.agencia).clear().type(agencia);
-//     cy.get(contaCorrenteCadastroLocator.agenciaDV).clear().type(agenciaDV);
-//     cy.get(contaCorrenteCadastroLocator.contaCorrente).clear().type(conta);
-//     cy.get(contaCorrenteCadastroLocator.contaDV).clear().type(contaDV);
-//     cy.get(contaCorrenteCadastroLocator.saldoInicial).clear().type(saldoInicial);
-//     cy.get(contaCorrenteCadastroLocator.dataSaldoInicial).clear().type(dataSaldo);
-//     cy.get(contaCorrenteCadastroLocator.limiteCredito).clear().type(limiteCredito);
-//     cy.get(contaCorrenteCadastroLocator.observacao).clear().type(observacao);
-//   }
-
-//   alternarContaPadrao(estado = true) {
-//     cy.get(contaCorrenteCadastroLocator.contaPadraoSwitch).then(($switch) => {
-//       const isChecked = $switch.hasClass('switchery-on');
-//       if (estado && !isChecked) cy.wrap($switch).click();
-//       if (!estado && isChecked) cy.wrap($switch).click();
-//     });
-//   }
-
-//   alternarCobrancaBancaria(estado = true) {
-//     cy.get(contaCorrenteCadastroLocator.cobrancaBancariaSwitch).then(($switch) => {
-//       const isChecked = $switch.hasClass('switchery-on');
-//       if (estado && !isChecked) cy.wrap($switch).click();
-//       if (!estado && isChecked) cy.wrap($switch).click();
-//     });
-//   }
-
-//   avancarParaProximoPasso() {
-//     cy.get(contaCorrenteCadastroLocator.botaoProximo).click();
-//   }
-
-//   verificarMensagemSucesso() {
-//     cy.get(contaCorrenteCadastroLocator.mensagemSucesso).should('be.visible');
-//   }
-// }
-
-// export default new ContaCorrenteCadastroPage();
-
-// import contaCorrenteCadastroLocator from '../../locators/ContaCorrenteCadastroLocator';
-// import contaCadastroPage from './ContaCadastroPage';
-
-// class ContaCorrenteCadastroPage {
-//   visit() {
-//     contaCadastroPage.visit();
-//     contaCadastroPage.selecionarTipoConta('Conta Corrente');
-//   }
-
-//   validarPassoAtual(nomePasso) {
-//     cy.get(contaCorrenteCadastroLocator.stepAtivo).should('contain.text', nomePasso);
-//   }
-
-//   preencherBancoPorNome(nomeBanco) {
-//     cy.get(contaCorrenteCadastroLocator.bancoAutocomplete).clear().type(nomeBanco);
-//     cy.get(contaCorrenteCadastroLocator.bancoListaResultados).contains(nomeBanco).click();
-//   }
-
-//   preencherFormulario(dadosConta) {
-//     const {
-//       descricao,
-//       agencia,
-//       agenciaDV,
-//       conta,
-//       contaDV,
-//       saldoInicial,
-//       dataSaldo,
-//       limiteCredito,
-//       observacao,
-//     } = dadosConta;
-
-//     cy.get(contaCorrenteCadastroLocator.descricao).clear().type(descricao);
-//     cy.get(contaCorrenteCadastroLocator.agencia).clear().type(agencia);
-//     cy.get(contaCorrenteCadastroLocator.agenciaDV).clear().type(agenciaDV);
-//     cy.get(contaCorrenteCadastroLocator.contaCorrente).clear().type(conta);
-//     cy.get(contaCorrenteCadastroLocator.contaDV).clear().type(contaDV);
-//     cy.get(contaCorrenteCadastroLocator.saldoInicial).clear().type(saldoInicial);
-//     cy.get(contaCorrenteCadastroLocator.dataSaldoInicial).clear().type(dataSaldo);
-//     cy.get(contaCorrenteCadastroLocator.limiteCredito).clear().type(limiteCredito);
-//     cy.get(contaCorrenteCadastroLocator.observacao).clear().type(observacao);
-//   }
-
-//   alternarSwitch(switchLocator, estado = true) {
-//     cy.get(switchLocator).then(($switch) => {
-//       const isChecked = $switch.hasClass('switchery-on');
-//       if (estado && !isChecked) cy.wrap($switch).click();
-//       if (!estado && isChecked) cy.wrap($switch).click();
-//     });
-//   }
-
-//   alternarContaPadrao(estado = true) {
-//     this.alternarSwitch(contaCorrenteCadastroLocator.contaPadraoSwitch, estado);
-//   }
-
-//   alternarCobrancaBancaria(estado = true) {
-//     this.alternarSwitch(contaCorrenteCadastroLocator.cobrancaBancariaSwitch, estado);
-//   }
-
-//   avancarParaProximoPasso() {
-//     cy.get(contaCorrenteCadastroLocator.botaoProximo).click();
-//   }
-
-//   verificarMensagemSucesso() {
-//     cy.get(contaCorrenteCadastroLocator.mensagemSucesso).should('be.visible');
-//   }
-// }
-
-// export default new ContaCorrenteCadastroPage();
 import contaCorrenteCadastroLocator from '../../locators/ContaCorrenteCadastroLocator';
 import contaCadastroPage from './ContaCadastroPage';
 
@@ -197,16 +60,17 @@ preencherIntegracaoBancaria(dadosIntegracao) {
     { locator: contaCorrenteCadastroLocator.lastDispatch, valor: dadosIntegracao.ultimoNumeroRemessa },
     //{ locator: contaCorrenteCadastroLocator.walletCode, valor: dadosIntegracao.modalidadeCarteira, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.companyCode, valor: dadosIntegracao.codigoTransmissao},
+    { locator: contaCorrenteCadastroLocator.posto, valor: dadosIntegracao.posto},
     { locator: contaCorrenteCadastroLocator.walletVariation, valor: dadosIntegracao.variacaoCarteira },
-    { locator: contaCorrenteCadastroLocator.interestCode, valor: dadosIntegracao.modalidadeJuros, tipo: 'select' },
+    //{ locator: contaCorrenteCadastroLocator.interestCode, valor: dadosIntegracao.modalidadeJuros, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.interestAmount, valor: dadosIntegracao.valorJuros },
-    { locator: contaCorrenteCadastroLocator.fineCode, valor: dadosIntegracao.modalidadeMulta, tipo: 'select' },
+    //{ locator: contaCorrenteCadastroLocator.fineCode, valor: dadosIntegracao.modalidadeMulta, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.fineAmount, valor: dadosIntegracao.valorMulta },
-    { locator: contaCorrenteCadastroLocator.protestCode, valor: dadosIntegracao.modalidadeProtesto, tipo: 'select' },
+    //{ locator: contaCorrenteCadastroLocator.protestCode, valor: dadosIntegracao.modalidadeProtesto, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.protestDays, valor: dadosIntegracao.diasProtesto },
-    { locator: contaCorrenteCadastroLocator.lowCode, valor: dadosIntegracao.modalidadeBaixa, tipo: 'select' },
+    //{ locator: contaCorrenteCadastroLocator.lowCode, valor: dadosIntegracao.modalidadeBaixa, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.lowDays, valor: dadosIntegracao.diasBaixa },
-    { locator: contaCorrenteCadastroLocator.discountCode, valor: dadosIntegracao.modalidadeDesconto, tipo: 'select' },
+    //{ locator: contaCorrenteCadastroLocator.discountCode, valor: dadosIntegracao.modalidadeDesconto, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.discountAmount, valor: dadosIntegracao.valorDesconto },
     //{ locator: contaCorrenteCadastroLocator.speciesCode, valor: dadosIntegracao.modalidadeEspecie, tipo: 'select' },
    // { locator: contaCorrenteCadastroLocator.acceptCode, valor: dadosIntegracao.codigoAceite, tipo: 'select' },

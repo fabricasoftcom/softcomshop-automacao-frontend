@@ -51,6 +51,7 @@ const ContaCorrenteCadastroLocator = {
   typeKeyPix: 'select#type_key_pix', // Tipo da Chave Pix
   keyPix: 'input#key_pix', // Chave Pix
   companyCode: 'input#company_code',
+  posto:'input#posto'
 };
 
 export default ContaCorrenteCadastroLocator;
