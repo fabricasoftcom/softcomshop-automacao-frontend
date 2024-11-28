@@ -63,7 +63,7 @@ class NovaDespesaPage {
         cy.get(NovaDespesaLocators.fornecedorAutocomplete)
             .type(fornecedor,{ force: true });
         cy.get('#autocomplete_provider_addon').click();
-        cy.wait(500)
+        cy.wait(5000)
         cy.get('.provider_results > :nth-child(1)').click();
     }
 

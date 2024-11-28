@@ -9,10 +9,10 @@ describe('Cadastro de Nova Despesa', () => {
     // Definição de categorias e formas de pagamento para o teste
     const categorias = ['DESPESA', 'RECEITA'];
     // Constante com todas as opções do autocomplete de Forma de Pagamento
-    // const formasPagamento = ['ESPÉCIE', 'DUPLICATA', 'BOLETO', 'CHEQUE', 'CARTÃO DE CRÉDITO',
-    //     'CARTÃO DE DÉBITO', 'TROCA', 'VALE ALIMENTAÇÃO', 'VALE REFEIÇÃO', 'VALE PRESENTE', 'VALE COMBUSTÍVEL', 'OUTROS',
-    //     'CRÉDITO LOJA', 'ONLINE', 'PIX', 'PIX COBRANCA', 'DEPÓSITO BANCÁRIO', 'TRANSFERÊNCIA BANCÁRIA', 'CARTEIRA DIGITAL', 'CASHBACK'];
-        const formasPagamento = ['ESPÉCIE'];
+    const formasPagamento = ['ESPÉCIE', 'DUPLICATA', 'BOLETO', 'CHEQUE', 'CARTÃO DE CRÉDITO',
+        'CARTÃO DE DÉBITO', 'TROCA', 'VALE ALIMENTAÇÃO', 'VALE REFEIÇÃO', 'VALE PRESENTE', 'VALE COMBUSTÍVEL', 'OUTROS',
+        'CRÉDITO LOJA', 'ONLINE', 'PIX', 'PIX COBRANCA', 'DEPÓSITO BANCÁRIO', 'TRANSFERÊNCIA BANCÁRIA', 'CARTEIRA DIGITAL', 'CASHBACK'];
+    // const formasPagamento = ['ESPÉCIE'];
 
     categorias.forEach((categoria) => {
         formasPagamento.forEach((formaPagamento) => {
