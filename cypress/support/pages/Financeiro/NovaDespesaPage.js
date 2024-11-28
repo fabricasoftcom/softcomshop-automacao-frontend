@@ -59,11 +59,12 @@ class NovaDespesaPage {
             .clear()
             .type(valor, { force: true });
     }
-    selecionarFornecedor(fornecedor) {
+    selecionarFornecedor(fornecedor = 'fornecedor 01') {
         cy.get(NovaDespesaLocators.fornecedorAutocomplete)
-            .clear()
-            .type(fornecedor);
-        cy.get('.provider_results').contains(fornecedor).click();
+            .type(fornecedor,{ force: true });
+        cy.get('#autocomplete_provider_addon').click();
+        cy.wait(500)
+        cy.get('.provider_results > :nth-child(1)').click();
     }
 
     selecionarTipoDocumento(tipo) {

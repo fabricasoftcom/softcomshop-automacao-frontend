@@ -78,7 +78,7 @@ describe('Cadastro de Nova Receita', () => {
     NovaReceitaPage.preencherValor('100,00');
   
     // Seleciona o cliente "Consumidor" no primeiro item da lista de resultados
-    cy.get(NovaReceitaLocators.clienteAutocomplete)
+    cy.get('#autocomplete_client')
       .type('Consumidor', { force: true });
     cy.get('#autocomplete_client_addon').click();
     cy.get('.client_results > :nth-child(1)').click(); // Seleciona o primeiro cliente (Consumidor)

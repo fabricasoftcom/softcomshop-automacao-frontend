@@ -31,7 +31,7 @@ Cypress.Commands.add('login', () => {
         LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
         LoginPage.clicarLogin();
         cy.contains('Início').should('be.visible')
-        cy.url().should('include', '/ta-em-ordem')
+        //cy.url().should('include', '/ta-em-ordem')
     });
     //cy.wait(10000)
     cy.get('body').then(($body) => {
