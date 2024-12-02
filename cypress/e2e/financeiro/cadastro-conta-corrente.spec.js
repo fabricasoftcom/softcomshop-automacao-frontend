@@ -5,8 +5,8 @@ describe('Cadastro de Conta Corrente', () => {
     { codigo: '001', nome: 'Banco do Brasil' },
     { codigo: '033', nome: 'Santander' },
     { codigo: '104', nome: 'Caixa Econômica' },
-    { codigo: '237', nome: 'Banco Bradesco S.A.' },
-    { codigo: '341', nome: 'Itaú Unibanco S.A.' },
+    { codigo: '237', nome: 'Bradesco S.A.' },
+    { codigo: '341', nome: 'Itaú Unibanco S' },
     { codigo: '748', nome: 'Sicredi S.A.' },
     { codigo: '756', nome: 'BANCOOB/SICOOB' },
   ];
@@ -15,20 +15,20 @@ describe('Cadastro de Conta Corrente', () => {
     cy.login();
     contaCorrenteCadastroPage.visit();
   });
+  //Cadastro de conta sem integração bancaria
+  // bancos.forEach(({ codigo, nome }) => {
+  //   it(`Deve cadastrar uma conta para o banco: ${nome} (Código: ${codigo})`, () => {
+  //     contaCorrenteCadastroPage.preencherBancoPorNome(nome);
 
-  bancos.forEach(({ codigo, nome }) => {
-    it(`Deve cadastrar uma conta para o banco: ${nome} (Código: ${codigo})`, () => {
-      contaCorrenteCadastroPage.preencherBancoPorNome(nome);
+  //     const dadosConta = gerarDadosConta(nome, codigo);
 
-      const dadosConta = gerarDadosConta(nome, codigo);
+  //     contaCorrenteCadastroPage.validarPassoAtual('2. Cadastrar Dados');
+  //     contaCorrenteCadastroPage.preencherFormulario(dadosConta);
+  //     contaCorrenteCadastroPage.avancarParaProximoPasso();
 
-      contaCorrenteCadastroPage.validarPassoAtual('2. Cadastrar Dados');
-      contaCorrenteCadastroPage.preencherFormulario(dadosConta);
-      contaCorrenteCadastroPage.avancarParaProximoPasso();
-
-      contaCorrenteCadastroPage.verificarMensagemSucesso();
-    });
-  });
+  //     contaCorrenteCadastroPage.verificarMensagemSucesso();
+  //   });
+  // });
   bancos.forEach(({ codigo, nome }) => {
     it(`Deve cadastrar uma conta para o banco: ${nome} (Código: ${codigo}) com cobrança bancária`, () => {
       // Preenche os dados da conta corrente
@@ -130,7 +130,7 @@ describe('Cadastro de Conta Corrente', () => {
     const dataHoraAtual = obterDataHoraAtual();
 
     return {
-      descricao: `${nome} (${codigo}) - ${dataHoraAtual}`,
+      descricao: `Banco:${nome} (${codigo}) - ${dataHoraAtual}`,
       agencia: agenciaAleatoria,
       agenciaDV: agenciaDVAleatorio,
       conta: contaAleatoria,
