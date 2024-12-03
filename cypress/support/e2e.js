@@ -20,55 +20,13 @@ import 'cypress-xpath';
 import '@percy/cypress';
 import '@shelex/cypress-allure-plugin';
 
-// Cypress.on('uncaught:exception', (err) => {
-//   // Loga exceções específicas para depuração
-//   if (err.message.includes('Erro esperado específico')) {
-//     cy.log(`Exceção ignorada: ${err.message}`);
-//     return false; // Ignora o erro esperado
-//   }
-
-//   // Para outros erros, deixa o Cypress processar normalmente
-//   return true;
-// });
-
-// // Variáveis globais para rastrear erros
-// let testFailed = false;
-// let errorMessages = [];
-
-// // Antes de cada teste
-// beforeEach(() => {
-//   testFailed = false; // Reseta o estado de falha
-//   errorMessages = []; // Reseta as mensagens de erro
-
-//   // Intercepta requisições para monitorar falhas
-//   cy.intercept({ method: 'POST', url: '/api/**' }, (req) => {
-//     req.on('response', (res) => {
-//       if (res.statusCode >= 400) { // Captura erros 4xx e 5xx
-//         testFailed = true;
-//         const errorMessage = `Erro ${res.statusCode} detectado na URL: ${res.url}`;
-//         errorMessages.push(errorMessage);
-//         cy.log(errorMessage);
-//       }
-//     });
-//   });
-// });
-
-// // Após cada teste
-// afterEach(function () {
-//   if (testFailed) {
-//     // Lança erro detalhado para forçar falha no teste
-//     throw new Error(`Erros detectados durante o teste:\n${errorMessages.join('\n')}`);
-//   }
-//});
-
 Cypress.on('uncaught:exception', (err) => {
-  // Loga exceções específicas para depuração
+  // Captura exceções não tratadas que possam ocorrer durante a execução de testes.
   if (err.message.includes('Erro esperado específico')) {
     cy.log(`Exceção ignorada: ${err.message}`);
     return false; // Ignora o erro esperado
   }
-
-  // Para outros erros, deixa o Cypress processar normalmente
+  // Para outros erros, permite que o Cypress processe normalmente
   return true;
 });
 
@@ -81,17 +39,27 @@ beforeEach(() => {
   testFailed = false; // Reseta o estado de falha
   errorMessages = []; // Reseta as mensagens de erro
 
-  // Intercepta requisições para monitorar falhas
-  cy.intercept({ method: 'POST', url: '/api/**' }, (req) => {
+  // Intercepta todas as requisições POST que podem resultar em erro 500
+  cy.intercept('POST', '/nfe-nfce/vinculos-fiscais/**', (req) => {
     req.on('response', (res) => {
-      if (res.statusCode >= 500) { // Captura erros 500
+      if (res.statusCode === 500) { // Captura erro 500
         testFailed = true;
-        const errorMessage = `Erro ${res.statusCode} detectado na URL: ${res.url}`;
+        const errorMessage = `Erro 500 detectado na URL: ${res.url}`;
         errorMessages.push(errorMessage);
-        cy.log(errorMessage);
+        cy.log(errorMessage); // Loga no console
+      }
+    });
+  });
 
-        // Tira um print do momento em que o erro é capturado
-        cy.screenshot(`erro-${res.statusCode}-${Date.now()}`);
+  // Captura erro 500 na página HTML
+  cy.on('window:load', () => {
+    cy.get('body').then(($body) => {
+      // Verifica se o conteúdo da página contém a mensagem de erro 500
+      if ($body.text().includes('Server Error') || $body.find('.code').text().includes('500')) {
+        testFailed = true;
+        const errorMessage = 'Erro 500 detectado na interface da página (Server Error)';
+        errorMessages.push(errorMessage);
+        cy.log(errorMessage); // Loga no console
       }
     });
   });
