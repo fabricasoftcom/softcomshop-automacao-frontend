@@ -1,36 +1,36 @@
-import NovoCadastroVinculoFiscalLocators from "../../locators/NovoCadastroVinculoFiscalLocators";
+import novoCadastroVinculoFiscalLocators from "../../locators/NovoCadastroVinculoFiscalLocators";
+import vinculoFiscalListagemPage from "./VinculoFiscalListagemPage";
 
 class NovoCadastroVinculoFiscalPage {
     // Acessa a página de Novo Cadastro de Vínculo Fiscal
     visit() {
-        cy.get(NovoCadastroVinculoFiscalLocators.btnNovoCadastro).click(); // Clica no botão Novo Cadastro
-        cy.url().should('include', '/novo'); // Verifica se a URL está correta
+        vinculoFiscalListagemPage.visit();
+        vinculoFiscalListagemPage.novoCadastro();
     }
 
-    // Preenche o campo "Nome do Vínculo"
     preencherNomeVinculo(nome) {
-        cy.get(NovoCadastroVinculoFiscalLocators.campoNomeVinculo).clear().type(nome); // Preenche o campo com o nome do vínculo
+        cy.get(novoCadastroVinculoFiscalLocators.nomeVinculoInput).type(nome);
     }
 
-    // Preenche o campo "Tipo do Item"
-    preencherTipoItem(tipo) {
-        cy.get(NovoCadastroVinculoFiscalLocators.campoTipoItem).clear().type(tipo); // Preenche o campo com o tipo do item
+    selecionarTipoItem(tipo) {
+        cy.get(novoCadastroVinculoFiscalLocators.tipoItemAutocomplete).type(tipo);
+        cy.get(novoCadastroVinculoFiscalLocators.tipoItemHiddenInput).should('have.value', tipo);
     }
 
-    // Submete o formulário
-    salvar() {
-        cy.get(NovoCadastroVinculoFiscalLocators.btnSalvar).click(); // Clica no botão de salvar
+    salvarVinculo() {
+        cy.get(novoCadastroVinculoFiscalLocators.salvarButton).click();
     }
 
-    // Verifica se a mensagem de erro 500 é exibida
-    verificarErroServidor() {
-        cy.get(NovoCadastroVinculoFiscalLocators.msgErroServidor).should('be.visible');  // Verifica a visibilidade da mensagem de erro
+    voltar() {
+        cy.get(novoCadastroVinculoFiscalLocators.voltarButton).click();
     }
 
-    // Verifica se o formulário foi enviado com sucesso
-    verificarSucessoCadastro() {
-        // Pode ser uma verificação de sucesso, como um redirecionamento ou uma mensagem de sucesso
-        cy.url().should('include', '/vinculos-fiscais');  // Verifica se a URL foi alterada após o cadastro
+    novoCadastro() {
+        cy.get(novoCadastroVinculoFiscalLocators.novoCadastroButton).click();
+    }
+
+    validarForm() {
+        cy.get(novoCadastroVinculoFiscalLocators.formVinculos).should('be.visible');
     }
 }
 
