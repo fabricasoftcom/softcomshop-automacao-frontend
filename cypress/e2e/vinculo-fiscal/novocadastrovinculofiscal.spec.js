@@ -1,28 +1,76 @@
-import novoCadastroVinculoFiscalPage from "../../support/pages/VinculoFiscal/NovoCadastroVinculoFiscalPage";
+import NovoCadastroVinculoFiscalPage from "../../support/pages/VinculoFiscal/NovoCadastroVinculoFiscalPage";
+import VinculoConfiguracaoEntradaPage from "../../support/pages/VinculoFiscal/VinculoConfiguracaoEntradaPage";
+import VinculoConfiguracaoSaidaPage from "../../support/pages/VinculoFiscal/VinculoConfiguracaoSaidaPage";
 
 describe('Cadastro de Novo Vínculo Fiscal', () => {
-
     beforeEach(() => {
         cy.login();
-        novoCadastroVinculoFiscalPage.visit();
+        NovoCadastroVinculoFiscalPage.visit();
     });
 
-    it('Deve preencher o formulário de vínculo fiscal e salvar', () => {
-        const nomeVinculo = 'Novo Vínculo Fiscal';
-        const tipoItem = 'Produto A';
+    it('Deve preencher o formulário de vínculo fiscal, salvar e validar as informações exibidas', () => {
+        const nomeVinculo = `Novo Vínculo Fiscal-${new Date().toLocaleString()}`;
+        const tipoItem = '00';
 
-        novoCadastroVinculoFiscalPage.preencherNomeVinculo(nomeVinculo);
-        novoCadastroVinculoFiscalPage.selecionarTipoItem(tipoItem);
+        // Preenche o formulário
+        NovoCadastroVinculoFiscalPage.preencherNomeVinculo(nomeVinculo);
+        NovoCadastroVinculoFiscalPage.selecionarTipoItem(tipoItem);
 
-        novoCadastroVinculoFiscalPage.salvarVinculo();
+        // Salva o vínculo
+        NovoCadastroVinculoFiscalPage.salvarVinculo();
 
-        // Verificar se a página de sucesso ou algum retorno ocorre após salvar
-        cy.url().should('include', '/vinculos-fiscais');
-        cy.get('body').should('contain', 'Cadastro realizado com sucesso');
-    });
+        // Validações após o salvamento
+        NovoCadastroVinculoFiscalPage.verificarToastSucesso();
+        NovoCadastroVinculoFiscalPage.verificarTituloVinculoCriado(nomeVinculo);
+        NovoCadastroVinculoFiscalPage.verificarBotaoVoltar();
+        NovoCadastroVinculoFiscalPage.verificarTabelaConfiguracoes();
 
-    it('Deve voltar à página de vínculos fiscais', () => {
-        novoCadastroVinculoFiscalPage.voltar();
-        cy.url().should('include', '/vinculos-fiscais');
+        VinculoConfiguracaoEntradaPage.abrirModalEntrada();
+
+        VinculoConfiguracaoEntradaPage.validarModalAberto();
+
+        // Dados de entrada para o formulário
+        const dadosEntrada = {
+            cfop: '1102 - COMPRA PARA COMERCIALIZAÇÃO',
+            pis: '98',
+            pisAliquota: '3,50',
+            cofins: '98',
+            cofinsAliquota: '7,60',
+            ipi: '49',
+        };
+
+        // Preenchimento do formulário
+        VinculoConfiguracaoEntradaPage.preencherFormularioEntrada(dadosEntrada);
+
+        // Salvar e validar
+        VinculoConfiguracaoEntradaPage.salvarFormulario();
+        //VinculoConfiguracaoEntradaPage.validarSalvamento();
+        // Configuração de Saída
+    VinculoConfiguracaoSaidaPage.abrirModalSaida();
+    VinculoConfiguracaoSaidaPage.validarCabecalhoModal();
+
+    // Dados de saída para o formulário
+    const dadosSaida = {
+        cfop: '5102 - VENDA DE MERCADORIA',
+        pis: '99',
+        pisAliquota: '1,65',
+        cofins: '99',
+        cofinsAliquota: '7,60',
+        ipi: '53',
+    };
+
+    // Preenchimento do formulário de saída
+    VinculoConfiguracaoSaidaPage.preencherCfopNfe(dadosSaida.cfop);
+    VinculoConfiguracaoSaidaPage.selecionarModelo('NFE');
+    VinculoConfiguracaoSaidaPage.selecionarUfDestino('SP');
+    VinculoConfiguracaoSaidaPage.selecionarRegimeTributario('Simples Nacional');
+    VinculoConfiguracaoSaidaPage.preencherCfopNfe(dadosSaida.cfop);
+
+    // Salvar e validar saída
+    VinculoConfiguracaoSaidaPage.salvarFormulario();
+    NovoCadastroVinculoFiscalPage.verificarToastSucesso();
+
+    // Valida retorno à tela de vínculo fiscal
+    NovoCadastroVinculoFiscalPage.verificarTabelaConfiguracoes();
     });
 });

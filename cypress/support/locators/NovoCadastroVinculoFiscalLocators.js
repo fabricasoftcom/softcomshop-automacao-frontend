@@ -1,12 +1,17 @@
 const NovoCadastroVinculoFiscalLocator = {
     voltarButton: '#btn-voltar',
-    novoCadastroButton: '#btn-novo',
+    salvarButton: '#btn-salvar',
     nomeVinculoInput: '#nome_vinculo',
     tipoItemAutocomplete: '#auto_tipo_item',
-    tipoItemHiddenInput: '#tipo_item',
-    salvarButton: '#btn-salvar',
+    resultadoTipoItem: '.typeahead-list',
     formVinculos: '#form-vinculos',
-    baseUrl: '#baseUrl',
+    notificacaoSucesso: '.toast.toast-success',
+    tabelaConfiguracoes: 'table.table-configuracao',
+    tituloVinculoCriado: '.ibox-title h5 .orange',
+
+      // Toasts de sucesso e erro
+  notificacaoSucesso: '.toast.toast-success ',
+  notificacaoErro: '.toast.toast-error'
 };
 
 export default NovoCadastroVinculoFiscalLocator;
