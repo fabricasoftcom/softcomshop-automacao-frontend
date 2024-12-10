@@ -73,6 +73,8 @@ const ListagemContasAReceberLocators = {
   modalMensagemSucesso: '#swal2-html-container', // Mensagem de sucesso no modal
 
   // Notificação de Sucesso
-  notificacaoSucesso: '.Toastify__toast--success' // Toastify de sucesso
+  notificacaoSucesso: '.Toastify__toast--success', // Toastify de sucesso
+
+  periodoSelect: '.row > :nth-child(1).col-md-2 .form-group select.form-control',
 };
 export default ListagemContasAReceberLocators;

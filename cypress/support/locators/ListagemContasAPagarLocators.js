@@ -61,6 +61,7 @@ const ListagemContasAPagarLocators = {
   // Modal de confirmação de exclusão
   botaoConfirmarExclusao: '.swal2-confirm',
   botaoCancelarExclusao: '.swal2-cancel',
+  periodoSelect: '.col-md-2 .form-group select.form-control',
 
   // Notificações Toastify
   notificacaoSucesso: '.Toastify__toast--success',

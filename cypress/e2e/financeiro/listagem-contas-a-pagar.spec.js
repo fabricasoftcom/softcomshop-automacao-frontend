@@ -109,4 +109,14 @@ describe('Testes de Listagem de Contas a Pagar', () => {
     listagemContasAPagarPage.confirmarExclusao();
     listagemContasAPagarPage.verificarNotificacaoErro();
   });
+  it('Deve selecionar o período "Este Mês" e validar que os valores da coluna "Valor Parcela" são diferentes de 0,00', () => {
+    // Seleciona o período "Este Mês"
+    listagemContasAPagarPage.selecionarPeriodoEsteMes();
+    cy.wait(10000);
+
+    // Valida os valores na coluna "Valor Parcela"
+    listagemContasAPagarPage.validarValoresNaColunaValorParcela();
+});
+
+
 });

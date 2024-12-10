@@ -236,6 +236,22 @@ class ListagemContasAReceberPage {
   obterNumeroLinhasTabela() {
     return cy.get(`${ListagemContasAReceberLocators.tabelaCompleta} tr`).its('length');
   }
+  selecionarPeriodoEsteMes() {
+    cy.get(ListagemContasAReceberLocators.periodoSelect).select('MONTH');
+    cy.get(ListagemContasAReceberLocators.periodoSelect).should('have.value', 'MONTH');
+}
+validarValoresNaColunaValorParcela() {
+  cy.get('table.table tbody tr').each(($row) => {
+      cy.wrap($row)
+          .find('td:nth-child(6)') // A sexta coluna corresponde à "Valor Parcela"
+          .invoke('text')
+          .then((valor) => {
+              // Remove espaços extras e converte valor para número
+              valor = valor.trim().replace(/\./g, '').replace(',', '.');
+              expect(parseFloat(valor)).to.be.greaterThan(0, 'Valor Parcela deve ser maior que 0,00');
+          });
+  });
+}
 
 }
 

@@ -124,5 +124,14 @@ describe('Testes da Listagem de Contas a Receber', () => {
       ListagemContasAReceberPage.verificarModalFechado();
     });
   });
+
+  it('Deve selecionar o período "Este Mês" e validar que os valores da coluna "Valor Parcela" são diferentes de 0,00', () => {
+    // Seleciona o período "Este Mês"
+    ListagemContasAReceberPage.selecionarPeriodoEsteMes();
+    cy.wait(10000);
+
+    // Valida os valores na coluna "Valor Parcela"
+    ListagemContasAReceberPage.validarValoresNaColunaValorParcela();
+});
 });
 

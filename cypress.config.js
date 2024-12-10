@@ -15,7 +15,7 @@ module.exports = defineConfig({
       // "./cypress/e2e/**/*.{feature,cy.js}",
       "**/*.spec.js"
     ],
-    baseUrl: 'https://stage-release.softcomshop.com.br',
+    baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
     retries: {
