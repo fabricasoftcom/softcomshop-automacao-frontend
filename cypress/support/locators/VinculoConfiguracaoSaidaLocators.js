@@ -26,8 +26,20 @@ const VinculoConfiguracaoSaidaLocators = {
     campoPisAliquota: '#pis_saida_aliquota', // Alíquota PIS
     campoCofins: '#auto_cofins_saida', // COFINS
     campoCofinsAliquota: '#cofins_saida_aliquota', // Alíquota COFINS
-    botaoSalvar: '#btn-salvar-configuracao-saida', // Botão Salvar
+    botaoSalvar: '.modal #btn-salvar', // Botão Salvar
     toastSucesso: '.toast-message', // Mensagem de sucesso
+    icmsSectionTitle: '.ibox-title h5', // Localizador do título da seção
+    icmsCollapseLink: '.ibox-tools .collapse-link', // Localizador do botão de expansão/recolhimento
+    icmsContent: '.ibox-content', // Localizador do conteúdo da seção ICMS
+    pisCofinsSectionTitle: '.ibox-title h5', // Localizador do título da seção PIS/COFINS
+    pisCofinsCollapseLink: '.ibox-tools .collapse-link', // Localizador do botão de expansão/recolhimento
+    pisCofinsContent: '.ibox-content', // Localizador do conteúdo da seção PIS/COFINS
+    ipiSectionTitle: '.ibox-title h5', // Localizador do título da seção IPI
+    ipiCollapseLink: '.ibox-tools .collapse-link', // Localizador do botão de expansão/recolhimento
+    ipiContent: '.ibox-content', // Localizador do conteúdo da seção IPI
+    ipiSituacaoInput: '#auto_ipi_saida', // Localizador do campo "Situação"
+    ipiAliquotaInput: '#ipi_saida_aliquota', // Localizador do campo "Alíquota"
+    ipiEnquadramentoInput: '#ipi_saida_enquadramento', // Localizador do campo "Enquadramento"
 };
 
 export default VinculoConfiguracaoSaidaLocators;
