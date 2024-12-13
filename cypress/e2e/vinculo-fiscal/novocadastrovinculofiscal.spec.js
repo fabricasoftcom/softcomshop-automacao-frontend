@@ -46,31 +46,34 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
         VinculoConfiguracaoEntradaPage.salvarFormulario();
         //VinculoConfiguracaoEntradaPage.validarSalvamento();
         // Configuração de Saída
-    VinculoConfiguracaoSaidaPage.abrirModalSaida();
-    VinculoConfiguracaoSaidaPage.validarCabecalhoModal();
+        VinculoConfiguracaoSaidaPage.abrirModalSaida();
+        VinculoConfiguracaoSaidaPage.validarModalAberto();
 
-    // Dados de saída para o formulário
-    const dadosSaida = {
-        cfop: '5102 - VENDA DE MERCADORIA',
-        pis: '99',
-        pisAliquota: '1,65',
-        cofins: '99',
-        cofinsAliquota: '7,60',
-        ipi: '53',
-    };
+        const dadosSaida = {
+            cfopNfe: '5102 - VENDA DE MERCADORIA',
+            cfopNfce: '5102 - VENDA DE MERCADORIA',
+            cstCsosn: '102',
+            icmsModalidadeBase: '3 - Valor da operação',
+            icmsAcrescimo: '2,50',
+            icmsReducao: '10,00',
+            icmsOrigem: '0',
+            icmsStModalidadeBase: '4 - Margem Valor Agregado (%)',
+            icmsStMva: '20,00',
+            icmsStAliquota: '18,00',
+            icmsStReducao: '5,00',
+            icmsValorPauta: '500,00',
+            ipi: '49',
+            pis: '98',
+            pisAliquota: '1,65',
+            cofins: '98',
+            cofinsAliquota: '7,60',
+        };
 
-    // Preenchimento do formulário de saída
-    VinculoConfiguracaoSaidaPage.preencherCfopNfe(dadosSaida.cfop);
-    VinculoConfiguracaoSaidaPage.selecionarModelo('NFE');
-    VinculoConfiguracaoSaidaPage.selecionarUfDestino('SP');
-    VinculoConfiguracaoSaidaPage.selecionarRegimeTributario('Simples Nacional');
-    VinculoConfiguracaoSaidaPage.preencherCfopNfe(dadosSaida.cfop);
+        VinculoConfiguracaoSaidaPage.preencherFormularioSaida(dadosSaida);
+        VinculoConfiguracaoSaidaPage.salvarFormulario();
+        VinculoConfiguracaoSaidaPage.validarSalvamento();
 
-    // Salvar e validar saída
-    VinculoConfiguracaoSaidaPage.salvarFormulario();
-    NovoCadastroVinculoFiscalPage.verificarToastSucesso();
-
-    // Valida retorno à tela de vínculo fiscal
-    NovoCadastroVinculoFiscalPage.verificarTabelaConfiguracoes();
+        // Validação final na tela principal
+        NovoCadastroVinculoFiscalPage.verificarTabelaConfiguracoes();
     });
 });
