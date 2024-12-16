@@ -6,6 +6,8 @@ describe('Balanco' ,() => {
         cy.login();
     })
 
+    
+
     it('Deve realizar um novo balanco', () => {
        const responsavelBalanco = 'felipe entregador'
 
@@ -13,6 +15,7 @@ describe('Balanco' ,() => {
        menulateralprodutopage.acessarListagemBalanco()
 
        menulateralprodutopage.acessarCadastroNovoBalanco()
+       
 
        // Preenche o cabecalho com o nome do responsavel pelo balanco
        BalancoPage.preencherCabecalho(responsavelBalanco)
