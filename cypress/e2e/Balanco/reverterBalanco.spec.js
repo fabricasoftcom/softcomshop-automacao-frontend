@@ -1,13 +1,13 @@
 import ReverterBalancoPage from "../../support/pages/Balanco/ReverterBalancoPage";
 import menulateralprodutopage from "../../support/pages/menulateral/menulateralprodutopage";
 
-describe("Deletar Balanço  ",() => {
+describe("Reverter Balanço  ",() => {
     beforeEach(() => {
         cy.login();
     })
 
 
-    it("Deve acessar a tela de balanco e excluir um registro", () => {
+    it("Deve acessar a tela de balanco e reverter um balanco em andamento", () => {
         menulateralprodutopage.acessarListagemBalanco()
 
         ReverterBalancoPage.acessarPrimeiroBalancoFinalizado()
@@ -18,6 +18,5 @@ describe("Deletar Balanço  ",() => {
 
         ReverterBalancoPage.verificarToastSucesso()
     
-
     })
 })
