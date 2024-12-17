@@ -40,6 +40,13 @@ const VinculoConfiguracaoSaidaLocators = {
     ipiSituacaoInput: '#auto_ipi_saida', // Localizador do campo "Situação"
     ipiAliquotaInput: '#ipi_saida_aliquota', // Localizador do campo "Alíquota"
     ipiEnquadramentoInput: '#ipi_saida_enquadramento', // Localizador do campo "Enquadramento"
+    documentoColuna: 'td:nth-child(5)', // Coluna onde aparece o documento (e.g., "NFCe")
+    documentoColunaNFe: 'thead > tr > :nth-child(5)',
+    botaoSaida: 'a.btn-info', // Botão de saída na linhatabelaConfiguracaoFiscal: 'table.table-configuracao tbody tr',
+    tabelaConfiguracaoFiscal: 'table.table-configuracao tbody tr',
+    tabelaConfiguracaoFiscal: 'table.table-configuracao tbody tr',
+    documentoColuna: 'td:nth-child(5)', // Coluna "Documento"
+    botaoSaida: 'a.btn-info', // Botão Saída
 };
 
 export default VinculoConfiguracaoSaidaLocators;

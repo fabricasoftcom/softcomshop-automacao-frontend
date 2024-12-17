@@ -1,6 +1,7 @@
 import NovoCadastroVinculoFiscalPage from "../../support/pages/VinculoFiscal/NovoCadastroVinculoFiscalPage";
 import VinculoConfiguracaoEntradaPage from "../../support/pages/VinculoFiscal/VinculoConfiguracaoEntradaPage";
 import VinculoConfiguracaoSaidaPage from "../../support/pages/VinculoFiscal/VinculoConfiguracaoSaidaPage";
+import ConfiguracaoSaidaNFcePage from "../../support/pages/VinculoFiscal/ConfiguracaoSaidaNFcePage";
 
 describe('Cadastro de Novo Vínculo Fiscal', () => {
     beforeEach(() => {
@@ -45,9 +46,9 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
         // Salvar e validar
         VinculoConfiguracaoEntradaPage.salvarFormulario();
         //VinculoConfiguracaoEntradaPage.validarSalvamento();
-        
+
         // Configuração de Saída
-        VinculoConfiguracaoSaidaPage.abrirModalSaida();
+        VinculoConfiguracaoSaidaPage.abrirModalSaidaNFe();
         VinculoConfiguracaoSaidaPage.validarModalAberto();
 
         const dadosSaida = {
@@ -68,7 +69,7 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
             pisAliquota: '1,65',
             cofins: '99',
             cofinsAliquota: '7,60',
-        };
+        }
 
         VinculoConfiguracaoSaidaPage.preencherFormularioSaida(dadosSaida);
         VinculoConfiguracaoSaidaPage.salvarFormulario();
@@ -76,5 +77,30 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
 
         // Validação final na tela principal
         NovoCadastroVinculoFiscalPage.verificarTabelaConfiguracoes();
+
+        VinculoConfiguracaoSaidaPage.abrirModalSaidaNFCe();
+        ConfiguracaoSaidaNFcePage.validarModalAberto();
+
+        const dadosSaidaNfce = {
+            cfopNfce: '5102 - VENDA DE MERCADORIA',
+            cstCsosn: '102 - Tributada pelo Simples Nacional',
+            pis: '99',
+            pisAliquota: '1,65',
+            cofins: '99',
+            cofinsAliquota: '7,60',
+            icmsModalidadeBase: '3',
+        };
+
+        ConfiguracaoSaidaNFcePage.preencherCampos(dadosSaidaNfce);
+        ConfiguracaoSaidaNFcePage.salvarConfiguracao();
+        //ConfiguracaoSaidaNFcePage.validarSucesso();
+        // Seleciona o primeiro produto
+        NovoCadastroVinculoFiscalPage.selecionarPrimeiroProduto();
+
+        // Adiciona o produto selecionado
+        NovoCadastroVinculoFiscalPage.adicionarProduto();
+
+        NovoCadastroVinculoFiscalPage.verificarToastSucesso();
+
     });
 });

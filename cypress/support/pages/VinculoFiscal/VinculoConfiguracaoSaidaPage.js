@@ -1,10 +1,17 @@
 import VinculoConfiguracaoSaidaLocators from "../../locators/VinculoConfiguracaoSaidaLocators";
 
 class VinculoConfiguracaoSaidaPage {
-    abrirModalSaida() {
-        // Clique no botão "Saída" da primeira linha da tabela
-        cy.get(VinculoConfiguracaoSaidaLocators.botaoSaida).click();
+    abrirModalSaidaNFe() {
+        // Localiza a linha onde a coluna "Documento" contém "NFE" e clica no botão "Saída"
+        cy.contains('table.table-configuracao tbody tr', 'NFE') // Procura a linha com "NFE"
+            .within(() => {
+                cy.get('a.btn-info') // Seleciona o botão "Saída" dentro da linha
+                    .click();
+            });
     }
+    
+    
+    
 
     validarModalAberto() {
         cy.get(VinculoConfiguracaoSaidaLocators.cabecalhoModal)
@@ -89,6 +96,19 @@ class VinculoConfiguracaoSaidaPage {
         cy.get(VinculoConfiguracaoSaidaLocators.ipiContent)
             .should('be.visible') // Verifica se o conteúdo está visível
             .and('not.have.css', 'display', 'none'); // Valida que não está oculto
+    }
+    abrirModalSaidaNFCe() {
+        cy.get(VinculoConfiguracaoSaidaLocators.tabelaConfiguracaoFiscal)
+            .filter((index, element) => {
+                // Filtra as linhas onde a coluna "Documento" contém "NFCe"
+                return Cypress.$(element)
+                    .find(VinculoConfiguracaoSaidaLocators.documentoColuna)
+                    .text()
+                    .trim() === 'NFCe';
+            })
+            .first() // Seleciona a primeira linha filtrada
+            .find(VinculoConfiguracaoSaidaLocators.botaoSaida) // Localiza o botão "Saída" na linha
+            .click(); // Realiza o clique
     }
 }
 
