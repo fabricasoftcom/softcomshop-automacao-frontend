@@ -5,32 +5,34 @@ import ConfiguracaoSaidaNFcePage from "../../support/pages/VinculoFiscal/Configu
 
 describe('Cadastro de Novo Vínculo Fiscal', () => {
     beforeEach(() => {
+        // Realiza login e navega até a página de cadastro
         cy.login();
         NovoCadastroVinculoFiscalPage.visit();
     });
 
     it('Deve preencher o formulário de vínculo fiscal, salvar e validar as informações exibidas', () => {
+        // **1. Cadastro do Vínculo Fiscal**
         const nomeVinculo = `Novo Vínculo Fiscal-${new Date().toLocaleString()}`;
         const tipoItem = '00';
 
-        // Preenche o formulário
+        // Preenche o formulário principal
         NovoCadastroVinculoFiscalPage.preencherNomeVinculo(nomeVinculo);
         NovoCadastroVinculoFiscalPage.selecionarTipoItem(tipoItem);
 
-        // Salva o vínculo
+        // Salva o vínculo fiscal
         NovoCadastroVinculoFiscalPage.salvarVinculo();
 
-        // Validações após o salvamento
+        // Validações após salvamento
         NovoCadastroVinculoFiscalPage.verificarToastSucesso();
         NovoCadastroVinculoFiscalPage.verificarTituloVinculoCriado(nomeVinculo);
         NovoCadastroVinculoFiscalPage.verificarBotaoVoltar();
         NovoCadastroVinculoFiscalPage.verificarTabelaConfiguracoes();
 
+        // **2. Configuração de Entrada**
         VinculoConfiguracaoEntradaPage.abrirModalEntrada();
-
         VinculoConfiguracaoEntradaPage.validarModalAberto();
 
-        // Dados de entrada para o formulário
+        // Dados para preenchimento da configuração de entrada
         const dadosEntrada = {
             cfop: '1102 - COMPRA PARA COMERCIALIZAÇÃO',
             pis: '98',
@@ -40,17 +42,18 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
             ipi: '49',
         };
 
-        // Preenchimento do formulário
+        // Preenche o formulário de entrada
         VinculoConfiguracaoEntradaPage.preencherFormularioEntrada(dadosEntrada);
 
-        // Salvar e validar
+        // Salva e valida o formulário de entrada
         VinculoConfiguracaoEntradaPage.salvarFormulario();
-        //VinculoConfiguracaoEntradaPage.validarSalvamento();
+        // VinculoConfiguracaoEntradaPage.validarSalvamento();
 
-        // Configuração de Saída
+        // **3. Configuração de Saída NFe**
         VinculoConfiguracaoSaidaPage.abrirModalSaidaNFe();
         VinculoConfiguracaoSaidaPage.validarModalAberto();
 
+        // Dados para preenchimento da configuração de saída NFe
         const dadosSaida = {
             cfopNfe: '5102 - VENDA DE MERCADORIA',
             cfopNfce: '5102 - VENDA DE MERCADORIA',
@@ -69,18 +72,21 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
             pisAliquota: '1,65',
             cofins: '99',
             cofinsAliquota: '7,60',
-        }
+        };
 
+        // Preenche e salva a configuração de saída NFe
         VinculoConfiguracaoSaidaPage.preencherFormularioSaida(dadosSaida);
         VinculoConfiguracaoSaidaPage.salvarFormulario();
-        //VinculoConfiguracaoSaidaPage.validarSalvamento();
+        // VinculoConfiguracaoSaidaPage.validarSalvamento();
 
-        // Validação final na tela principal
+        // Validação final na tabela
         NovoCadastroVinculoFiscalPage.verificarTabelaConfiguracoes();
 
+        // **4. Configuração de Saída NFCe**
         VinculoConfiguracaoSaidaPage.abrirModalSaidaNFCe();
         ConfiguracaoSaidaNFcePage.validarModalAberto();
 
+        // Dados para preenchimento da configuração de saída NFCe
         const dadosSaidaNfce = {
             cfopNfce: '5102 - VENDA DE MERCADORIA',
             cstCsosn: '102 - Tributada pelo Simples Nacional',
@@ -91,16 +97,14 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
             icmsModalidadeBase: '3',
         };
 
+        // Preenche e salva a configuração de saída NFCe
         ConfiguracaoSaidaNFcePage.preencherCampos(dadosSaidaNfce);
         ConfiguracaoSaidaNFcePage.salvarConfiguracao();
-        //ConfiguracaoSaidaNFcePage.validarSucesso();
-        // Seleciona o primeiro produto
+        // ConfiguracaoSaidaNFcePage.validarSucesso();
+
+        // **5. Adição de Produto**
         NovoCadastroVinculoFiscalPage.selecionarPrimeiroProduto();
-
-        // Adiciona o produto selecionado
         NovoCadastroVinculoFiscalPage.adicionarProduto();
-
         NovoCadastroVinculoFiscalPage.verificarToastSucesso();
-
     });
 });

@@ -1,52 +1,61 @@
 const VinculoConfiguracaoSaidaLocators = {
-    cabecalhoModal: '.modal-content .modal-header',
-    botaoFecharModal: '#btn-modal-plus-close',
-    formularioSaida: '#form-vinculos-fiscais-configuracoes',
-    campoCfopNfe: '#auto_cfop_nfe_saida',
-    dropdownModelo: '#modelo',
-    dropdownUfDestino: '#uf_destino',
-    dropdownRegimeTributario: '#regime_tributario',
-    //botaoSalvar: 'button[type="submit"]',
-    botaoSaida: 'table tbody tr:first-child a.btn-info', // Botão "Saída"
-    cabecalhoModal: '.modal-header h2', // Cabeçalho do modal
-    campoCfopNfe: '#auto_cfop_nfe_saida', // Campo CFOP NFE
+    // **Modal de Configuração de Saída**
+    cabecalhoModal: '.modal-header h2', // Título do modal de Configuração de Saída
+    botaoFecharModal: '#btn-modal-plus-close', // Botão de fechar o modal
+    formularioSaida: '#form-vinculos-fiscais-configuracoes', // Formulário de Saída
+    botaoSalvar: '.modal #btn-salvar', // Botão Salvar
+    toastSucesso: '.toast-message', // Mensagem de sucesso após salvar
+
+    // **Campos Principais do Formulário**
+    campoCfopNfe: '#auto_cfop_nfe_saida', // Campo CFOP NFe
     campoCfopNfce: '#auto_cfop_nfce_saida', // Campo CFOP NFCe
     campoCstCsosn: '#auto_cst_csosn', // Campo CST/CSOSN
+    dropdownModelo: '#modelo', // Dropdown do Modelo
+    dropdownUfDestino: '#uf_destino', // Dropdown UF Destino
+    dropdownRegimeTributario: '#regime_tributario', // Dropdown Regime Tributário
+
+    // **Campos ICMS**
     campoIcmsModalidadeBase: '#auto_icms_modalidade_base', // Modalidade Base ICMS
     campoIcmsAcrescimo: '#icms_acrescimo', // Acréscimo ICMS
     campoIcmsReducao: '#icms_reducao', // Redução de Base ICMS
     campoIcmsOrigem: '#icms_saida_origem', // Origem do ICMS
     campoIcmsStModalidadeBase: '#auto_icms_st_modalidade_base', // Modalidade Base ST
-    campoIcmsStMva: '#icms_st_mva', // MVA
+    campoIcmsStMva: '#icms_st_mva', // MVA ST
     campoIcmsStAliquota: '#icms_st_aliquota', // Alíquota ST
-    campoIcmsStReducao: '#icms_st_reducao', // Redução ST
-    campoIcmsValorPauta: '#icms_valor_pauta', // Valor Pauta
-    campoIpi: '#auto_ipi_saida', // IPI
-    campoPis: '#auto_pis_saida', // PIS
+    campoIcmsStReducao: '#icms_st_reducao', // Redução Base ST
+    campoIcmsValorPauta: '#icms_valor_pauta', // Valor Pauta ICMS
+
+    // **Campos PIS/COFINS**
+    campoPis: '#auto_pis_saida', // Campo PIS
     campoPisAliquota: '#pis_saida_aliquota', // Alíquota PIS
-    campoCofins: '#auto_cofins_saida', // COFINS
+    campoCofins: '#auto_cofins_saida', // Campo COFINS
     campoCofinsAliquota: '#cofins_saida_aliquota', // Alíquota COFINS
-    botaoSalvar: '.modal #btn-salvar', // Botão Salvar
-    toastSucesso: '.toast-message', // Mensagem de sucesso
-    icmsSectionTitle: '.ibox-title h5', // Localizador do título da seção
-    icmsCollapseLink: '.ibox-tools .collapse-link', // Localizador do botão de expansão/recolhimento
-    icmsContent: '.ibox-content', // Localizador do conteúdo da seção ICMS
-    pisCofinsSectionTitle: '.ibox-title h5', // Localizador do título da seção PIS/COFINS
-    pisCofinsCollapseLink: '.ibox-tools .collapse-link', // Localizador do botão de expansão/recolhimento
-    pisCofinsContent: '.ibox-content', // Localizador do conteúdo da seção PIS/COFINS
-    ipiSectionTitle: '.ibox-title h5', // Localizador do título da seção IPI
-    ipiCollapseLink: '.ibox-tools .collapse-link', // Localizador do botão de expansão/recolhimento
-    ipiContent: '.ibox-content', // Localizador do conteúdo da seção IPI
-    ipiSituacaoInput: '#auto_ipi_saida', // Localizador do campo "Situação"
-    ipiAliquotaInput: '#ipi_saida_aliquota', // Localizador do campo "Alíquota"
-    ipiEnquadramentoInput: '#ipi_saida_enquadramento', // Localizador do campo "Enquadramento"
-    documentoColuna: 'td:nth-child(5)', // Coluna onde aparece o documento (e.g., "NFCe")
-    documentoColunaNFe: 'thead > tr > :nth-child(5)',
-    botaoSaida: 'a.btn-info', // Botão de saída na linhatabelaConfiguracaoFiscal: 'table.table-configuracao tbody tr',
-    tabelaConfiguracaoFiscal: 'table.table-configuracao tbody tr',
-    tabelaConfiguracaoFiscal: 'table.table-configuracao tbody tr',
-    documentoColuna: 'td:nth-child(5)', // Coluna "Documento"
-    botaoSaida: 'a.btn-info', // Botão Saída
+
+    // **Campos IPI**
+    campoIpi: '#auto_ipi_saida', // Campo IPI Situação
+    ipiAliquotaInput: '#ipi_saida_aliquota', // Campo Alíquota IPI
+    ipiEnquadramentoInput: '#ipi_saida_enquadramento', // Campo Enquadramento IPI
+
+    // **Seções Expansíveis**
+    icmsSectionTitle: '.ibox-title h5', // Título da seção ICMS
+    icmsCollapseLink: '.ibox-tools .collapse-link', // Botão para expandir/recolher ICMS
+    icmsContent: '.ibox-content', // Conteúdo da seção ICMS
+
+    pisCofinsSectionTitle: '.ibox-title h5', // Título da seção PIS/COFINS
+    pisCofinsCollapseLink: '.ibox-tools .collapse-link', // Botão para expandir/recolher PIS/COFINS
+    pisCofinsContent: '.ibox-content', // Conteúdo da seção PIS/COFINS
+
+    ipiSectionTitle: '.ibox-title h5', // Título da seção IPI
+    ipiCollapseLink: '.ibox-tools .collapse-link', // Botão para expandir/recolher IPI
+    ipiContent: '.ibox-content', // Conteúdo da seção IPI
+
+    // **Tabela de Configurações Fiscais**
+    tabelaConfiguracaoFiscal: 'table.table-configuracao tbody tr', // Linhas da tabela
+    documentoColuna: 'td:nth-child(5)', // Coluna "Documento" (e.g., NFe, NFCe)
+    botaoSaida: 'a.btn-info', // Botão "Saída" na linha da tabela
+
+    // **Outros**
+    documentoColunaNFe: 'thead > tr > :nth-child(5)', // Cabeçalho da coluna de documento
 };
 
 export default VinculoConfiguracaoSaidaLocators;
