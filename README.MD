@@ -133,6 +133,11 @@ Para diferenciar as áreas de trabalho, utilizamos as seguintes convenções:
    - Prefixo: `bugfix/`
    - **Exemplo**: `bugfix/corrigir-teste-login` ou `bugfix/ajuste-flaky-test`
 
+#### ♻ Refatoração na Automação (`refactor/`)
+   - Criadas para refatorar funcionalidades/scripts de automação.
+   - Prefixo: `refactor/`
+   - **Exemplo**: `refactor/implementar-reutilizacao-funcoes-genericas`
+
 ---
 
 ## 📌 Exemplo Prático de Uso
