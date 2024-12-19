@@ -12,5 +12,6 @@ describe("Realizar venda", () => {
         VendaPage.adicionarPagamento();
         VendaPage.salvarPagamento();
         VendaPage.gerarNFCe();
+        cy.get('.btn:contains("Nota Fiscal Consumidor")').should('be.visible');
     });
 });

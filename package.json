@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "e2e": "cypress run --env allure=true",
-    "report:allure": "allure generate allure-results --clean -o allure-report && allure open  allure-report",
+    "report:allure": "allure generate allure-results --clean -o allure-report && allure open  allure-report --host localhost",
     "test:allure": "npm run e2e && npm run report:allure",
     "test:chrome": "cypress run --browser chrome",
     "test:firefox": "cypress run --browser firefox",
@@ -17,6 +17,7 @@
   "description": "",
   "dependencies": {
     "@faker-js/faker": "^9.0.2",
+    "allure-commandline": "^2.32.0",
     "cpf-cnpj-validator": "^1.0.3",
     "cypress": "^13.14.2",
     "faker": "^6.6.6",
@@ -27,6 +28,7 @@
     "@percy/cypress": "^3.1.3-beta.0",
     "@shelex/cypress-allure-plugin": "^2.40.2",
     "allure-cypress": "^3.0.2",
+    "cypress-wait-until": "^3.0.2",
     "cypress-xpath": "^2.0.1"
   }
 }
