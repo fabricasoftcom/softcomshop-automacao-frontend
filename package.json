@@ -20,7 +20,7 @@
     "allure-commandline": "^2.32.0",
     "cpf-cnpj-validator": "^1.0.3",
     "cypress": "^13.14.2",
-    "faker": "^6.6.6",
+    "faker": "5.5.3",
     "mocha": "^10.7.3"
   },
   "devDependencies": {
