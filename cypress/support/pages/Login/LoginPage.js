@@ -3,7 +3,7 @@ import LoginLocators from "../../locators/LoginLocators";
 
 class LoginPage {
     visit() {
-      cy.visit('/auth/login');
+      cy.visit('/');
     }
   
     preencherCredenciais(username, password) {

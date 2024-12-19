@@ -1,6 +1,7 @@
+import listagemprodutopage from "./listagemprodutopage";
 class ProdutoPage {
     visit() {
-      cy.visit('/produto/novo');
+      listagemprodutopage.acessarCadastroNovoProduto();
     }
   
     preencherDetalhesDoProduto(produto) {
@@ -13,6 +14,7 @@ class ProdutoPage {
       cy.get('#auto_icon_unidade_medida_id').click()
       cy.xpath('//*[@id="div_auto_unidade_medida_id"]/div/div[2]/ul/li/a')
         .should('be.visible')
+        .first()
         .click();
       cy.get('#preco_compra').type(produto.preco_compra);
       cy.get('#margem_lucro').type(produto.margem_lucro)
