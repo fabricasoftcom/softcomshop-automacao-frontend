@@ -1,3 +1,6 @@
+# Webstorm
+.idea
+
 # Cypress specific folders and files
 cypress/screenshots/
 cypress/videos/
