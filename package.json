@@ -9,7 +9,9 @@
     "test:allure": "npm run e2e && npm run report:allure",
     "test:chrome": "cypress run --browser chrome",
     "test:firefox": "cypress run --browser firefox",
-    "test:all": "npm run test:chrome && npm run test:firefox"
+    "test:all": "npm run test:chrome && npm run test:firefox",
+    "lint": "eslint . -f table",
+    "lint-html": "eslint . -f html -o eslint-report.html"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +31,10 @@
     "@shelex/cypress-allure-plugin": "^2.40.2",
     "allure-cypress": "^3.0.2",
     "cypress-wait-until": "^3.0.2",
-    "cypress-xpath": "^2.0.1"
+    "cypress-xpath": "^2.0.1",
+    "eslint": "^9.17.0",
+    "eslint-formatter-table": "^7.32.1",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-cypress": "^4.1.0"
   }
 }
