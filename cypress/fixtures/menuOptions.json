@@ -1,0 +1,34 @@
+[
+  {
+    "mainMenu": "Configurações",
+    "subMenu": "Empresa",
+    "route": "cadastro/empresa"
+  },
+  {
+    "mainMenu": "Configurações",
+    "subMenu": "Funcionários",
+    "route": "cadastro/funcionario"
+  },
+  {
+    "mainMenu": "Configurações",
+    "subMenu": "Autenticação",
+    "childMenu": "Usuários",
+    "route": "autenticacao/usuario"
+  },
+  {
+    "mainMenu": "Configurações",
+    "subMenu": "Autenticação",
+    "childMenu": "Perfis de Acesso",
+    "route": "autenticacao/perfil/inicio"
+  },
+  {
+    "mainMenu": "Configurações",
+    "subMenu": "Formas de Pagamento",
+    "route": "configuracao/forma-pagamento"
+  },
+  {
+    "mainMenu": "Configurações",
+    "subMenu": "Cartões",
+    "route": "/cartao"
+  }
+]
