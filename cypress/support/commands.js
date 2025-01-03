@@ -31,15 +31,32 @@ Cypress.Commands.add('login', () => {
         LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
         LoginPage.clicarLogin();
         cy.contains('Início').should('be.visible')
-        //cy.url().should('include', '/ta-em-ordem')
     });
-    //cy.wait(10000)
+
     cy.get('body').then(($body) => {
-      if ($body.find('.sweet-alert').length) {
-        cy.get('button[class="confirm"]').contains('OK').click();
-      }
+        if ($body.find('.sweet-alert').length) {
+            cy.get('button[class="confirm"]').contains('OK').click();
+        }
     });
-})
+});
+
+Cypress.Commands.add('loginRestoreSession', () => {
+    cy.session('user_session', () => {
+        cy.fixture('users').then((user) => {
+            LoginPage.visit();
+            LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
+            LoginPage.clicarLogin();
+            cy.contains('Início').should('be.visible')
+        });
+    })
+
+    cy.get('body').then(($body) => {
+        if ($body.find('.sweet-alert').length) {
+            cy.get('button[class="confirm"]').contains('OK').click();
+        }
+    });
+});
+
 //temp, navegação do menu lateral:
 //Clica em uma opção do menu lateral
 Cypress.Commands.add('clicarMenu', function(opcaoClick){
