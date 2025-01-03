@@ -8,6 +8,9 @@ module.exports = defineConfig({
       return config;
     },
     defaultCommandTimeout: 25000,
+    env: {
+      preserveCookies: ['softcomshop_session', 'XSRF-TOKEN']
+    },
     specPattern:[
       // "./cypress/e2e/setup/_beforeConfigPadrao.spec.js",
       "./cypress/e2e/financeiro/nova-receita.spec.js",
