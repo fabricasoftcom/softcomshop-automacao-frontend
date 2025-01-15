@@ -30,5 +30,93 @@
     "mainMenu": "Configurações",
     "subMenu": "Cartões",
     "route": "/cartao"
+  },
+  {
+    "mainMenu": "Fiscal",
+    "subMenu": "SPED",
+    "childMenu": "Contador",
+    "route": "/cadastro/contador"
+  },
+  {
+    "mainMenu": "Fiscal",
+    "subMenu": "SPED",
+    "childMenu": "Gerar Arquivo",
+    "route": "/sped/arquivo"
+  },
+  {
+    "mainMenu": "Fiscal",
+    "subMenu": "SPED",
+    "childMenu": "Valores Declaratórios",
+    "route": "/sped/valores-declaratorios"
+  },
+  {
+    "mainMenu": "Fiscal",
+    "subMenu": "SPED",
+    "childMenu": "Inventário Base",
+    "route": "/sped/inventario"
+  },
+  {
+    "mainMenu": "Fiscal",
+    "subMenu": "SPED",
+    "childMenu": "ICMS Ajuste Apuração",
+    "route": "/sped/e111-ajuste-apuracao"
+  },
+  {
+    "mainMenu": "Fiscal",
+    "subMenu": "SPED",
+    "childMenu": "IPI Ajuste Apuração",
+    "route": "/sped/ipi-ajuste-apuracao"
+  },
+  {
+    "mainMenu": "Fiscal",
+    "subMenu": "SPED",
+    "childMenu": "Plano de contas",
+    "route": "/sped/plano-de-contas"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Produtos",
+    "childMenu": "Atributos",
+    "route": "/produto/atributo"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Produtos",
+    "childMenu": "Vinculos Fiscais",
+    "route": "/nfe-nfce/vinculos-fiscais"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Produtos",
+    "childMenu": "Atualizar Dados Fiscais",
+    "route": "/produto/atualizar-dados-fiscais"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Produtos",
+    "childMenu": "Produto",
+    "route": "/produto"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Produtos",
+    "childMenu": "Grupo",
+    "route": "/grupo"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Produtos",
+    "childMenu": "Gestor de Promoções",
+    "route": "/produto/promocoes"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Produtos",
+    "childMenu": "Gestor de Preços",
+    "route": "/produto/gestor-preco"
+  },
+  {
+    "mainMenu": "Relatórios",
+    "route": "/softcomtecnologia/relatorios-gerais"
   }
 ]
