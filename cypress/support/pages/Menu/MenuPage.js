@@ -1,71 +1,143 @@
-import MenulateralConfiguracoesLocators from "../../locators/ConfiguracoesLocators";
-
 class MenuPage {
-    /**
-     * Aguarda a aplicação estabilizar (pode ser ajustado com um seletor que indica o carregamento)
-     */
+
     waitForAppReady() {
-        cy.get('#loading-indicator', { timeout: 10000 }).should('not.exist'); // Exemplo de seletor de loading
+        cy.get('#loading-indicator', { timeout: 10000 }).should('not.exist');
     }
 
-    /**
-     * Clica em um item do menu principal pelo texto, adaptando-se para menus com ou sem submenus
-     * @param {string} menuText - Texto do menu principal
-     */
-    clickMainMenu(menuText) {
-        cy.get('a[href="#"]')
-            .find('span')
-            .contains(menuText)
-            .then(($menu) => {
-                if ($menu.closest('li').hasClass('has-submenu')) {
-                    // Menu com submenus
-                    cy.wrap($menu).click({ force: true });
-                } else {
-                    // Menu sem submenus, navegação direta
-                    cy.wrap($menu).click();
-                }
-            });
+    // Função genérica para clicar em qualquer seletor, seja CSS ou XPath
+    clickMenu(menu) {
+        if (menu.id) {
+            cy.get(`#${menu.id}`).click();
+        } else if (menu.text) {
+            cy.contains(menu.text).click();
+        } else if (menu.xpath) {
+            cy.xpath(menu.xpath).click();
+        } else {
+            throw new Error('Nenhum seletor (ID, Texto ou XPath) encontrado para o menu.');
+        }
     }
 
-    /**
-     * Clica em uma opção de submenu pelo texto
-     * @param {string} subMenuText - Texto do submenu
-     */
-    clickSubMenu(subMenuText) {
-        cy.contains(subMenuText)
-            .should('be.visible') // Garante visibilidade
-            .click(); // Clique sem forçar
+    clickMainMenu(menu) {
+        this.clickMenu(menu);
     }
 
-    /**
-     * Expande um submenu antes de clicar
-     * @param {string} menuText - Texto do menu principal
-     * @param {string} subMenuText - Texto do submenu pai
-     * @param {string} childMenuText - Texto do submenu filho
-     */
-    clickNestedSubMenu(menuText, subMenuText, childMenuText) {
-        // Aguarda aplicação pronta
+    clickSubMenu(menu) {
+        this.clickMenu(menu);
+    }
+
+    clickNestedSubMenu(menu, subMenu, childMenu) {
         this.waitForAppReady();
+        this.clickMainMenu(menu);
+        this.clickSubMenu(subMenu);
 
-        // Menu principal
-        this.clickMainMenu(menuText);
-
-        // Submenu pai
-        this.clickSubMenu(subMenuText);
-
-        // Submenu filho
-        cy.contains(childMenuText)
-            .should('be.visible') // Garante visibilidade
-            .click(); // Clique no submenu filho
+        if (childMenu) {
+            this.clickMenu(childMenu);
+        }
     }
 
-    /**
-     * Valida a rota atual
-     * @param {string} expectedUrl - URL esperada
-     */
     validateRoute(expectedUrl) {
         cy.url().should('contain', expectedUrl);
     }
 }
 
 export default new MenuPage();
+
+
+// class MenuPage {
+//
+//     waitForAppReady() {
+//         cy.get('#loading-indicator', { timeout: 10000 }).should('not.exist');
+//     }
+//
+//     clickMenu(menu) {
+//         if (menu.id) {
+//             cy.get(`#${menu.id}`).click({force: true, multiple: true});
+//         }
+//         else if (menu.text) {
+//             cy.contains(menu.text).click({force: true, multiple: true});
+//         } else {
+//             throw new Error('Nenhum seletor (ID ou Texto) encontrado para o menu.');
+//         }
+//     }
+//
+//     clickMainMenu(menu) {
+//         this.clickMenu(menu);
+//     }
+//
+//     clickSubMenu(menu) {
+//         this.clickMenu(menu);
+//     }
+//
+//     clickNestedSubMenu(menu, subMenu, childMenu) {
+//         this.waitForAppReady();
+//         this.clickMainMenu(menu);
+//         this.clickSubMenu(subMenu);
+//         if (childMenu) {
+//             this.clickMenu(childMenu);
+//         }
+//     }
+//
+//     validateRoute(expectedUrl) {
+//         cy.url().should('contain', expectedUrl);
+//     }
+// }
+//
+// export default new MenuPage();
+
+// class MenuPage {
+//
+//     waitForAppReady() {
+//         cy.get('#loading-indicator', { timeout: 10000 }).should('not.exist');
+//     }
+//
+//     clickMenu(menu) {
+//         // Verifique se é necessário expandir o submenu
+//         if (menu.parentSelector) {
+//             // Expande o submenu se necessário
+//             cy.get(menu.parentSelector)
+//                 .should('have.class', 'collapse')
+//                 .invoke('removeClass', 'collapse'); // Força a remoção da classe 'collapse'
+//
+//             // Agora, localize o item com base no ID ou texto
+//             cy.get(menu.parentSelector)
+//                 .find(`#${menu.id}, span.nav-label:contains("${menu.text}")`)
+//                 .should('be.visible')
+//                 .click({ force: true, multiple: true });
+//         } else if (menu.id) {
+//             cy.get(`#${menu.id}`)
+//                 .should('be.visible')
+//                 .click({ force: true });
+//         } else if (menu.text) {
+//             cy.contains(menu.text)
+//                 .should('be.visible')
+//                 .click({ force: true });
+//         } else {
+//             throw new Error('Nenhum seletor (ID, Texto ou ParentSelector) encontrado para o menu.');
+//         }
+//     }
+//
+//     clickMainMenu(menu) {
+//         this.clickMenu(menu);
+//     }
+//
+//     clickSubMenu(menu) {
+//         this.clickMenu(menu);
+//     }
+//
+//     clickNestedSubMenu(menu, subMenu, childMenu) {
+//         this.waitForAppReady();
+//         this.clickMainMenu(menu); // Clica no menu principal
+//         this.clickSubMenu(subMenu); // Clica no submenu
+//
+//         // Clica no child menu se fornecido
+//         if (childMenu) {
+//             this.clickMenu(childMenu);
+//         }
+//     }
+//
+//     validateRoute(expectedUrl) {
+//         cy.url().should('contain', expectedUrl);
+//     }
+// }
+//
+// export default new MenuPage();

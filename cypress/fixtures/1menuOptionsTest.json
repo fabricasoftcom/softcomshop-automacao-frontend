@@ -1,0 +1,20 @@
+[
+  {
+    "mainMenu": {
+      "text": "Tá em ordem"
+    },
+    "route": "/ta-em-ordem"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nfc-e"
+    },
+    "childMenu": {
+      "xpath": "(//span[contains(.,'NFC-e')])[2]"
+    },
+    "route": "/home"
+  }
+]

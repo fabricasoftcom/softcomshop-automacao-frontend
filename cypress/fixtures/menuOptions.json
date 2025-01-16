@@ -75,6 +75,11 @@
   },
   {
     "mainMenu": "Compras e Estoque",
+    "subMenu": "Fornecedor",
+    "route": "/cadastro/fornecedor"
+  },
+  {
+    "mainMenu": "Compras e Estoque",
     "subMenu": "Produtos",
     "childMenu": "Atributos",
     "route": "/produto/atributo"
@@ -116,7 +121,8 @@
     "route": "/produto/gestor-preco"
   },
   {
-    "mainMenu": "Relatórios",
-    "route": "/softcomtecnologia/relatorios-gerais"
+    "mainMenu": "Compras e Estoque",
+    "subMenu": "Nuvem Fiscal",
+    "route": "/nuvemfiscal"
   }
 ]

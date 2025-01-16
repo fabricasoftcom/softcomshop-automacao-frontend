@@ -4,7 +4,7 @@ describe('Validação do Menu Lateral do Softcomshop', () => {
     let menuOptions = [];
 
     before(() => {
-        cy.fixture('menuOptionsTest').then((data) => {
+        cy.fixture('1menuOptionsTest').then((data) => {
             menuOptions = data;
         });
     });
