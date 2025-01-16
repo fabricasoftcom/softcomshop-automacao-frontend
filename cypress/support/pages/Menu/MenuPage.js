@@ -40,6 +40,10 @@ class MenuPage {
     }
 }
 
+/**
+ * TODO: adicionar validacao da abertura do PDV em nova aba
+ */
+
 export default new MenuPage();
 
 

@@ -10,11 +10,11 @@
       "text": "Vendas e NF-e"
     },
     "subMenu": {
-      "id": "nfc-e"
+      "xpath": "(//span[@class='nav-label'][contains(.,'NFC-e')])[1]"
     },
     "childMenu": {
       "xpath": "(//span[contains(.,'NFC-e')])[2]"
     },
-    "route": "/home"
+    "route": "/nfce"
   }
 ]

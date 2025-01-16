@@ -238,7 +238,7 @@
       "text": "Vendas e NF-e"
     },
     "subMenu": {
-      "id": "nfc-e"
+      "xpath": "(//span[@class='nav-label'][contains(.,'NFC-e')])[1]"
     },
     "childMenu": {
       "xpath": "(//span[contains(.,'NFC-e')])[2]"
@@ -253,7 +253,7 @@
       "id": "nfc-e"
     },
     "childMenu": {
-      "id": "inutilizar"
+      "xpath": "(//span[@class='nav-label'][contains(.,'Inutilizar')])[1]"
     },
     "route": "/nfce/inutilizar"
   },
@@ -277,7 +277,7 @@
       "id": "nfc-e"
     },
     "childMenu": {
-      "id": "configurações"
+      "xpath": "(//span[@class='nav-label'][contains(.,'Configurações')])[1]"
     },
     "route": "/serie/nfce"
   },
@@ -301,7 +301,7 @@
       "id": "nf-e"
     },
     "childMenu": {
-      "id": "inutilizar"
+      "xpath": "(//span[@class='nav-label'][contains(.,'Inutilizar')])[2]"
     },
     "route": "/nfe/inutilizar"
   },
@@ -313,7 +313,7 @@
       "id": "nf-e"
     },
     "childMenu": {
-      "id": "download_xml"
+      "xpath": "(//span[@class='nav-label'][contains(.,'Download XML')])[2]"
     },
     "route": "/nfe/download-xml"
   },
@@ -325,7 +325,7 @@
       "id": "nf-e"
     },
     "childMenu": {
-      "id": "configurações"
+      "xpath": "(//span[@class='nav-label'][contains(.,'Configurações')])[2]"
     },
     "route": "/serie/nfe"
   },
