@@ -1,33 +1,38 @@
-import MenuPage from '../../support/pages/Menu/MenuPage';
+import menulateralconfiguracoespage from "../../support/pages/menulateral/menulateralconfiguracoespage";
 
-describe('Validação do Menu Lateral do Softcomshop', () => {
-    let menuOptions;
+describe('Acessar opções do menu lateral Configurações', () =>{
+    beforeEach(function () {
+        cy.login();
+    })
 
-    before(() => {
-        cy.fixture('menuOptions').then((data) => {
-            menuOptions = data;
-        });
-    });
-
-    beforeEach(() => {
-        cy.loginRestoreSession();
-        cy.visit('/');
-    });
-
-    menuOptions.forEach((option) => {
-        if (option.childMenu) {
-            it(`Deve acessar o menu ${option.mainMenu} > ${option.subMenu} > ${option.childMenu} e validar a rota`, () => {
-                cy.log(`Acessando menu: ${option.mainMenu} > ${option.subMenu} > ${option.childMenu}`);
-                MenuPage.clickNestedSubMenu(option.mainMenu, option.subMenu, option.childMenu);
-                MenuPage.validateRoute(option.route);
-            });
-        } else {
-            it(`Deve acessar o menu ${option.mainMenu} > ${option.subMenu} e validar a rota`, () => {
-                cy.log(`Acessando menu: ${option.mainMenu} > ${option.subMenu}`);
-                MenuPage.clickMainMenu(option.mainMenu);
-                MenuPage.clickSubMenu(option.subMenu);
-                MenuPage.validateRoute(option.route);
-            });
-        }
-    });
-});
+    it('T001- Listagem de Empresas', ()=>{
+        menulateralconfiguracoespage.acessarListagemEmpresas();
+    })
+    it('T002- Listagem Funcionarios', ()=>{
+        menulateralconfiguracoespage.acessarListagemFuncionarios();
+    })
+    it('T003- Listagem Usuarios', ()=>{
+        menulateralconfiguracoespage.acessarListagemUsuarios();
+    })
+    it('T004- Listagem Perfis de Acesso', ()=>{
+        menulateralconfiguracoespage.acessarListagemPerfisAcesso();
+    })
+    it('T005- Listagem Formas de pagamento', ()=>{
+        menulateralconfiguracoespage.acessarListagemFormasPagamentos();
+    })
+    it('T006- Listagem de Cartões', ()=>{
+        menulateralconfiguracoespage.acessarListagemCartoes();
+    })
+    it('T007- Modulos', ()=>{
+        menulateralconfiguracoespage.acessarModulos();
+    })
+    it('T008- Scheme', ()=>{
+        menulateralconfiguracoespage.acessarScheme();
+    })
+    it('T009- Sincronização', ()=>{
+        menulateralconfiguracoespage.acessarSincronizacao();
+    })
+    it('T011- Notificações', ()=>{
+        menulateralconfiguracoespage.acessarNotificacoes();
+    })
+})
