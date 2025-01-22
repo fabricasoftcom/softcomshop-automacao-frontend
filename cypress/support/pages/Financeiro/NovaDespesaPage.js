@@ -84,7 +84,6 @@ class NovaDespesaPage {
         cy.get(NovaDespesaLocators.notificacaoSucesso, { timeout: 10000 }).should('be.visible');
     }
 
-
 }
 
 export default new NovaDespesaPage();

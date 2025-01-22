@@ -44,7 +44,7 @@ describe('Cadastro de Nova Despesa', () => {
         novaDespesaPage.clicarSalvar();
 
         // Valida se a despesa aparece na listagem após o cadastro
-        //avaliar, apenas algumas formas de pagamento geram registro em tela.
+        // avaliar, apenas algumas formas de pagamento geram registro em tela.
         // cy.get('table tbody').should('be.visible');
         // cy.contains(descricaoTeste).should('exist');
     }
@@ -60,7 +60,6 @@ describe('Cadastro de Nova Despesa', () => {
     //     cy.get('.modal-content', { timeout: 10000 })
     //         .find('.has-error') // Busca por elementos que possuem a classe "has-error" dentro do modal
     //         .should('exist');   // Verifica se ao menos um elemento existe
-
 
     // });
 });

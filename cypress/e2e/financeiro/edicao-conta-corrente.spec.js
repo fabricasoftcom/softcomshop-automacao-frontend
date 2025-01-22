@@ -15,7 +15,6 @@ describe('Testes de Edição de Conta Corrente', () => {
     ContaCorrenteEdicaoPage.validarCamposPreenchidos();
   });
 
-
   it('Deve desativar uma conta ativa', () => {
     // Seleciona a primeira conta ativa com "Banco" no nome
     ListagemContasPage.selecionarPrimeiraContaBancoAtiva();

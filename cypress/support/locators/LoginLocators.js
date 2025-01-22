@@ -4,5 +4,5 @@ const LoginLocators = {
     loginButton: '#login-acessar',
     errorMessage: '#login-erro'
 };
-  
+
 export default LoginLocators;

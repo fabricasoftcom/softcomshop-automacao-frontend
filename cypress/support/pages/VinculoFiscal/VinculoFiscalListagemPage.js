@@ -88,44 +88,44 @@ class VinculoFiscalListagemPage {
     novoCadastro() {
         cy.get(VinculoFiscalListagemLocators.btnNovoCadastro).click();
       }
-    
+
       pesquisar(codigo, descricao) {
         cy.get(VinculoFiscalListagemLocators.campoCodigo).clear().type(codigo);
         cy.get(VinculoFiscalListagemLocators.campoDescricao).clear().type(descricao);
         cy.get(VinculoFiscalListagemLocators.btnPesquisar).click();
       }
-    
+
       excluirSelecionados() {
         cy.get(VinculoFiscalListagemLocators.btnExcluirSelecionados).click();
       }
-    
+
       confirmarExclusao() {
         cy.get(VinculoFiscalListagemLocators.botaoConfirmarExclusao).click();
       }
-    
+
       validarAlerta() {
         cy.get(VinculoFiscalListagemLocators.toastAlert).should('be.visible');
       }
-    
+
       selecionarTodosRegistros() {
         cy.get(VinculoFiscalListagemLocators.checkboxTodos).check();
       }
-    
+
       editarLinha(index) {
         cy.get(VinculoFiscalListagemLocators.linhasTabela)
           .eq(index)
           .find(VinculoFiscalListagemLocators.botaoEditar)
           .click();
       }
-    
+
       verificarTabelaVazia() {
         cy.get(VinculoFiscalListagemLocators.linhasTabela).should('not.exist');
       }
-    
+
       verificarQuantidadeLinhasTabela(qtd) {
         cy.get(VinculoFiscalListagemLocators.linhasTabela).should('have.length', qtd);
       }
-    
+
       verificarLinhaContemTexto(index, texto) {
         cy.get(VinculoFiscalListagemLocators.linhasTabela)
           .eq(index)

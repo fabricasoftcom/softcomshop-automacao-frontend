@@ -173,7 +173,7 @@ class ListagemContasAPagarPage {
     cy.get(ListagemContasAPagarLocators.notificacaoSucesso).should('not.exist');
   }
 
-  //-----------------------novos metodos----------------------------------
+  // -----------------------novos metodos----------------------------------
   clicarBotaoBaixarNaPrimeiraLinha() {
     cy.get(ListagemContasAPagarLocators.linhaTabela)
       .filter(':contains("Baixar")')

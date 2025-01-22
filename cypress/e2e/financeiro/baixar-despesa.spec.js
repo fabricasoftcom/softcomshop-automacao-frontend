@@ -39,9 +39,8 @@ describe('Testes de Baixa de Despesas', () => {
     BaixarDespesasPage.verificarToastSucesso();
 
     // Verifica que a tabela de detalhes está vazia
-    //BaixarDespesasPage.verificarTabelaDetalhesPagamentoVazia();
+    // BaixarDespesasPage.verificarTabelaDetalhesPagamentoVazia();
   });
-
 
   it('Deve realizar baixa parcial (50%) e verificar status "Parcial"', () => {
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusBaixar();

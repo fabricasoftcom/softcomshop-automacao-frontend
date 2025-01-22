@@ -118,5 +118,4 @@ describe('Testes de Listagem de Contas a Pagar', () => {
     listagemContasAPagarPage.validarValoresNaColunaValorParcela();
 });
 
-
 });

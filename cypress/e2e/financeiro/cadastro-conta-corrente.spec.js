@@ -15,20 +15,7 @@ describe('Cadastro de Conta Corrente', () => {
     cy.login();
     contaCorrenteCadastroPage.visit();
   });
-  //Cadastro de conta sem integração bancaria
-  // bancos.forEach(({ codigo, nome }) => {
-  //   it(`Deve cadastrar uma conta para o banco: ${nome} (Código: ${codigo})`, () => {
-  //     contaCorrenteCadastroPage.preencherBancoPorNome(nome);
 
-  //     const dadosConta = gerarDadosConta(nome, codigo);
-
-  //     contaCorrenteCadastroPage.validarPassoAtual('2. Cadastrar Dados');
-  //     contaCorrenteCadastroPage.preencherFormulario(dadosConta);
-  //     contaCorrenteCadastroPage.avancarParaProximoPasso();
-
-  //     contaCorrenteCadastroPage.verificarMensagemSucesso();
-  //   });
-  // });
   bancos.forEach(({ codigo, nome }) => {
     it(`Deve cadastrar uma conta para o banco: ${nome} (Código: ${codigo}) com cobrança bancária`, () => {
       // Preenche os dados da conta corrente
@@ -55,22 +42,22 @@ describe('Cadastro de Conta Corrente', () => {
         convênio: '12345',
         ultimoNossoNumero: '1234',
         ultimoNumeroRemessa: '5678',
-        //modalidadeCarteira: 'Cobrança Simples',  // Modalidade padrão
+        // modalidadeCarteira: 'Cobrança Simples',  // Modalidade padrão
         variacaoCarteira: gerarNumeroAleatorio(1, 99).toString(),
         posto: '04',
         codigoTransmissao: gerarNumeroAleatorio(1, 10).toFixed(2),
-        //modalidadeJuros: '1', // Valor dia atraso
+        // modalidadeJuros: '1', // Valor dia atraso
         valorJuros: gerarNumeroAleatorio(1, 10).toFixed(2),
-        //modalidadeMulta: '1', // Valor dia atraso
+        // modalidadeMulta: '1', // Valor dia atraso
         valorMulta: gerarNumeroAleatorio(1, 10).toFixed(2),
-        //modalidadeProtesto: '1', // Protestar dias corridos
+        // modalidadeProtesto: '1', // Protestar dias corridos
         diasProtesto: gerarNumeroAleatorio(1, 30).toString(),
-        //modalidadeBaixa: '1', // Baixar / Devolver
+        // modalidadeBaixa: '1', // Baixar / Devolver
         diasBaixa: gerarNumeroAleatorio(1, 30).toString(),
-        //modalidadeDesconto: '1', // Valor fixo até a data informada
+        // modalidadeDesconto: '1', // Valor fixo até a data informada
         valorDesconto: gerarNumeroAleatorio(1, 10).toFixed(2),
-        //modalidadeEspecie: '02', 
-        //codigoAceite: 'A', // Aceite
+        // modalidadeEspecie: '02',
+        // codigoAceite: 'A', // Aceite
         tipoIntegracao: tipoIntegracao, // Tipo da integração
         tipoLayout: 'A4', // Layout padrão
         mensagem1: `Informações de juros: Taxa de ${gerarNumeroAleatorio(1, 10).toFixed(2)}% ao dia.`,
@@ -91,7 +78,6 @@ describe('Cadastro de Conta Corrente', () => {
       contaCorrenteCadastroPage.verificarMensagemSucesso();
     });
   });
-
 
   // Funções auxiliares para gerar dados aleatórios
   function gerarChave16Bits() {
@@ -118,10 +104,7 @@ describe('Cadastro de Conta Corrente', () => {
     }
   }
 
-
-
-
-  //Funções do .spec
+  // Funções do .spec
   function gerarDadosConta(nome, codigo) {
     const agenciaAleatoria = gerarNumeroAleatorio(1000, 9999).toString();
     const agenciaDVAleatorio = gerarNumeroAleatorio(0, 9).toString();

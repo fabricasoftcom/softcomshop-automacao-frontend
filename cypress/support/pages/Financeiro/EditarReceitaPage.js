@@ -15,7 +15,7 @@ class EditarReceitaPage {
     abrirModal() {
         ListagemContasAReceberPage.selecionarOpcaoEditar();
     }
-    
+
     fecharModal() {
         cy.get(EditarReceitaLocators.closeButton).click();
     }
@@ -23,7 +23,7 @@ class EditarReceitaPage {
     clicarSalvar() {
         cy.get(EditarReceitaLocators.modalContent)
           .find(EditarReceitaLocators.salvarButton) // Confirma que o botão específico do modal é buscado
-          //.should('be.visible') // Aguarda até que o botão esteja visível
+          // .should('be.visible') // Aguarda até que o botão esteja visível
           .click({force: true});
     }
 

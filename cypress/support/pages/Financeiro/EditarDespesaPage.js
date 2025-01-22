@@ -57,12 +57,12 @@ class EditarDespesaPage {
             cy.get(EditarDespesaLocators.contaAutocomplete)
             .click({ force: true })
               .clear({ force: true });
-            
+
             // Aguarda o carregamento dos resultados
             cy.get(EditarDespesaLocators.contaResults).should('be.visible').then(($contas) => {
                 const contasDisponiveis = Cypress.$($contas).map((_, conta) => conta.innerText).get();
                 const contasFiltradas = contasDisponiveis.filter(conta => conta !== contaAtual);
-    
+
                 if (contasFiltradas.length > 0) {
                     const contaParaSelecionar = contasFiltradas[0];
                     cy.get(EditarDespesaLocators.contaAutocomplete)
@@ -77,12 +77,11 @@ class EditarDespesaPage {
             });
         });
     }
-    
 
     selecionarFormaPagamento() {
         cy.get(EditarDespesaLocators.formaPagamentoAutocomplete).invoke('val').then((formaAtual) => {
             cy.get(EditarDespesaLocators.formaPagamentoAutocomplete).clear();
-        
+
             cy.get(EditarDespesaLocators.formaPagamentoResults).should('be.visible').then(($formas) => {
                 const formasDisponiveis = Cypress.$($formas).map((_, forma) => forma.innerText).get();
                 const formasFiltradas = formasDisponiveis.filter(forma => forma !== formaAtual);

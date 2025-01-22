@@ -80,6 +80,5 @@ describe('Acessar relatorio: ', ()=>{
       it('T025- Cliente > Ultimas Compras', ()=>{
         relatoriospage.acessarRelatorioClientesUltimasCompras();
       })
-    
 
 })

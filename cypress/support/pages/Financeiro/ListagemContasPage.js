@@ -51,7 +51,7 @@ class ListagemContasPage {
     clicarNovoCadastro() {
       cy.get(ListagemContasLocators.novoCadastroButton).click();
     }
-  
+
     // Verificar se a página de cadastro foi carregada
     verificarPaginaCadastro() {
       cy.get(ListagemContasLocators.paginaCadastroTitulo).should('be.visible');
@@ -61,17 +61,17 @@ class ListagemContasPage {
       cy.get(ListagemContasLocators.tabelaLinhas).each(($row) => {
           const nomeConta = $row.find(ListagemContasLocators.colunaNomeConta).text().trim();
           const statusConta = $row.find(ListagemContasLocators.colunaStatus).text().trim();
-  
+
           // Verifica se o nome contém "banco" (case-insensitive) e o status é "Ativa"
           if (nomeConta.toLowerCase().includes('banco') && statusConta.toLowerCase().includes('ativa')) {
               cy.wrap($row)
                   .find(ListagemContasLocators.dropdownAcoes)
                   .click(); // Abre o dropdown de ações
-  
+
               cy.wrap($row)
                   .find(ListagemContasLocators.opcaoEditar)
                   .click({ force: true }); // Clica na opção "Editar"
-              
+
               cy.log(`Conta ativa selecionada para edição: ${nomeConta}`);
               return false; // Encerra a iteração após encontrar a conta válida
           }
@@ -91,13 +91,13 @@ class ListagemContasPage {
             cy.wrap($row)
                 .find(ListagemContasLocators.opcaoEditar)
                 .click({ force: true }); // Clica na opção "Editar"
-            
+
             cy.log(`Conta inativa selecionada para edição: ${nomeConta}`);
             return false; // Encerra a iteração após encontrar a conta válida
         }
     });
   }
-  
+
 }
 
 export default new ListagemContasPage();

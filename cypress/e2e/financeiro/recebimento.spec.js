@@ -119,7 +119,7 @@ describe('Testes do Modal de Recebimento', () => {
 
       // Verifica o Toast de sucesso para confirmação
       RecebimentoPage.verificarToastSucesso();
-    });    
+    });
   });
 
     it('Deve expandir os detalhes de pagamento e verificar tabela vazia', () => {

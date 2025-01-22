@@ -16,9 +16,9 @@ describe('Edição Completa de Receita', () => {
         EditarReceitaPage.preencherValorAleatorio();
         EditarReceitaPage.selecionarCliente();
         EditarReceitaPage.selecionarTipoDocumento();
-        
+
         EditarReceitaPage.clicarSalvar();
-        
+
         // Validação de sucesso e verificação dos dados
         cy.get('.Toastify__toast--success').should('contain', 'Sucesso');
     });

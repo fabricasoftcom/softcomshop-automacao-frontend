@@ -20,7 +20,7 @@ const MenulateralProdutoLocators = {
     movimentacoes: '#movimentações',
     producao: '#produção',
     balanco: '#balanço',
-    
+
     // Botão de novo cadastro
     btnNovo: '#btn-novo',
 };
