@@ -13,8 +13,8 @@ module.exports = defineConfig({
     },
     specPattern:[
       // "./cypress/e2e/setup/_beforeConfigPadrao.spec.js",
-      "./cypress/e2e/financeiro/nova-receita.spec.js",
-      "./cypress/e2e/financeiro/nova-despesa.spec.js",
+      //"./cypress/e2e/financeiro/nova-receita.spec.js",
+      //"./cypress/e2e/financeiro/nova-despesa.spec.js",
       // "./cypress/e2e/**/*.{feature,cy.js}",
       "**/*.spec.js"
     ],
