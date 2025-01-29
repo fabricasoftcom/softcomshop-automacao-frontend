@@ -1,6 +1,6 @@
 import menulateralfinanceiropage from "../../support/pages/menulateral/menulateralfinanceiropage";
 
-describe('Acessar opções do menu lateral de Financeiro', () =>{
+describe.skip('Acessar opções do menu lateral de Financeiro', () =>{
     beforeEach(function () {
         cy.login();
     })

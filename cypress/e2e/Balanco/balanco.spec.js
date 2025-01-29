@@ -9,7 +9,7 @@ describe('Balanco' ,() => {
     
 
     it('Deve realizar um novo balanco', () => {
-       const responsavelBalanco = 'felipe entregador'
+       const responsavelBalanco = 'VENDEDOR'
 
        // Acessa a tela de listagem de balanco atraves do menu lateral
        menulateralprodutopage.acessarListagemBalanco()

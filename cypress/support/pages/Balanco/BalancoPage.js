@@ -4,7 +4,7 @@ class BalancoPage {
 
     preencherCabecalho(responsavel) {
         cy.get(BalancoLocators.responsavelInput).click()
-        cy.get(".typeahead-list > :nth-child(1) > a").contains(responsavel).click()
+        cy.xpath("//a[@data-index='1']").contains(responsavel).click()
     }
 
     salvarCabecalho() {
@@ -13,7 +13,7 @@ class BalancoPage {
 
     selecionarProduto() {
         cy.get(BalancoLocators.produtoInput).click();
-        cy.xpath("//strong[@class='autocomplete-color-primary'][contains(.,'1 prod grade 1 G Amarela')]").click()
+        cy.xpath("//a[contains(@data-index,'0')]").click()
     }
 
     salvarBalanco() {

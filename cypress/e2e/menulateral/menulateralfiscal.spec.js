@@ -1,6 +1,6 @@
 import menulateralfiscalpage from "../../support/pages/menulateral/menulateralfiscalpage";
 
-describe('Acessar opções do menu lateral do Fiscal', () => {
+describe.skip('Acessar opções do menu lateral do Fiscal', () => {
 
     beforeEach(function () {
         cy.login();

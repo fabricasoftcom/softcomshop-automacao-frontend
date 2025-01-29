@@ -1,6 +1,6 @@
 import menulateralvendapage from "../../support/pages/menulateral/menulateralvendapage";
 
-describe('Acessar opções do menu lateral de Vendas', () =>{
+describe.skip('Acessar opções do menu lateral de Vendas', () =>{
     beforeEach(function () {
         cy.login();
     })

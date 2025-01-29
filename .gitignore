@@ -15,3 +15,6 @@ yarn-error.log*
 
 # Environment variables (se estiver utilizando arquivos .env)
 .env
+
+# Webstorm
+.idea

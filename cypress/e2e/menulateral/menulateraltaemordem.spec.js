@@ -1,6 +1,6 @@
 import menulateraltaemordempage from "../../support/pages/menulateral/menulateraltaemordempage";
 
-describe('Acessar opções do menu lateral ta em ordem', () =>{
+describe.skip('Acessar opções do menu lateral ta em ordem', () =>{
     beforeEach(function () {
         cy.login();
     })

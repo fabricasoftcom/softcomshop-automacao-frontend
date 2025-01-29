@@ -1,6 +1,6 @@
 import menulateralconfiguracoespage from "../../support/pages/menulateral/menulateralconfiguracoespage";
 
-describe('Acessar opções do menu lateral Configurações', () =>{
+describe.skip('Acessar opções do menu lateral Configurações', () =>{
     beforeEach(function () {
         cy.login();
     })

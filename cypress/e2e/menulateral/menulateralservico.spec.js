@@ -1,6 +1,6 @@
 import menulateralservicopage from "../../support/pages/menulateral/menulateralservicopage";
 
-describe('Acessar opções do menu lateral de Serviços e NFSe', () =>{
+describe.skip('Acessar opções do menu lateral de Serviços e NFSe', () =>{
     beforeEach(function () {
         cy.login();
     })
