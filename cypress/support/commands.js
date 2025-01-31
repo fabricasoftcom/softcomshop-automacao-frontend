@@ -58,6 +58,11 @@ Cypress.Commands.add('loginRestoreSession', () => {
     });
 });
 
+Cypress.Commands.add('loginFinanceiro', () => {
+    cy.loginRestoreSession();
+    cy.visit('/')
+})
+
 //temp, navegação do menu lateral:
 //Clica em uma opção do menu lateral
 Cypress.Commands.add('clicarMenu', function(opcaoClick){

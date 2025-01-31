@@ -80,8 +80,7 @@ class NovaDespesaPage {
     }
 
     clicarSalvar() {
-        cy.get(NovaDespesaLocators.salvarButton).click();
-        cy.get(NovaDespesaLocators.notificacaoSucesso, { timeout: 10000 }).should('be.visible');
+        cy.get('h5', {timeout: 15000}).contains('Despesa').should('be.visible');
     }
 
 

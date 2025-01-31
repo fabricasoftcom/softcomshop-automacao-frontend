@@ -12,7 +12,6 @@ describe('Cadastro de Nova Despesa', () => {
     const formasPagamento = ['ESPÉCIE', 'DUPLICATA', 'BOLETO', 'CHEQUE', 'CARTÃO DE CRÉDITO',
         'CARTÃO DE DÉBITO', 'TROCA', 'VALE ALIMENTAÇÃO', 'VALE REFEIÇÃO', 'VALE PRESENTE', 'VALE COMBUSTÍVEL', 'OUTROS',
         'CRÉDITO LOJA', 'ONLINE', 'PIX', 'PIX COBRANCA', 'DEPÓSITO BANCÁRIO', 'TRANSFERÊNCIA BANCÁRIA', 'CARTEIRA DIGITAL', 'CASHBACK'];
-    // const formasPagamento = ['ESPÉCIE'];
 
     categorias.forEach((categoria) => {
         formasPagamento.forEach((formaPagamento) => {
