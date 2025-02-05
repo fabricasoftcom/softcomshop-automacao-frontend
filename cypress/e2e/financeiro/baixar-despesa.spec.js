@@ -1,8 +1,8 @@
 import BaixarDespesasPage from "../../support/pages/Financeiro/BaixarDespesasPage";
 
-describe('Testes de Baixa de Despesas', () => {
+describe('Testes de Baixa de Despesas', { tags: ['@baixar-despesa', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.login();
+    cy.loginFinanceiro();
     BaixarDespesasPage.visit();
   });
 
@@ -23,25 +23,12 @@ describe('Testes de Baixa de Despesas', () => {
     });
   });
   it('Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status "Baixar"', () => {
-    // Localiza e clica no botão "PARCIAL" da primeira linha
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusPago();
-
-    // Clica no botão "Desfazer baixa"
     BaixarDespesasPage.clicarDesfazerBaixa();
-
-    // Confirma o desfazer da baixa
     BaixarDespesasPage.confirmarDesfazerBaixa();
-
-    // Fecha o modal de baixa de despesas
     BaixarDespesasPage.fecharModal();
-
-    // Verifica o Toast de sucesso
     BaixarDespesasPage.verificarToastSucesso();
-
-    // Verifica que a tabela de detalhes está vazia
-    //BaixarDespesasPage.verificarTabelaDetalhesPagamentoVazia();
   });
-
 
   it('Deve realizar baixa parcial (50%) e verificar status "Parcial"', () => {
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusBaixar();

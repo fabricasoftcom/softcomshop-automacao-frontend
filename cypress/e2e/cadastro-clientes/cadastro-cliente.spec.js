@@ -2,7 +2,7 @@ import { beforeEach } from 'mocha';
 import ClientePage from '../../support/pages/Cliente/ClientePage';
 import { generateRandomCustomer } from '../../support/factory/generateRandomData';
 
-describe('Cadastro de cliente', () => {
+describe('Cadastro de cliente', { tags: ["@cadastro-cliente", "@regressivo"] }, () => {
     beforeEach(() => {
         cy.login();
     })

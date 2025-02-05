@@ -1,8 +1,8 @@
 import RecebimentoPage from "../../support/pages/Financeiro/RecebimentoPage";
 
-describe('Testes do Modal de Recebimento', () => {
+describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.login();
+    cy.loginFinanceiro();
     RecebimentoPage.visit();
   });
 
@@ -119,7 +119,7 @@ describe('Testes do Modal de Recebimento', () => {
 
       // Verifica o Toast de sucesso para confirmação
       RecebimentoPage.verificarToastSucesso();
-    });    
+    });
   });
 
     it('Deve expandir os detalhes de pagamento e verificar tabela vazia', () => {

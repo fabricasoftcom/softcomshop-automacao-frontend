@@ -131,7 +131,7 @@ class BaixarDespesasPage {
         // Adiciona logs para depuração
         cy.log(`Valor Atual: ${valorFormatado}`);
         cy.log(`Valor Esperado: ${valorEsperado}`);
-        
+
         // Validação com espera explícita para garantir que o valor correto seja capturado
         cy.wrap(parseFloat(valorFormatado), { timeout: 10000 })
           .should('equal', parseFloat(valorEsperado));
@@ -150,7 +150,7 @@ class BaixarDespesasPage {
       .find('tbody tr') // Seleciona as linhas do corpo da tabela
       .should('have.length', 0); // Verifica que não há linhas (tabela vazia)
   }
-  
+
 }
 
 export default new BaixarDespesasPage();

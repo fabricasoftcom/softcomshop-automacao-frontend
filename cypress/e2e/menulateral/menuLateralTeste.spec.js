@@ -1,6 +1,6 @@
 import MenuPage from '../../support/pages/Menu/MenuPage';
 
-describe('Validação do Menu Lateral do Softcomshop', () => {
+describe('Validação do Menu Lateral do Softcomshop', { tags: ['@menu-lateral', '@regressivo'] }, () => {
     let menuOptions = [];
 
     before(() => {

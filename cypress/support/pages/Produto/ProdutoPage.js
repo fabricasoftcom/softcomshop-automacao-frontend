@@ -3,7 +3,7 @@ class ProdutoPage {
     visit() {
       listagemprodutopage.acessarCadastroNovoProduto();
     }
-  
+
     preencherDetalhesDoProduto(produto) {
       cy.percySnapshot();
       cy.get('#nome').type(produto.nome);
@@ -21,7 +21,7 @@ class ProdutoPage {
       cy.get('#preco_venda').type(produto.preco_venda);
       cy.get('#percentual_comissao_produto').type(produto.percentual_comissao);
     }
-  
+
     cadastrar() {
       cy.get('#btn-salvar').click()
     }
@@ -30,6 +30,5 @@ class ProdutoPage {
       cy.contains('Sucesso').should('be.visible')
     }
 }
-  
+
 module.exports = new ProdutoPage();
-  

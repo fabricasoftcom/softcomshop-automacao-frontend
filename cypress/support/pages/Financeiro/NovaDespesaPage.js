@@ -7,9 +7,13 @@ class NovaDespesaPage {
         ListagemContasAPagarPage.visit();
         ListagemContasAPagarPage.abrirNovoCadastro();
     }
-    abrirModal() {
+    abrirModal(categoria) {
         cy.get(NovaDespesaLocators.modalContent).should('be.visible');
-        cy.get(NovaDespesaLocators.modalTitle).should('contain', 'Nova Despesa');
+        cy.get(NovaDespesaLocators.modalTitle)
+            .invoke('text')
+            .then((text) => {
+                expect(text.toLowerCase()).to.contain(categoria.toLowerCase());
+            });
     }
 
     preencherDescricao(descricao) {
@@ -21,7 +25,9 @@ class NovaDespesaPage {
             .clear()
             .type(categoria);
         cy.get('#autocomplete_category_list').should('be.visible');
-        cy.contains('.category_result', categoria).click();
+        cy.get('.category_result')
+            .filter((_, el) => el.innerText.trim().toLowerCase() === categoria.toLowerCase())
+            .click();
     }
 
     selecionarConta(conta = 'CAIXA') {
@@ -82,7 +88,6 @@ class NovaDespesaPage {
     clicarSalvar() {
         cy.get('h5', {timeout: 15000}).contains('Despesa').should('be.visible');
     }
-
 
 }
 

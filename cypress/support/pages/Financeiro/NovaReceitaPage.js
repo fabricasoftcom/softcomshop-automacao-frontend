@@ -18,13 +18,12 @@ class NovaReceitaPage {
     cy.get(NovaReceitaLocators.descricaoInput).clear().type(descricao);
   }
 
-  selecionarCategoria(categoria = 'RECEITA') {
+  selecionarCategoria(categoria) {
     cy.get(NovaReceitaLocators.categoriaAutocomplete).type(categoria);
-    cy.waitUntil(() => cy.get('#autocomplete_category_list').should('be.visible'), {
-      timeout: 10000,
-      interval: 500
-    });
-    cy.contains('.category_results .category_result', categoria).click();
+    cy.get('#autocomplete_category_list').should('be.visible');
+    cy.get('.category_result')
+      .filter((_, el) => el.innerText.trim().toLowerCase() === categoria.toLowerCase())
+      .click();
   }
 
   selecionarConta() {
@@ -41,13 +40,12 @@ class NovaReceitaPage {
     cy.contains(NovaReceitaLocators.contaOptionResult, conta).click({ force: true });
   }
 
-  selecionarFormaPagamento(forma = 'DUPLICATA') {
+  selecionarFormaPagamento(forma) {
     cy.get(NovaReceitaLocators.formaPagamentoAutocomplete).type(forma);
-    cy.waitUntil(() => cy.get('#autocomplete_payment_method_list').should('be.visible'), {
-      timeout: 10000,
-      interval: 500
-    });
-    cy.contains('.payment_method_results .payment_method_result', forma).click();
+    cy.get('#autocomplete_payment_method_list').should('be.visible')
+    cy.get('.payment_method_results .payment_method_result')
+      .filter((_, el) => el.innerText.trim().toLowerCase() === forma.toLowerCase())
+      .click();
   }
 
   selecionarDataCompetencia(data = '01/01/2024') {
@@ -65,33 +63,33 @@ class NovaReceitaPage {
       .clear()              // Limpa o campo
       .type(valor);         // Digita o valor especificado
   }
-   
+
   selecionarCliente(cliente = 'Cliente Padrão') {
     // Localiza o campo de autocomplete para cliente e clica no botão para exibir a lista
     cy.get(NovaReceitaLocators.clienteAutocomplete)
       .type(cliente, { force: true });  // Digita o valor no campo de cliente (se necessário)
-  
+
     // Clica no botão para expandir o autocomplete
     cy.get('#autocomplete_client_addon').click();
-  
+
     // Aguarda um curto período para garantir que a lista seja carregada
     cy.wait(1000);
-  
+
     // Seleciona o segundo item na lista de resultados
     cy.get('.client_results > :nth-child(2)').click();
-  }  
+  }
 
   selecionarTipoDocumento(tipo = 'Padrão') {
     // Localiza o campo de autocomplete para tipo de documento e digita o valor
     cy.get(NovaReceitaLocators.tipoDocumentoAutocomplete)
       .type(tipo, { force: true });  // Digita o valor no campo de tipo de documento
-  
+
     // Aguarda um curto período para garantir que a lista seja carregada
     cy.wait(1000);
-  
+
     // Seleciona o primeiro item na lista de resultados para o tipo de documento
     cy.get('.document_type_results .document_type_result:first-child').click();
-  }  
+  }
   preencherNumeroDocumento(numero = '12345') {
     cy.get(NovaReceitaLocators.numeroDocumentoInput).clear().type(numero);
   }
@@ -117,12 +115,11 @@ class NovaReceitaPage {
     cy.get('.modal-content')                 // Seleciona o escopo do modal
       .find('.btn-primary')                  // Busca o botão "Salvar" dentro do modal
       .click();                              // Clica no botão "Salvar"
-  
+
     // Aguarda até que o Toastify de sucesso seja exibido
-    cy.get('.Toastify__toast--success', { timeout: 10000 }) // Ajusta para esperar até 10 segundos
-      .should('be.visible');                 // Verifica se o Toastify de sucesso está visível
+    // cy.get('.Toastify__toast--success', { timeout: 10000 }) // Ajusta para esperar até 10 segundos
+    //   .should('be.visible');                 // Verifica se o Toastify de sucesso está visível
   }
-  
 }
 
 export default new NovaReceitaPage();

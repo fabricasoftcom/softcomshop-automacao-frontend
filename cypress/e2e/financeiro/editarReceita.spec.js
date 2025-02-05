@@ -1,8 +1,8 @@
 import EditarReceitaPage from "../../support/pages/Financeiro/EditarReceitaPage";
 
-describe('Edição Completa de Receita', () => {
+describe('Edição Completa de Receita', { tags: ['@editar-receita', '@financeiro', '@regressivo'] }, () => {
     beforeEach(() => {
-        cy.login();
+        cy.loginFinanceiro();
         EditarReceitaPage.visit();
     });
 
@@ -16,9 +16,9 @@ describe('Edição Completa de Receita', () => {
         EditarReceitaPage.preencherValorAleatorio();
         EditarReceitaPage.selecionarCliente();
         EditarReceitaPage.selecionarTipoDocumento();
-        
+
         EditarReceitaPage.clicarSalvar();
-        
+
         // Validação de sucesso e verificação dos dados
         cy.get('.Toastify__toast--success').should('contain', 'Sucesso');
     });

@@ -1,6 +1,6 @@
 import LoginPage from "../../support/pages/Login/LoginPage";
 
-describe('Login com credenciais validas', () => {
+describe('Login com credenciais validas', { tags: ['@login', '@regressivo'] }, () => {
   it.only('Login deve ser realizado com sucesso usando credenciais validas', () => {
     LoginPage.visit();
     cy.fixture('users').then((user) => {

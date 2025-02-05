@@ -1,6 +1,6 @@
 import VinculoFiscalListagemPage from "../../support/pages/VinculoFiscal/VinculoFiscalListagemPage";
 
-describe('Testes de Listagem de Vínculo Fiscal', () => {
+describe('Testes de Listagem de Vínculo Fiscal', { tags: ['@listagem-vinculo-fiscal', '@regressivo'] }, () => {
 
   beforeEach(() => {
     // Realiza o login e visita a página antes de cada teste

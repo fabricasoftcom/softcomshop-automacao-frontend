@@ -49,5 +49,5 @@ describe.skip('Acessar opções do menu lateral de Financeiro', () =>{
     it('T017- Cadastro de nova categoria', ()=>{
         menulateralfinanceiropage.acessarCadastroNovaCategoria();
     })
-    
+
 })

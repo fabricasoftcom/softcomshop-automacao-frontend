@@ -1,9 +1,9 @@
 import novaDespesaPage from "../../support/pages/Financeiro/NovaDespesaPage";
 import ListagemContasAPagarPage from "../../support/pages/Financeiro/ListagemContasAPagarPage";
 
-describe('Cadastro de Nova Despesa', () => {
+describe('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@regressivo'] }, () => {
     const formasPagamento = require('../../fixtures/formasPagamento.json').formasPagamento;
-    const categoria = 'DESPESA'
+    const categoria = 'Despesa'
 
     if(!Array.isArray(formasPagamento)) {
         throw new Error('O arquivo não contém um conteúdo de um JSON válido.');
@@ -22,7 +22,7 @@ describe('Cadastro de Nova Despesa', () => {
     function preencherFormulario(categoria, formaPagamento) {
         const descricaoTeste = `Despesa Teste - ${new Date().toLocaleString()} - ${categoria}/${formaPagamento}`;
 
-        novaDespesaPage.abrirModal();
+        novaDespesaPage.abrirModal(categoria);
         novaDespesaPage.preencherDescricao(descricaoTeste);
         novaDespesaPage.selecionarCategoria(categoria);
         novaDespesaPage.selecionarConta();

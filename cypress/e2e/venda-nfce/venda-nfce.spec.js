@@ -1,6 +1,6 @@
 import VendaPage from "../../support/pages/Venda/VendaPage";
 
-describe("Realizar venda", () => {
+describe("Realizar venda", { tags: ['@venda-nfce', '@regressivo'] }, () => {
     beforeEach(() => {
         cy.login();
     });

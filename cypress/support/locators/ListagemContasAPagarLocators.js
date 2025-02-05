@@ -16,7 +16,7 @@ const ListagemContasAPagarLocators = {
   linhaTabela: 'table tbody tr',
   checkboxTodos: 'input.receive_check_all',
   checkboxLinha: 'input.receive_check',
-  
+
   // Colunas da tabela
   colunaDataVencimento: 'td:nth-child(2)',
   colunaDescricao: 'td:nth-child(3)',
@@ -42,7 +42,7 @@ const ListagemContasAPagarLocators = {
   modalTitulo: '.swal2-title',
   botaoConfirmarBaixa: 'button.swal2-confirm',
   botaoCancelar: 'button.swal2-cancel',
-  
+
   // Modal para operações de baixa
   selectContaBaixa: '#conta_baixa_lote',
   botaoConfirmarBaixaLote: '.swal2-confirm',

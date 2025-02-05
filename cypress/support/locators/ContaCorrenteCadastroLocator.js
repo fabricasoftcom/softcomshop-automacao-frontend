@@ -1,6 +1,6 @@
 const ContaCorrenteCadastroLocator = {
   stepAtivo: '.step-options .step-option.active',
-  
+
   // Inputs e Autocompletes
   bancoAutocomplete: '#autocomplete_bank_id',
   bancoListaResultados: '.bank_id_result',
@@ -13,7 +13,7 @@ const ContaCorrenteCadastroLocator = {
   dataSaldoInicial: '.input-group > #opening_balance_date',
   limiteCredito: '#limitValue',
   observacao: '#div_note > #note',
-  
+
   // Switches
   contaPadraoSwitch: '#div_patternBankAccount .switchery',
   cobrancaBancariaSwitch: '#div_usingBankCollection .switchery',

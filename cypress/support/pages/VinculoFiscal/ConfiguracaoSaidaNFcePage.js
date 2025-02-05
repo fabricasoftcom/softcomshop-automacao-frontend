@@ -50,7 +50,7 @@ class ConfiguracaoSaidaNFcePage {
     expandirSessaoIcmsSaida() {
         cy.get('h5').contains('ICMS').parents('.ibox').find('.collapse-link').click();
     }
-    
+
     expandirSessaoPisCofins() {
         cy.get('h5').contains('PIS/COFINS').parents('.ibox').find('.collapse-link').click();
     }

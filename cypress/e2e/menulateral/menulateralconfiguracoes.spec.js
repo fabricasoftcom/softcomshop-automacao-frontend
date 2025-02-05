@@ -35,9 +35,4 @@ describe.skip('Acessar opções do menu lateral Configurações', () =>{
     it('T011- Notificações', ()=>{
         menulateralconfiguracoespage.acessarNotificacoes();
     })
-    
-    
-    
-    
-    
 })
