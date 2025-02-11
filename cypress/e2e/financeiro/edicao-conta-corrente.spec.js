@@ -3,7 +3,7 @@ import ContaCorrenteEdicaoPage from "../../support/pages/Financeiro/ContaCorrent
 
 describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrente', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.loginFinanceiro();
+    cy.loginArmazenandoSessao();
     ListagemContasPage.visit();
   });
 

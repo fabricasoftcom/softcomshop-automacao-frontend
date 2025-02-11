@@ -11,7 +11,7 @@ describe('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@
 
     formasPagamento.forEach((formaPagamento) => {
         it(`Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}`, () => {
-            cy.loginRestoreSession()
+            cy.loginArmazenandoSessao()
             cy.visit('/financeiro/contas-a-pagar')
             cy.get('h5').contains('Despesa').should('be.visible');
             ListagemContasAPagarPage.abrirNovoCadastro();

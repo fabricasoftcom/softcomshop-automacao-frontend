@@ -2,7 +2,7 @@ import ListagemContasAReceberPage from "../../support/pages/Financeiro/ListagemC
 
 describe('Testes da Listagem de Contas a Receber', { tags: ['@listagem-contas-a-receber', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.loginFinanceiro();
+    cy.loginArmazenandoSessao();
     ListagemContasAReceberPage.visit();
     ListagemContasAReceberPage.verificarCarregamentoDaPagina();
   });

@@ -17,7 +17,7 @@ describe('Acessar relatorios: ', { tags: ['@relatorios', '@regressivo'] }, () =>
   it('Deve validar os relatorios', () => {
     cy.wrap(relatoriosList).each((option) => {
       cy.log(`Acessando relatorio: ${option.relatorioName}`);
-      cy.loginFinanceiro();
+      cy.loginArmazenandoSessao();
       cy.visit('/softcomtecnologia/relatorios-gerais')
       cy.xpath(option.relatorioElement)
         .should('exist')

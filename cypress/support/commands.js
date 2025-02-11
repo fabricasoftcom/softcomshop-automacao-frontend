@@ -56,7 +56,7 @@ Cypress.Commands.add('loginRestoreSession', () => {
     });
 });
 
-Cypress.Commands.add('loginFinanceiro', () => {
+Cypress.Commands.add('loginArmazenandoSessao', () => {
   cy.session('user_session', () => {
     cy.fixture('users').then((user) => {
         LoginPage.visit();

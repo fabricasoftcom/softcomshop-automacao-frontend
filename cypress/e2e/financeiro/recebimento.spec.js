@@ -2,7 +2,7 @@ import RecebimentoPage from "../../support/pages/Financeiro/RecebimentoPage";
 
 describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.loginFinanceiro();
+    cy.loginArmazenandoSessao();
     RecebimentoPage.visit();
   });
 

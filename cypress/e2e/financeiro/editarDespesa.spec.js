@@ -2,7 +2,7 @@ import EditarDespesaPage from "../../support/pages/Financeiro/EditarDespesaPage"
 
 describe('Edição Completa de Despesa', { tags: ['@editar-despesa', '@financeiro', '@regressivo'] }, () => {
     beforeEach(() => {
-        cy.loginFinanceiro();
+        cy.loginArmazenandoSessao();
         EditarDespesaPage.visit();
     });
 

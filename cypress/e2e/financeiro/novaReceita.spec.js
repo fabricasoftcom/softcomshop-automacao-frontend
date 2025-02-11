@@ -11,7 +11,7 @@ describe('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@
 
     formasPagamento.forEach((formaPagamento) => {
         it(`Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}`, () => {
-            cy.loginRestoreSession()
+            cy.loginArmazenandoSessao()
             cy.visit('/financeiro/contas-a-receber')
             cy.get('h5').contains('Receita').should('be.visible');
             ListagemContasAReceberPage.abrirNovoCadastro();
