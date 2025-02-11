@@ -226,6 +226,9 @@ Se quiser rodar múltiplas tags, use `--env grepTags="all"` para combinar múlti
   ```
 
 ---
+### Login global com o método loginArmazenandoSessao()
+
+Todos os cenários criados devem utilizar o metodo acima (loginArmazenandoSessao()) para criação/verificação da sessão do usuário.
 
 ## 📚 Documentação Oficial
 Para mais detalhes, consulte a documentação oficial das ferramentas utilizadas:
