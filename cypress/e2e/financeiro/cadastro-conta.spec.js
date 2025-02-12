@@ -3,6 +3,7 @@ import contaCadastroPage from "../../support/pages/Financeiro/ContaCadastroPage"
 describe('Cadastro de Contas', { tags: ['@cadastro-conta', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
+    cy.visit("/");
     contaCadastroPage.visit();
   });
 

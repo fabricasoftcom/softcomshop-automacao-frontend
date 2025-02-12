@@ -3,6 +3,7 @@ import listagemContasAPagarPage from "../../support/pages/Financeiro/ListagemCon
 describe('Testes de Listagem de Contas a Pagar', { tags: ['@listagem-contas-a-pagar', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
+    cy.visit("/");
     listagemContasAPagarPage.visit();
   });
 

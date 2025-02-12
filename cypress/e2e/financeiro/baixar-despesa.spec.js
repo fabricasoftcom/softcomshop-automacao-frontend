@@ -3,6 +3,7 @@ import BaixarDespesasPage from "../../support/pages/Financeiro/BaixarDespesasPag
 describe('Testes de Baixa de Despesas', { tags: ['@baixar-despesa', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
+    cy.visit("/");
     BaixarDespesasPage.visit();
   });
 
