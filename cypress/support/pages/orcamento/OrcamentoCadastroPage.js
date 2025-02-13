@@ -45,7 +45,7 @@ class OrcamentoCadastroPage {
     }
     adicionarProduto(dados) {
         cy.get(OrcamentoCadastroLocators.campoProduto).clear().type(dados.produto);
-        cy.get(OrcamentoCadastroLocators.campoProdutoResultado).click();
+        cy.get(OrcamentoCadastroLocators.campoProdutoResultado).first().click();
         cy.get(OrcamentoCadastroLocators.campoQuantidade).clear().type(dados.quantidade);
         cy.get(OrcamentoCadastroLocators.campoPreco).clear().type(dados.preco);
     }

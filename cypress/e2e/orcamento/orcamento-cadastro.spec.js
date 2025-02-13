@@ -23,6 +23,8 @@ describe('Cadastro de Novo Orçamento', () => {
         OrcamentoCadastroPage.adicionarProduto(dadosProduto);
 
         OrcamentoCadastroPage.preencherCondicaoPagamento(condicaoPagamento);
+
+        OrcamentoCadastroPage.salvarFormulario();
         OrcamentoCadastroPage.validarSucesso();
     });
 });
