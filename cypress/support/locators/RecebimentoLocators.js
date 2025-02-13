@@ -37,7 +37,7 @@ const RecebimentoLocators = {
 
     // Toast de Sucesso
     toastSucesso: '.Toastify__toast--success',  // Classe específica para o Toast de sucesso
-    
+
 // Locators específicos para o modal de Recebimento
 detalhesPagamentoTitulo: '.accordion .card-header h5',
 detalhesPagamentoBotaoDesfazerBaixa: '.btn-danger.btn-xs', // Botão "Desfazer baixa"
@@ -56,7 +56,6 @@ tabelaCabecalhoData: '.table thead th:nth-child(6)',
   botaoConfirmarDesfazer: '.swal2-confirm',
   botaoCancelarDesfazer: '.swal2-cancel'
 
-
 };
 
-export default RecebimentoLocators;  
+export default RecebimentoLocators;

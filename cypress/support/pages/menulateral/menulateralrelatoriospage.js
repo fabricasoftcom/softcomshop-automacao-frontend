@@ -1,5 +1,5 @@
 class menulateralrelatoriospage{
-    //Acessar o dashboard do ta em ordem
+    // Acessar o dashboard do ta em ordem
     acessarRelatorios(){
         cy.clicarMenu('Relatórios');
     }

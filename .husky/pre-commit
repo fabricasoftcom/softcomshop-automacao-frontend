@@ -1,0 +1,2 @@
+echo "🔍 Executando ESLint... Se houver erros, corrija antes de fazer o commit."
+npx lint-staged || (echo "❌ Erros encontrados! Corrija-os antes de continuar. Você pode verificar o relatório executando o comando: 'npm run lint-html' e acessando o arquivo gerado" && exit 1)

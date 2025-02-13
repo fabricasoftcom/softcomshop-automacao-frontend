@@ -1,0 +1,689 @@
+[
+  {
+    "mainMenu":{
+      "text": "Tá em ordem"
+    },
+    "route": "/ta-em-ordem"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "fornecedor"
+    },
+    "route": "/cadastro/fornecedor"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "atributos"
+    },
+    "route": "/produto/atributo"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "vinculos_fiscais"
+    },
+    "route": "/nfe-nfce/vinculos-fiscais"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "atualizar_dados_fiscais"
+    },
+    "route": "/produto/atualizar-dados-fiscais"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "produto"
+    },
+    "route": "/produto"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "grupo"
+    },
+    "route": "/grupo"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "setores_de_impressão"
+    },
+    "route": "/produto/setor-impressao"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "gestor_de_promoções"
+    },
+    "route": "/produto/promocoes"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produtos"
+    },
+    "childMenu": {
+      "id": "gestor_de_preços"
+    },
+    "route": "/produto/gestor-preco"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "nuvem_fiscal"
+    },
+    "route": "/nuvemfiscal"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "gestão_de_compras"
+    },
+    "childMenu": {
+      "id": "ordem_de_fornecimento"
+    },
+    "route": "/ordem-fornecimento"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "gestão_de_compras"
+    },
+    "childMenu": {
+      "id": "compras"
+    },
+    "route": "/compra"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "movimentações"
+    },
+    "route": "/movimentacao"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "produção"
+    },
+    "route": "/producao"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "balanço"
+    },
+    "route": "/balanco"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "clientes"
+    },
+    "route": "/cadastro/cliente"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "orçamento"
+    },
+    "route": "/orcamento"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "consignação"
+    },
+    "childMenu": {
+      "id": "requisição"
+    },
+    "route": "/consignacao/requisicao"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "consignação"
+    },
+    "childMenu": {
+      "text": "Devolução/Venda"
+    },
+    "route": "/consignacao/devolucao"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "consignação"
+    },
+    "childMenu": {
+      "id": "extrato"
+    },
+    "route": "/consignacao/extrato"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "vendas"
+    },
+    "route": "/vendas"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "xpath": "(//span[@class='nav-label'][contains(.,'NFC-e')])[1]"
+    },
+    "childMenu": {
+      "xpath": "(//span[contains(.,'NFC-e')])[2]"
+    },
+    "route": "/nfce"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nfc-e"
+    },
+    "childMenu": {
+      "xpath": "(//span[@class='nav-label'][contains(.,'Inutilizar')])[1]"
+    },
+    "route": "/nfce/inutilizar"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nfc-e"
+    },
+    "childMenu": {
+      "id": "download_xml"
+    },
+    "route": "/nfce/download-xml"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nfc-e"
+    },
+    "childMenu": {
+      "xpath": "(//span[@class='nav-label'][contains(.,'Configurações')])[1]"
+    },
+    "route": "/serie/nfce"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nf-e"
+    },
+    "childMenu": {
+      "id": "nota_fiscal"
+    },
+    "route": "/nfe"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nf-e"
+    },
+    "childMenu": {
+      "xpath": "(//span[@class='nav-label'][contains(.,'Inutilizar')])[2]"
+    },
+    "route": "/nfe/inutilizar"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nf-e"
+    },
+    "childMenu": {
+      "xpath": "(//span[@class='nav-label'][contains(.,'Download XML')])[2]"
+    },
+    "route": "/nfe/download-xml"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "nf-e"
+    },
+    "childMenu": {
+      "xpath": "(//span[@class='nav-label'][contains(.,'Configurações')])[2]"
+    },
+    "route": "/serie/nfe"
+  },
+  {
+    "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "menu_pesquisa_preco"
+    },
+    "route": "/"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "id": "clientes"
+    },
+    "route": "/cadastro/cliente"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "id": "serviço"
+    },
+    "route": "/servico"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "id": "vinculos_fiscais_de_serviço"
+    },
+    "route": "/vinculos-fiscais-servico"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "contas"
+    },
+    "route": "/integracao-bancaria/conta"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "transferência_entre_contas"
+    },
+    "route": "/financeiro/transferencia-contas"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "lançamento_conta"
+    },
+    "route": "/financeiro/lancamento-conta"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "contas_a_pagar"
+    },
+    "route": "/financeiro/contas-a-pagar"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "contas_a_receber"
+    },
+    "childMenu": {
+      "id": "receita"
+    },
+    "route": "/financeiro/contas-a-receber"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "contas_a_receber"
+    },
+    "childMenu": {
+      "id": "exportar_remessa"
+    },
+    "route": "/cobranca/dispatch"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "contas_a_receber"
+    },
+    "childMenu": {
+      "id": "receber_retorno"
+    },
+    "route": "/cobranca/return"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "categorias"
+    },
+    "route": "/financeiro/plano-de-contas"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "fluxo"
+    },
+    "route": "/financeiro/fluxo"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "dre"
+    },
+    "route": "/financeiro/dre"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "xpath": "//a[@href='https://stage-hotfix-3.softcomshop.com.br/financeiro/extrato']"
+    },
+    "route": "/financeiro/extrato"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "recibo"
+    },
+    "route": "/financeiro/recibo"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "recibo"
+    },
+    "route": "/financeiro/recibo"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "id": "contador"
+    },
+    "route": "/cadastro/contador"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "xpath": "//a[@href='https://stage-hotfix-3.softcomshop.com.br/sped/configuracoes'][contains(.,'Configurações')]"
+    },
+    "route": "/sped/configuracoes"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "id": "gerar_arquivo"
+    },
+    "route": "/sped/arquivo"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "id": "valores_declaratórios"
+    },
+    "route": "/sped/valores-declaratorios"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "id": "inventário_base"
+    },
+    "route": "/sped/inventario"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "id": "icms_ajuste_apuração"
+    },
+    "route": "/sped/e111-ajuste-apuracao"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "id": "ipi_ajuste_apuração"
+    },
+    "route": "/sped/ipi-ajuste-apuracao"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sped"
+    },
+    "childMenu": {
+      "id": "plano_de_contas"
+    },
+    "route": "/sped/plano-de-contas"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "sintegra"
+    },
+    "childMenu": {
+      "xpath": "(//span[contains(.,'Gerar Arquivo')])[2]"
+    },
+    "route": "/sintegra/arquivo"
+  },
+  {
+    "mainMenu": {
+      "xpath": "(//span[contains(.,'Fiscal')])[3]"
+    },
+    "subMenu": {
+      "id": "importar_nfce"
+    },
+    "route": "/configuracao/importar-nfce"
+  },
+  {
+    "mainMenu": {
+      "text": "Relatórios"
+    },
+    "route": "/softcomtecnologia/relatorios-gerais"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "empresa"
+    },
+    "route": "/cadastro/empresa"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "funcionários"
+    },
+    "route": "/cadastro/funcionario"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "autenticação"
+    },
+    "childMenu": {
+      "id": "usuários"
+    },
+    "route": "/autenticacao/usuario"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "autenticação"
+    },
+    "childMenu": {
+      "id": "usuários"
+    },
+    "route": "/autenticacao/usuario"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "autenticação"
+    },
+    "childMenu": {
+      "id": "perfis_de_acesso"
+    },
+    "route": "/autenticacao/perfil/inicio"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "formas_de_pagamentos"
+    },
+    "route": "/configuracao/forma-pagamento"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "cartões"
+    },
+    "route": "/cartao"
+  }
+]

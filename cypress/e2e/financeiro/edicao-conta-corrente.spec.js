@@ -1,9 +1,10 @@
 import ListagemContasPage from "../../support/pages/Financeiro/ListagemContasPage";
 import ContaCorrenteEdicaoPage from "../../support/pages/Financeiro/ContaCorrenteEdicaoPage";
 
-describe('Testes de Edição de Conta Corrente', () => {
+describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrente', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.login();
+    cy.loginArmazenandoSessao();
+    cy.visit("/");
     ListagemContasPage.visit();
   });
 
@@ -14,7 +15,6 @@ describe('Testes de Edição de Conta Corrente', () => {
     // Valida os campos na tela de edição
     ContaCorrenteEdicaoPage.validarCamposPreenchidos();
   });
-
 
   it('Deve desativar uma conta ativa', () => {
     // Seleciona a primeira conta ativa com "Banco" no nome

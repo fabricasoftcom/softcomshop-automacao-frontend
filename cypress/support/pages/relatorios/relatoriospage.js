@@ -100,6 +100,9 @@ class RelatoriosPage {
         this.acessarRelatorio(RelatoriosLocators.clientesUltimasCompras);
     }
 
+    validateRoute(expectedUrl) {
+        cy.url().should('contain', expectedUrl)
+    }
 }
 
 export default new RelatoriosPage();

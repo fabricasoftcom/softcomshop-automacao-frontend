@@ -15,7 +15,7 @@ const BaixarDespesaLocators = {
  // Campos de valores usando seletores baseados em rótulos
  valorPagoInput: 'div.form-group:has(label:contains("Valor Pago")) input[disabled]',
  valorPendenteInput: 'div.form-group:has(label:contains("Valor Pendente")) input[disabled]',
- 
+
   JurosMulta: '#fine',
   Desconto: '#discount',
   ValorFinal: 'div.form-group:has(label:contains("Valor Final")) input[disabled]',
@@ -40,7 +40,7 @@ const BaixarDespesaLocators = {
 
   // Notificação de sucesso
   toastSucesso: '.Toastify__toast--success'
-  
+
 };
 
 export default BaixarDespesaLocators;

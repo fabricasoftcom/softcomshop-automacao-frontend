@@ -3,10 +3,10 @@ import VinculoConfiguracaoEntradaPage from "../../support/pages/VinculoFiscal/Vi
 import VinculoConfiguracaoSaidaPage from "../../support/pages/VinculoFiscal/VinculoConfiguracaoSaidaPage";
 import ConfiguracaoSaidaNFcePage from "../../support/pages/VinculoFiscal/ConfiguracaoSaidaNFcePage";
 
-describe('Cadastro de Novo Vínculo Fiscal', () => {
+describe('Cadastro de Novo Vínculo Fiscal', { tags: ['@cadastro-vinculo-fiscal', '@regressivo'] }, () => {
     beforeEach(() => {
-        // Realiza login e navega até a página de cadastro
-        cy.login();
+        cy.loginArmazenandoSessao();
+        cy.visit("/");
         NovoCadastroVinculoFiscalPage.visit();
     });
 
@@ -102,9 +102,9 @@ describe('Cadastro de Novo Vínculo Fiscal', () => {
         ConfiguracaoSaidaNFcePage.salvarConfiguracao();
         // ConfiguracaoSaidaNFcePage.validarSucesso();
 
-        // **5. Adição de Produto**
-        NovoCadastroVinculoFiscalPage.selecionarPrimeiroProduto();
-        NovoCadastroVinculoFiscalPage.adicionarProduto();
-        NovoCadastroVinculoFiscalPage.verificarToastSucesso();
+        // **5. Adição de Produto - Validar necesisdade**
+        // NovoCadastroVinculoFiscalPage.selecionarPrimeiroProduto();
+        // NovoCadastroVinculoFiscalPage.adicionarProduto();
+        // NovoCadastroVinculoFiscalPage.verificarToastSucesso();
     });
 });

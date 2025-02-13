@@ -1,0 +1,11 @@
+{
+  "formasPagamento": [
+    "ESPÉCIE",
+    "DUPLICATA",
+    "BOLETO",
+    "CHEQUE",
+    "CARTÃO DE CRÉDITO",
+    "CARTÃO DE DÉBITO",
+    "PIX"
+  ]
+}

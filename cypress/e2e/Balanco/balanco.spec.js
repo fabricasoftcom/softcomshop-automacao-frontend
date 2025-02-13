@@ -1,24 +1,20 @@
 import BalancoPage from "../../support/pages/Balanco/BalancoPage";
 import menulateralprodutopage from "../../support/pages/menulateral/menulateralprodutopage";
 
-describe('Balanco' ,() => {
+describe('Balanco', { tags: ["@balanco", "@regressivo"] }, () => {
     beforeEach(() => {
-        cy.login();
+        cy.loginArmazenandoSessao();
+        cy.visit("/")
     })
 
-    
-
     it('Deve realizar um novo balanco', () => {
-       const responsavelBalanco = 'felipe entregador'
-
        // Acessa a tela de listagem de balanco atraves do menu lateral
        menulateralprodutopage.acessarListagemBalanco()
 
        menulateralprodutopage.acessarCadastroNovoBalanco()
-       
 
        // Preenche o cabecalho com o nome do responsavel pelo balanco
-       BalancoPage.preencherCabecalho(responsavelBalanco)
+       BalancoPage.preencherCabecalho()
 
        // Salvar o cabecalho para ser exibido as proximas opcoes da tela
        BalancoPage.salvarCabecalho()

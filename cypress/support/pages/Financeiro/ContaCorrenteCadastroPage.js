@@ -58,21 +58,21 @@ preencherIntegracaoBancaria(dadosIntegracao) {
     { locator: contaCorrenteCadastroLocator.recipientCode, valor: dadosIntegracao.convênio },
     { locator: contaCorrenteCadastroLocator.lastOurNumber, valor: dadosIntegracao.ultimoNossoNumero },
     { locator: contaCorrenteCadastroLocator.lastDispatch, valor: dadosIntegracao.ultimoNumeroRemessa },
-    //{ locator: contaCorrenteCadastroLocator.walletCode, valor: dadosIntegracao.modalidadeCarteira, tipo: 'select' },
+    // { locator: contaCorrenteCadastroLocator.walletCode, valor: dadosIntegracao.modalidadeCarteira, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.companyCode, valor: dadosIntegracao.codigoTransmissao},
     { locator: contaCorrenteCadastroLocator.posto, valor: dadosIntegracao.posto},
     { locator: contaCorrenteCadastroLocator.walletVariation, valor: dadosIntegracao.variacaoCarteira },
-    //{ locator: contaCorrenteCadastroLocator.interestCode, valor: dadosIntegracao.modalidadeJuros, tipo: 'select' },
+    // { locator: contaCorrenteCadastroLocator.interestCode, valor: dadosIntegracao.modalidadeJuros, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.interestAmount, valor: dadosIntegracao.valorJuros },
-    //{ locator: contaCorrenteCadastroLocator.fineCode, valor: dadosIntegracao.modalidadeMulta, tipo: 'select' },
+    // { locator: contaCorrenteCadastroLocator.fineCode, valor: dadosIntegracao.modalidadeMulta, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.fineAmount, valor: dadosIntegracao.valorMulta },
-    //{ locator: contaCorrenteCadastroLocator.protestCode, valor: dadosIntegracao.modalidadeProtesto, tipo: 'select' },
+    // { locator: contaCorrenteCadastroLocator.protestCode, valor: dadosIntegracao.modalidadeProtesto, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.protestDays, valor: dadosIntegracao.diasProtesto },
-    //{ locator: contaCorrenteCadastroLocator.lowCode, valor: dadosIntegracao.modalidadeBaixa, tipo: 'select' },
+    // { locator: contaCorrenteCadastroLocator.lowCode, valor: dadosIntegracao.modalidadeBaixa, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.lowDays, valor: dadosIntegracao.diasBaixa },
-    //{ locator: contaCorrenteCadastroLocator.discountCode, valor: dadosIntegracao.modalidadeDesconto, tipo: 'select' },
+    // { locator: contaCorrenteCadastroLocator.discountCode, valor: dadosIntegracao.modalidadeDesconto, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.discountAmount, valor: dadosIntegracao.valorDesconto },
-    //{ locator: contaCorrenteCadastroLocator.speciesCode, valor: dadosIntegracao.modalidadeEspecie, tipo: 'select' },
+    // { locator: contaCorrenteCadastroLocator.speciesCode, valor: dadosIntegracao.modalidadeEspecie, tipo: 'select' },
    // { locator: contaCorrenteCadastroLocator.acceptCode, valor: dadosIntegracao.codigoAceite, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.integrationType, valor: dadosIntegracao.tipoIntegracao, tipo: 'select' },
     { locator: contaCorrenteCadastroLocator.printLayout, valor: dadosIntegracao.tipoLayout, tipo: 'select' },
@@ -119,8 +119,6 @@ preencherIntegracaoBancaria(dadosIntegracao) {
     });
   }
 }
-
-  
 
   alternarCobrancaBancaria(estado = true) {
     this.alternarSwitch(contaCorrenteCadastroLocator.cobrancaBancariaSwitch, estado);

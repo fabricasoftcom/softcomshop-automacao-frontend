@@ -1,8 +1,9 @@
 import EditarDespesaPage from "../../support/pages/Financeiro/EditarDespesaPage";
 
-describe('Edição Completa de Despesa', () => {
+describe('Edição Completa de Despesa', { tags: ['@editar-despesa', '@financeiro', '@regressivo'] }, () => {
     beforeEach(() => {
-        cy.login();
+        cy.loginArmazenandoSessao();
+        cy.visit("/");
         EditarDespesaPage.visit();
     });
 
@@ -10,8 +11,8 @@ describe('Edição Completa de Despesa', () => {
         const descricaoTeste = `Despesa Editada - ${new Date().toLocaleString()}`;
         EditarDespesaPage.preencherDescricao(descricaoTeste);
         EditarDespesaPage.selecionarCategoria();
-        //EditarDespesaPage.selecionarConta();
-        //EditarDespesaPage.selecionarFormaPagamento();
+        // EditarDespesaPage.selecionarConta();
+        // EditarDespesaPage.selecionarFormaPagamento();
         EditarDespesaPage.preencherDataVencimento();
         EditarDespesaPage.preencherValorAleatorio();
         EditarDespesaPage.clicarSalvar();
@@ -19,13 +20,4 @@ describe('Edição Completa de Despesa', () => {
         // Validações de sucesso
         cy.get('.Toastify__toast--success').should('contain', 'Sucesso');
     });
-
-    // it('Deve editar uma despesa e cancelar a edição clicando em voltar', () => {
-    //     const descricaoTeste = `Teste Cancelar - ${new Date().toLocaleString()}`;
-    //     EditarDespesaPage.preencherDescricao(descricaoTeste);
-    //     EditarDespesaPage.clicarVoltar();
-
-    //     // Valida que o modal foi fechado
-    //     cy.get(EditarDespesaPage.modalContent).should('not.exist');
-    // });
 });

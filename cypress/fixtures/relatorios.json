@@ -1,0 +1,132 @@
+[
+    {
+        "relatorioName": "Período",
+        "relatorioElement": "//a[contains(.,'Período')]",
+        "relatorioURL": "/relatorio/periodo"
+    },
+    {
+        "relatorioName": "Mais Vendidos",
+        "relatorioElement": "//a[contains(.,'Mais Vendidos')]",
+        "relatorioURL": "/relatorio/mais-vendido"
+    },
+    {
+        "relatorioName": "Forma Pagamento",
+        "relatorioElement": "//a[contains(.,'Forma Pagamento')]",
+        "relatorioURL": "/relatorio/forma-pagamento"
+    },
+    {
+        "relatorioName": "Gerente de Vendas",
+        "relatorioElement": "//a[contains(.,'Gerente de Vendas')]",
+        "relatorioURL": "/relatorio/gerente-vendas"
+    },
+    {
+        "relatorioName": "Evolução",
+        "relatorioElement": "//a[contains(.,'Evolução')]",
+        "relatorioURL": "/relatorio/evolucao"
+    },
+    {
+        "relatorioName": "Comissão",
+        "relatorioElement": "//a[contains(.,'Comissão')]",
+        "relatorioURL": "/relatorio/comissao"
+    },
+    {
+        "relatorioName": "Fiscal Saída Analítico",
+        "relatorioElement": "//a[contains(.,'Fiscal Saída Analítico')]",
+        "relatorioURL": "/relatorio/relatorio-fiscal"
+    },
+    {
+        "relatorioName": "Fiscal Saída Sintético",
+        "relatorioElement": "//a[contains(.,'Fiscal Saída Sintético')]",
+        "relatorioURL": "/relatorio/relatorio-fiscal-sintetico"
+    },
+    {
+        "relatorioName": "Fiscal Entrada Analítico",
+        "relatorioElement": "//a[contains(.,'Fiscal Entrada Analítico')]",
+        "relatorioURL": "/relatorio/relatorio-fiscal-entrada"
+    },
+    {
+        "relatorioName": "Fiscal Entrada Sintético",
+        "relatorioElement": "//a[contains(.,'Fiscal Entrada Sintético')]",
+        "relatorioURL": "/relatorio/relatorio-fiscal-entrada-sintetico"
+    },
+    {
+        "relatorioName": "Relatório Fiscal Pis/Cofins",
+        "relatorioElement": "//a[contains(.,'Relatório Fiscal Pis/Cofins')]",
+        "relatorioURL": "/relatorio/relatorio-fiscal-pis-cofins"
+    },
+    {
+        "relatorioName": "NFSe",
+        "relatorioElement": "//a[contains(.,'NFSe')]",
+        "relatorioURL": "/relatorio/relatorio-nfse"
+    },
+    {
+        "relatorioName": "Caixa",
+        "relatorioElement": "//a[contains(.,'Caixa')]",
+        "relatorioURL": "/relatorio/vendas-caixa"
+    },
+    {
+        "relatorioName": "Contas a Receber",
+        "relatorioElement": "(//a[contains(.,'Contas a Receber')])[2]",
+        "relatorioURL": "/relatorio/contas-a-receber"
+    },
+    {
+        "relatorioName": "Contas a Pagar",
+        "relatorioElement": "(//a[contains(.,'Contas a Pagar')])[2]",
+        "relatorioURL": "/relatorio/contas-a-pagar"
+    },
+    {
+        "relatorioName": "Projeção de Cartões",
+        "relatorioElement": "//a[contains(.,'Projeção de Cartões')]",
+        "relatorioURL": "/relatorio/projecao-de-cartoes"
+    },
+    {
+        "relatorioName": "Exibir Estoque",
+        "relatorioElement": "//a[contains(.,'Exibir Estoque')]",
+        "relatorioURL": "/relatorio/exibir-estoque"
+    },
+    {
+        "relatorioName": "Exibir Estoque",
+        "relatorioElement": "//a[contains(.,'Exibir Estoque')]",
+        "relatorioURL": "/relatorio/exibir-estoque"
+    },
+    {
+        "relatorioName": "Tabela de Preço",
+        "relatorioElement": "//a[contains(.,'Tabela de Preço')]",
+        "relatorioURL": "/relatorio/tabela-preco"
+    },
+    {
+        "relatorioName": "Ficha Estoque",
+        "relatorioElement": "//a[contains(.,'Ficha Estoque')]",
+        "relatorioURL": "/relatorio/ficha-estoque"
+    },
+    {
+        "relatorioName": "Inventário",
+        "relatorioElement": "(//a[contains(.,'Inventário')])[2]",
+        "relatorioURL": "/relatorio/inventario"
+    },
+    {
+        "relatorioName": "NCM",
+        "relatorioElement": "//a[contains(.,'NCM')]",
+        "relatorioURL": "/relatorio/ncm"
+    },
+    {
+        "relatorioName": "Movimentação de Estoque",
+        "relatorioElement": "//a[contains(.,'Movimentação de Estoque')]",
+        "relatorioURL": "/relatorios/movimentacao-estoque"
+    },
+    {
+        "relatorioName": "Aniversariantes",
+        "relatorioElement": "//a[contains(.,'Aniversariantes')]",
+        "relatorioURL": "/relatorio/aniversariante"
+    },
+    {
+        "relatorioName": "Listagem dos Clientes",
+        "relatorioElement": "//a[contains(.,'Listagem dos Clientes')]",
+        "relatorioURL": "/relatorio/dados-clientes"
+    },
+    {
+        "relatorioName": "Últimas Compras",
+        "relatorioElement": "//a[contains(.,'Últimas Compras')]",
+        "relatorioURL": "/relatorio/ultimas-compras"
+    }
+]

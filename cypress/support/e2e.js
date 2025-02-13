@@ -20,6 +20,9 @@ import 'cypress-xpath';
 import '@percy/cypress';
 import '@shelex/cypress-allure-plugin';
 
+const registerCypressGrep = require('@cypress/grep')
+registerCypressGrep()
+
 Cypress.on('uncaught:exception', (err) => {
   // Captura exceções não tratadas que possam ocorrer durante a execução de testes.
   if (err.message.includes('Erro esperado específico')) {

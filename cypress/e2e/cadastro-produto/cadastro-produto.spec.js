@@ -2,7 +2,7 @@ import { generateRandomProduct } from "../../support/factory/generateRandomData"
 import ProdutoPage from "../../support/pages/Produto/ProdutoPage";
 import VinculoFiscalPage from "../../support/pages/VinculoFiscal/VinculoFiscalPage";
 
-describe('Cadastro de produtos', () => {
+describe('Cadastro de produtos', { tags: ["@cadastro-produto", "@regressivo"] }, () => {
     beforeEach(() => {
         cy.login();
     })

@@ -133,6 +133,11 @@ Para diferenciar as áreas de trabalho, utilizamos as seguintes convenções:
    - Prefixo: `bugfix/`
    - **Exemplo**: `bugfix/corrigir-teste-login` ou `bugfix/ajuste-flaky-test`
 
+#### ♻ Refatoração na Automação (`refactor/`)
+   - Criadas para refatorar funcionalidades/scripts de automação.
+   - Prefixo: `refactor/`
+   - **Exemplo**: `refactor/implementar-reutilizacao-funcoes-genericas`
+
 ---
 
 ## 📌 Exemplo Prático de Uso
@@ -161,3 +166,75 @@ git checkout -b bugfix/ajustar-teste-autenticacao
 
 Seguindo esse padrão, garantimos um fluxo de trabalho eficiente, seguro e organizado 😉!
 ---
+## 🚀 Qualidade de Código com ESLint + Husky
+
+Este repositório utiliza **ESLint** integrado com **Husky** para garantir que todo o código commitado siga as boas práticas de desenvolvimento. 🔍✨
+
+### 🔒 Como funciona?
+Sempre que você tentar fazer um `git commit`, o Husky irá executar o ESLint automaticamente:
+1. O Husky inicia o processo de verificação.
+2. O ESLint analisa os arquivos `.js` modificados.
+3. Se houver **erros**, o commit será bloqueado e os problemas serão exibidos no terminal. ❌
+4. Você precisará corrigir os erros antes de tentar novamente. 🛠️
+5. Se não houver erros, o commit será realizado com sucesso! ✅🎉
+
+### 💡 O que fazer se o commit for bloqueado?
+Se o commit não for permitido, revise os erros exibidos e corrija-os antes de tentar novamente. Você pode rodar o ESLint manualmente com:
+  ```bash
+  npm run lint-html
+  ```
+Ou, para output dos erros direto no terminal:
+  ```bash
+  npm run lint
+  ```
+Isso verificará todos os arquivos `.js` no projeto.
+
+### 🛠️ Como instalar as dependências?
+Caso você ainda não tenha as dependências instaladas, basta rodar:
+  ```bash
+  npm install
+  ```
+Isso garantirá que o ESLint e o Husky estejam funcionando corretamente.
+
+---
+
+## 🏷️ Uso de Tags nos Testes
+
+Este projeto utiliza **tags** para organizar e executar cenários de teste específicos. 🔖✨
+
+### 📌 Como adicionar tags nos testes?
+As tags são definidas diretamente no `describe` do Cypress, conforme o exemplo:
+  ```javascript
+  describe('Balanco', { tags: ["@balanco", "@regressivo"] }, () => {
+    it('Deve validar o saldo', () => {
+      // Teste aqui
+    });
+  });
+  ```
+Isso permite que os testes sejam filtrados na execução. 🔎
+
+### 🚀 Como executar testes filtrando por tags?
+Você pode rodar testes específicos utilizando a flag `--env grep="@tag"`, por exemplo:
+  ```bash
+  npx cypress run --env grep="@balanco"
+  ```
+Isso executará apenas os cenários que possuem a tag `@balanco`.
+
+Se quiser rodar múltiplas tags, use `--env grepTags="all"` para combinar múltiplas tags:
+  ```bash
+  npx cypress run --env grep="@balanco" --env grepTags="all"
+  ```
+
+---
+### Login global com o método loginArmazenandoSessao()
+
+Todos os cenários criados devem utilizar o metodo acima (loginArmazenandoSessao()) para criação/verificação da sessão do usuário.
+
+## 📚 Documentação Oficial
+Para mais detalhes, consulte a documentação oficial das ferramentas utilizadas:
+- [ESLint](https://eslint.org/docs/latest/user-guide/) 🛠️
+- [Husky](https://typicode.github.io/husky/#/) 🔗
+- [Cypress Grep Plugin (Tags)](https://github.com/cypress-io/cypress-grep) 📌
+
+Com isso, garantimos que todo o código do projeto segue um padrão de qualidade e que os testes podem ser organizados e executados de forma eficiente! 🚀🔥
+

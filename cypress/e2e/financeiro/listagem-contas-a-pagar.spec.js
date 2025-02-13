@@ -1,8 +1,9 @@
 import listagemContasAPagarPage from "../../support/pages/Financeiro/ListagemContasAPagarPage";
 
-describe('Testes de Listagem de Contas a Pagar', () => {
+describe('Testes de Listagem de Contas a Pagar', { tags: ['@listagem-contas-a-pagar', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.login();
+    cy.loginArmazenandoSessao();
+    cy.visit("/");
     listagemContasAPagarPage.visit();
   });
 
@@ -117,6 +118,4 @@ describe('Testes de Listagem de Contas a Pagar', () => {
     // Valida os valores na coluna "Valor Parcela"
     listagemContasAPagarPage.validarValoresNaColunaValorParcela();
 });
-
-
 });

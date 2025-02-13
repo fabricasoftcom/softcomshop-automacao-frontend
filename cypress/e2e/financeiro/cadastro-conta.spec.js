@@ -1,9 +1,9 @@
 import contaCadastroPage from "../../support/pages/Financeiro/ContaCadastroPage";
 
-describe('Cadastro de Contas', () => {
+describe('Cadastro de Contas', { tags: ['@cadastro-conta', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
-    // Acessa a página de cadastro antes de cada teste
-    cy.login();
+    cy.loginArmazenandoSessao();
+    cy.visit("/");
     contaCadastroPage.visit();
   });
 

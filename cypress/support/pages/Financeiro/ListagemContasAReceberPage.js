@@ -17,6 +17,7 @@ class ListagemContasAReceberPage {
 
   abrirNovoCadastro() {
     cy.get(ListagemContasAReceberLocators.novoCadastroBtn).click();
+    cy.get('.modal-title').contains('Nova Receita').should('be.visible');
   }
 
   verificarTotalizadores() {
