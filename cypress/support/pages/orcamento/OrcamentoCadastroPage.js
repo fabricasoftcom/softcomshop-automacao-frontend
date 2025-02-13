@@ -9,7 +9,7 @@ class OrcamentoCadastroPage {
     preencherFormulario(dados) {
         cy.get(OrcamentoCadastroLocators.dropdownCliente).click();
         cy.get(OrcamentoCadastroLocators.campoClienteResultado).click();
-
+        cy.log(dados.telefone)
         cy.get(OrcamentoCadastroLocators.campoTelefone).clear().type(dados.telefone);
         cy.get(OrcamentoCadastroLocators.campoEmail).clear().type(dados.email);
         cy.get(OrcamentoCadastroLocators.campoResponsavel).clear().type(dados.responsavel);

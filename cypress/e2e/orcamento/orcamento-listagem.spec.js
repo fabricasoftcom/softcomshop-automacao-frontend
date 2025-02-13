@@ -1,4 +1,4 @@
-import OrcamentoListagemPage from "../../support/pages/orcamento/OrcamentoListagemPage";
+import OrcamentoListagemPage from "../../support/pages/Orcamento/OrcamentoListagemPage";
 
 describe('Testes de Listagem de Orçamento', () => {
     beforeEach(() => {

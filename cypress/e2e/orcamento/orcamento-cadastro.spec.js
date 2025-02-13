@@ -1,21 +1,21 @@
-import OrcamentoCadastroPage from "../../support/pages/orcamento/OrcamentoCadastroPage";
+import OrcamentoCadastroPage from "../../support/pages/Orcamento/OrcamentoCadastroPage";
+import {generateRandomDadosOrcamento} from "../../support/factory/generateRandomData";
+import {generateRandomDadosOrcamentoProduto} from "../../support/factory/generateRandomData";
 
 describe('Cadastro de Novo Orçamento', () => {
-    let dadosProduto;
-    let dadosOrcamento;
     const condicaoPagamento = 'À vista';
 
     beforeEach(() => {
-        // Carrega os dados da fixture antes de cada teste
-        cy.fixture('orcamento.json').then((dados) => {
-            dadosProduto = dados.dadosProduto;
-            dadosOrcamento = dados.dadosOrcamento;
-        });
         cy.loginArmazenandoSessao();
         OrcamentoCadastroPage.visit();
     });
 
     it('Deve preencher e salvar um novo orçamento com sucesso', () => {
+        const dadosOrcamento = generateRandomDadosOrcamento();
+        const dadosProduto = generateRandomDadosOrcamentoProduto();
+        cy.log(dadosOrcamento)
+        cy.log(dadosProduto)
+
         OrcamentoCadastroPage.preencherFormulario(dadosOrcamento);
         OrcamentoCadastroPage.preencherDadosOrcamento(dadosOrcamento);
         OrcamentoCadastroPage.preencherInformacoesAdicionais(dadosOrcamento);
