@@ -20,12 +20,12 @@ module.exports = defineConfig({
       "**/*.spec.js"
     ],
     testIsolation: false,
-    baseUrl: 'https://stage-hotfix-3.softcomshop.com.br',
+    baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
-    retries: {
-      runMode: 1, // Número de tentativas em modo de execução
-      openMode: 0 // Número de tentativas em modo interativo
-    }
+    // retries: {
+    //   runMode: 1, // Número de tentativas em modo de execução
+    //   openMode: 0 // Número de tentativas em modo interativo
+    // }
   },
 });

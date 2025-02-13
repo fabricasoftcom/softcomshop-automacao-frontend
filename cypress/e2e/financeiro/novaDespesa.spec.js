@@ -39,5 +39,7 @@ describe('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@
         novaDespesaPage.preencherNumeroDocumento('98765');
 
         novaDespesaPage.clicarSalvar();
+        cy.get('h5', { timeout: 10000 }).should('be.visible'); // Espera até 10 segundos
+
     }
 });

@@ -2,9 +2,9 @@ import BalancoLocators from "../../locators/BalancoLocator";
 
 class BalancoPage {
 
-    preencherCabecalho(responsavel) {
+    preencherCabecalho() {
         cy.get(BalancoLocators.responsavelInput).click()
-        cy.xpath("//a[@data-index='1']").contains(responsavel).click()
+        cy.get('.typeahead-list>> a:contains("VENDEDOR")').click();
     }
 
     salvarCabecalho() {

@@ -3,6 +3,7 @@ import EditarReceitaPage from "../../support/pages/Financeiro/EditarReceitaPage"
 describe('Edição Completa de Receita', { tags: ['@editar-receita', '@financeiro', '@regressivo'] }, () => {
     beforeEach(() => {
         cy.loginArmazenandoSessao();
+        cy.visit("/");
         EditarReceitaPage.visit();
     });
 

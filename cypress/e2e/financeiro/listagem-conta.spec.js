@@ -3,6 +3,7 @@ import ListagemContasPage from "../../support/pages/Financeiro/ListagemContasPag
 describe('Testes de Listagem de Contas', { tags: ['@listagem-conta', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
+    cy.visit("/");
     ListagemContasPage.visit();
   });
 
