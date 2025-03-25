@@ -1,0 +1,237 @@
+
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📖 Documentação dos Testes Automatizados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body { padding: 20px; }
+      .test-file { margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9; }
+      ul { list-style-type: none; padding-left: 20px; }
+      li { margin-bottom: 5px; }
+    </style>
+  </head>
+  <body>
+    <h1 class="text-center">📖 Documentação dos Testes Automatizados</h1>
+  <div class="test-file"><h2>📂 Balanco\balanco.spec.js</h2>
+<h3>📌 Balanco</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve realizar um novo balanco</li>
+</ul>
+</div><div class="test-file"><h2>📂 Balanco\reverterBalanco.spec.js</h2>
+<h3>📌 Reverter Balanço</h3>
+<ul>
+<li>✅ Deve acessar a tela de balanco e reverter um balanco em andamento</li>
+</ul>
+</div><div class="test-file"><h2>📂 cadastro-clientes\cadastro-cliente.spec.js</h2>
+<h3>📌 Cadastro de cliente</h3>
+<ul>
+<li>✅ Realizar cadastro de cliente</li>
+</ul>
+</div><div class="test-file"><h2>📂 cadastro-produto\cadastro-produto.spec.js</h2>
+<h3>📌 Cadastro de produtos</h3>
+<ul>
+<li>✅ Realizar cadastro de produto valido informando o vinculo fiscal</li>
+</ul>
+</div><div class="test-file"><h2>📂 debounce-autocomplete\debounce-autocomplete.spec.js</h2>
+<li>✅ Deve contar as requisições de autocomplete</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\baixar-despesa.spec.js</h2>
+<h3>📌 Testes de Baixa de Despesas</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve realizar baixa completa e verificar status </li>
+<li>✅ Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status </li>
+<li>✅ Deve realizar baixa parcial (50%) e verificar status </li>
+<li>✅ Deve localizar e clicar no botão </li>
+<li>✅ Deve desfazer baixa e verificar valor pendente restaurado</li>
+<li>✅ Deve expandir os detalhes de pagamento e verificar tabela vazia</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\cadastro-conta-corrente.spec.js</h2>
+<h3>📌 Cadastro de Conta Corrente</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve cadastrar uma conta para o banco: ${nome} (Código: ${codigo}) com cobrança bancária</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\cadastro-conta.spec.js</h2>
+<h3>📌 Cadastro de Contas</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve selecionar a Conta Corrente</li>
+<li>✅ Deve selecionar a Caixinha</li>
+<li>✅ Deve retornar à listagem ao clicar em Voltar</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\detalhes-do-titulo.spec.js</h2>
+</div><div class="test-file"><h2>📂 financeiro\edicao-conta-corrente.spec.js</h2>
+<h3>📌 Testes de Edição de Conta Corrente</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve acessar uma conta ativa com nome </li>
+<li>✅ Deve desativar uma conta ativa</li>
+<li>✅ Deve alterar o último número da remessa, salvar e validar a alteração</li>
+<li>✅ Deve ativar uma conta inativa</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\editarDespesa.spec.js</h2>
+<h3>📌 Edição Completa de Despesa</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve editar completamente uma despesa e salvar</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\editarReceita.spec.js</h2>
+<h3>📌 Edição Completa de Receita</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve realizar uma edição completa e salvar a receita</li>
+<li>✅ Deve cancelar a edição clicando no botão </li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\listagem-conta.spec.js</h2>
+<h3>📌 Testes de Listagem de Contas</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve clicar no botão de novo cadastro e redirecionar para a página de cadastro</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\listagem-contas-a-pagar.spec.js</h2>
+<h3>📌 Testes de Listagem de Contas a Pagar</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve validar a exibição da tabela de contas a pagar e linhas da tabela</li>
+<li>✅ Deve validar a exibição dos totalizadores corretamente</li>
+<li>✅ Deve filtrar despesas por período e tipo de data</li>
+<li>✅ Deve efetuar pagamento da primeira despesa com status </li>
+<li>✅ Deve abrir a página de novo cadastro de despesa</li>
+<li>✅ Deve selecionar todas as linhas da tabela</li>
+<li>✅ Deve abrir o dropdown da primeira linha com status </li>
+<li>✅ Deve abrir o dropdown e selecionar a opção </li>
+<li>✅ Deve abrir o dropdown e selecionar a opção </li>
+<li>✅ Deve abrir o dropdown e selecionar a opção </li>
+<li>✅ Deve abrir o dropdown e selecionar a opção </li>
+<li>✅ Não deve cancelar a despesa se a confirmação for cancelada</li>
+<li>✅ Não deve excluir a despesa se a confirmação for cancelada</li>
+<li>✅ Deve abrir o dropdown na primeira linha com status </li>
+<li>✅ Deve abrir o dropdown e selecionar a opção </li>
+<li>✅ Deve selecionar o período </li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\listagem-contas-a-receber.spec.js</h2>
+<h3>📌 Testes da Listagem de Contas a Receber</h3>
+<ul>
+<h3>📌 Ações de Cadastro</h3>
+<ul>
+<h3>📌 Ações de Baixa e Confirmações</h3>
+<ul>
+<h3>📌 Validações de Campos e Totalizadores</h3>
+<ul>
+<h3>📌 Ações de Dropdown</h3>
+<ul>
+<h3>📌 Exclusão e Confirmações</h3>
+<ul>
+<h3>📌 Cancelamento de Parcelas</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve abrir o modal de novo cadastro ao clicar no botão </li>
+<li>✅ Deve exibir erro ao tentar baixar sem selecionar parcelas</li>
+<li>✅ Deve marcar o checkbox da primeira parcela, realizar a baixa e confirmar</li>
+<li>✅ Deve exibir o popup de confirmação e cancelar a ação de baixa</li>
+<li>✅ Deve validar os totalizadores de valores e rótulos</li>
+<li>✅ Deve verificar que os campos estão visíveis na primeira linha</li>
+<li>✅ Deve abrir o dropdown de ações e verificar que as opções estão visíveis</li>
+<li>✅ Deve validar as opções do dropdown de ações</li>
+<li>✅ Deve clicar na opção </li>
+<li>✅ Deve clicar na opção </li>
+<li>✅ Deve clicar na opção </li>
+<li>✅ Deve clicar na opção </li>
+<li>✅ Deve realizar a exclusão com sucesso e validar que o tamanho da tabela diminuiu</li>
+<li>✅ Deve cancelar a exclusão e verificar que a parcela permanece na tabela</li>
+<li>✅ Deve preencher o motivo, confirmar o cancelamento e verificar o status atualizado</li>
+<li>✅ Deve preencher o motivo e cancelar a ação de cancelamento</li>
+<li>✅ Deve selecionar o período </li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\novaDespesa.spec.js</h2>
+<h3>📌 Cadastro de Nova Despesa</h3>
+<ul>
+<li>✅ Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}</li>
+<li>✅ /financeiro/contas-a-pagar</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\novaReceita.spec.js</h2>
+<h3>📌 Cadastro de Nova Receita</h3>
+<ul>
+<li>✅ Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}</li>
+<li>✅ /financeiro/contas-a-receber</li>
+<li>✅ Valida erro ao tentar criar receita com tipo </li>
+<li>✅ /financeiro/contas-a-receber</li>
+</ul>
+</div><div class="test-file"><h2>📂 financeiro\recebimento.spec.js</h2>
+<h3>📌 Testes do Modal de Recebimento</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve verificar os dados principais do modal</li>
+<li>✅ Deve preencher todas as informações de pagamento, clicar em voltar e verificar que o status permanece </li>
+<li>✅ Deve preencher as informações de pagamento, salvar e verificar status Pago</li>
+<li>✅ Deve preencher as informações de pagamento com baixa parcial de 20% e salvar</li>
+<li>✅ Deve localizar e clicar no botão </li>
+<li>✅ Deve expandir os detalhes de pagamento e verificar tabela vazia</li>
+<li>✅ Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status </li>
+</ul>
+</div><div class="test-file"><h2>📂 login\login.spec.js</h2>
+<h3>📌 Login com credenciais validas</h3>
+<ul>
+<h3>📌 Login com credenciais invalidas</h3>
+<ul>
+<li>✅ Login não deve ser realizado e deve ser apresentado uma mensagem informando que as credenciais são inválidas</li>
+</ul>
+</div><div class="test-file"><h2>📂 menulateral\menuLateralTeste.spec.js</h2>
+<h3>📌 Validação do Menu Lateral do Softcomshop</h3>
+<ul>
+<li>✅ Deve validar os menus e submenus</li>
+<li>✅ /</li>
+<li>✅ /</li>
+<li>✅ /</li>
+</ul>
+</div><div class="test-file"><h2>📂 orcamento\orcamento-cadastro.spec.js</h2>
+<h3>📌 Cadastro de Novo Orçamento</h3>
+<ul>
+<li>✅ Deve preencher e salvar um novo orçamento com sucesso</li>
+</ul>
+</div><div class="test-file"><h2>📂 orcamento\orcamento-listagem.spec.js</h2>
+<h3>📌 Testes de Listagem de Orçamento</h3>
+<ul>
+<li>✅ Deve realizar cadastro de novo orçamento</li>
+</ul>
+</div><div class="test-file"><h2>📂 relatorio\relatorios.spec.js</h2>
+<h3>📌 Acessar relatorios: </h3>
+<ul>
+<li>✅ Deve validar os relatorios</li>
+<li>✅ /softcomtecnologia/relatorios-gerais</li>
+</ul>
+</div><div class="test-file"><h2>📂 setup\_beforeConfigPadrao.spec.js</h2>
+<h3>📌 _beforeAll</h3>
+<ul>
+<h3>📌 cypress setup</h3>
+<ul>
+<li>✅ Configurar sistema Padrao com NFSe</li>
+</ul>
+</div><div class="test-file"><h2>📂 venda-nfce\venda-nfce.spec.js</h2>
+<h3>📌 Realizar venda</h3>
+<ul>
+<li>✅ Realizar venda com sucesso</li>
+</ul>
+</div><div class="test-file"><h2>📂 vinculo-fiscal\novocadastrovinculofiscal.spec.js</h2>
+<h3>📌 Cadastro de Novo Vínculo Fiscal</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve preencher o formulário de vínculo fiscal, salvar e validar as informações exibidas</li>
+</ul>
+</div><div class="test-file"><h2>📂 vinculo-fiscal\vinculo-fiscal-listagem.spec.js</h2>
+<h3>📌 Testes de Listagem de Vínculo Fiscal</h3>
+<ul>
+<li>✅ /</li>
+<li>✅ Deve realizar cadastro de novo vínculo fiscal</li>
+<li>✅ Deve excluir todos os itens selecionados</li>
+<li>✅ Deve editar o primeiro vínculo fiscal da tabela</li>
+</ul>
+</div>
+  </body>
+  </html>
+  
