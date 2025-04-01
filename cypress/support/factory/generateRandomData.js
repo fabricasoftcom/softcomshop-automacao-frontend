@@ -1,14 +1,27 @@
 const { faker } = require('@faker-js/faker');
-const { cpf } = require('cpf-cnpj-validator')
+const { cpf, cnpj } = require('cpf-cnpj-validator')
 
 const generateValidCPF = () => {
   return cpf.generate()
 };
 
+const gerarCNPJValido = () => {
+  return cnpj.generate()
+}
+
 const generateRandomCustomer = () => {
   return {
     nome: faker.person.fullName(),
     cpf: generateValidCPF(),
+  };
+};
+
+const gerarFornecedorAleatorio = () => {
+  let nome = faker.person.fullName()
+  return {
+    CNPJ: gerarCNPJValido(),
+    nome: nome,
+    razaoSocial: nome
   };
 };
 
@@ -49,4 +62,4 @@ const generateRandomDadosOrcamentoProduto = () => {
   }
 };
 
-module.exports = { generateRandomCustomer, generateRandomProduct ,generateRandomDadosOrcamento , generateRandomDadosOrcamentoProduto}
+module.exports = { generateRandomCustomer, generateRandomProduct ,generateRandomDadosOrcamento , generateRandomDadosOrcamentoProduto, gerarFornecedorAleatorio}
