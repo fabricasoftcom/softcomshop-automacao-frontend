@@ -27,5 +27,6 @@ module.exports = defineConfig({
     //   runMode: 1, // Número de tentativas em modo de execução
     //   openMode: 0 // Número de tentativas em modo interativo
     // }
+    experimentalStudio: true,
   },
 });

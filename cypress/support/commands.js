@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import LoginPage from "./pages/Login/LoginPage"
+import 'cypress-file-upload';
 
 Cypress.Commands.add('login', () => {
     cy.fixture('users').then((user) => {
