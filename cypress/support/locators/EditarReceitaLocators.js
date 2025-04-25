@@ -1,6 +1,6 @@
 const EditarReceitaLocators = {
     // Seletores do modal e cabeçalho
-    modalContent: '.modal-content',
+    modalContent: '.modal-content:contains("Editar Receita")',
     closeButton: '.modal-header .close',
 
     // Seletores do formulário

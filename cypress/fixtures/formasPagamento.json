@@ -1,11 +1,16 @@
 {
   "formasPagamento": [
-    "ESPÉCIE",
-    "DUPLICATA",
-    "BOLETO",
-    "CHEQUE",
-    "CARTÃO DE CRÉDITO",
-    "CARTÃO DE DÉBITO",
-    "PIX"
+    "ESPÉCIE", 
+    "DUPLICATA", 
+    "CARTÃO DE CRÉDITO", 
+    "CARTÃO DE DÉBITO", 
+    "OUTROS", 
+    "CRÉDITO LOJA", 
+    "ONLINE", 
+    "PIX", 
+    "PIX COBRANCA", 
+    "DEPÓSITO BANCÁRIO",
+    "TRANSFERÊNCIA BANCÁRIA",
+    "PIX OFF"
   ]
 }

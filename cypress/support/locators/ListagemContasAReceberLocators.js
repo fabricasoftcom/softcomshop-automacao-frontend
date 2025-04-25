@@ -29,7 +29,7 @@ const ListagemContasAReceberLocators = {
   celulaValorPago: 'td:nth-of-type(7)',
   celulaValorPendente: 'td:nth-of-type(8)',
   celulaStatus: 'td:nth-of-type(9)',
-  celulaStatusPrimeiraLinha: '.table tbody tr:first-child td:nth-of-type(9)', // Célula de status na primeira linha
+  celulaStatusPrimeiraLinha: '.table tbody tr:first-child .btn', // Célula de status na primeira linha
 
   // Ações na Linha da Tabela
   dropdownAcao: '#dropdown-basic', // Botão de dropdown de ações

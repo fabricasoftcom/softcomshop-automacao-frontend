@@ -4,7 +4,8 @@ import { generateRandomCustomer } from '../../support/factory/generateRandomData
 
 describe('Cadastro de cliente', { tags: ["@cadastro-cliente", "@regressivo"] }, () => {
     beforeEach(() => {
-        cy.login();
+        cy.loginArmazenandoSessao();
+        cy.visit("/");
     })
     it('Realizar cadastro de cliente', () => {
         ClientePage.visit();

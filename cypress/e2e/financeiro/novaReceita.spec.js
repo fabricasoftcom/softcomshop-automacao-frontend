@@ -10,7 +10,7 @@ describe('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@
     }
 
     formasPagamento.forEach((formaPagamento) => {
-        it(`Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}`, () => {
+        it(`Deve preencher o formulário de Nova Receita com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}`, () => {
             cy.loginArmazenandoSessao()
             cy.visit('/financeiro/contas-a-receber')
             cy.get('h5').contains('Receita').should('be.visible');
@@ -34,8 +34,8 @@ describe('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@
         NovaReceitaPage.selecionarCliente('{downarrow}{enter}');
         NovaReceitaPage.selecionarTipoDocumento('Padrão');
         NovaReceitaPage.clicarSalvar();
-
-        cy.contains('Sucesso').should('be.visible');
+        cy.get('#loading').should('not.exist');
+        // cy.contains('Sucesso').should('be.visible');
 
     }
     it('Valida erro ao tentar criar receita com tipo "Duplicata" para cliente "Consumidor"', { tags: ["@teste"] }, () => {

@@ -86,6 +86,8 @@ class NovaDespesaPage {
     }
 
     clicarSalvar() {
+        cy.get(NovaDespesaLocators.salvarButton).click();
+        cy.get('#loading').should('not.exist');
         cy.get('h5', {timeout: 15000}).contains('Despesa').should('be.visible');
     }
 

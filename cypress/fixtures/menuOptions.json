@@ -82,18 +82,6 @@
       "id": "produtos"
     },
     "childMenu": {
-      "id": "setores_de_impressão"
-    },
-    "route": "/produto/setor-impressao"
-  },
-  {
-    "mainMenu": {
-      "text": "Compras e Estoque"
-    },
-    "subMenu": {
-      "id": "produtos"
-    },
-    "childMenu": {
       "id": "gestor_de_promoções"
     },
     "route": "/produto/promocoes"
@@ -469,7 +457,7 @@
       "text": "Financeiro"
     },
     "subMenu": {
-      "xpath": "//a[@href='https://stage-hotfix-3.softcomshop.com.br/financeiro/extrato']"
+      "xpath": "//a[@href='https://stage-hotfix.softcomshop.com.br/financeiro/extrato']"
     },
     "route": "/financeiro/extrato"
   },
@@ -511,7 +499,7 @@
       "id": "sped"
     },
     "childMenu": {
-      "xpath": "//a[@href='https://stage-hotfix-3.softcomshop.com.br/sped/configuracoes'][contains(.,'Configurações')]"
+      "xpath": "//a[@href='https://stage-hotfix.softcomshop.com.br/sped/configuracoes'][contains(.,'Configurações')]"
     },
     "route": "/sped/configuracoes"
   },

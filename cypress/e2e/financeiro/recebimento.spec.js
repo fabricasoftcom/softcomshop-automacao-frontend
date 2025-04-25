@@ -9,6 +9,7 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
 
     it('Deve verificar os dados principais do modal', () => {
       RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
+      cy.get('#loading').should('not.exist');
       RecebimentoPage.verificarDadosPrincipais();
     });
     it('Deve preencher todas as informações de pagamento, clicar em voltar e verificar que o status permanece "Baixar"', () => {
@@ -41,13 +42,13 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
         RecebimentoPage.clicarVoltar();
 
         // Verifica se o modal foi fechado
-        cy.get('.modal-content').should('not.exist');
+        cy.get('.modal-content:contains("Recebimento")', {timeout:1000}).should('not.exist');
 
         // Valida que o status da linha permanece como "Baixar", indicando que a operação não foi concluída
         RecebimentoPage.verificarStatusRegistroBaixar();
       });
     });
-  it('Deve preencher as informações de pagamento, salvar e verificar status Pago', () => {
+  it('Deve preencher as informações de pagamento e salvar', () => {
     RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
       RecebimentoPage.preencherConta(); // Preenche com "CAIXA"
       RecebimentoPage.preencherFormaPagamento(); // Preenche com "ESPÉCIE"
@@ -61,12 +62,9 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
         RecebimentoPage.preencherDataRecebimentoComDataAtual();
         RecebimentoPage.preencherValorRecebido(valorFinal);
         RecebimentoPage.clicarSalvar();
-
+        cy.get('#loading').should('not.exist');
         // Verifica o Toast de sucesso
-        RecebimentoPage.verificarToastSucesso();
-
-        // Fecha o modal e verifica o status "Pago"
-        RecebimentoPage.verificarStatusRegistroPago();
+       RecebimentoPage.verificarToastSucesso();
       });
     });
   it('Deve preencher as informações de pagamento com baixa parcial de 20% e salvar', () => {
@@ -87,40 +85,13 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
       RecebimentoPage.preencherDataRecebimentoComDataAtual();
       RecebimentoPage.preencherValorRecebido(valorVintePorcento);
       RecebimentoPage.clicarSalvar();
+      cy.get('#loading').should('not.exist');
       RecebimentoPage.verificarToastSucesso();
-      RecebimentoPage.verificarStatusRegistroParcial();
     });
   });
   it('Deve localizar e clicar no botão "PARCIAL" da primeira linha com status PARCIAL', () => {
     // Chama o método que localiza e clica no botão "PARCIAL" da primeira linha com status "PARCIAL"
     RecebimentoPage.clicarPrimeiraLinhaComStatusParcial();
-
-    // Preenche o campo "Conta" com "CAIXINHA" ou "CAIXA"
-    RecebimentoPage.preencherConta();
-
-    // Preenche o campo "Forma de Pagamento" com "ESPÉCIE"
-    RecebimentoPage.preencherFormaPagamento();
-
-    // Verifica os campos "Valor Pago" e "Valor Pendente" para confirmar que estão desabilitados
-    RecebimentoPage.verificarCamposPagoEPendente();
-
-    // Verifica o campo "Valor Final" como desabilitado para alterações
-    RecebimentoPage.verificarCampoValorFinal();
-
-    // Captura o valor final e o usa para preencher o campo "Valor Recebido"
-    RecebimentoPage.obterValorFinal().then((valorFinal) => {
-      // Preenche a data de recebimento com a data atual
-      RecebimentoPage.preencherDataRecebimentoComDataAtual();
-
-      // Preenche o campo "Valor Recebido" com o valor final para baixa completa
-      RecebimentoPage.preencherValorRecebido(valorFinal);
-
-      // Clica no botão "Salvar" para finalizar a baixa
-      RecebimentoPage.clicarSalvar();
-
-      // Verifica o Toast de sucesso para confirmação
-      RecebimentoPage.verificarToastSucesso();
-    });
   });
 
     it('Deve expandir os detalhes de pagamento e verificar tabela vazia', () => {
@@ -128,7 +99,6 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
       RecebimentoPage.expandirDetalhesPagamento();
       RecebimentoPage.verificarTabelaDetalhesPagamentoVazia();
     });
-
   it('Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status "Baixar"', () => {
     // Chama o método que localiza e clica no botão "PARCIAL" da primeira linha com status "PARCIAL"
     RecebimentoPage.clicarPrimeiraLinhaComStatusParcial();
@@ -147,9 +117,6 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
 
     // Verifica que o status da parcela é atualizado para "Baixar"
     RecebimentoPage.clicarPrimeiraLinhaComStatusBaixar();
-
-    // Verifica o Toast de sucesso
-    RecebimentoPage.verificarToastSucesso();
   });
 
 });

@@ -11,7 +11,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
   it('Deve acessar uma conta ativa com nome "Banco" e validar os campos preenchidos', () => {
     // Seleciona a primeira conta ativa com "Banco" no nome
     ListagemContasPage.selecionarPrimeiraContaBancoAtiva();
-
+    cy.get('#loading').should('not.exist');
     // Valida os campos na tela de edição
     ContaCorrenteEdicaoPage.validarCamposPreenchidos();
   });
@@ -19,7 +19,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
   it('Deve desativar uma conta ativa', () => {
     // Seleciona a primeira conta ativa com "Banco" no nome
     ListagemContasPage.selecionarPrimeiraContaBancoAtiva();
-
+    cy.get('#loading').should('not.exist');
     // Desativa a conta
     ContaCorrenteEdicaoPage.desativarConta();
     ContaCorrenteEdicaoPage.salvar();
@@ -31,7 +31,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
 it('Deve alterar o último número da remessa, salvar e validar a alteração', () => {
     // Seleciona uma conta ativa para edição
     ListagemContasPage.selecionarPrimeiraContaBancoAtiva();
-
+    cy.get('#loading').should('not.exist');
     // Gera um novo número de remessa
     const novoNumeroRemessa = '9999';
 
@@ -51,7 +51,7 @@ it('Deve alterar o último número da remessa, salvar e validar a alteração', 
   it('Deve ativar uma conta inativa', () => {
     // Seleciona a primeira conta inativa com "Banco" no nome
     ListagemContasPage.selecionarPrimeiraContaBancoInativa();
-
+    cy.get('#loading').should('not.exist');
     // Ativa a conta
     ContaCorrenteEdicaoPage.ativarConta();
     ContaCorrenteEdicaoPage.salvar();

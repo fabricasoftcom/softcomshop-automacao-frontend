@@ -3,7 +3,12 @@ import contaCorrenteCadastroPage from "../../support/pages/Financeiro/ContaCorre
 describe('Cadastro de Conta Corrente', { tags: ['@cadastro-conta-corrente', '@financeiro', '@regressivo'] }, () => {
   const bancos = [
     { codigo: '001', nome: 'Banco do Brasil' },
+    { codigo: '033', nome: 'Santander' },
     { codigo: '104', nome: 'Caixa Econômica' },
+    { codigo: '237', nome: 'Bradesco S.A.' },
+    { codigo: '341', nome: 'Itaú Unibanco S' },
+    { codigo: '748', nome: 'Sicredi S.A.' },
+   { codigo: '756', nome: 'BANCOOB/SICOOB' },
   ];
 
   beforeEach(() => {
@@ -26,7 +31,7 @@ describe('Cadastro de Conta Corrente', { tags: ['@cadastro-conta-corrente', '@fi
       contaCorrenteCadastroPage.alternarCobrancaBancaria(true);
 
       // Espera o tempo necessário para garantir que o alerta não apareça
-      cy.wait(32334);
+      cy.wait(5345);
 
       // Verifica que o popup com a mensagem "Não é possível realizar as configurações bancárias" não aparece
       cy.get('div.swal2-popup').should('not.exist'); // Verifica que o modal swal2 não existe

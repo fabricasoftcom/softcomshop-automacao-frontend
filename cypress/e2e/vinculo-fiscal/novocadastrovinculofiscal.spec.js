@@ -57,7 +57,7 @@ describe('Cadastro de Novo Vínculo Fiscal', { tags: ['@cadastro-vinculo-fiscal'
         const dadosSaida = {
             cfopNfe: '5102 - VENDA DE MERCADORIA',
             cfopNfce: '5102 - VENDA DE MERCADORIA',
-            cstCsosn: '102',
+            cstCsosn: '00',
             icmsModalidadeBase: '3 - Valor da operação',
             icmsAcrescimo: '2,50',
             icmsReducao: '10,00',
@@ -89,7 +89,7 @@ describe('Cadastro de Novo Vínculo Fiscal', { tags: ['@cadastro-vinculo-fiscal'
         // Dados para preenchimento da configuração de saída NFCe
         const dadosSaidaNfce = {
             cfopNfce: '5102 - VENDA DE MERCADORIA',
-            cstCsosn: '102 - Tributada pelo Simples Nacional',
+            cstCsosn: '00',
             pis: '99',
             pisAliquota: '1,65',
             cofins: '99',

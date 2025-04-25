@@ -244,7 +244,7 @@ class ListagemContasAReceberPage {
 validarValoresNaColunaValorParcela() {
   cy.get('table.table tbody tr').each(($row) => {
       cy.wrap($row)
-          .find('td:nth-child(6)') // A sexta coluna corresponde à "Valor Parcela"
+          .find('td:nth-child(7)') // A sexta coluna corresponde à "Valor Parcela"
           .invoke('text')
           .then((valor) => {
               // Remove espaços extras e converte valor para número

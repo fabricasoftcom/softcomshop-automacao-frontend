@@ -43,10 +43,11 @@ describe('Testes de Baixa de Despesas', { tags: ['@baixar-despesa', '@financeiro
       BaixarDespesasPage.preencherDataRecebimentoComDataAtual();
       BaixarDespesasPage.preencherValorRecebido(valorParcial);
       BaixarDespesasPage.clicarSalvar();
+      cy.get('#loading').should('not.exist');
       BaixarDespesasPage.verificarToastSucesso();
       BaixarDespesasPage.verificarStatusRegistroParcial();
     });
-  });
+   });
   it('Deve localizar e clicar no botão "PARCIAL" da primeira linha com status PARCIAL', () => {
     // Localiza e clica no botão "PARCIAL"
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusParcial();

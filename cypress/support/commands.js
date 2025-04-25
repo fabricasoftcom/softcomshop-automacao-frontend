@@ -46,6 +46,8 @@ Cypress.Commands.add('loginRestoreSession', () => {
             LoginPage.visit();
             LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
             LoginPage.clicarLogin();
+            // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
+            cy.get('.cont-grid-empresa > :nth-child(1):contains("demais testes")').click();
             cy.contains('Início').should('be.visible')
         });
     })
@@ -63,6 +65,8 @@ Cypress.Commands.add('loginArmazenandoSessao', () => {
         LoginPage.visit();
         LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
         LoginPage.clicarLogin();
+        // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
+        cy.get('.cont-grid-empresa > :nth-child(1):contains("demais testes")').click();
         cy.contains('Início').should('be.visible')
     });
   });
@@ -93,10 +97,8 @@ Cypress.Commands.add('salvarRegistroCadsatro', function(){
 })
 Cypress.Commands.add('setupSistemaPadrao', function() {
 
+    cy.loginArmazenandoSessao();
     cy.visit('/')
-    cy.get('#login-email').type('fabrica@softcomtecnologia.com.br');
-    cy.get('input[name="password"]').type('fab1478');
-    cy.get('form button[id="login-acessar"]').click();
 
     cy.get('body').then(($body) => {
         if ($body.find('.sweet-alert').length) {
@@ -191,9 +193,9 @@ Cypress.Commands.add('setupSistemaPadrao', function() {
       });
       // notificacao
       // mudar o get para 'input[type="checkbox"][data-modulo="NotificacaoLaravel"]'
-      cy.get('#modulo-41').then(($checkbox) => {
+      cy.get('#modulo-38').then(($checkbox) => {
         if (!$checkbox.is(':checked')) {
-          cy.get('#modulo-41').check();
+          cy.get('#modulo-38').check();
         }
       });
       // tanomenu
@@ -212,6 +214,6 @@ Cypress.Commands.add('setupSistemaPadrao', function() {
       cy.get('#btn-salvar-modulo').click();
 
       cy.get('span[class="text-muted text-xs block"]').click();
-      cy.get('.dropdown > .dropdown-menu > :nth-child(1) > a').click();
+      cy.get('#cabecalho-menu:contains("Sair")').click();
 
   })

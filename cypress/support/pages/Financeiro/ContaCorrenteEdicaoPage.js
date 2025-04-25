@@ -44,7 +44,8 @@ class ContaCorrenteEdicaoPage {
             });
     }
     desativarConta() {
-        cy.get('#div_active > .switchery').then(($switch) => {
+        cy.get('#loading').should('not.exist');
+        cy.get('#div_active > .switchery').should('be.visible').then(($switch) => {
             if ($switch.attr('style').includes('border-color: rgb(255, 192, 103)')) {
                 cy.wrap($switch).click(); // Clica no switch apenas se ele estiver ativado
             }

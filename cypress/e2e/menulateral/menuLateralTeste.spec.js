@@ -7,14 +7,13 @@ describe('Validação do Menu Lateral do Softcomshop', { tags: ['@menu-lateral',
         cy.fixture('menuOptions').then((data) => {
             menuOptions = data;
         });
+        cy.visit("/");
     });
 
     it('Deve validar os menus e submenus', function () {
         cy.wrap(menuOptions).each((option) => {
             if (option.childMenu) {
                 cy.log(`Acessando menu: ${option.mainMenu.text || option.mainMenu.id} > ${option.subMenu.text || option.subMenu.id || option.subMenu.xpath} > ${option.childMenu.text || option.childMenu.id || option.childMenu.xpath}`);
-                cy.loginRestoreSession();
-                cy.visit('/');
                 MenuPage.clickNestedSubMenu(option.mainMenu, option.subMenu, option.childMenu);
                 MenuPage.validateRoute(option.route);
             } else if (option.subMenu) {

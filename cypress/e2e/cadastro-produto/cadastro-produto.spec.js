@@ -4,7 +4,8 @@ import VinculoFiscalPage from "../../support/pages/VinculoFiscal/VinculoFiscalPa
 
 describe('Cadastro de produtos', { tags: ["@cadastro-produto", "@regressivo"] }, () => {
     beforeEach(() => {
-        cy.login();
+        cy.loginArmazenandoSessao();
+        cy.visit("/");
     })
 
     it('Realizar cadastro de produto valido informando o vinculo fiscal', () => {

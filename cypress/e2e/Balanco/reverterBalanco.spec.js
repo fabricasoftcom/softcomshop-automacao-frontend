@@ -3,7 +3,8 @@ import menulateralprodutopage from "../../support/pages/menulateral/menulateralp
 
 describe("Reverter Balanço", { tags: ["@balanco", "@regressivo"] }, () => {
     beforeEach(() => {
-        cy.login();
+        cy.loginArmazenandoSessao();
+        cy.visit("/");
     })
 
     it("Deve acessar a tela de balanco e reverter um balanco em andamento", () => {

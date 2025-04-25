@@ -3,9 +3,9 @@ const RecebimentoLocators = {
     modalTitulo: '.modal-title',
     modalContent: '.modal-content',
 
-    // Dados principais do modal
-    parcelaInfo: '.col-md-4:contains("Parcela")',
-    valorInfo: '.col-md-4:contains("Valor")',
+    // Dados principais do modal (cabeçalho)
+    parcelaInfo: '.col-md-3:contains("Parcela")',
+    valorInfo: '.col-md-3:contains("Valor")',
     vencimentoInfo: '.col-md-4:contains("Vencimento")',
 
     // Campos de formulário
@@ -24,7 +24,7 @@ const RecebimentoLocators = {
     detalhesPagamentoTable: '.card-body .table tbody',
 
     // Botões
-    voltarBtn: '.modal-content .btn-default:contains("Voltar")', // Garante que seja o botão "Voltar" do modal
+    voltarBtn: '.modal .modal-content .btn-default:contains("Voltar")', // Garante que seja o botão "Voltar" do modal
     salvarBtn: '.modal-content .btn-primary', // Garante que seja o botão "Salvar" do modal
 
     // Autocomplete
@@ -41,7 +41,7 @@ const RecebimentoLocators = {
 // Locators específicos para o modal de Recebimento
 detalhesPagamentoTitulo: '.accordion .card-header h5',
 detalhesPagamentoBotaoDesfazerBaixa: '.btn-danger.btn-xs', // Botão "Desfazer baixa"
-botaoFecharModal: 'button.close',  // Botão para fechar o modal de recebimento
+botaoFecharModal: '.btn:contains("Voltar")',  // Botão para fechar o modal de recebimento
 
 // Locators para colunas do cabeçalho da tabela de detalhes de pagamento
 tabelaCabecalhoConta: '.table thead th:nth-child(1)',

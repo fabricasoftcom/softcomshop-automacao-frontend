@@ -5,6 +5,7 @@ class VinculoFiscalPage {
     }
 
     selecionarEmpresaMatriz() {
+        cy.get('.wrapper > .col-md-8 > :nth-child(1):contains("demais testes")').click(); // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
         cy.contains('Informações Fiscais').should('be.visible')
     }
 

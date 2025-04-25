@@ -1,4 +1,5 @@
 import listagemclientepage from "./listagemclientepage";
+import clienteLocators from "../../locators/ClienteLocators";
 
 class ClientePage {
   visit() {
@@ -15,6 +16,8 @@ class ClientePage {
 
   cadastrar() {
     cy.get('#btn-salvar').click();
+    cy.wait(5000);
+    cy.get(clienteLocators.botaoConfirmar).click(); // confirmação de cadastro para quando modulo fiscal ativo
   }
 
   confirmacaoCadastroCliente() {
