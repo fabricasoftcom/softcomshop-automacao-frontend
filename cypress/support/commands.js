@@ -47,7 +47,7 @@ Cypress.Commands.add('loginRestoreSession', () => {
             LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
             LoginPage.clicarLogin();
             // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-            cy.get('.cont-grid-empresa > :nth-child(1):contains("demais testes")').click();
+            cy.get('.cont-grid-empresa > :contains("demais testes")').click();
             cy.contains('Início').should('be.visible')
         });
     })
@@ -66,7 +66,7 @@ Cypress.Commands.add('loginArmazenandoSessao', () => {
         LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
         LoginPage.clicarLogin();
         // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-        cy.get('.cont-grid-empresa > :nth-child(1):contains("demais testes")').click();
+        cy.get('.cont-grid-empresa > :contains("demais testes")').click();
         cy.contains('Início').should('be.visible')
     });
   });
