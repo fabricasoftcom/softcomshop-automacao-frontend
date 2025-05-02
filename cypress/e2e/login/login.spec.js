@@ -8,6 +8,7 @@ describe('Login com credenciais validas', { tags: ['@login', '@regressivo'] }, (
     });
 
     LoginPage.clicarLogin();
+    cy.get('.cont-grid-empresa > :contains("demais testes")').click();
     cy.url().should('include', '/home');
   })
 })

@@ -457,7 +457,7 @@
       "text": "Financeiro"
     },
     "subMenu": {
-      "xpath": "//a[@href='https://stage-hotfix.softcomshop.com.br/financeiro/extrato']"
+      "xpath": "//li[contains(@class, 'active')]//a[@id='extrato' and span[contains(text(), 'Extrato')]]"
     },
     "route": "/financeiro/extrato"
   },
@@ -499,7 +499,7 @@
       "id": "sped"
     },
     "childMenu": {
-      "xpath": "//a[@href='https://stage-hotfix.softcomshop.com.br/sped/configuracoes'][contains(.,'Configurações')]"
+      "xpath": "//li[contains(@class, 'active')]//ul[contains(@class, 'nav')]//a[@id='configurações']"
     },
     "route": "/sped/configuracoes"
   },

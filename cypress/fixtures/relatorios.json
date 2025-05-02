@@ -1,7 +1,7 @@
 [
     {
         "relatorioName": "Período",
-        "relatorioElement": "//a[contains(.,'Período')]",
+        "relatorioElement": "//a[contains(@href,'relatorio/periodo')]",
         "relatorioURL": "/relatorio/periodo"
     },
     {

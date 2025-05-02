@@ -14,6 +14,8 @@ class PainelAtendimentoPage {
         cy.get(PainelAtendimentoLocators.btnAbrirBuscaAnimal).click();
         cy.wait(5000); // aguarda carregamento da lista
         cy.get(PainelAtendimentoLocators.listaResultadoBuscaAnimal).click();
+        this.preencherFormularioNovoAtendimento();
+        this.preencherCamposAtendimento();
     }
 
     // Pesquisar atendimentos utilizando filtros
@@ -74,7 +76,7 @@ class PainelAtendimentoPage {
         cy.get(PainelAtendimentoLocators.btnAbrirservicoProduto).click();
         cy.wait(5000);
         cy.get(PainelAtendimentoLocators.listaResultadoProduto).click();
-        cy.get(PainelAtendimentoLocators.campoQuantidade).clear().type((Math.floor(Math.random() * 5) + 1)*100);
+        cy.get(PainelAtendimentoLocators.campoQuantidade).clear().type((Math.floor(Math.random() * 5) + 1) * 100);
         cy.get(PainelAtendimentoLocators.botaoAdicionarItem).click();
         cy.get(PainelAtendimentoLocators.btnImprimir).click();
     }
@@ -87,20 +89,43 @@ class PainelAtendimentoPage {
         cy.get(PainelAtendimentoLocators.campoStatus).select(statusValue)
 
     }
-    salvarAtendimento(){
+    salvarAtendimento() {
         cy.get(PainelAtendimentoLocators.btnSalvarAtendimento).click()
     }
     clicarNoPrimeiroCardDaColunaEmAtendimento() {
         cy.get(PainelAtendimentoLocators.cardKanbanEmAtendimento)
-          .first()
-          .click();
-      }
-    clicarAbaOrdemServico(){
+            .filter(':not(:has(.badge-venda))')
+            .first()
+            .click();
+    }
+    clicarAbaOrdemServico() {
         cy.get(PainelAtendimentoLocators.abaOrdemServico).click();
     }
-    gerarVenda(){
+    gerarVenda() {
         cy.get(PainelAtendimentoLocators.btnGerarVenda).click();
+        cy.wait(1000)
         cy.get(PainelAtendimentoLocators.botaoSimPopupConfirmacao).click();
+
+    }
+    marcarCheckboxGerarAtendimentoServicoSeDesmarcado() {
+        this.configurarPainel();
+        cy.get(PainelAtendimentoLocators.checkboxGerarAtendimentoServico).then($el => {
+            if (!$el.is(':checked')) {
+                cy.wrap($el).click();
+            }
+        });
+    }
+
+    desmarcarCheckboxGerarAtendimentoServicoSeMarcado() {
+        this.configurarPainel();
+        cy.get(PainelAtendimentoLocators.checkboxGerarAtendimentoServico).then($el => {
+            if ($el.is(':checked')) {
+                cy.wrap($el).click();
+            }
+        });
+    }
+    fecharModalAtendimento(){
+        cy.get(PainelAtendimentoLocators.btnFecharModalAtendimento).click();
     }
 
 }

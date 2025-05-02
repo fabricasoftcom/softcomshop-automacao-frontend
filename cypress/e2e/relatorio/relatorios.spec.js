@@ -24,6 +24,7 @@ describe('Acessar relatorios: ', { tags: ['@relatorios', '@regressivo'] }, () =>
         .should('be.visible')
         .click()
       relatoriospage.validateRoute(option.relatorioURL);
+      cy.verificarErro500Visual();
     });
   });
 });

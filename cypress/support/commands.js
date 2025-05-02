@@ -71,7 +71,20 @@ Cypress.Commands.add('loginArmazenandoSessao', () => {
     });
   });
 });
+// verificar erro 500 em tela manualmente para testes que usam laço como wrap
+Cypress.Commands.add('verificarErro500Visual', () => {
+  cy.get('body').then(($body) => {
+    const errorImage = $body.find('img.error-image');
+    const errorText = $body.find('.error-message h1').text();
 
+    if (
+      errorImage.length > 0 &&
+      errorText.includes('Oops! Parece que algo deu errado')
+    ) {
+      throw new Error('Erro 500 detectado na interface: página de erro personalizada carregada.');
+    }
+  });
+});
 // temp, navegação do menu lateral:
 // Clica em uma opção do menu lateral
 Cypress.Commands.add('clicarMenu', function(opcaoClick){

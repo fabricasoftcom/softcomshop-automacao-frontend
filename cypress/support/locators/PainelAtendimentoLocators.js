@@ -68,6 +68,8 @@ const PainelAtendimentoLocators = {
     popupConfirmacao: '.sweet-alert.modal-confirm-destroy',
     botaoSimPopupConfirmacao: '.sweet-alert.modal-confirm-destroy .confirm',
     botaoNaoPopupConfirmacao: '.sweet-alert.modal-confirm-destroy .cancel',
+    checkboxGerarAtendimentoServico: '#check_gerar_atendimento_servico',
+    btnFecharModalAtendimento: '.modal-body > #btn-modal-plus-close',
 
 };
 

@@ -16,6 +16,7 @@ describe('Validação do Menu Lateral do Softcomshop', { tags: ['@menu-lateral',
                 cy.log(`Acessando menu: ${option.mainMenu.text || option.mainMenu.id} > ${option.subMenu.text || option.subMenu.id || option.subMenu.xpath} > ${option.childMenu.text || option.childMenu.id || option.childMenu.xpath}`);
                 MenuPage.clickNestedSubMenu(option.mainMenu, option.subMenu, option.childMenu);
                 MenuPage.validateRoute(option.route);
+                cy.verificarErro500Visual();
             } else if (option.subMenu) {
                 cy.log(`Acessando menu: ${option.mainMenu.text || option.mainMenu.id} > ${option.subMenu.text || option.subMenu.id}`);
                 cy.loginRestoreSession();
@@ -23,12 +24,14 @@ describe('Validação do Menu Lateral do Softcomshop', { tags: ['@menu-lateral',
                 MenuPage.clickMainMenu(option.mainMenu);
                 MenuPage.clickSubMenu(option.subMenu);
                 MenuPage.validateRoute(option.route);
+                cy.verificarErro500Visual();
             } else {
                 cy.log(`Acessando menu: ${option.mainMenu.text || option.mainMenu.id}`);
                 cy.loginRestoreSession();
                 cy.visit('/');
                 MenuPage.clickMainMenu(option.mainMenu);
                 MenuPage.validateRoute(option.route);
+                cy.verificarErro500Visual();
             }
         });
     });

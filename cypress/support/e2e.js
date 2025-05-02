@@ -58,7 +58,7 @@ beforeEach(() => {
   cy.on('window:load', () => {
     cy.get('body').then(($body) => {
       // Verifica se o conteúdo da página contém a mensagem de erro 500
-      if ($body.text().includes('Server Error') || $body.find('.code').text().includes('500')) {
+      if ($body.text().includes('Oops! Parece que algo deu errado.') || $body.find('.code').text().includes('500')) {
         testFailed = true;
         const errorMessage = 'Erro 500 detectado na interface da página (Server Error)';
         errorMessages.push(errorMessage);
