@@ -1,6 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","29922","Realizar venda com sucesso","Realizar venda","Thu Oct 03 10:13:11 BRT 2024","passed","Thu Oct 03 10:13:41 BRT 2024","","","",""
-"","14358","Realizar cadastro de cliente","Cadastro de cliente","Thu Oct 03 10:12:24 BRT 2024","passed","Thu Oct 03 10:12:38 BRT 2024","","","",""
-"","21778","Realizar cadastro de produto valido informando o vinculo fiscal","Cadastro de produtos","Thu Oct 03 10:12:41 BRT 2024","passed","Thu Oct 03 10:13:02 BRT 2024","","","",""
-"","7177","Login deve ser realizado com sucesso usando credenciais validas","Login com credenciais validas","Thu Oct 03 10:13:03 BRT 2024","passed","Thu Oct 03 10:13:11 BRT 2024","","","",""
-"","12","Login não deve ser realizado e deve ser apresentado uma mensagem informando que as credenciais são inválidas","Login com credenciais invalidas","Thu Oct 03 10:13:11 BRT 2024","passed","Thu Oct 03 10:13:11 BRT 2024","","","",""

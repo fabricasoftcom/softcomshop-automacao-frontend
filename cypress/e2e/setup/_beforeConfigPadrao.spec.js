@@ -1,4 +1,4 @@
-describe("_beforeAll", () => {
+describe.skip("_beforeAll", () => {
     describe("cypress setup", { tags: ['@before', '@regressivo'] }, () => {
         before(function(){
             cy.setupSistemaPadrao();

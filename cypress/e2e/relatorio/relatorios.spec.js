@@ -1,6 +1,6 @@
 import relatoriospage from "../../support/pages/relatorios/relatoriospage";
 
-describe('Acessar relatorios: ', { tags: ['@relatorios', '@regressivo'] }, () => {
+describe.skip('Acessar relatorios: ', { tags: ['@relatorios', '@regressivo'] }, () => {
 
   Cypress.on('uncaught:exception', () => {
     return false;

@@ -17,6 +17,10 @@ class ClientePage {
     cy.get('#btn-salvar').click();
   }
 
+  confirmarCamposObrigatorios() {
+    cy.get('.confirm').click();
+  }
+
   confirmacaoCadastroCliente() {
     cy.contains('Sucesso').should('be.visible')
   }
