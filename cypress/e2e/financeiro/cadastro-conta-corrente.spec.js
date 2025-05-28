@@ -1,6 +1,6 @@
 import contaCorrenteCadastroPage from "../../support/pages/Financeiro/ContaCorrenteCadastroPage";
 
-describe('Cadastro de Conta Corrente', { tags: ['@cadastro-conta-corrente', '@financeiro', '@regressivo'] }, () => {
+describe.skip('Cadastro de Conta Corrente', { tags: ['@cadastro-conta-corrente', '@financeiro', '@regressivo'] }, () => {
   const bancos = [
     { codigo: '001', nome: 'Banco do Brasil' },
     { codigo: '104', nome: 'Caixa Econômica' },

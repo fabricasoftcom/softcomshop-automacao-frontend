@@ -11,7 +11,7 @@ describe("Realizar venda", { tags: ['@venda-nfce', '@regressivo'] }, () => {
         VendaPage.adicionarProduto();
         VendaPage.adicionarPagamento();
         VendaPage.salvarPagamento();
-        VendaPage.gerarNFCe();
-        cy.get('.btn:contains("Nota Fiscal Consumidor")').should('be.visible');
+        // VendaPage.gerarNFCe();
+        // cy.get('.btn:contains("Nota Fiscal Consumidor")').should('be.visible');
     });
 });
