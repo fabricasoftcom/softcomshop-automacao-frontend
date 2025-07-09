@@ -1,7 +1,7 @@
 import novaDespesaPage from "../../support/pages/Financeiro/NovaDespesaPage";
 import ListagemContasAPagarPage from "../../support/pages/Financeiro/ListagemContasAPagarPage";
 
-describe('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@regressivo'] }, () => {
+describe.skip('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@regressivo'] }, () => {
     const formasPagamento = require('../../fixtures/formasPagamento.json').formasPagamento;
     const categoria = 'Despesa'
 

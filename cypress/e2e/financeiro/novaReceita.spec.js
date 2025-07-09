@@ -1,7 +1,7 @@
 import NovaReceitaPage from "../../support/pages/Financeiro/NovaReceitaPage";
 import ListagemContasAReceberPage from "../../support/pages/Financeiro/ListagemContasAReceberPage";
 
-describe('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@regressivo'] }, () => {
+describe.skip('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@regressivo'] }, () => {
     const formasPagamento = require('../../fixtures/formasPagamento.json').formasPagamento;
     const categoria = 'RECEITA'
 

@@ -64,10 +64,7 @@ module.exports = defineConfig({
     baseUrl: 'https://stage-hotfix-1.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
-    // retries: {
-    //   runMode: 1, // Número de tentativas em modo de execução
-    //   openMode: 0 // Número de tentativas em modo interativo
-    // }
+
     experimentalStudio: true,
   },
 });

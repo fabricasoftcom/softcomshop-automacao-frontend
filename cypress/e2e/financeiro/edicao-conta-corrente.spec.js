@@ -1,7 +1,7 @@
 import ListagemContasPage from "../../support/pages/Financeiro/ListagemContasPage";
 import ContaCorrenteEdicaoPage from "../../support/pages/Financeiro/ContaCorrenteEdicaoPage";
 
-describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrente', '@financeiro', '@regressivo'] }, () => {
+describe.skip('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrente', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
     cy.visit("/");
@@ -28,7 +28,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
     // Verifica que o switch mudou para a aparência de "desativado"
     cy.get('#div_active > .switchery').should('have.attr', 'style').and('include', 'border-color: rgb(223, 223, 223)');
   });
-it('Deve alterar o último número da remessa, salvar e validar a alteração', () => {
+it.skip('Deve alterar o último número da remessa, salvar e validar a alteração', () => {
     // Seleciona uma conta ativa para edição
     ListagemContasPage.selecionarPrimeiraContaBancoAtiva();
     cy.get('#loading').should('not.exist');

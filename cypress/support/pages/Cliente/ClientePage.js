@@ -20,6 +20,10 @@ class ClientePage {
     cy.get(clienteLocators.botaoConfirmar).click(); // confirmação de cadastro para quando modulo fiscal ativo
   }
 
+  confirmarCamposObrigatorios() {
+    cy.get('.confirm').click();
+  }
+
   confirmacaoCadastroCliente() {
     cy.contains('Sucesso').should('be.visible')
   }
