@@ -1,6 +1,6 @@
 import BaixarDespesasPage from "../../support/pages/Financeiro/BaixarDespesasPage";
 
-describe.skip('Testes de Baixa de Despesas', { tags: ['@baixar-despesa', '@financeiro', '@regressivo'] }, () => {
+describe('Testes de Baixa de Despesas', { tags: ['@baixar-despesa', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
     cy.visit("/");

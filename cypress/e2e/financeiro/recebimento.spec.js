@@ -1,6 +1,6 @@
 import RecebimentoPage from "../../support/pages/Financeiro/RecebimentoPage";
 
-describe.skip('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro', '@regressivo'] }, () => {
+describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
     cy.visit("/");

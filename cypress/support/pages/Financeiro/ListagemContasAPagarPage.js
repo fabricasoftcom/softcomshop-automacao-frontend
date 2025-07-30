@@ -9,20 +9,20 @@ class ListagemContasAPagarPage {
   }
 
   verificarCarregamentoDaPagina() {
-    cy.get('h5').contains('Despesa').should('be.visible');
+    cy.get('h5').contains('Contas a Pagar').should('be.visible');
   }
 
   // ---------------------- Ações de Filtro ----------------------
 
   filtrarPorPeriodo(periodo = 'TODAY', tipoData = 'VENCIMENTO') {
-    cy.get(ListagemContasAPagarLocators.periodoSelect).select(periodo);
-    cy.get(ListagemContasAPagarLocators.tipoDataSelect).select(tipoData);
+    cy.get(ListagemContasAPagarLocators.periodoSelectListagem).select(periodo);
+    cy.get(ListagemContasAPagarLocators.tipoDataSelectListagem).select(tipoData);
     this.validarFiltroAplicado(periodo, tipoData);
   }
 
   validarFiltroAplicado(periodo, tipoData) {
-    cy.get(ListagemContasAPagarLocators.periodoSelect).should('have.value', periodo);
-    cy.get(ListagemContasAPagarLocators.tipoDataSelect).should('have.value', tipoData);
+    cy.get(ListagemContasAPagarLocators.periodoSelectListagem).should('have.value', periodo);
+    cy.get(ListagemContasAPagarLocators.tipoDataSelectListagem).should('have.value', tipoData);
   }
 
   // ---------------------- Ações na Tabela ----------------------
@@ -36,7 +36,7 @@ class ListagemContasAPagarPage {
       .filter(':contains("Baixar")')
       .first()
       .find(ListagemContasAPagarLocators.checkboxLinha)
-      .check({ force: true });
+      .check();
   }
 
   abrirDropdownPrimeiraLinhaComStatusBaixar() {
@@ -109,6 +109,10 @@ class ListagemContasAPagarPage {
       .should('contain.text', 'Deseja realmente cancelar está parcela?');
   }
 
+  clicarPesquisar() {
+    cy.get(ListagemContasAPagarLocators.botaoPesquisar);
+  }
+
   preencherMotivoCancelamento(motivo) {
     cy.get(ListagemContasAPagarLocators.inputMotivoCancelamento).type(motivo);
   }
@@ -148,7 +152,7 @@ class ListagemContasAPagarPage {
 
   validarPrimeiraLinhaTabela() {
     cy.get(ListagemContasAPagarLocators.linhaTabela).first().within(() => {
-      cy.get(ListagemContasAPagarLocators.colunaDataVencimento).should('be.visible');
+      cy.get(ListagemContasAPagarLocators.colunaDataVencimento);
       cy.get(ListagemContasAPagarLocators.colunaDescricao).should('be.visible');
       cy.get(ListagemContasAPagarLocators.colunaFornecedor).should('be.visible');
       cy.get(ListagemContasAPagarLocators.colunaCategoria).should('be.visible');
@@ -213,21 +217,21 @@ class ListagemContasAPagarPage {
       .should('contain.text', 'Baixar');
   }
   selecionarPeriodoEsteMes() {
-    cy.get(ListagemContasAPagarLocators.periodoSelect).select('MONTH');
-    cy.get(ListagemContasAPagarLocators.periodoSelect).should('have.value', 'MONTH');
-}
-validarValoresNaColunaValorParcela() {
-  cy.get('table.table tbody tr').each(($row) => {
+    cy.get(ListagemContasAPagarLocators.periodoSelectListagem).select('MONTH');
+    cy.get(ListagemContasAPagarLocators.periodoSelectListagem).should('have.value', 'MONTH');
+  }
+  validarValoresNaColunaValorParcela() {
+    cy.get('table.table tbody tr').each(($row) => {
       cy.wrap($row)
-          .find('td:nth-child(6)') // A sexta coluna corresponde à "Valor Parcela"
+          .get('td:nth-child(8)') // A oitava coluna corresponde à "Valor Parcela"
           .invoke('text')
           .then((valor) => {
               // Remove espaços extras e converte valor para número
               valor = valor.trim().replace(/\./g, '').replace(',', '.');
               expect(parseFloat(valor)).to.be.greaterThan(0, 'Valor Parcela deve ser maior que 0,00');
           });
-  });
-}
+    });
+  }
 
 }
 

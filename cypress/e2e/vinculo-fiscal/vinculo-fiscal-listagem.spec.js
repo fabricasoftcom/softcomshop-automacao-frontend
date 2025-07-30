@@ -17,7 +17,7 @@ describe('Testes de Listagem de Vínculo Fiscal', { tags: ['@listagem-vinculo-fi
     cy.get('h5').should('contain', 'Vínculo Fiscal');
   });
 
-  it.skip('Deve excluir todos os itens selecionados', () => {
+  it('Deve excluir todos os itens selecionados', () => {
     // Seleciona todos os registros da tabela
     VinculoFiscalListagemPage.selecionarTodosRegistros();
 

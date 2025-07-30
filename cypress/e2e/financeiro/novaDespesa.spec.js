@@ -1,7 +1,7 @@
 import novaDespesaPage from "../../support/pages/Financeiro/NovaDespesaPage";
 import ListagemContasAPagarPage from "../../support/pages/Financeiro/ListagemContasAPagarPage";
 
-describe.skip('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@regressivo'] }, () => {
+describe('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@regressivo'] }, () => {
     const formasPagamento = require('../../fixtures/formasPagamento.json').formasPagamento;
     const categoria = 'Despesa'
 
@@ -13,7 +13,7 @@ describe.skip('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro
         it(`Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}`, () => {
             cy.loginArmazenandoSessao()
             cy.visit('/financeiro/contas-a-pagar')
-            cy.get('h5').contains('Despesa').should('be.visible');
+            cy.get('h5').contains('Contas a Pagar').should('be.visible');
             ListagemContasAPagarPage.abrirNovoCadastro();
             preencherFormulario(categoria, formaPagamento);
         });

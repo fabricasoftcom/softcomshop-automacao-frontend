@@ -1,12 +1,13 @@
 const ListagemContasAPagarLocators = {
   // Botões principais
-  novoCadastroButton: '.btn-warning.btn-sm:contains("Novo cadastro")',
+  novoCadastroButton: '#novo-contas-a-pagar',
   baixarSelecionadosButton: '.btn-success.btn-sm:contains("Baixar selecionados")',
   buscarButton: '.btn-warning i.fa-search',
+  botaoPesquisar: '#pesquisar',
 
   // Filtros (usando seletores não dinâmicos)
-  periodoSelect: '.col-md-2 .form-group select.form-control', // Filtro de período (coluna 1)
-  tipoDataSelect: '.col-md-2:nth-of-type(3) select.form-control', // Filtro de tipo de data (coluna 3)
+  periodoSelectListagem: '#periodo', // Filtro de período (coluna 1)
+  tipoDataSelectListagem: '#tipo_data', // Filtro de tipo de data (coluna 3)
   contaBancariaAutocomplete: 'input[name="autocomplete_bank_account"]',
   dataSearchInput: 'input.daterangepicker-date_search',
   calendarioButton: '.btn-daterangepicker-date_search',
@@ -14,8 +15,8 @@ const ListagemContasAPagarLocators = {
   // Tabela de despesas
   tabela: 'table.table',
   linhaTabela: 'table tbody tr',
-  checkboxTodos: 'input.receive_check_all',
-  checkboxLinha: 'input.receive_check',
+  checkboxTodos: '#check-all-contas-a-pagar',
+  checkboxLinha: '.check_financeiro_parcela',
 
   // Colunas da tabela
   colunaDataVencimento: 'td:nth-child(2)',

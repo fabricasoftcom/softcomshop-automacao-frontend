@@ -1,13 +1,13 @@
 import ListagemContasPage from "../../support/pages/Financeiro/ListagemContasPage";
 
-describe.skip('Testes de Listagem de Contas', { tags: ['@listagem-conta', '@financeiro', '@regressivo'] }, () => {
+describe('Testes de Listagem de Contas', { tags: ['@listagem-conta', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
     cy.visit("/");
     ListagemContasPage.visit();
   });
 
-it.skip('Deve clicar no botão de novo cadastro e redirecionar para a página de cadastro', () => {
+it('Deve clicar no botão de novo cadastro e redirecionar para a página de cadastro', () => {
     // Clicar no botão de novo cadastro
     ListagemContasPage.clicarNovoCadastro();
 

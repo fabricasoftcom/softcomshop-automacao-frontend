@@ -20,30 +20,23 @@ class NovaReceitaPage {
 
   selecionarCategoria(categoria) {
     cy.get(NovaReceitaLocators.categoriaAutocomplete).type(categoria);
-    cy.get('#autocomplete_category_list').should('be.visible');
-    cy.get('.category_result')
+    cy.get('.soft-select__option').should('be.visible');
+    cy.get('.soft-select__option')
       .filter((_, el) => el.innerText.trim().toLowerCase() === categoria.toLowerCase())
       .click();
   }
 
   selecionarConta() {
     const conta = 'CAIXA';
-    cy.get(NovaReceitaLocators.contaAutocomplete).type(conta, { force: true });
-
-    // Tenta mostrar explicitamente o contêiner de opções
-    cy.get(NovaReceitaLocators.contaOptionList).invoke('show');
-
-    // Aguarda um curto período para garantir o carregamento da lista
-    cy.wait(1000);
-
+    cy.get(NovaReceitaLocators.contaAutocomplete).type(conta);
     // Clica na opção "CAIXA" na lista de resultados
     cy.contains(NovaReceitaLocators.contaOptionResult, conta).click({ force: true });
   }
 
   selecionarFormaPagamento(forma) {
     cy.get(NovaReceitaLocators.formaPagamentoAutocomplete).type(forma);
-    cy.get('#autocomplete_payment_method_list').should('be.visible')
-    cy.get('.payment_method_results .payment_method_result')
+    cy.get('.soft-select__option').should('be.visible')
+    cy.get('.soft-select__option')
       .filter((_, el) => el.innerText.trim().toLowerCase() === forma.toLowerCase())
       .click();
   }
@@ -58,8 +51,7 @@ class NovaReceitaPage {
 
   preencherValor(valor = '100,00') {
     // Localiza o campo de valor usando o seletor direto dentro do formulário
-    cy.get('#form-receive > :nth-child(3) > :nth-child(3)')
-      .find('input')        // Encontra o input dentro da estrutura localizada
+    cy.get(NovaReceitaLocators.valorInput)
       .clear()              // Limpa o campo
       .type(valor);         // Digita o valor especificado
   }
@@ -67,28 +59,17 @@ class NovaReceitaPage {
   selecionarCliente(cliente = 'Cliente Padrão') {
     // Localiza o campo de autocomplete para cliente e clica no botão para exibir a lista
     cy.get(NovaReceitaLocators.clienteAutocomplete)
-      .type(cliente, { force: true });  // Digita o valor no campo de cliente (se necessário)
-
-    // Clica no botão para expandir o autocomplete
-    cy.get('#autocomplete_client_addon').click();
-
-    // Aguarda um curto período para garantir que a lista seja carregada
-    cy.wait(1000);
-
+      .type(cliente);  // Digita o valor no campo de cliente (se necessário)
     // Seleciona o segundo item na lista de resultados
-    cy.get('.client_results > :nth-child(2)').click();
+    cy.get('.soft-select__option').eq(1).click();
   }
 
   selecionarTipoDocumento(tipo = 'Padrão') {
     // Localiza o campo de autocomplete para tipo de documento e digita o valor
     cy.get(NovaReceitaLocators.tipoDocumentoAutocomplete)
-      .type(tipo, { force: true });  // Digita o valor no campo de tipo de documento
-
-    // Aguarda um curto período para garantir que a lista seja carregada
-    cy.wait(1000);
-
+      .type(tipo);  // Digita o valor no campo de tipo de documento
     // Seleciona o primeiro item na lista de resultados para o tipo de documento
-    cy.get('.document_type_results .document_type_result:first-child').click();
+    cy.get('.soft-select__option').first().click();
   }
   preencherNumeroDocumento(numero = '12345') {
     cy.get(NovaReceitaLocators.numeroDocumentoInput).clear().type(numero);

@@ -1,6 +1,6 @@
 import EditarReceitaPage from "../../support/pages/Financeiro/EditarReceitaPage";
 
-describe.skip('Edição Completa de Receita', { tags: ['@editar-receita', '@financeiro', '@regressivo'] }, () => {
+describe('Edição Completa de Receita', { tags: ['@editar-receita', '@financeiro', '@regressivo'] }, () => {
     beforeEach(() => {
         cy.loginArmazenandoSessao();
         cy.visit("/");

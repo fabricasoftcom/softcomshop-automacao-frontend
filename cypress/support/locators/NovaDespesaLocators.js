@@ -5,22 +5,22 @@ const NovaDespesaLocators = {
   modalTitle: '.modal-title',
 
   // Inputs do formulário
-  descricaoInput: '#description',
-  categoriaAutocomplete: '#autocomplete_category',
-  contaAutocomplete: '#autocomplete_bank_account',
-  formaPagamentoAutocomplete: '#autocomplete_payment_method',
-  dataCompetenciaInput: '#competency_date',
-  dataVencimentoInput: '#dueDate',
+  descricaoInput: '#historico',
+  categoriaAutocomplete: '.modal-content #categoria_id',
+  contaAutocomplete: '#conta_id',
+  formaPagamentoAutocomplete: '#forma_pagamento_id',
+  dataCompetenciaInput: '#termino_vigencia',
+  dataVencimentoInput: '#data_termino_vigencia',
 
  // Div que contém o campo de valor
  divValor: '#form-receive > :nth-child(3) > :nth-child(3)',
 
  // Campo de valor - será localizado dentro de divValor na classe de página
- valorInputDentroDiv: 'input.form-control',  // Localizador para o input dentro da divValor
+ valorInputDentroDiv: '#valor_parcela',  // Localizador para o input dentro da divValor
 
-  fornecedorAutocomplete: '#autocomplete_provider',
-  tipoDocumentoAutocomplete: '#autocomplete_document_type',
-  numeroDocumentoInput: '#document_number',
+  fornecedorAutocomplete: '#fornecedor_id',
+  tipoDocumentoAutocomplete: '#tipo_documento_id',
+  numeroDocumentoInput: '#documento',
 
   // Botões
   repetirButton: 'a:contains("Repetir")',

@@ -22,31 +22,27 @@ class NovaDespesaPage {
 
     selecionarCategoria(categoria) {
         cy.get(NovaDespesaLocators.categoriaAutocomplete)
-            .clear()
             .type(categoria);
-        cy.get('#autocomplete_category_list').should('be.visible');
-        cy.get('.category_result')
+        cy.get('.soft-select__option').should('be.visible');
+        cy.get('.soft-select__option')
             .filter((_, el) => el.innerText.trim().toLowerCase() === categoria.toLowerCase())
             .click();
     }
 
     selecionarConta(conta = 'CAIXA') {
+        cy.get(NovaDespesaLocators.contaAutocomplete)
+            .type(conta);
         cy.get(NovaDespesaLocators.modalContent)
-            .find(NovaDespesaLocators.contaAutocomplete)
-            .clear()
-            .type(conta, { force: true });
-        cy.get(NovaDespesaLocators.modalContent)
-            .find('#autocomplete_bank_account_list')
+            .find('.soft-select__option')
             .should('be.visible');
-        cy.contains('.bank_account_result', conta).click();
+        cy.get('.soft-select__option').first().click();
     }
 
     selecionarFormaPagamento(forma) {
         cy.get(NovaDespesaLocators.formaPagamentoAutocomplete)
-            .clear()
             .type(forma);
-        cy.get('#autocomplete_payment_method_list').should('be.visible');
-        cy.contains('.payment_method_result', forma).click();
+        cy.get('.soft-select__option').should('be.visible');
+        cy.get('.soft-select__option').first().click();
     }
 
     selecionarDataCompetencia(data) {
@@ -59,26 +55,21 @@ class NovaDespesaPage {
 
     preencherValor(valor) {
         // Localiza a div que contém o campo de valor e, em seguida, localiza o input dentro dela
-        cy.get(NovaDespesaLocators.divValor)
-            .find(NovaDespesaLocators.valorInputDentroDiv)
+        cy.get(NovaDespesaLocators.valorInputDentroDiv)
             .should('be.visible')
             .clear()
             .type(valor, { force: true });
     }
-    selecionarFornecedor(fornecedor = 'fornecedor 01') {
-        cy.get(NovaDespesaLocators.fornecedorAutocomplete)
-            .type(fornecedor,{ force: true });
-        cy.get('#autocomplete_provider_addon').click();
-        cy.wait(5000)
-        cy.get('.provider_results > :nth-child(1)').click();
+    selecionarFornecedor() {
+        cy.get(NovaDespesaLocators.fornecedorAutocomplete).click();
+        cy.get('.soft-select__option').first().click();
     }
 
     selecionarTipoDocumento(tipo) {
         cy.get(NovaDespesaLocators.tipoDocumentoAutocomplete)
-            .clear()
             .type(tipo);
-        cy.get('#autocomplete_document_type_list').should('be.visible');
-        cy.contains('.document_type_result', tipo).click();
+        cy.get('.soft-select__option').should('be.visible');
+        cy.get('.soft-select__option').first().click();
     }
 
     preencherNumeroDocumento(numero) {
@@ -88,7 +79,7 @@ class NovaDespesaPage {
     clicarSalvar() {
         cy.get(NovaDespesaLocators.salvarButton).click();
         cy.get('#loading').should('not.exist');
-        cy.get('h5', {timeout: 15000}).contains('Despesa').should('be.visible');
+        cy.get('h5', {timeout: 15000}).contains('Contas a Pagar').should('be.visible');
     }
 
 }
