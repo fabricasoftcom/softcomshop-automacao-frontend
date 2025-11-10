@@ -56,7 +56,7 @@
     },
     {
         "relatorioName": "NFSe",
-        "relatorioElement": "//a[contains(.,'NFSe')]",
+        "relatorioElement": "//td//a[contains(., 'NFSe')]",
         "relatorioURL": "/relatorio/relatorio-nfse"
     },
     {

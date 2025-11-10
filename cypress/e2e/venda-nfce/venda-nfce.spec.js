@@ -8,7 +8,7 @@ describe("Realizar venda", { tags: ['@venda-nfce', '@regressivo'] }, () => {
 
     it("Realizar venda com sucesso", () => {
         cy.get('.text-muted').click().then(() => {
-            cy.get('.dropdown-menu > :nth-child(5) > a:contains("softcom matriz")').click();
+            cy.get('.dropdown > .dropdown-menu > :contains("SOFTCOM MATRIZ")').click();
         });
         VendaPage.acessarPaginaVenda();
         VendaPage.informarVendedor();

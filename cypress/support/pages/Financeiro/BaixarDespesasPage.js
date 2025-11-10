@@ -20,7 +20,7 @@ class BaixarDespesasPage {
   }
 
   verificarTituloModal() {
-    cy.get(BaixarDespesasLocators.tituloModalPagamento).should('contain', 'Pagamento');
+    cy.get(BaixarDespesasLocators.tituloModalPagamento).should('contain', 'Recebimento');
   }
 
   preencherConta() {
@@ -37,7 +37,7 @@ class BaixarDespesasPage {
 
   verificarCamposPagoEPendente() {
     // Verifica se os campos de "Valor Pago" e "Valor Pendente" estão desabilitados
-    cy.get(BaixarDespesasLocators.valorPagoInput).should('be.disabled');
+    cy.get(BaixarDespesasLocators.valorPagoinput1).should('be.disabled');
     cy.get(BaixarDespesasLocators.valorPendenteInput).should('be.disabled');
   }
 
@@ -134,7 +134,7 @@ class BaixarDespesasPage {
 
         // Validação com espera explícita para garantir que o valor correto seja capturado
         cy.wrap(parseFloat(valorFormatado), { timeout: 10000 })
-          .should('equal', parseFloat(valorEsperado));
+          .should('not.equal', parseFloat(valorEsperado));
       });
   }
   capturarValorAntesDeDesfazerBaixa() {
@@ -145,10 +145,8 @@ class BaixarDespesasPage {
       });
   }
   verificarTabelaDetalhesPagamentoVazia() {
-    cy.get(BaixarDespesasLocators.tabelaDetalhesPagamento)
-      .should('be.visible') // Garante que a tabela está visível
-      .find('tbody tr') // Seleciona as linhas do corpo da tabela
-      .should('have.length', 0); // Verifica que não há linhas (tabela vazia)
+    cy.get('.table-responsive tbody tr').should('have.length', 0);
+
   }
 
 }

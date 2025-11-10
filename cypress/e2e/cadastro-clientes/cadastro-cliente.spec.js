@@ -12,8 +12,6 @@ describe('Cadastro de cliente', { tags: ["@cadastro-cliente", "@regressivo"] }, 
         const cliente = generateRandomCustomer();
         ClientePage.preencherCamposCliente(cliente);
         ClientePage.cadastrar();
-        cy.wait(3000)
-        ClientePage.confirmarCamposObrigatorios();
         ClientePage.confirmacaoCadastroCliente();
     })
 })

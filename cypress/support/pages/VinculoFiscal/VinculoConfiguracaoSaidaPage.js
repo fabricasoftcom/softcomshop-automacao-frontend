@@ -53,7 +53,7 @@ class VinculoConfiguracaoSaidaPage {
         cy.get('#div_auto_cst_csosn > .typeahead-container > .typeahead-result > .typeahead-list >> a')
             .contains(dadosSaida.cstCsosn).click({ force: true });
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsModalidadeBase).clear().type(dadosSaida.icmsModalidadeBase);
-        cy.get('.typeahead-list > li > a').contains(dadosSaida.icmsModalidadeBase).click();
+        cy.get('#div_auto_icms_modalidade_base > .typeahead-container > .typeahead-result > .typeahead-list').contains(dadosSaida.icmsModalidadeBase).click();
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsAcrescimo).clear().type(dadosSaida.icmsAcrescimo);
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsReducao).clear().type(dadosSaida.icmsReducao);
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsOrigem).select(dadosSaida.icmsOrigem);

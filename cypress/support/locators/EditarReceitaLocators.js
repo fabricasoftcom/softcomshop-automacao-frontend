@@ -4,33 +4,33 @@ const EditarReceitaLocators = {
     closeButton: '.modal-header .close',
 
     // Seletores do formulário
-    descricaoInput: '#description',
+    descricaoInput: '#historico',
 
     // Categoria
-    categoriaAutocomplete: '#autocomplete_category',
-    categoriaResults: '#autocomplete_category_list .category_result',
+    categoriaAutocomplete: ' .modal #categoria_id > .soft-select__control',
+    categoriaResults: '.category_results .category_result',
 
     // Conta
-    contaAutocomplete: '#autocomplete_bank_account',
+    contaAutocomplete: '.modal #conta_id > .soft-select__control',
     contaResults: '#autocomplete_bank_account_list .bank_account_result',
 
     // Forma de pagamento
-    formaPagamentoAutocomplete: '#autocomplete_payment_method',
-    formaPagamentoResults: '#autocomplete_payment_method_list .payment_method_result',
+    formaPagamentoAutocomplete: '.modal #forma_pagamento_id > .soft-select__control',
+    formaPagamentoResults: '.soft-select__option',
 
     // Datas
-    dataCompetenciaInput: '#competency_date',
-    dataVencimentoInput: '#dueDate',
+    dataCompetenciaInput: '#termino_vigencia',
+    dataVencimentoInput: '#data_termino_vigencia',
 
     // Valor, localizado pelo rótulo "Valor*"
-    valorInput: '.form-group:has(label:contains("Valor")) .form-control',
+    valorInput: '#valor_parcela',
 
     // Cliente
-    clienteAutocomplete: '#autocomplete_client',
-    clienteResults: '#autocomplete_client_list .client_result',
+    clienteAutocomplete: '.modal #cliente_id > .soft-select__control',
+    clienteResults: '.client_results .client_result',
 
     // Tipo de documento e número
-    tipoDocumentoAutocomplete: '#autocomplete_document_type',
+    tipoDocumentoAutocomplete: '.modal #tipo_documento_id > .soft-select__control',
     tipoDocumentoResults: '#autocomplete_document_type_list .document_type_result',
     numeroDocumentoInput: '#document_number',
 

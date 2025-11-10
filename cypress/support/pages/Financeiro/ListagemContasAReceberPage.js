@@ -10,7 +10,7 @@ class ListagemContasAReceberPage {
   }
 
   verificarCarregamentoDaPagina() {
-    cy.get('h5').contains('Receita').should('be.visible');
+    cy.get('h5').contains('Contas a Receber').should('be.visible');
   }
 
   // ====== Ações de Cadastro e Filtros ======
@@ -98,7 +98,10 @@ class ListagemContasAReceberPage {
   // ====== Ações de Dropdown nas Linhas ======
 
   abrirDropdownAcaoPrimeiraLinha() {
-    cy.get(ListagemContasAReceberLocators.dropdownAcao).should('be.visible').click();
+    // cy.get(ListagemContasAReceberLocators.dropdownAcao).should('be.visible').click();
+    // O id do dropdown ta dinamico ver se é possivel fixar
+    cy.get('tbody > :nth-child(1) > :nth-child(11) .dropdown').click();
+
   }
 
   abrirDropdownAcaoNaLinha(valor) {
@@ -158,7 +161,7 @@ class ListagemContasAReceberPage {
   verificarModalFechado() {
     cy.get(ListagemContasAReceberLocators.modalTituloBaixar).should('not.exist');
   }
-    // Seleciona uma opção no dropdown de conta para a baixa
+  // Seleciona uma opção no dropdown de conta para a baixa
   selecionarContaParaBaixa(conta) {
     cy.get(ListagemContasAReceberLocators.dropdownContaBaixa)
       .select(conta); // Seleciona a conta especificada
@@ -195,7 +198,7 @@ class ListagemContasAReceberPage {
   cancelarExclusao() {
     cy.get(ListagemContasAReceberLocators.modalBotaoCancelarExcluir).click();
   }
-    // Clica no botão de confirmação "Sim, pode realizar a baixa!"
+  // Clica no botão de confirmação "Sim, pode realizar a baixa!"
   confirmarBaixa() {
     cy.get(ListagemContasAReceberLocators.botaoConfirmarBaixa).click();
   }
@@ -240,19 +243,23 @@ class ListagemContasAReceberPage {
   selecionarPeriodoEsteMes() {
     cy.get(ListagemContasAReceberLocators.periodoSelect).select('MONTH');
     cy.get(ListagemContasAReceberLocators.periodoSelect).should('have.value', 'MONTH');
-}
-validarValoresNaColunaValorParcela() {
-  cy.get('table.table tbody tr').each(($row) => {
-      cy.wrap($row)
-          .find('td:nth-child(7)') // A sexta coluna corresponde à "Valor Parcela"
+    cy.get(ListagemContasAReceberLocators.pesquisarBtn).click();
+  }
+  validarValoresNaColunaValorParcela() {
+    cy.wait(2000)
+    cy.get('table tbody tr').each(($row) => {
+      // Re-wrap the row in the current iteration
+      cy.wrap($row).within(() => {
+        cy.get('td:nth-child(7)')
           .invoke('text')
           .then((valor) => {
-              // Remove espaços extras e converte valor para número
-              valor = valor.trim().replace(/\./g, '').replace(',', '.');
-              expect(parseFloat(valor)).to.be.greaterThan(0, 'Valor Parcela deve ser maior que 0,00');
+            // Remove espaços extras e converte valor para número
+            valor = valor.trim().replace(/\./g, '').replace(',', '.');
+            expect(parseFloat(valor)).to.be.greaterThan(0, 'Valor Parcela deve ser maior que 0,00');
           });
-  });
-}
+      });
+    });
+  }
 
 }
 

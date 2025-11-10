@@ -11,8 +11,6 @@ describe('Testes de Baixa de Despesas', { tags: ['@baixar-despesa', '@financeiro
     BaixarDespesasPage.clicarPrimeiraLinhaComStatusBaixar();
     BaixarDespesasPage.preencherConta();
     BaixarDespesasPage.preencherFormaPagamento();
-    BaixarDespesasPage.preencherJurosMulta('5,00');
-    BaixarDespesasPage.preencherDesconto('2,00');
     BaixarDespesasPage.verificarCampoValorFinal();
 
     BaixarDespesasPage.obterValorFinal().then(valorFinal => {

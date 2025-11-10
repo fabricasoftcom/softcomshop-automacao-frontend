@@ -16,7 +16,7 @@ class VendaPage {
     adicionarProduto() {
       // cy.get('#auto_icon_produto_empresa_grade_id_').click();
       // cy.xpath("//strong[@class='autocomplete-color-primary'][contains(.,'coca-cola lata 350ml')]").click()
-      cy.get('#auto_produto_empresa_grade_id_').type('teste ncm');
+      cy.get('#auto_produto_empresa_grade_id_').type('cst');
       cy.get('#div_auto_produto_empresa_grade_id_ > .typeahead-container > .typeahead-result > .typeahead-list > :nth-child(1) > a').click();
     }
 

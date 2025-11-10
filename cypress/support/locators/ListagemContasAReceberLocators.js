@@ -6,7 +6,7 @@ const ListagemContasAReceberLocators = {
   contaBancariaInput: '#autocomplete_bank_account', // Campo de conta bancária
   formaPagamentoInput: '#autocomplete_payment_methods', // Campo de forma de pagamento
   aplicarBtn: '.daterangepicker .applyBtn', // Botão "Aplicar" do modal
-  pesquisarBtn: '.btn.btn-warning.btn-sm:contains("Pesquisar")', // Botão "Pesquisar"
+  pesquisarBtn: '#pesquisar', // Botão "Pesquisar"
 
   // Totalizadores
   totalizadoresRotulos: '.row .col-md-3 small', // Rótulos dos totalizadores
@@ -32,7 +32,7 @@ const ListagemContasAReceberLocators = {
   celulaStatusPrimeiraLinha: '.table tbody tr:first-child .btn', // Célula de status na primeira linha
 
   // Ações na Linha da Tabela
-  dropdownAcao: '#dropdown-basic', // Botão de dropdown de ações
+  dropdownAcao: '.dropdown', // Botão de dropdown de ações
   opcaoEditar: '.dropdown-menu .dropdown-item:contains("Editar")',
   opcaoDetalhes: '.dropdown-menu .dropdown-item:contains("Detalhes do título")',
   opcaoCancelar: '.dropdown-menu .dropdown-item:contains("Cancelar")',
@@ -75,6 +75,6 @@ const ListagemContasAReceberLocators = {
   // Notificação de Sucesso
   notificacaoSucesso: '.Toastify__toast--success', // Toastify de sucesso
 
-  periodoSelect: '.row > :nth-child(1).col-md-2 .form-group select.form-control',
+  periodoSelect: '#periodo',
 };
 export default ListagemContasAReceberLocators;

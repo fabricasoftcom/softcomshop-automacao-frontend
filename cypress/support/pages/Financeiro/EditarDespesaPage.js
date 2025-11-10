@@ -38,17 +38,8 @@ class EditarDespesaPage {
           .type(descricao, { force: true });
     }
 
-    selecionarCategoria(categoria = "DESPESA") {
-        cy.get(EditarDespesaLocators.categoriaAutocomplete).invoke('val').then((categoriaAtual) => {
-            const valorParaPreencher = categoriaAtual || categoria;
-            cy.get(EditarDespesaLocators.categoriaAutocomplete)
-                .click({ force: true })
-              .clear({ force: true })
-              .type(valorParaPreencher, { force: true });
-            cy.get(EditarDespesaLocators.categoriaResults)
-              .contains(valorParaPreencher)
-              .click({ force: true });
-        });
+    selecionarCategoria() {
+        this.selecionarValorDiferenteAtual(EditarDespesaLocators.categoriaAutocomplete);
     }
 
     selecionarConta() {
@@ -117,6 +108,22 @@ class EditarDespesaPage {
               .clear({ force: true })
               .type(novoValor, { force: true });
         });
+    }
+        selecionarValorDiferenteAtual(locator) {
+        cy.get(locator)  // Localiza o autocomplete e pega o valor Atual
+            .invoke('text')
+            .then((valorAtual) => {
+                cy.get(locator).click({ force: true });// Abre o dropdown
+                cy.get('.soft-select__option')
+                    .should('have.length.greaterThan', 1) // Garante que há mais de uma opção
+                    .each(($opcao) => {
+                        const textoOpcao = $opcao.text().trim();
+                        if (textoOpcao !== valorAtual) { // Se a opção for diferente da atual, clica nela
+                            cy.wrap($opcao).click({ force: true });
+                            return false; // interrompe o .each apos o click
+                        }
+                    });
+            });
     }
 }
 

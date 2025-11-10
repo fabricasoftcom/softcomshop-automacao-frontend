@@ -26,7 +26,7 @@ class ConfiguracaoSaidaNFcePage {
         cy.get(ConfiguracaoSaidaNFceLocators.campoCstCsosn).clear({ force: true }).type(dadosSaida.cstCsosn);
         cy.get('#div_auto_cst_csosn .typeahead-list >> a').contains(dadosSaida.cstCsosn).click({ force: true });
         cy.get(ConfiguracaoSaidaNFceLocators.campoIcmsModalidadeBase).clear().type(dadosSaida.icmsModalidadeBase);
-        cy.get('.typeahead-list > li > a').contains(dadosSaida.icmsModalidadeBase).click();
+        cy.get('#div_auto_icms_modalidade_base > .typeahead-container > .typeahead-result > .typeahead-list').contains(dadosSaida.icmsModalidadeBase).click();
     }
 
     // Preencher PIS/COFINS

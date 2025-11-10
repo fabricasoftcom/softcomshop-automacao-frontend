@@ -60,7 +60,17 @@ class PainelAtendimentoPage {
         cy.get(PainelAtendimentoLocators.btnAbrirTipoAtendimento).click();
         cy.get(PainelAtendimentoLocators.listaResultadoTipoAtendimento).click();
         // Quando por horario
-        // cy.get(PainelAtendimentoLocators.campoHorario).clear().type('14:00');
+        cy.get('body').then($body => {
+            if ($body.find(PainelAtendimentoLocators.campoHorario).length) {
+                const hora = new Date().toLocaleTimeString('pt-BR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+
+                cy.get(PainelAtendimentoLocators.campoHorario).clear().type(hora);
+            }
+        });
         cy.get(PainelAtendimentoLocators.campoDuracao).select('30 minutos');
 
         cy.get(PainelAtendimentoLocators.btnAbrirProfissional).click();
@@ -124,8 +134,23 @@ class PainelAtendimentoPage {
             }
         });
     }
-    fecharModalAtendimento(){
+    fecharModalAtendimento() {
         cy.get(PainelAtendimentoLocators.btnFecharModalAtendimento).click();
+    }
+    registroTempoTurno() {
+        this.alterarTipoRegistroTempo('Turno')
+    }
+    registroTempoHorario() {
+        this.alterarTipoRegistroTempo('HORARIO')
+    }
+    alterarTipoRegistroTempo(valorDesejado) {
+        cy.get('#tipo_registro_tempo').then($select => {
+            const valorAtual = $select.val(); // pega o valor atual selecionado
+
+            if (valorAtual !== valorDesejado) {
+                cy.get('#tipo_registro_tempo').select(valorDesejado);
+            }
+        });
     }
 
 }

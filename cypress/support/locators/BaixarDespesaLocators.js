@@ -3,28 +3,29 @@ const BaixarDespesaLocators = {
   tituloModalPagamento: '.modal-title.h4',
 
   // Campos de seleção de Conta e Forma de Pagamento
-  campoConta: 'input[placeholder="Ex. CAIXINHA"]',
+  campoConta: '.modal #conta_id > .soft-select__control',
   listaAutocompleteConta: '.SoftcomAutocompleteResults ul.bank_account_id_results',
-  resultadoAutocompleteConta: '.SoftcomAutocompleteResults ul.bank_account_id_results li',
+  resultadoAutocompleteConta: '.soft-select__option',
 
-  campoFormaPagamento: 'input[placeholder="Ex. Energia"]',
+  campoFormaPagamento: '.modal #forma_pagamento_id > .soft-select__control',
   listaAutocompleteFormaPagamento: '.SoftcomAutocompleteResults ul.payment_method_id_results',
-  resultadoAutocompleteFormaPagamento: '.payment_method_id_result',
+  resultadoAutocompleteFormaPagamento: '.soft-select__option',
 
   // Campos de valores
  // Campos de valores usando seletores baseados em rótulos
- valorPagoInput: 'div.form-group:has(label:contains("Valor Pago")) input[disabled]',
- valorPendenteInput: 'div.form-group:has(label:contains("Valor Pendente")) input[disabled]',
+ valorPagoinput1: '#valor_pago',
+ valorPagoInput: '#valor',
+ valorPendenteInput: '#valor_pendente',
 
-  JurosMulta: '#fine',
-  Desconto: '#discount',
-  ValorFinal: 'div.form-group:has(label:contains("Valor Final")) input[disabled]',
+  JurosMulta: '#acrescimo',
+  Desconto: '#desconto',
+  ValorFinal: '.col-md-4 input[disabled]',
 
   // Data de Recebimento
-  dataRecebimentoInput: '.daterangepicker-receipt_date',
+  dataRecebimentoInput: '#data_pagamento',
 
   // Campo de valor recebido
-  ValorRecebido: '#receipt_value',
+  ValorRecebido: '#valor',
 
   // Botões
   botaoSalvarPagamento: 'button.btn-primary:contains("Salvar")',

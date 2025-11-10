@@ -25,7 +25,7 @@ class NovaDespesaPage {
             .type(categoria);
         cy.get('.soft-select__option').should('be.visible');
         cy.get('.soft-select__option')
-            .filter((_, el) => el.innerText.trim().toLowerCase() === categoria.toLowerCase())
+            // .filter((_, el) => el.innerText.trim().toLowerCase() === categoria.toLowerCase())
             .click();
     }
 

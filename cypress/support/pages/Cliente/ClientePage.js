@@ -21,7 +21,7 @@ class ClientePage {
   }
 
   confirmarCamposObrigatorios() {
-    cy.get('.confirm').click();
+    cy.get('.sweet-alert .confirm').click();
   }
 
   confirmacaoCadastroCliente() {

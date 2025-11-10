@@ -45,42 +45,43 @@ class ContaCorrenteEdicaoPage {
     }
     desativarConta() {
         cy.get('#loading').should('not.exist');
-        cy.get('#div_active > .switchery').should('be.visible').then(($switch) => {
-            if ($switch.attr('style').includes('border-color: rgb(255, 192, 103)')) {
-                cy.wrap($switch).click(); // Clica no switch apenas se ele estiver ativado
-            }
-        });
+        cy.get('#div_active .switchery small')
+            .invoke('attr', 'style')
+            .then(style => {
+                if (style.includes('left: 20px')) {
+                    // Está ativado → clica para desativar
+                    cy.get('#div_active .switchery').click();
+                }
+            });
     }
     ativarConta() {
-        // Localiza e clica no switch para ativar a conta
-        cy.get('#div_active > .switchery').then(($switch) => {
-          const style = $switch.attr('style');
-          // Verifica se o switch já está ativado
-          if (style.includes('border-color: rgb(223, 223, 223)')) {
-            cy.wrap($switch).click(); // Clica apenas se estiver desativado
-          } else {
-            cy.log('A conta já está ativada.');
-          }
-        });
-      }
+        cy.get('#div_active .switchery small')
+            .invoke('attr', 'style')
+            .then(style => {
+                if (!style.includes('left: 20px')) {
+                    // Está desativado → ativa clicando
+                    cy.get('#div_active .switchery').click();
+                }
+            });
+    }
     salvar() {
         cy.get('.btn:contains("Salvar")').click();
     }
-    validarSucesso(){
+    validarSucesso() {
         cy.get('.Toastify__toast--success').should('be.visible');
     }
     alterarUltimoNumeroRemessa(novoNumero) {
         cy.get(ContaCorrenteCadastroLocator.lastDispatch)
-          .should('exist')
-          .and('be.visible')
-          .clear()
-          .type(novoNumero);
-      }
-      validarUltimoNumeroRemessa(numeroEsperado) {
+            .should('exist')
+            .and('be.visible')
+            .clear()
+            .type(novoNumero);
+    }
+    validarUltimoNumeroRemessa(numeroEsperado) {
         cy.get(ContaCorrenteCadastroLocator.lastDispatch)
-          .invoke('val')
-          .should('equal', numeroEsperado);
-      }
+            .invoke('val')
+            .should('equal', numeroEsperado);
+    }
 }
 
 export default new ContaCorrenteEdicaoPage();

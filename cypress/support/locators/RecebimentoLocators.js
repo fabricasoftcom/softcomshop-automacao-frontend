@@ -9,15 +9,15 @@ const RecebimentoLocators = {
     vencimentoInfo: '.col-md-4:contains("Vencimento")',
 
     // Campos de formulário
-    contaInput: 'input[placeholder="Ex. CAIXINHA"]',
-    formaPagamentoInput: 'input[placeholder="Ex. Energia"]',
+    contaInput: '.modal #conta_id > .soft-select__control',
+    formaPagamentoInput: '.modal #forma_pagamento_id > .soft-select__control',
     valorPagoInput: '.col-md-6 input[disabled]',
     valorPendenteInput: '.col-md-6 input[disabled]',
-    jurosMultaInput: 'input[name="fine"]',
-    descontoInput: 'input[name="discount"]',
+    jurosMultaInput: '#acrescimo',
+    descontoInput: '#desconto',
     valorFinalInput: '.col-md-4 input[disabled]',
-    dataRecebimentoInput: 'input.daterangepicker-receipt_date',
-    valorRecebidoInput: 'input[name="receipt_value"]',
+    dataRecebimentoInput: '#data_pagamento',
+    valorRecebidoInput: '#valor',
 
     // Detalhes do pagamento
     detalhesPagamentoAccordion: '.icon-payment-details',
@@ -28,12 +28,12 @@ const RecebimentoLocators = {
     salvarBtn: '.modal-content .btn-primary', // Garante que seja o botão "Salvar" do modal
 
     // Autocomplete
-    listaAutocompleteConta: '#autocomplete_bank_account_id_list',  // Lista de resultados
-    primeiroResultadoAutocomplete: '.bank_account_id_results .bank_account_id_result:first-child',  // Primeiro item na lista de autocomplete
+    listaAutocompleteConta: '.soft-select__option',  // Lista de resultados
+    primeiroResultadoAutocomplete: '.soft-select__option:first-child',  // Primeiro item na lista de autocomplete
 
     // Autocomplete para Forma de Pagamento
-    listaAutocompleteFormaPagamento: '#autocomplete_payment_method_id_list',
-    primeiroResultadoAutocompleteFormaPagamento: '.payment_method_id_results .payment_method_id_result:first-child',
+    listaAutocompleteFormaPagamento: '.modal #forma_pagamento_id > .soft-select__control',
+    primeiroResultadoAutocompleteFormaPagamento: '.soft-select__option:first-child',
 
     // Toast de Sucesso
     toastSucesso: '.Toastify__toast--success',  // Classe específica para o Toast de sucesso

@@ -5,8 +5,8 @@ const EditarDespesaLocators = {
     closeButton: '.modal-header .close',
 
     // Campos principais
-    descricaoInput: '#description',
-    categoriaAutocomplete: '#autocomplete_category',
+    descricaoInput: '#historico',
+    categoriaAutocomplete: ' .modal #categoria_id > .soft-select__control',
     categoriaResults: '#autocomplete_category_list .category_result',
 
     // Conta bancária
@@ -18,11 +18,11 @@ const EditarDespesaLocators = {
     formaPagamentoResults: '#autocomplete_payment_method_list .payment_method_result',
 
     // Datas
-    dataCompetenciaInput: '#competency_date',
-    dataVencimentoInput: '#dueDate',
+    dataCompetenciaInput: '#termino_vigencia',
+    dataVencimentoInput: '#data_termino_vigencia',
 
     // Valor
-    valorInput: '#form-receive > :nth-child(3) > :nth-child(3) input.form-control',
+    valorInput: '#valor_parcela',
 
     // Fornecedor
     fornecedorAutocomplete: '#autocomplete_provider',
@@ -41,5 +41,4 @@ const EditarDespesaLocators = {
     voltarButton: '.btn-default:contains("Voltar")',
     salvarButton: '.btn-primary:contains("Salvar")',
 };
-
 export default EditarDespesaLocators;

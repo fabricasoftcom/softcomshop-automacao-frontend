@@ -22,62 +22,34 @@ class EditarReceitaPage {
 
     clicarSalvar() {
         cy.get(EditarReceitaLocators.modalContent)
-          .find(EditarReceitaLocators.salvarButton) // Confirma que o botão específico do modal é buscado
-          .click({force: true});
+            .find(EditarReceitaLocators.salvarButton) // Confirma que o botão específico do modal é buscado
+            .click({ force: true });
     }
 
     clicarVoltar() {
         cy.get(EditarReceitaLocators.modalContent)
-          .find(EditarReceitaLocators.voltarButton) // Garantia do botão Voltar correto
-          .click({force: true});
+            .find(EditarReceitaLocators.voltarButton) // Garantia do botão Voltar correto
+            .click({ force: true });
     }
 
     // Métodos de preenchimento de campos
 
     preencherDescricao(descricao) {
         cy.get(EditarReceitaLocators.descricaoInput)
-          .clear({force: true})
-          .type(descricao, {force: true});
+            .clear({ force: true })
+            .type(descricao, { force: true });
     }
 
-    selecionarCategoria(categoria = "RECEITA") {
-        cy.get(EditarReceitaLocators.categoriaAutocomplete).invoke('val').then((categoriaAtual) => {
-            const valorParaPreencher = categoriaAtual || categoria;
-            cy.get(EditarReceitaLocators.categoriaAutocomplete)
-              .clear({force: true})
-              .type(valorParaPreencher, {force: true});
-            cy.get(EditarReceitaLocators.categoriaResults)
-              .contains(valorParaPreencher)
-              .click({force: true});
-        });
+    selecionarCategoria() {
+        this.selecionarValorDiferenteAtual(EditarReceitaLocators.categoriaAutocomplete);
     }
 
-    selecionarConta(conta = "CAIXA") {
-        cy.get(EditarReceitaLocators.modalContent).within(() => {
-            cy.get(EditarReceitaLocators.contaAutocomplete).invoke('val').then((contaAtual) => {
-                const valorParaPreencher = contaAtual || conta;
-                cy.get(EditarReceitaLocators.contaAutocomplete)
-                  .clear({force: true})
-                  .type(valorParaPreencher, {force: true});
-                cy.get(EditarReceitaLocators.contaResults)
-                  .should('be.visible')
-                  .contains(valorParaPreencher)
-                  .click({force: true});
-            });
-        });
+    selecionarConta() {
+        this.selecionarValorDiferenteAtual(EditarReceitaLocators.contaAutocomplete);
     }
 
-    selecionarFormaPagamento(formaPagamento = "DUPLICATA") {
-        cy.get(EditarReceitaLocators.formaPagamentoAutocomplete).invoke('val').then((formaAtual) => {
-            const valorParaPreencher = formaAtual || formaPagamento;
-            cy.get(EditarReceitaLocators.formaPagamentoAutocomplete)
-              .clear({force: true})
-              .type(valorParaPreencher, {force: true});
-            cy.get(EditarReceitaLocators.formaPagamentoResults)
-              .should('be.visible')
-              .contains(valorParaPreencher)
-              .click({force: true});
-        });
+    selecionarFormaPagamento() {
+        this.selecionarValorDiferenteAtual(EditarReceitaLocators.formaPagamentoAutocomplete);
     }
 
     preencherDataVencimento() {
@@ -86,8 +58,8 @@ class EditarReceitaPage {
             const dataVencimento = new Date(ano, mes - 1, Number(dia) + 1);
             const dataVencimentoFormatada = dataVencimento.toLocaleDateString('pt-BR');
             cy.get(EditarReceitaLocators.dataVencimentoInput)
-              .clear({force: true})
-              .type(dataVencimentoFormatada, {force: true});
+                .clear({ force: true })
+                .type(dataVencimentoFormatada, { force: true });
         });
     }
 
@@ -98,33 +70,33 @@ class EditarReceitaPage {
                 do {
                     novoValor = (Math.floor(Math.random() * 791) + 10).toFixed(2).replace('.', ',');
                 } while (novoValor === valorAtual);
-                cy.get(EditarReceitaLocators.valorInput).clear({force: true}).type(novoValor, {force: true});
+                cy.get(EditarReceitaLocators.valorInput).clear({ force: true }).type(novoValor, { force: true });
             });
         });
     }
 
     selecionarCliente() {
-        cy.get(EditarReceitaLocators.clienteAutocomplete).invoke('val').then((clienteAtual) => {
-            cy.get(EditarReceitaLocators.clienteAutocomplete).clear({ force: true }).click();
-            cy.get(EditarReceitaLocators.clienteResults).should('be.visible').then(($clientes) => {
-                const clientesDisponiveis = Cypress.$($clientes).map((_, cliente) => cliente.innerText).get();
-                const clientesValidos = clientesDisponiveis.filter(cliente => cliente !== clienteAtual && cliente !== "CONSUMIDOR");
-                const clienteParaSelecionar = clientesValidos.length > 0 ? clientesValidos[0] : clientesDisponiveis[0];
-                cy.contains(EditarReceitaLocators.clienteResults, clienteParaSelecionar).click({ force: true });
-            });
-        });
+        this.selecionarValorDiferenteAtual(EditarReceitaLocators.clienteAutocomplete);
     }
 
-    selecionarTipoDocumento(tipoDocumento = "PADRÃO") {
-        cy.get(EditarReceitaLocators.tipoDocumentoAutocomplete).invoke('val').then((tipoAtual) => {
-            const valorParaPreencher = tipoAtual || tipoDocumento;
-            cy.get(EditarReceitaLocators.tipoDocumentoAutocomplete)
-              .clear({force: true})
-              .type(valorParaPreencher, {force: true});
-            cy.get(EditarReceitaLocators.tipoDocumentoResults)
-              .contains(valorParaPreencher)
-              .click({force: true});
-        });
+    selecionarTipoDocumento() {
+        this.selecionarValorDiferenteAtual(EditarReceitaLocators.tipoDocumentoAutocomplete);
+    }
+    selecionarValorDiferenteAtual(locator) {
+        cy.get(locator)  // Localiza o autocomplete e pega o valor Atual
+            .invoke('text')
+            .then((valorAtual) => {
+                cy.get(locator).click({ force: true });// Abre o dropdown
+                cy.get('.soft-select__option')
+                    .should('have.length.greaterThan', 1) // Garante que há mais de uma opção
+                    .each(($opcao) => {
+                        const textoOpcao = $opcao.text().trim();
+                        if (textoOpcao !== valorAtual) { // Se a opção for diferente da atual, clica nela
+                            cy.wrap($opcao).click({ force: true });
+                            return false; // interrompe o .each apos o click
+                        }
+                    });
+            });
     }
 }
 
