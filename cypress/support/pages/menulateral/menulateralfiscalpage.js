@@ -41,7 +41,9 @@ class MenulateralFiscalPage {
     }
 
     acessarSintegraGerarArquivo() {
-        this.expandirClicarMenuFiscal(MenulateralFiscalLocators.sintegra, MenulateralFiscalLocators.sintegraGerarArquivo);
+    cy.get(MenulateralFiscalLocators.menuFiscal).click({ force: true });
+    cy.get(MenulateralFiscalLocators.sintegra).click({ force: true });
+    cy.xpath(MenulateralFiscalLocators.sintegraGerarArquivoXPath, { timeout: 10000 }).click({ force: true });
     }
 
     acessarImportadorNFce() {

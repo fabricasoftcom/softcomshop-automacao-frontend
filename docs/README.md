@@ -25,8 +25,10 @@
 ## 🗂️ cadastro-produto
 
 ### 📂 Arquivo: `cadastro-produto/cadastro-produto.spec.js`
-
-#### 🔹 Suite: Cadastro de produtos
+#### Cadastro de produtos
+- Cadastra produto habilitando combo, valida retorno para Dados Cadastrais, verifica a aba Combo zerada e inclui um item via modal.
+- Cadastra produto com o switch "Vender" desativado e garante que o estado permanece desmarcado apos salvar.
+- Edita um produto a partir da listagem, altera a observacao, salva e valida que o valor foi persistido na tela de edicao.
 - ✅ Realizar cadastro de produto valido informando o vinculo fiscal
 
 ## 🗂️ debounce-autocomplete

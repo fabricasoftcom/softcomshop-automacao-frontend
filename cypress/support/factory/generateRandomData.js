@@ -11,8 +11,16 @@ const gerarCNPJValido = () => {
 
 const generateRandomCustomer = () => {
   return {
+    pessoa: 'FISICA',
     nome: faker.person.fullName(),
     cpf: generateValidCPF(),
+    inscricaoEstadual: faker.number.int({ min: 100000, max: 999999 }).toString(),
+    rg: faker.string.numeric(9),
+    cep: faker.location.zipCode('#####-###'),
+    endereco: faker.location.streetAddress(),
+    numero: faker.number.int({ min: 1, max: 9999 }),
+    complemento: faker.location.secondaryAddress(),
+    observacao: faker.lorem.sentence()
   };
 };
 
@@ -28,12 +36,21 @@ const gerarFornecedorAleatorio = () => {
 const generateRandomProduct = () => {
   return {
     nome: faker.commerce.productName(),
+    referencia: faker.string.alphanumeric({ length: 8 }),
+    codigo_barras: faker.string.numeric(13),
     preco_compra: faker.commerce.price(),
     margem_lucro: 1000,
     preco_venda: faker.commerce.price(),
-    percentual_comissao: 10
-  }
-}
+    percentual_comissao: 10,
+    observacao: faker.lorem.sentence(),
+    informacao_adicional: faker.lorem.sentences(2),
+    peso: faker.number.float({ min: 0.1, max: 10, precision: 0.001 }),
+    altura: faker.number.float({ min: 5, max: 100, precision: 0.1 }),
+    largura: faker.number.float({ min: 5, max: 100, precision: 0.1 }),
+    comprimento: faker.number.float({ min: 5, max: 100, precision: 0.1 }),
+    estoque_inicial: faker.number.int({ min: 1, max: 20 }),
+  };
+};
 // Função para gerar o orçamento aleatório
 const generateRandomDadosOrcamento = () => {
   return {

@@ -1,28 +1,30 @@
-// MenulateralProdutoLocators.js
+﻿// MenulateralProdutoLocators.js
 const MenulateralProdutoLocators = {
-    // Submenus e opções de produtos
+    // Submenus e opÃ§Ãµes de produtos
     fornecedor: '#fornecedor',
     produtos: '#produtos',
     atributos: '#atributos',
     vinculosFiscais: '#vinculos_fiscais',
     atualizarDadosFiscais: '#atualizar_dados_fiscais',
     produto: '#produto',
-    gestorPromocoes: '#gestor_de_promoções',
-    gestorPrecos: '#gestor_de_preços',
+    gestorPromocoes: '#gestor_de_promoÃ§Ãµes',
+    gestorPrecos: '#gestor_de_preÃ§os',
     nuvemFiscal: '#nuvem_fiscal',
 
-    // Gestão de compras
-    gestaoCompras: '#gestão_de_compras',
+    // GestÃ£o de compras
+    gestaoCompras: '#gestÃ£o_de_compras',
     ordemFornecimento: '#ordem_de_fornecimento',
     compras: '#compras',
 
     // Outras listagens
-    movimentacoes: '#movimentações',
-    producao: '#produção',
-    balanco: '#balanço',
+    movimentacoes: '#movimentaÃ§Ãµes',
+    producao: '#produÃ§Ã£o',
 
-    // Botão de novo cadastro
+    grupos: '#grupo',
+
+    // BotÃ£o de novo cadastro
     btnNovo: '#btn-novo',
 };
 
 export default MenulateralProdutoLocators;
+

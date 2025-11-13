@@ -11,6 +11,7 @@ const MenulateralFiscalLocators = {
     spedIpiAjuste: '#ipi_ajuste_apuração',
     sintegra: '#sintegra',
     sintegraGerarArquivo: '#gerar_arquivo',
+    sintegraGerarArquivoXPath: "(//span[contains(.,'Gerar Arquivo')])[2]",
     importarNFce: '#importar_nfce',
 };
 

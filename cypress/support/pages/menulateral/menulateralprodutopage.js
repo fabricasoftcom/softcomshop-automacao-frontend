@@ -35,6 +35,10 @@ class MenulateralProdutoPage {
         this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.produto);
     }
 
+    acessarListagemGrupos() {
+        this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.grupos);
+    }
+
     acessarListagemGestorPromocoes() {
         this.acessarMenuProdutoDoisNiveis(MenulateralProdutoLocators.produtos, MenulateralProdutoLocators.gestorPromocoes);
     }

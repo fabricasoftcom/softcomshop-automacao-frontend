@@ -17,17 +17,22 @@
 
 ## 🗂️ cadastro-clientes
 
-### 📂 Arquivo: `cadastro-clientes/cadastro-cliente.spec.js`
+### ?Y"' Arquivo: `cadastro-clientes/cadastro-cliente.spec.js`
 
-#### 🔹 Suite: Cadastro de cliente
-- ✅ Realizar cadastro de cliente
+#### ?Y"? Suite: Cadastro de cliente
+- Exibe abas e botoes principais do formulario
+- Alterna os switches de bloqueado e desativado
+- Realizar cadastro de cliente
 
-## 🗂️ cadastro-produto
+### ?Y"' Arquivo: `cadastro-clientes/listagem-clientes.spec.js`
 
-### 📂 Arquivo: `cadastro-produto/cadastro-produto.spec.js`
+#### ?Y"? Suite: Listagem de clientes
+- Exibe a tabela inicial, valida paginacao e abre o formulario de filtros
+- Aplica filtro por nome, valida resultado e limpa o campo apos a pesquisa
+- Seleciona todos os checkboxes e os limpa em seguida
+- Tenta excluir sem selecionar registros e valida o alerta
+- Seleciona um registro, abre o modal de exclusao e cancela a acao
 
-#### 🔹 Suite: Cadastro de produtos
-- ✅ Realizar cadastro de produto valido informando o vinculo fiscal
 
 ## 🗂️ debounce-autocomplete
 
@@ -236,4 +241,6 @@
 - ✅ Deve realizar cadastro de novo vínculo fiscal
 - ✅ Deve excluir todos os itens selecionados
 - ✅ Deve editar o primeiro vínculo fiscal da tabela
+
+
 

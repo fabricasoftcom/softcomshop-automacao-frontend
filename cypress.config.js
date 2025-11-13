@@ -25,13 +25,20 @@ module.exports = defineConfig({
       // compra
       "./cypress/e2e/compras/cadastro-compra.spec.js",
       "./cypress/e2e/compras/cadastro-fornecedor.spec.js",
+      // compras e estoque
+      "./cypress/e2e/compras/movimentacoes.spec.js",
       // produto
       "./cypress/e2e/cadastro-produto/cadastro-produto.spec.js",
+      "./cypress/e2e/produtos/atributos.spec.js",
+      "./cypress/e2e/produtos/grupos.spec.js",
+      "./cypress/e2e/produtos/atributos.spec.js",
+      "./cypress/e2e/produtos/listagem-produtos.spec.js",
       // vinculo fiscal
       "./cypress/e2e/vinculo-fiscal/novocadastrovinculofiscal.spec.js",
       "./cypress/e2e/vinculo-fiscal/vinculo-fiscal-listagem.spec.js",
       // clientes
       "./cypress/e2e/cadastro-clientes/cadastro-cliente.spec.js",
+      "./cypress/e2e/cadastro-clientes/listagem-clientes.spec.js",
       // balanco
       "./cypress/e2e/Balanco/balanco.spec.js",
       "./cypress/e2e/Balanco/reverterBalanco.spec.js",
@@ -55,13 +62,17 @@ module.exports = defineConfig({
       "./cypress/e2e/financeiro/listagem-conta.spec.js",
       // vendas
       "./cypress/e2e/venda-nfce/venda-nfce.spec.js",
+      // sped
+      "./cypress/e2e/sped/gerarArquivo.spec.js",
+      // sintegra
+      "./cypress/e2e/sintegra/gerarArquivo.spec.js",
       // petshop
       // "./cypress/e2e/painel-atendimento/painel-atendimento.spec.js",
       // "./cypress/e2e/**/*.{feature,cy.js}",
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    baseUrl: 'https://stage-release.softcomshop.com.br',
+    baseUrl: 'https://stage-hotfix.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
 
