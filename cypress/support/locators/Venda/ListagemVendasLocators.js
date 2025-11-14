@@ -1,0 +1,28 @@
+const ListagemVendasLocators = {
+  btnPesquisaToggle: '#btn-pesquisa',
+  formPesquisa: '.form-pesquisa',
+  inputPeriodo: '#periodo',
+  inputCodigo: '#id',
+  inputCliente: '#auto_cliente_id',
+  hiddenClienteId: '#cliente_id',
+  inputOrigemVenda: '#auto_origem_venda',
+  hiddenOrigemVenda: '#origem_venda',
+  selectNfeNfce: '#nfe_nfce_faturada',
+  selectSituacao: '#situacao',
+  btnPesquisar: '#pesquisar',
+  btnNovo: '.ibox-title #btn-novo',
+  btnNovoRodape: '.ibox-content ~ a#btn-novo',
+  btnExcluirSelecionados: '.delete_all',
+  tabelaVendas: '.ibox-content table.table-hover',
+  linhasTabela: '.ibox-content table.table-hover tbody tr',
+  checkboxSelecionarTodos: '.check_all',
+  checkboxLinhas: "input[name='simplecheck[]']",
+  paginacaoAtual: '.pagination .page-item.active .page-link',
+  dropdownAcoesPrimeiraLinha: '#table-form-body tr:first-child .dropdown-toggle',
+  dropdownOpcoesClonar: 'body > .dropdown-menu .option-item-clonar',
+  dropdownContainerAnexadoAoBody: 'body > .dropdown-menu',
+  documentoFiscalColunaIndex: 7,
+  statusColunaIndex: 8,
+};
+
+export default ListagemVendasLocators;

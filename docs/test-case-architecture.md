@@ -42,6 +42,7 @@ Este documento descreve os padrões, dependências e classes que devem ser usado
 - Fixtures e dados dinâmicos (timestamp, valores aleatórios) previnem conflitos e garantem isolamento.
 - Valide carregamentos com `cy.get('#loading').should('not.exist')` ou esperas nos toasts.
 - Ao lidar com SweetAlert, aguarde o modal ficar visível antes de interagir (ex.: `cy.get('.sweet-alert').should('be.visible').wait(800)`) e prefira encapsular essa lógica nos Page Objects.
+- Para os modais nativos do Softcomshop (ex.: desconto/acréscimo, formas de pagamento), aguarde explicitamente todos os elementos internos estarem visíveis antes de preencher ou clicar, e após confirmar a ação use um `cy.wait` curto + validação de fechamento (o DOM pode ser recarregado e remover o modal imediatamente).
 - Documente tags importantes no `describe` ({ tags: ['@financeiro', '@regressivo', ...] }) para facilitar execução com `@cypress/grep`.
 
 ## 5. Hooks e monitoramento comuns
@@ -58,6 +59,5 @@ Este documento descreve os padrões, dependências e classes que devem ser usado
 1. Crie um novo spec em `cypress/e2e/...` seguindo o template acima.
 2. Adicione Page Object/locator se o fluxo exigir interações repetidas.
 3. Registre o spec no `specPattern` se precisar de ordem específica.
-4. Documente detalhes em `docs/cases/architecture-<nome-do-spec>.md` usando o formato já aplicado para `novaReceita` e `balanco`.
-
-
+4. Quando houver fluxos derivados (por exemplo, reaproveitar um cadastro base para validar abas ou modais adicionais), encapsule o setup comum em helpers do Page Object e crie `its` que apenas estendam esse fluxo.
+5. Documente detalhes em `docs/cases/architecture-<nome-do-spec>.md` usando o formato já aplicado para `novaReceita` e `balanco`.

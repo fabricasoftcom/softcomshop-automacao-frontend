@@ -1,6 +1,6 @@
 import ClientePage from '../../support/pages/Cliente/ClientePage';
 import CadastroClienteLocators from '../../support/locators/Cliente/CadastroClienteLocators';
-import { generateRandomCustomer } from '../../support/factory/generateRandomData';
+import { generateRandomCustomer, generateRandomContact } from '../../support/factory/generateRandomData';
 
 describe('Cadastro de cliente', { tags: ['@cadastro-cliente', '@regressivo'] }, () => {
   beforeEach(() => {
@@ -28,5 +28,52 @@ describe('Cadastro de cliente', { tags: ['@cadastro-cliente', '@regressivo'] }, 
     ClientePage.preencherCamposCliente(cliente);
     ClientePage.cadastrar();
     ClientePage.confirmacaoCadastroCliente();
+  });
+
+  it('deve realizar cadastro de cliente pessoa juridica', () => {
+    ClientePage.visit();
+    const cliente = generateRandomCustomer('JURIDICA');
+    ClientePage.preencherCamposCliente(cliente);
+    ClientePage.cadastrar();
+    ClientePage.confirmacaoCadastroCliente();
+  });
+
+  it('deve salvar cliente com endereco completo e acessar aba Outros Enderecos', () => {
+    ClientePage.visit();
+    const cliente = generateRandomCustomer();
+    ClientePage.preencherCamposCliente(cliente);
+    ClientePage.configurarInterceptRedirecionamentoCliente();
+    ClientePage.cadastrar();
+    ClientePage.aguardarRedirecionamentoCliente();
+    ClientePage.abrirAbaOutrosEnderecos();
+    ClientePage.validarOutrosEnderecosSemResultados();
+    ClientePage.abrirModalNovoEndereco();
+    ClientePage.preencherModalEndereco({
+      tipo: 'ENTREGA',
+      cep: cliente.cep,
+      numero: cliente.numero,
+      endereco: cliente.endereco,
+      cidade: cliente.cidade,
+      bairro: cliente.bairro,
+      complemento: cliente.complemento
+    });
+    ClientePage.salvarModalEndereco();
+    ClientePage.validarEnderecoListado();
+  });
+
+  it('deve salvar cliente e acessar aba Contato/Notificacoes', () => {
+    ClientePage.visit();
+    const cliente = generateRandomCustomer();
+    ClientePage.preencherCamposCliente(cliente);
+    ClientePage.configurarInterceptRedirecionamentoCliente();
+    ClientePage.cadastrar();
+    ClientePage.aguardarRedirecionamentoCliente();
+    ClientePage.abrirAbaContatoNotificacoes();
+    ClientePage.validarContatoNotificacoesSemRegistro();
+    ClientePage.abrirModalContato();
+    const contato = generateRandomContact();
+    ClientePage.preencherModalContato(contato);
+    ClientePage.salvarModalContato();
+    ClientePage.validarContatoListado();
   });
 });

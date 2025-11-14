@@ -61,6 +61,8 @@ module.exports = defineConfig({
       "./cypress/e2e/financeiro/edicao-conta-corrente.spec.js",
       "./cypress/e2e/financeiro/listagem-conta.spec.js",
       // vendas
+      "./cypress/e2e/vendas/cadastro-venda.spec.js",
+      "./cypress/e2e/vendas/listagem-vendas.spec.js",
       "./cypress/e2e/venda-nfce/venda-nfce.spec.js",
       // sped
       "./cypress/e2e/sped/gerarArquivo.spec.js",

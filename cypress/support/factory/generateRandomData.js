@@ -9,18 +9,34 @@ const gerarCNPJValido = () => {
   return cnpj.generate()
 }
 
-const generateRandomCustomer = () => {
-  return {
-    pessoa: 'FISICA',
+const generateRandomCustomer = (tipo = 'FISICA') => {
+  const base = {
+    pessoa: tipo,
     nome: faker.person.fullName(),
-    cpf: generateValidCPF(),
-    inscricaoEstadual: faker.number.int({ min: 100000, max: 999999 }).toString(),
-    rg: faker.string.numeric(9),
     cep: faker.location.zipCode('#####-###'),
     endereco: faker.location.streetAddress(),
     numero: faker.number.int({ min: 1, max: 9999 }),
     complemento: faker.location.secondaryAddress(),
+    bairro: faker.location.city(),
+    cidade: 'SAO PAULO - SP',
     observacao: faker.lorem.sentence()
+  };
+
+  if (tipo === 'JURIDICA') {
+    return {
+      ...base,
+      cnpj: gerarCNPJValido(),
+      inscricaoEstadual: faker.number.int({ min: 100000, max: 999999 }).toString(),
+      inscricaoMunicipal: faker.number.int({ min: 10000, max: 99999 }).toString(),
+      razaoSocial: `${base.nome} LTDA`
+    };
+  }
+
+  return {
+    ...base,
+    cpf: generateValidCPF(),
+    inscricaoEstadual: faker.number.int({ min: 100000, max: 999999 }).toString(),
+    rg: faker.string.numeric(9)
   };
 };
 
@@ -54,29 +70,40 @@ const generateRandomProduct = () => {
 // Função para gerar o orçamento aleatório
 const generateRandomDadosOrcamento = () => {
   return {
-      telefone: 11 * 100000000 + Math.floor(Math.random() * 100000000),  // Telefone aleatório
-      email: faker.internet.email(),                // E-mail aleatório
-      responsavel: faker.person.fullName(),        // Nome de responsável aleatório
-      vendedor: faker.person.fullName(),           // Nome de vendedor aleatório
-      observacoes: faker.lorem.sentence(),         // Observações aleatórias
-      validade: Math.floor(Math.random() * 60) + 1, // Validade em dias
-      dataValidade: faker.date.soon().toLocaleDateString('pt-BR'), // Data de validade aleatória
-      cpfCnpj: generateValidCPF(),                 // CPF aleatório
-      cep: '58030021',                // CEP softcomshop
-      numero: Math.floor(Math.random() * 9999) + 1,  // Número aleatório de casa
-      complemento: faker.address.secondaryAddress(),  // Complemento de endereço aleatório
-      tipoDebito: ['Crédito', 'Débito'][Math.floor(Math.random() * 2)],
-      descricaoServico: faker.lorem.sentence(),    // Descrição do serviço aleatória
-      prazoEntrega: Math.floor(Math.random() * 30) + 1+ ' dias',  // Prazo de entrega aleatório
-      garantia: faker.date.soon().toLocaleDateString('pt-BR') // Garantia aleatória
+    telefone: 11 * 100000000 + Math.floor(Math.random() * 100000000),  // Telefone aleatório
+    email: faker.internet.email(),                // E-mail aleatório
+    responsavel: faker.person.fullName(),        // Nome de responsável aleatório
+    vendedor: faker.person.fullName(),           // Nome de vendedor aleatório
+    observacoes: faker.lorem.sentence(),         // Observações aleatórias
+    validade: Math.floor(Math.random() * 60) + 1, // Validade em dias
+    dataValidade: faker.date.soon().toLocaleDateString('pt-BR'), // Data de validade aleatória
+    cpfCnpj: generateValidCPF(),                 // CPF aleatório
+    cep: '58030021',                // CEP softcomshop
+    numero: Math.floor(Math.random() * 9999) + 1,  // Número aleatório de casa
+    complemento: faker.address.secondaryAddress(),  // Complemento de endereço aleatório
+    tipoDebito: ['Crédito', 'Débito'][Math.floor(Math.random() * 2)],
+    descricaoServico: faker.lorem.sentence(),    // Descrição do serviço aleatória
+    prazoEntrega: Math.floor(Math.random() * 30) + 1 + ' dias',  // Prazo de entrega aleatório
+    garantia: faker.date.soon().toLocaleDateString('pt-BR') // Garantia aleatória
   }
 };
 const generateRandomDadosOrcamentoProduto = () => {
   return {
-      produto : 'Produto',
-      quantidade: Math.floor(Math.random() * 999) + 1, // Quantidade aleatória
-      preco: faker.commerce.price() // Preço aleatório
+    produto: 'Produto',
+    quantidade: Math.floor(Math.random() * 999) + 1, // Quantidade aleatória
+    preco: faker.commerce.price() // Preço aleatório
   }
 };
 
-module.exports = { generateRandomCustomer, generateRandomProduct ,generateRandomDadosOrcamento , generateRandomDadosOrcamentoProduto, gerarFornecedorAleatorio}
+const generateRandomContact = () => {
+  return {
+    tipo: 'PRINCIPAL',
+    nome: faker.person.fullName(),
+    ddd: faker.string.numeric({ length: 2 }),
+    telefone: faker.string.numeric({ length: 9 }),
+    email: faker.internet.email()
+  };
+};
+
+module.exports = { generateRandomCustomer, generateRandomProduct, generateRandomDadosOrcamento, generateRandomDadosOrcamentoProduto, gerarFornecedorAleatorio, generateRandomContact }
+

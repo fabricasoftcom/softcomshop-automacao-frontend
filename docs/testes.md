@@ -1,4 +1,4 @@
-# 📌 Testes Automatizados no Cypress
+﻿# 📌 Testes Automatizados no Cypress
 
 > 🚀 Este documento lista os testes organizados por módulo.
 
@@ -23,6 +23,9 @@
 - Exibe abas e botoes principais do formulario
 - Alterna os switches de bloqueado e desativado
 - Realizar cadastro de cliente
+- Realizar cadastro de cliente pessoa juridica com CNPJ
+- Salva cliente com endereco completo, acessa a aba Outros Enderecos, abre o modal e salva um novo endereco
+- Salva cliente, acessa a aba Contato/Notificacoes, valida ausencia de registros, abre o modal e salva um contato
 
 ### ?Y"' Arquivo: `cadastro-clientes/listagem-clientes.spec.js`
 
@@ -219,6 +222,30 @@
 #### 🔹 Suite: cypress setup
 - ✅ Configurar sistema Padrao com NFSe
 
+## vendas
+
+### Arquivo: endas/listagem-vendas.spec.js
+
+#### Suite: Listagem de vendas
+- Exibe a tabela inicial, valida a paginacao e abre o painel de filtros
+- Filtra por codigo e situacao, aguardando o retorno da listagem
+- Mantem o periodo informado ao enviar a requisicao de busca
+- Seleciona e desmarca todos os registros da tabela
+- Valida os cenarios de exclusao em massa (com e sem selecao)
+- Abre o dropdown de acoes e garante a visualizacao da opcao de clonar venda
+
+### Arquivo: endas/cadastro-venda.spec.js
+
+#### Suite: Cadastro de venda
+- Exibe os botoes principais e o formulario base
+- Permite pesquisar cliente e vendedor utilizando autocomplete
+- Mantem o painel de itens pronto para preenchimento
+- Exibe sugestoes ao pesquisar produtos
+- Apresenta o painel de pagamentos com a mensagem padrao
+- Realiza fluxo completo alterando cliente, vendedor, item e gerando pagamento
+
+
+
 ## 🗂️ venda-nfce
 
 ### 📂 Arquivo: `venda-nfce/venda-nfce.spec.js`
@@ -241,6 +268,9 @@
 - ✅ Deve realizar cadastro de novo vínculo fiscal
 - ✅ Deve excluir todos os itens selecionados
 - ✅ Deve editar o primeiro vínculo fiscal da tabela
+
+
+
 
 
 
