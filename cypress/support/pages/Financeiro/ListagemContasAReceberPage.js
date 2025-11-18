@@ -100,7 +100,7 @@ class ListagemContasAReceberPage {
   abrirDropdownAcaoPrimeiraLinha() {
     // cy.get(ListagemContasAReceberLocators.dropdownAcao).should('be.visible').click();
     // O id do dropdown ta dinamico ver se é possivel fixar
-    cy.get('tbody > :nth-child(1) > :nth-child(11) .dropdown').click();
+    cy.get('tbody > :nth-child(1) > :nth-child(13) .dropdown').click();
 
   }
 
@@ -144,7 +144,7 @@ class ListagemContasAReceberPage {
 
   verificarModalErroBaixar() {
     cy.get(ListagemContasAReceberLocators.modalTituloErroBaixar)
-      .should('contain', 'Nenhuma parcela foi selecionada!')
+      .should('contain', 'Nenhuma parcela foi selecionada!', {timeout : 1500})
       .and('be.visible');
   }
 
@@ -250,7 +250,7 @@ class ListagemContasAReceberPage {
     cy.get('table tbody tr').each(($row) => {
       // Re-wrap the row in the current iteration
       cy.wrap($row).within(() => {
-        cy.get('td:nth-child(7)')
+        cy.get('td:nth-child(9)')
           .invoke('text')
           .then((valor) => {
             // Remove espaços extras e converte valor para número

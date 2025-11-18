@@ -1,0 +1,26 @@
+const ListagemNfeLocators = {
+  tituloPagina: '.ibox-title h5',
+  botaoPesquisarToggle: '#btn-pesquisa',
+  botaoPesquisarInferior: '#pesquisar',
+  botaoNovoCadastro: 'a[href*="/nfe2/novo"]',
+  botaoExcluirSelecionados: '#btn-excluir-selecionados',
+  campoPeriodo: '#periodo',
+  botaoCalendarioPeriodo: '.btn-daterangepicker[data-label="periodo"]',
+  formPesquisaAvancada: '.form-pesquisa',
+  campoDestinatarioAutocomplete: '#auto_destinatario_nome',
+  campoDestinatarioHidden: '#destinatario_nome',
+  botaoDropdownDestinatario: '#auto_icon_destinatario_nome',
+  campoNumeroInicial: '#numero_nfe_de',
+  campoNumeroFinal: '#numero_nfe_ate',
+  selectSerie: '#serie',
+  selectStatus: '#status_nota',
+  botaoPesquisarAvancado: '#btn-pesquisar',
+  tabelaListagem: '.ibox-content table',
+  checkboxSelecionarTodos: '.check_all',
+  checkboxPrimeiraLinha: '.ibox-content table tbody tr:first-child input[type="checkbox"]',
+  linhasTabela: '.ibox-content table tbody tr',
+  sweetAlertModal: '.sweet-alert',
+  sweetAlertBotaoConfirmar: '.sweet-alert .confirm',
+};
+
+export default ListagemNfeLocators;

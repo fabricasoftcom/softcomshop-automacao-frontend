@@ -22,6 +22,7 @@ module.exports = defineConfig({
       "./cypress/e2e/menulateral/menuLateralTeste.spec.js",
       // relatorio
       "./cypress/e2e/relatorio/relatorios.spec.js",
+      "./cypress/e2e/relatorio/relatorio-caixa.spec.js",
       // compra
       "./cypress/e2e/compras/cadastro-compra.spec.js",
       "./cypress/e2e/compras/cadastro-fornecedor.spec.js",
@@ -63,7 +64,9 @@ module.exports = defineConfig({
       // vendas
       "./cypress/e2e/vendas/cadastro-venda.spec.js",
       "./cypress/e2e/vendas/listagem-vendas.spec.js",
-      "./cypress/e2e/venda-nfce/venda-nfce.spec.js",
+      "./cypress/e2e/venda-nfcenfe/venda-nfce.spec.js",
+      "./cypress/e2e/venda-nfcenfe/venda-nfe.spec.js",
+      "./cypress/e2e/venda-nfcenfe/listagem-nfe.spec.js",
       // sped
       "./cypress/e2e/sped/gerarArquivo.spec.js",
       // sintegra

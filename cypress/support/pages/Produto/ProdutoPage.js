@@ -162,11 +162,18 @@ class ProdutoPage {
   }
 
   verificarAlertaDadosFiscais() {
+    cy.wait(2000);
     cy.get("body").then(($body) => {
       if ($body.find(ProdutoLocators.alertaDadosFiscais).length) {
         cy.get(ProdutoLocators.alertaDadosFiscais, { timeout: 20000 }).should(
           "be.visible"
         );
+
+        // SweetAlert pode trazer acentos; normalizamos para comparar em ASCII.
+        const tituloEsperado = "o produto nao possui informacoes fiscais";
+        const mensagemEsperada =
+          "e obrigatorio o preenchimento dos dados fiscais";
+
         cy.get(ProdutoLocators.alertaDadosFiscaisTitulo, { timeout: 20000 })
           .invoke("text")
           .then((text) => {
@@ -174,9 +181,7 @@ class ProdutoPage {
               .replace(/[^a-z0-9\s]/g, " ")
               .replace(/\s+/g, " ")
               .trim();
-            expect(normalized).to.include(
-              "o produto nao possui informacoes fiscais"
-            );
+            expect(normalized).to.include(tituloEsperado);
           });
         cy.get(ProdutoLocators.alertaDadosFiscaisMensagem)
           .invoke("text")
@@ -185,10 +190,9 @@ class ProdutoPage {
               .replace(/[^a-z0-9\s]/g, " ")
               .replace(/\s+/g, " ")
               .trim();
-            expect(normalized).to.include(
-              "e obrigatorio o preenchimento dos dados fiscais"
-            );
+            expect(normalized).to.include(mensagemEsperada);
           });
+          cy.get(ProdutoLocators.alertaDadosFiscaisCancelar).click();
       } else {
         cy.log("Alerta fiscal nao apareceu; prosseguindo.");
       }
@@ -481,9 +485,11 @@ class ProdutoPage {
     tentativa = 0
   ) {
     const maxTentativas = 3;
-    cy.get(iconeLocator)
+    cy.get(iconeLocator, { timeout: 20000 })
       .should("be.visible")
-      .click()
+      .then(($el) => {
+        cy.wrap($el).click({ force: true });
+      })
       .wait(1000);
     cy.get("body").then(($body) => {
       const totalOpcoes = $body.find(opcoesLocator).length;

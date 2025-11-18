@@ -14,6 +14,7 @@ describe('Cadastro de produtos', { tags: ["@cadastro-produto", "@regressivo"] },
         ProdutoPage.preencherDetalhesDoProduto(produto);
         ProdutoPage.desabilitarVenda();
         ProdutoPage.cadastrar();
+        ProdutoPage.verificarAlertaDadosFiscais();
         ProdutoPage.verificarTelaDadosCadastrais();
         ProdutoPage.verificarVendaDesativada();
     });
@@ -49,6 +50,7 @@ describe('Cadastro de produtos', { tags: ["@cadastro-produto", "@regressivo"] },
         const produto = generateRandomProduct();
         ProdutoPage.preencherDetalhesDoProduto(produto);
         ProdutoPage.cadastrar();
+        ProdutoPage.verificarAlertaDadosFiscais();
         ProdutoPage.verificarTelaDadosCadastrais();
         VinculoFiscalPage.acessarMenuDetalhesFiscais();
 
@@ -64,6 +66,7 @@ describe('Cadastro de produtos', { tags: ["@cadastro-produto", "@regressivo"] },
         ProdutoPage.preencherDetalhesDoProduto(produto);
         ProdutoPage.habilitarGrade();
         ProdutoPage.cadastrar();
+        ProdutoPage.verificarAlertaDadosFiscais();
         ProdutoPage.verificarTelaDadosCadastrais();
         cy.location("pathname", { timeout: 40000 }).should(
             "match",
@@ -82,6 +85,7 @@ describe('Cadastro de produtos', { tags: ["@cadastro-produto", "@regressivo"] },
         ProdutoPage.preencherDetalhesDoProduto(produto);
         ProdutoPage.habilitarCombo();
         ProdutoPage.cadastrar();
+        ProdutoPage.verificarAlertaDadosFiscais();
         ProdutoPage.verificarTelaDadosCadastrais();
         cy.location("pathname", { timeout: 40000 }).should(
             "match",
@@ -103,6 +107,7 @@ describe('Cadastro de produtos', { tags: ["@cadastro-produto", "@regressivo"] },
         const produto = generateRandomProduct();
         ProdutoPage.preencherDetalhesDoProduto(produto);
         ProdutoPage.cadastrar();
+        ProdutoPage.verificarAlertaDadosFiscais();
         ProdutoPage.verificarTelaDadosCadastrais();
         ProdutoPage.excluir();
     });

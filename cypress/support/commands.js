@@ -27,18 +27,17 @@ import LoginPage from "./pages/Login/LoginPage"
 import 'cypress-file-upload';
 
 Cypress.Commands.add('login', () => {
-  cy.fixture('users').then((user) => {
-    LoginPage.visit();
-    LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
-    LoginPage.clicarLogin();
-    cy.contains('Início').should('be.visible')
+  cy.session('user_session', () => {
+    cy.fixture('users').then((user) => {
+      LoginPage.visit();
+      LoginPage.preencherCredenciais(user.validFiscal.username, user.validFiscal.password);
+      LoginPage.clicarLogin();
+      // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
+      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
+      cy.contains('Início').should('be.visible')
+    });
   });
-  cy.get('body').then(($body) => {
-    if ($body.find('.sweet-alert').length) {
-      cy.get('button[class="confirm"]').contains('OK').click();
-    }
-  });
-})
+});
 
 Cypress.Commands.add('loginRestoreSession', () => {
   cy.session('user_session', () => {

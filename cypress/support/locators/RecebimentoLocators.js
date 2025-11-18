@@ -4,9 +4,9 @@ const RecebimentoLocators = {
     modalContent: '.modal-content',
 
     // Dados principais do modal (cabeçalho)
-    parcelaInfo: '.col-md-3:contains("Parcela")',
-    valorInfo: '.col-md-3:contains("Valor")',
-    vencimentoInfo: '.col-md-4:contains("Vencimento")',
+    parcelaInfo: '.mb-2:contains("Parcela")',
+    valorInfo: '.mb-2:contains("Valor")',
+    vencimentoInfo: '.mb-2:contains("Vencimento")',
 
     // Campos de formulário
     contaInput: '.modal #conta_id > .soft-select__control',

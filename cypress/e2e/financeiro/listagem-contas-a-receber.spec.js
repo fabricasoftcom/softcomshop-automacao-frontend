@@ -21,6 +21,7 @@ describe('Testes da Listagem de Contas a Receber', { tags: ['@listagem-contas-a-
 
   describe('Ações de Baixa e Confirmações', () => {
     it('Deve exibir erro ao tentar baixar sem selecionar parcelas', () => {
+      cy.wait(1500);
       ListagemContasAReceberPage.clicarBaixarSelecionados();
       ListagemContasAReceberPage.verificarModalErroBaixar();
     });

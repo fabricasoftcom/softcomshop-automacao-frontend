@@ -11,9 +11,9 @@ class RecebimentoPage {
   }
 
   verificarDadosPrincipais() {
-    cy.get(RecebimentoLocators.parcelaInfo).should('be.visible');
-    cy.get(RecebimentoLocators.valorInfo).should('be.visible');
-    cy.get(RecebimentoLocators.vencimentoInfo).should('be.visible');
+    cy.get(RecebimentoLocators.parcelaInfo).should('be.visible', {timeout : 15000});
+    cy.get(RecebimentoLocators.valorInfo).should('be.visible', {timeout : 15000});
+    cy.get(RecebimentoLocators.vencimentoInfo).should('be.visible', {timeout : 15000});
   }
 
   preencherConta() {
