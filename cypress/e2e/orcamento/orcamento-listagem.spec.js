@@ -1,6 +1,6 @@
 import OrcamentoListagemPage from "../../support/pages/Orcamento/OrcamentoListagemPage";
 
-describe('Testes de Listagem de Orçamento', () => {
+describe('Testes de Listagem de Orçamento', { tags: ['@orcamento', '@regressivo'] },() => {
     beforeEach(() => {
         cy.loginArmazenandoSessao();
         OrcamentoListagemPage.visit();
