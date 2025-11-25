@@ -2,17 +2,17 @@ const ContaCorrenteCadastroLocator = {
   stepAtivo: '.step-options .step-option.active',
 
   // Inputs e Autocompletes
-  bancoAutocomplete: '#autocomplete_bank_id',
-  bancoListaResultados: '.bank_id_result',
+  bancoAutocomplete: '.soft-select__input-container',
+  bancoListaResultados: '.soft-select__option',
   descricao: 'input[id="description"]', // Atualizado
   agencia: 'input[id="bank_agency"]',
   agenciaDV: 'input[id="bank_agency_dv"]',
   contaCorrente: 'input[id="bank_account_number"]',
   contaDV: 'input[id="bank_account_dv"]',
-  saldoInicial: '#openingBalance',
+  saldoInicial: '#opening_balance',
   dataSaldoInicial: '.input-group > #opening_balance_date',
   limiteCredito: '#limitValue',
-  observacao: '#div_note > #note',
+  observacao: '#note',
 
   // Switches
   contaPadraoSwitch: '#div_patternBankAccount .switchery',
@@ -51,7 +51,7 @@ const ContaCorrenteCadastroLocator = {
   typeKeyPix: 'select#type_key_pix', // Tipo da Chave Pix
   keyPix: 'input#key_pix', // Chave Pix
   companyCode: 'input#company_code',
-  posto:'input#posto'
+  posto: 'input#posto'
 };
 
 export default ContaCorrenteCadastroLocator;
