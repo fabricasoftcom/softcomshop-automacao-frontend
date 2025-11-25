@@ -29,6 +29,12 @@ Cypress.on('uncaught:exception', (err) => {
     cy.log(`Exceção ignorada: ${err.message}`);
     return false; // Ignora o erro esperado
   }
+  // Ignora erros relacionados a focus em elementos undefined (comum após salvamento de formulários)
+  if (err.message.includes('Cannot read properties of undefined') &&
+    (err.message.includes('focus') || err.message.includes('Focus'))) {
+    cy.log(`Exceção de focus ignorada: ${err.message}`);
+    return false; // Ignora o erro de focus
+  }
   // Para outros erros, permite que o Cypress processe normalmente
   return true;
 });

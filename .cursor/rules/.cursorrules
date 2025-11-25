@@ -1,0 +1,518 @@
+# Arquitetura do Projeto - Regras do Cursor
+
+Este arquivo consolida toda a documentação de arquitetura do projeto para uso como regras do Cursor, evitando a necessidade de referenciar documentos externos.
+
+---
+
+## Visão Geral
+
+- Este repositório concentra suites de testes ponta a ponta para o Softcomshop, escritas com Cypress 13+. Os cenários seguem o padrão Page Object / locators para manter testes legíveis e resilientes a mudanças na interface.
+- A automação é composta de estruturas de suporte (pages, locators, factory) que se conectam a `cypress/e2e` por meio de comandos personalizados e fixtures compartilhadas.
+- Resultados são exportados para Allure (`allure-results` e `allure-report`), com opcional de testes em navegadores específicos (Chrome, Firefox) e visual checks com Percy quando necessário.
+
+---
+
+## Estrutura de Diretórios
+
+- `cypress/e2e`: especificações organizadas por módulo (login, financeiro, compras, relatórios, etc). O `specPattern` do `cypress.config.js` garante a ordem de execução e inclui um setup inicial em `setup/_beforeConfigPadrao.spec.js`.
+- `cypress/support/pages`: classes Page Object com lógica de interação. Cada página expõe métodos de preenchimento, clique e validação reutilizáveis.
+- `cypress/support/locators`: arquivos que concentram seletores. Permitem atualizar apenas esses arquivos quando o DOM mudar, mantendo o mesmo método dos Page Objects.
+- `cypress/support/factory`: fábricas de dados (usuários, produtos, etc) construídas com Faker para gerar recursos dinâmicos nos testes.
+- `cypress/support/commands.js`: adiciona comandos utilitários (login padrão, login com sessão, seleções no menu lateral, validações de telas, configuração do sistema). Esses comandos são importados automaticamente em `support/e2e.js`.
+- `cypress/support/e2e.js`: carrega plugins (Allure, cypress-xpath, Percy, cypress-grep) e define ganchos globais (`beforeEach`, `afterEach`) que interceptam erros HTTP 500 e forçam falha caso detectem problemas.
+- `cypress/fixtures`: dados de teste estáticos (ex: `users.json`) usados por `cy.fixture` nas fábricas e nos comandos.
+- `docs`: documentos de apoio, incluindo esse arquivo, o inventário de testes (`docs/testes.md`), os casos específicos dentro de `docs/cases/` e o README principal com o passo a passo de configuração.
+- `allure-results` e `allure-report`: pasta de saídas com evidência e relatórios gerados após execução.
+
+---
+
+## Configurações Principais
+
+- `cypress.config.js` define `baseUrl` (`https://stage-release.softcomshop.com.br`), `viewport` 1366x768 e `defaultCommandTimeout` estendido para 50s, garantindo estabilidade em ambientes lentos.
+- Em `setupNodeEvents` são registrados os plugins `allure-cypress` e `@cypress/grep` e retornado o config atualizado, permitindo filtro de especificações via `grep`.
+- `testIsolation: false` preserva estados entre testes quando necessário, e `experimentalStudio: true` facilita criação rápida de testes.
+
+---
+
+## Fluxos de Execução
+
+- Scripts npm (`package.json`) padronizam comandos:
+  - `npm run e2e`: executa Cypress com Allure habilitado.
+  - `npm run test:chrome|test:firefox`: força execução em navegador específico.
+  - `npm run test:all`: encadeia os dois navegadores.
+  - `npm run test:allure`: gera e abre o relatório Allure após os testes.
+  - `npm run lint` e `npm run lint-html`: validam o padrão ESLint em todo o código.
+- O README principal descreve o setup completo (instalação do Node, `npm install`, `npx cypress run/open`).
+
+---
+
+## Fluxo de Dados
+
+- Suites e comandos reutilizam fixtures/fábricas para representar entidades (usuário, produto, cliente). As fábricas importam `@faker-js/faker` para preservar variabilidade e evitar registros duplicados.
+- Os testes usam o plugin `cy.session` para criar sessão logada (`loginRestoreSession`, `loginArmazenandoSessao`), acelerando suites longas.
+- Hooks globais em `support/e2e.js` interceptam erros de servidor e forçam falhas, garantindo que falhas de infraestrutura não passem despercebidas.
+
+---
+
+## Relatórios e Evidências
+
+- `allure-results`: cada execução populada com metadados, suites, steps e anexos (logs, screenshots). O comando `npm run report:allure` gera o HTML em `allure-report` e abre em `localhost`.
+- A pasta `cypress/screenshots` recebe imagens de falhas e verificações manualmente disparadas pelos testes.
+- `cypress/reports` e `allure-results` podem ser integradas em pipelines CI para publicação automática.
+
+---
+
+## Arquitetura dos Casos de Teste
+
+Este documento descreve os padrões, dependências e classes que devem ser usados ao criar novos testes Cypress neste repositório. Use-o como checklist para manter consistência, reuso e observabilidade em todas as suites.
+
+### 1. Estrutura Esperada do Caso
+
+1. **Objetivo claro**: descreva o comportamento testado, o fluxo principal e os critérios de sucesso.
+2. **Importações organizadas**:
+   - Page Objects (`cypress/support/pages/...`).
+   - Locators (`cypress/support/locators/...`) se necessário diretamente.
+   - Fixtures (`cypress/fixtures/...`) para dados.
+   - Commands (`cy.loginArmazenandoSessao()`, `cy.login`, etc.).
+3. **Defina hooks usados**:
+   - `beforeAll` / `beforeEach` para login, setup e navegação. Sempre inclua `cy.visit('/')` logo após o comando de login para garantir que o ponto inicial da aplicação esteja carregado antes dos passos seguintes.
+   - `afterEach` para limpeza de dados ou garantir que o teste falhou se algum monitor capturar erro (hooks genéricos já existentes em `support/e2e.js`).
+4. **Teste principal**: log de steps (navegação → preenchimento → submissão → validação).
+5. **Assertivas**: confirme toasts, estados do DOM, resposta da API quando disponível.
+
+### 1.5. Registro no `specPattern`
+
+- Qualquer novo spec deve ser adicionado ao `specPattern` no `cypress.config.js` para manter a sequência prevista e permitir filtragem via `grep`. Atualize o comentário/filtro correspondente (por exemplo `// sped` → `// sped` e o caminho relativo) logo após o bloco lógico onde o novo spec pertence.
+
+### 2. Dependências Principais
+
+- Cypress 13+ com plugins carregados em `cypress/support/e2e.js`: `allure-cypress`, `@shelex/cypress-allure-plugin`, `@percy/cypress`, `cypress-xpath`, `@cypress/grep`.
+- Fixtures de dados (`cypress/fixtures/users.json`, `formasPagamento.json`, etc.).
+- Helpers e comandos personalizados (`cypress/support/commands.js`) que centralizam login (`cy.loginArmazenandoSessao`, `cy.loginRestoreSession`), navegação de menus (`cy.clicarMenu`, `cy.expandirClicarMenuUmNivel`), e validações (`cy.verificarErro500Visual`).
+- Especificações registradas no `specPattern` de `cypress.config.js` para garantir ordem de execução (começando pelo setup `_beforeConfigPadrao.spec.js`).
+- Plugins para relatórios (Allure) e visual testing (Percy) usados em pipelines e `npm run e2e`.
+
+### 3. Classes e Page Objects
+
+- Cada página crítica possui classe em `cypress/support/pages`. Ao criar nova classe:
+  - Use nomes PascalCase e métodos verbos (ex.: `preencherFormulario`, `clicarSalvar`).
+  - Importe os locators específicos (`cypress/support/locators/...`).
+  - Centralize waits sensíveis e seletores complexos dentro das classes para evitar duplicação nos specs.
+- Exemplos existentes:
+  - `Financeiro/NovaReceitaPage.js`, `ListagemContasAReceberPage.js`
+  - `Balanco/BalancoPage.js`
+  - `menulateral/menulateralfinanceiropage.js`, `menulateral/menulateralprodutopage.js`
+- `locators` definem strings CSS/XPath reutilizadas por várias classes para diminuir acoplamento direto ao DOM.
+
+### 4. Padrões de Implementação
+
+- Evite ganchos desnecessários e mantenha cada `it` com foco único. Separe cenários de sucesso/erro em specs distintos quando possível.
+- Use `cy.session` via `cy.loginArmazenandoSessao()` para acelerar autorizações em suites longas.
+- Fixtures e dados dinâmicos (timestamp, valores aleatórios) previnem conflitos e garantem isolamento.
+- Valide carregamentos com `cy.get('#loading').should('not.exist')` ou esperas nos toasts.
+- Ao lidar com SweetAlert, aguarde o modal ficar visível antes de interagir (ex.: `cy.get('.sweet-alert').should('be.visible').wait(800)`) e prefira encapsular essa lógica nos Page Objects.
+- Para os modais nativos do Softcomshop (ex.: desconto/acréscimo, formas de pagamento), aguarde explicitamente todos os elementos internos estarem visíveis antes de preencher ou clicar, e após confirmar a ação use um `cy.wait` curto + validação de fechamento (o DOM pode ser recarregado e remover o modal imediatamente).
+- Documente tags importantes no `describe` ({ tags: ['@financeiro', '@regressivo', ...] }) para facilitar execução com `@cypress/grep`.
+
+### 5. Hooks e Monitoramento Comuns
+
+- `cypress/support/e2e.js` já intercepta erros 500 e lança falhas quando detectados via `cy.on` / `cy.intercept`.
+- Sempre herdado por novos specs (não sobrescrever o arquivo, mas chame `import './commands';` se for um setup separado).
+- Use `beforeEach` para resetar estados, mas evite `afterEach` com comandos longos que possam mascarar falhas reais.
+
+### 6. Integração Contínua e Evidências
+
+- Resultados vão para `allure-results`; use `npm run report:allure` para gerar e abrir `allure-report`.
+- Screenshots e vídeos vão para `cypress/screenshots` e `cypress/videos` quando ativados (geralmente via CI).
+- Mantenha `docs/testes.md` e `docs/cases/architecture-nova-receita.md` atualizados com novos specs e fluxos.
+
+### Próximos Passos para Novos Testes
+
+1. Crie um novo spec em `cypress/e2e/...` seguindo o template acima.
+2. Adicione Page Object/locator se o fluxo exigir interações repetidas.
+3. Registre o spec no `specPattern` se precisar de ordem específica.
+4. Quando houver fluxos derivados (por exemplo, reaproveitar um cadastro base para validar abas ou modais adicionais), encapsule o setup comum em helpers do Page Object e crie `its` que apenas estendam esse fluxo.
+5. Documente detalhes em `docs/cases/architecture-<nome-do-spec>.md` usando o formato já aplicado para `novaReceita` e `balanco`.
+
+---
+
+## Arquitetura dos Casos Específicos
+
+### Arquitetura: `produtos/atributos.spec.js`
+
+**Objetivo**: Garantir que o menu Compras e Estoque › Produtos › Atributos abra a listagem com os filtros, permita realizar uma pesquisa e acessar o formulário de novo cadastro.
+
+**Importações e dependências**:
+- `MenulateralProdutoPage` abre o menu e clica em "Atributos".
+- `AtributosListPage` (Page Object) controla o botão de pesquisa, os campos `#id` e `#nome`, o botão de submissão, a tabela de resultados e o botão "Novo Cadastro".
+- O comando `cy.loginArmazenandoSessao()` + `cy.visit('/')` garante estado inicial antes de cada `it`.
+- Plugins comuns (`support/e2e.js`) permanecem ativos; o spec está registrado no `specPattern` sob o bloco `// produto`.
+
+**Estrutura do teste**:
+1. `beforeEach` loga, visita `/` e navega para a listagem de atributos.
+2. Um `it` abre o filtro, preenche `Código` e `Descrição`, dispara a pesquisa e valida que a tabela aparece com pelo menos uma linha.
+3. Outro `it` clica em "Novo Cadastro", intercepta o GET `/produto/atributo/novo`, confere a URL/título e garante que o formulário é exibido; preenche o campo de descrição, intercepta o POST `/produto/atributo/salvar` e valida que o submit retorna 200. Segue validando a seção "Opções" (botão/tabela); após salvar o atributo, clica em "Opções", intercepta o GET do modal, preenche o campo "Nome" da opção, salva e garante que o POST `/produto/opcoes/*` foi disparado com sucesso.
+4. Um terceiro `it` cria dois atributos temporais (com timestamp) e volta à listagem. Seleciona o checkbox de cada nova linha, usa um stub para confirmar o `swal`, dispara o botão "Excluir Selecionados" e aguarda o POST `/produto/atributo/excluir`. O teste garante que os dois registros somem da tabela enquanto os atributos padrão "COR" (código 7) e "TAMANHO" (código 1) continuam visíveis, proibindo exclusões involuntárias desses itens críticos.
+
+**Boas práticas**:
+- Mesmo sem criar um novo atributo, o fluxo valida a navegação completa e o form de filtro, o que é suficiente para detectar regressões de menu ou layout.
+- A Page Object concentra esperas e seletores específicos da tela de atributos. Note que as tabelas de listagem e de opções possuem IDs dinâmicos, por isso os locators usam seletores mais genéricos (`table.table-hover`) para continuar funcionando mesmo com o ID flutuante.
+- Tags `@produtos` e `@regressivo` permitem filtrar via `@cypress/grep`.
+
+---
+
+### Arquitetura: `cadastro-clientes/cadastro-cliente.spec.js`
+
+**Objetivo**:
+- Validar que o formulário de cliente apresenta as abas e botões principais logo após a navegação a partir da listagem.
+- Garantir que os switches de Bloqueado e Desativado respondem corretamente aos cliques e refletem o estado esperado antes de salvar.
+- Preencher os campos obrigatórios/essenciais e salvar novos clientes PF e PJ garantindo o retorno de sucesso.
+
+**Importações e dependências**:
+- `ClientePage` (Page Object em `cypress/support/pages/Cliente/ClientePage.js`) encapsula o acesso via menu, validações de layout, preenchimento do formulário e submissão.
+- `CadastroClienteLocators` concentra os seletores da tela de cadastro; `ClienteLocators` continua responsável pelos seletores genéricos (modal de confirmação).
+- `generateRandomCustomer` e `generateRandomContact` (`cypress/support/factory/generateRandomData.js`) fornecem dados dinâmicos para clientes (PF/PJ), endereços e contatos evitando colisões.
+- Hooks globais em `cypress/support/e2e.js` continuam ativos (Allure, interceptação HTTP 500, Percy), sem ajustes adicionais.
+
+**Estrutura do teste**:
+1. `beforeEach` executa `cy.loginArmazenandoSessao()` e `cy.visit('/')`, garantindo a sessão logada antes de abrir o menu.
+2. O primeiro cenário chama `ClientePage.visit()` e `ClientePage.verificarLayoutBasico()` para confirmar abas, botões e formulário visíveis.
+3. O segundo cenário reutiliza `ClientePage.visit()` e `ClientePage.alternarSwitchesEstado()` para validar o comportamento dos switches Bloqueado/Desativado.
+4. O terceiro cenário gera dados via `generateRandomCustomer`, chama `ClientePage.preencherCamposCliente()`, executa `ClientePage.cadastrar()` (com intercept em `/cadastro/cliente/salvar`, tratamento do SweetAlert clicando em "Sim, continuar", seleção automática de Bairro e Cidade no autocomplete e nova tentativa de salvar) e, por fim, verifica a mensagem de sucesso.
+5. Um quarto cenário repete o fluxo completo selecionando `Pessoa = JURIDICA`, preenchendo o CNPJ e validando o retorno de sucesso para clientes PJ.
+6. Um quinto cenário preenche todos os campos de endereço, salva o cliente, aguarda o redirecionamento para a página de edição, valida que não há endereços listados, abre o modal "Endereço", salva um novo registro e valida que a tabela foi populada.
+7. Um sexto cenário reutiliza o fluxo de cadastro para acessar a aba "Contato/Notificações", valida que não há registros, abre o modal "Contato", salva um novo registro e confirma que a tabela deixa de apresentar a mensagem de vazio.
+
+---
+
+### Arquitetura: `venda-nfcenfe/cadastro-nfe.spec.js`
+
+**Objetivo**:
+- Exercitar o fluxo completo de uma NFe normal avulsa no módulo de vendas, desde a tela inicial até a confirmação de emissão.
+- Garantir que passos, abas de finalidade e tipo Avulsa estão pré-configurados e navegáveis.
+- Validar o preenchimento dos dados principais (natureza CFOP e destinatário) com autocompletes e requisições de salvamento monitoradas.
+- Verificar a transição para a etapa de itens, incluindo aguardo de carregamento, inserção de um item e confirmação na tabela.
+- Abrir o painel de pagamentos, cadastrar um novo pagamento via modal e confirmar a persistência.
+- Emitir a nota e validar o modal de sucesso (SweetAlert), escolhendo a ação de retorno.
+- Repetir o mesmo fluxo para a finalidade **Devolução Avulsa**, assegurando paridade de comportamento com o cenário normal.
+
+**Importações e dependências**:
+- `CadastroNfePage` (`cypress/support/pages/Venda/CadastroNfePage.js`): concentra métodos para tela inicial, formulário, itens, pagamentos e emissão.
+- `ListagemNfePage` (`cypress/support/pages/Venda/ListagemNfePage.js`): navega até a lista e aciona "Novo Cadastro".
+- `CadastroNfeLocators` (`cypress/support/locators/Venda/CadastroNfeLocators.js`): agrupa seletores de tabs, formulário, itens, pagamentos, painel final e SweetAlert.
+- `cy.login()` (custom command) garante autenticação antes de cada teste.
+- Intercepts utilizados:
+  - `POST **/nfe2/salvar` (destinatário).
+  - `GET **/nfe2/**/itens*` (carregamento da tela de itens).
+  - `POST **/nfe2/**/itens/salvar` (inserção de item).
+  - `POST **/nfe2/**/pagamentos/salvar` (modal de pagamento).
+
+**Estrutura do teste**:
+1. **beforeEach**: `cy.login()` e `cy.visit('/')`. `CadastroNfePage.desabilitarTourFinalidadeNormal()` para evitar tooltips. `ListagemNfePage.visitar()` e `ListagemNfePage.clicarNovoCadastro()` para abrir o wizard.
+2. **Testes ativos**:
+   - `preenche formulário com natureza e destinatário na NFe normal avulsa`: Avança para o passo de cadastro normal avulsa. Preenche natureza com CFOP `5102`, confirmando o código no campo oculto. Seleciona o destinatário "SOFTCOM TECNOLOGIA" via typeahead, aguarda o `POST /salvar` e clica em Continuar. `validarTelaSelecaoItens()` aguarda URL `/nfe2/{id}/editar`, loading, skeleton e tabela de itens. `adicionarItem()` insere o primeiro produto disponível, define quantidade/valor, salva aguardando `POST /itens/salvar`, valida tabela e avança. `validarTelaPagamentos()` garante painel exibido; `adicionarPagamentoBasico()` abre o modal, seleciona tipo/valor, salva aguardando `POST /pagamentos/salvar` e valida a nova linha. Clica novamente em Continuar, `validarTelaEmitirNota()` confirma painel final e `emitirNota()` dispara o envio. `validarModalSucessoEmissao('listagem')` valida o SweetAlert de sucesso e escolhe "Voltar para a listagem".
+   - `realiza fluxo completo da NFe de devolução avulsa`: Seleciona a aba de devolução, ativa o radio Avulsa e avança com `avancarParaCadastroDevolucaoAvulsa()`. `validarFormularioDevolucaoAvulsa()` assegura finalidade `4` e campos principais disponíveis. Preenche natureza com CFOP `1202` e reutiliza o mesmo destinatário, aguardando `POST /salvar`. Os passos subsequentes (itens, pagamentos, emissão e modal) replicam exatamente o fluxo normal, garantindo cobertura completa da finalidade de devolução.
+
+**Padrões e boas práticas**:
+- **Page Object completo**: métodos com responsabilidade clara por etapa (abas, formulário, itens, pagamentos, emissão).
+- **Intercepts condicionais**: flag `itensRequestInterceptada` evita `cy.wait` desnecessário quando não há requisição de itens.
+- **Aguardos defensivos**: verificação de skeleton, loading, blur após digitação e filtros `:visible` previnem flakiness.
+- **Reuso de componentes**: botão "Continuar" e validações de modal centralizadas em métodos dedicados.
+- **Documentação de tags**: suite anotada com `{ tags: ['@nfe', '@vendas', '@regressivo'] }` para filtros via `@cypress/grep`.
+
+---
+
+### Arquitetura: `cadastro-produto/cadastro-produto.spec.js`
+
+**Objetivo**: Validar o fluxo principal de cadastro de produto (dados cadastrais + vínculo fiscal) usando dados dinâmicos e mantendo o ambiente limpo após cada cenário.
+
+**Importações e dependências**:
+- `generateRandomProduct` (`cypress/support/factory/generateRandomData.js`) cria descrição, referência, códigos e valores monetários aleatórios.
+- `ProdutoPage` concentra toda a navegação/listagem e o preenchimento do formulário usando `ProdutoLocators` (inputs, dropdowns, botões, modais SweetAlert).
+- `VinculoFiscalPage` encapsula as ações dentro da tela de "Detalhes Fiscais" reaproveitando `VinculoFiscalPageLocators`.
+- Cada `it` inicia autenticado via `cy.loginArmazenandoSessao()` e `cy.visit("/")`, mantendo os hooks globais (`support/e2e.js`) ativos.
+- O spec permanece registrado no `specPattern` para garantir ordem previsível dentro do conjunto de suites de produtos.
+
+**Estrutura do teste**:
+1. `beforeEach` garante sessão válida e carrega a página inicial, permitindo que os comandos personalizados e interceptações globais atuem antes dos passos específicos.
+2. O primeiro `it` ativo cobre o fluxo de Combo: o teste habilita o switch (`ProdutoPage.habilitarCombo()`), salva, confirma o redirecionamento para `/produto/<id>/editar`, acessa a aba Combo (`ProdutoPage.acessarAbaCombo()`), valida o estado inicial sem itens (`ProdutoPage.verificarComboSemItens()`/`ProdutoPage.verificarComboQuantidadeItens(0)`), aciona o modal para montagem (`ProdutoPage.adicionarItemCombo()`) — que seleciona automaticamente um ou mais produtos, ignorando o grupo "Taxa de Entrega" quando houver outras opções — e garante que a tabela/totalizador reflitam pelo menos um item criado (`ProdutoPage.verificarComboComItens(1)` + `ProdutoPage.verificarComboQuantidadeItens(1)`).
+3. O segundo `it` ativa o fluxo de "produto sem venda": após preencher os dados, o teste desmarca o switch (`ProdutoPage.desabilitarVenda()`), salva, volta para a aba de Dados Cadastrais e garante que o estado permaneceu desativado (`ProdutoPage.verificarVendaDesativada()`), validando tanto o hidden `#vender` quanto o checkbox correspondente.
+4. O terceiro `it` cobre a edição a partir da listagem: `ProdutosListPage.acessarListagem()` captura o primeiro produto, usa o botão editar da tabela, altera a observação (`ProdutoPage.atualizarObservacao()`), salva e confirma que o usuário permanece na tela de edição com o valor atualizado (`ProdutoPage.validarObservacao()`).
+
+**Boas práticas**:
+- `ProdutoPage` faz `cy.percySnapshot()` antes do preenchimento e usa normalização de texto ao validar os SweetAlerts restantes (exclusão), reduzindo intermitências causadas por acentuação ou HTML adicional.
+- Os toggles de grade e combo são encapsulados em métodos próprios, que validam os campos ocultos (`#habilitar_grade`, `#habilitar_acompanhamento`) e só continuam quando o valor `1` for aplicado, garantindo que as abas Grade/Combo estejam visíveis antes das asserts.
+- `ProdutoPage.adicionarItemCombo()` centraliza a abertura do modal, o preenchimento dos campos obrigatórios (descrição, ordem, quantidades) e a seleção de múltiplos produtos (ignorando o grupo "Taxa de Entrega" quando houver alternativas). Ele também expõe via alias `@comboItensAdicionados` o total de grupos/produtos efetivamente selecionados, permitindo garantir que o modal contemplou mais de um conjunto quando disponível, enquanto a validação da aba Combo continua exigindo pelo menos um item criado.
+- `ProdutoPage.desabilitarVenda()` e `ProdutoPage.verificarVendaDesativada()` encapsulam a manipulação do switch "Vender" (via hidden + `switchery`), garantindo que o valor `0` permaneça após o salvamento.
+- `ProdutoPage.atualizarObservacao()`/`ProdutoPage.validarObservacao()` centralizam a edição e verificação do campo de observação, facilitando verificações pós-salvamento na tela de edição.
+- `ProdutosListPage.obterPrimeiroProdutoDaTabela()` e `ProdutosListPage.clicarEditarProdutoPeloCodigo()` permitem recuperar rapidamente um registro existente e abrir o formulário de edição a partir da listagem.
+- O alerta opcional exibido após salvar edições pode ser dispensado com `ProdutoPage.cancelarAlertaAtualizacaoGrupo()` (que aguarda o carregamento do modal e clica em "Não"), garantindo que a validação prossiga mesmo quando o SweetAlert aparecer.
+- `VinculoFiscalPage` aguarda o dropdown de vínculo ficar visível (timeout dedicado), oferece `preencherNcmECest()` para selecionar as primeiras opções dos typeaheads e mantém o spec desacoplado dos seletores concretos.
+- Os dados aleatórios minimizam colisões entre execuções paralelas e simplificam a limpeza.
+- Tags `@cadastro-produto` e `@regressivo` continuam em uso para filtragem com `@cypress/grep`.
+
+---
+
+### Arquitetura: `vendas/cadastro-venda.spec.js`
+
+**Objetivo**:
+- Validar o fluxo inicial do **cadastro de vendas**, garantindo que os botões principais, formulários e painéis (itens e pagamentos) sejam carregados corretamente ao abrir `Vendas e NF-e > Vendas > Novo Cadastro`.
+- Exercitar os autocompletes de **cliente, vendedor e produto** usando respostas controladas (stubs), assegurando que o front-end trate as sugestões corretamente sem depender de dados reais.
+- Confirmar que o painel de itens inicia com valores padrão (`quantidade 1,00`, `preço 0,00`, totalizadores zerados) e que o painel de pagamentos informa a ausência de registros antes de gerar parcelas.
+- Cobrir um fluxo completo alterando cliente (quando disponível), selecionando o primeiro vendedor do autocomplete real, adicionando item e gerando pagamento pelo modal padrão.
+- Exercitar um fluxo com múltiplos itens, aplicação de desconto e geração de pagamento para validar as regras do modal de desconto e a disponibilidade do botão de pagamento.
+
+**Importações e dependências**:
+- `CadastroVendaPage` (`cypress/support/pages/Venda/CadastroVendaPage.js`) encapsula navegação via `MenulateralVendaPage`, valida botões, interage com autocompletes/story e verifica os painéis.
+- `CadastroVendaLocators` (`cypress/support/locators/Venda/CadastroVendaLocators.js`) concentra os seletores do cabeçalho, formulário principal, tabela de itens e painel de pagamentos.
+- `ListagemVendasLocators` é reutilizado para clicar no botão **Novo Cadastro** da listagem antes de chegar ao formulário.
+- O spec usa `cy.intercept` para mockar os endpoints:
+  - `POST **/vendas/autocomplete/cliente`
+  - `POST **/vendas/autocomplete-vendedor`
+  - `POST **/vendas-itens/autocomplete`
+  Isso evita dependência do ambiente e garante previsibilidade ao validar os autocompletes.
+- O último teste reutiliza os dados reais do ambiente (sem intercepts) para validar a troca de cliente, a seleção do primeiro vendedor disponível, a inclusão de itens e a geração de pagamentos.
+- O fluxo com desconto utiliza intercept específico para garantir sugestão estável de produtos antes de acionar o modal de desconto.
+
+**Estrutura do teste**:
+1. `beforeEach`: login com `cy.loginArmazenandoSessao()`, `cy.visit('/')`, navegação pelo menu até `Vendas > Novo`.
+2. Primeiro `it` valida botões (`Voltar`, `Novo`, `Salvar`, `Excluir`, `Mais ações`) e campos principais do formulário.
+3. Segundo `it` aplica intercepts para cliente/vendedor, digita textos nos inputs e garante que as listas de sugestões apareçam com pelo menos um item.
+4. Terceiro `it` valida o painel "Adicione os Itens na Venda", conferindo tabela, campos visíveis e totalizadores zerados.
+5. Quarto `it` intercepta `vendas-itens/autocomplete`, digita no campo de produto e verifica que a lista de sugestões é exibida.
+6. Quinto `it` confirma que o painel de pagamentos apresenta a mensagem padrão ("Nenhum resultado foi localizado...") antes de gerar parcelas.
+7. Sexto `it` executa o fluxo completo com dados reais:
+   - Seleciona um cliente diferente do atual (quando disponível) e valida a alteração do campo oculto.
+   - Escolhe o primeiro vendedor retornado pelo autocomplete.
+   - Adiciona o primeiro produto disponível na lista e aguarda o item salvo na tabela.
+   - Gera um pagamento usando o modal padrão, selecionando a primeira forma de pagamento e validando que a tabela de pagamentos deixa de exibir a mensagem "Nenhum resultado...".
+8. Sétimo `it` adiciona três itens, aplica desconto e gera pagamento:
+   - Utiliza intercept dedicado para garantir o autocomplete de produtos antes de cada inclusão.
+   - Valida que o botão de Desconto/Acréscimo fica disponível e que o modal aceita o percentual informado.
+   - Reexecuta o fluxo de pagamento confirmando que a tabela deixa de exibir "Nenhum resultado..." após a parcela ser criada.
+
+---
+
+### Arquitetura: `produtos/grupos.spec.js`
+
+**Objetivo**: Garantir o acesso à listagem de grupos via menu "Compras e Estoque › Produtos › Grupos", validar o filtro por código/nome e a navegação para o cadastro de um novo grupo.
+
+**Importações e dependências**:
+- `MenulateralProdutoPage.acessarListagemGrupos()` expande o menu adequado.
+- `GruposListPage` organiza o filtro (botão "Pesquisar", campos `#id`, `#auto_nome`, botão `#btn-pesquisar`) e a tabela principal (`table.table-hover`, com timeout maior para lidar com recarga lenta). O GET usado para abrir o novo cadastro pode chegar via `/grupo/novo` ou `/grupo-padrao/novo`, por isso o `cy.intercept` usa um regex.
+- `cy.loginArmazenandoSessao()` + `cy.visit('/')` preparam o estado antes de cada teste; os plugins em `support/e2e.js` continuam ativos.
+
+**Estrutura do teste**:
+1. `beforeEach` loga, visita `/` e abre a listagem de grupos.
+2. O primeiro `it` abre o filtro, preenche código e nome, dispara a pesquisa e valida que a tabela aparecer com linhas visíveis.
+3. O segundo `it` intercepta o GET `/grupo(-padrao)?/novo`, clica no botão "Novo Cadastro" e garante que a URL muda para `/grupo/novo` ou `/grupo-padrao/novo`, além de checar o título do formulário contém "Grupo". Em seguida, preenche nome/percentual de comissão, salva o formulário interagindo com o POST `/grupo(-padrao)?/salvar` e retorna à listagem (rota `/grupo-padrao`) para confirmar que o novo grupo está presente na tabela.
+4. O terceiro `it` fortalece a cobertura desenhando dois grupos temporários, marcando seus checkboxes e acionando "Excluir Selecionados" com o `swal` confirmado via stub. O POST `/grupo/excluir` é interceptado, garante que os novos registros desaparecem e os grupos padrão (ex.: "Adicionais Combo TOp", "Adicional") permanecem visíveis.
+
+**Boas práticas**:
+- O locators evita IDs específicos na tabela, mantendo `table.table-hover` mesmo que o ID mude.
+- Tags `@produtos` e `@regressivo` permitem filtrar rodando apenas os fluxos de produto.
+
+---
+
+### Arquitetura: `cadastro-clientes/listagem-clientes.spec.js`
+
+**Objetivo**:
+- Garantir que a tela **Vendas e NF-e > Clientes** apresenta a tabela inicial paginada, permite pesquisa por nome e mantém os botões principais funcionais.
+- Validar as salvaguardas de exclusão: alerta quando não há linhas selecionadas e modal de confirmação quando há seleção ativa.
+- Certificar que o fluxo não altera registros em ambiente compartilhado; todos os testes cancelam as confirmações.
+
+**Importações e dependências**:
+- `ListagemClientePage` (`cypress/support/pages/Cliente/listagemclientepage.js`) encapsula navegação via menu lateral e todas as interações com filtros, tabela, paginação e botões de exclusão.
+- `ListagemClienteLocators` concentra os seletores da tela (filtros, tabela, checkbox, paginação), enquanto `ClienteLocators` segue responsável apenas pelos seletores de modais globais.
+- `beforeEach` reutiliza `cy.loginArmazenandoSessao()` seguido de `cy.visit('/')` para cumprir o checklist de `docs/test-case-architecture.md` e garantir contexto estável antes de acessar o menu.
+- Hooks globais definidos em `cypress/support/e2e.js` continuam habilitados (Allure, interceptação de erro 500, Percy, grep), não sendo necessário configuração adicional no spec.
+
+**Estrutura do teste**:
+1. `beforeEach` faz login com sessão armazenada, visita a home e chama `ListagemClientePage.acessarTelaListagem()` para aguardar a tabela visível antes de cada `it`.
+2. O primeiro teste garante que a tabela está carregada, valida que a paginação ativa é "1" e abre o formulário de filtros (`abrirFormularioPesquisa`) antes de seguir.
+3. O segundo teste aplica um filtro por nome (`pesquisarPorNome`), valida o resultado (`validarResultadoPorNome`) e limpa o campo via `limparFiltroNome`, confirmando que o input ficou vazio.
+4. O terceiro teste usa `selecionarTodosClientes` e `desmarcarTodosClientes` para validar o comportamento do checkbox "Selecionar todos" e das linhas da tabela.
+5. O quarto teste reproduz o cenário de exclusão sem seleção (`tentarExcluirSemSelecao`), esperando o alerta de aviso do SweetAlert.
+6. O quinto teste marca a primeira linha, abre o modal de exclusão (`abrirModalExcluirSelecionados`) e cancela a ação (`cancelarModalExclusao`), garantindo que o modal fecha sem efeitos.
+
+---
+
+### Arquitetura: `venda-nfcenfe/listagem-nfe.spec.js`
+
+**Objetivo**:
+- Garantir que a navegação pelo menu **Vendas e NF-e > NF-e > Listagem NF-e** abre a tela com o título visível e a tabela carregada.
+- Validar o filtro avançado por número inicial/final, série e status (estado RECEBIDO/Autorizadas), confirmando que a submissão envia os parâmetros na query string.
+- Bloquear a exclusão em massa quando não há linhas selecionadas, exibindo o SweetAlert de aviso e permitindo fechar via botão Confirmar.
+- Assegurar que o checkbox geral seleciona as linhas da tabela (checando a primeira linha como evidência).
+
+**Importações e dependências**:
+- `ListagemNfePage` em `cypress/support/pages/Venda/ListagemNfePage.js` centraliza abertura pelo menu lateral, validação de carregamento, filtro avançado, submissão da busca, seleção em massa e interação com o alert.
+- `ListagemNfeLocators` em `cypress/support/locators/Venda/ListagemNfeLocators.js` contém os seletores do filtro (`#btn-pesquisa`, `#numero_nfe_de`, `#numero_nfe_ate`, `#serie`, `#status_nota`, `#btn-pesquisar`), tabela (`.ibox-content table`, `.check_all`) e SweetAlert (`.sweet-alert`, `.confirm`).
+- `cy.login()` seguido de `cy.visit('/')` no `beforeEach` garante sessão antes de chamar `ListagemNfePage.visitar()`; hooks globais de `support/e2e.js` mantêm intercept de erro 500 e integrações Allure/Percy ativas.
+- Tags `{ tags: ['@nfe', '@vendas', '@regressivo'] }` habilitam filtragem com `@cypress/grep`.
+
+**Estrutura do teste**:
+1. `beforeEach`: executa login padrão, visita a raiz, acessa a listagem via menu lateral e valida título + tabela visíveis.
+2. Cenário 1: abre o filtro avançado, preenche número inicial `349`, final `379`, série `301` e status `RECEBIDO`, submete e verifica que a URL inclui os parâmetros `numero_nfe_de`, `numero_nfe_ate`, `serie` e `status_nota`.
+3. Cenário 2: aciona **Excluir selecionados** sem marcar linhas e valida o modal de aviso do SweetAlert, fechando pelo botão Confirmar.
+4. Cenário 3: marca o checkbox geral `.check_all` e certifica que o checkbox da primeira linha fica selecionado.
+
+---
+
+### Arquitetura: `produtos/listagem-produtos.spec.js`
+
+**Objetivo**:
+- Garantir que o menu de **Compras e Estoque > Produtos > Produto** apresenta corretamente os filtros, realiza pesquisas e controla os seletores de linha na listagem principal.
+- Validar o comportamento do botão "Limpar Filtros" após submissão, confirmando que limpa os campos e switches mesmo quando o formulário é reaberto automaticamente.
+- Cobrir o toggle do checkbox "selecionar todos" da tabela para garantir que as linhas podem ser marcadas e desmarcadas em massa.
+
+**Importações e dependências**:
+- `ProdutosListPage` (Page Object em `cypress/support/pages/Produtos/ProdutosListPage.js`) encapsula a navegação via `MenulateralProdutoPage`, a abertura do formulário de filtros, o preenchimento dos inputs (`auto_produto_id`, `grupo`), o acionamento dos switches (`Desativado`, `Combo`), os botões de pesquisa e limpeza e as interações com a tabela/checkboxes.
+- `ProdutosListLocators` concentra todos os seletores da tela de listagem (filtros, tabela, bulk actions) para manter a reutilização e facilitar ajustes futuros.
+- O `beforeEach` reutiliza `cy.loginArmazenandoSessao()` + `cy.visit('/')` para garantir que a sessão logada e a tela inicial estejam prontas antes de acionar o menu.
+- Hooks globais em `support/e2e.js` (captura de erros 500, Percy, Allure, etc.) continuam ativos sem alterações específicas para esse spec.
+
+**Estrutura do teste**:
+1. `beforeEach` faz login com sessão guardada, visita a raiz da aplicação e usa `ProdutosListPage.acessarListagem()` para entrar no menu produto e aguardar a tabela visível.
+2. O primeiro `it` abre o formulário de filtros, certifica-se de que ele aparece e valida que a tabela já contém linhas (checando o tamanho).
+3. O segundo `it` aplica filtro de grupo, habilita os switches "Desativado" e "Combo", dispara a pesquisa e, com o formulário escondido após o reload, reabre o filtro para clicar em "Limpar filtros". Em seguida, verifica que o `<select>` e os switches voltaram ao estado não selecionado.
+4. O terceiro `it` dispara o "selecionar todos" do checkbox principal, valida que todas as linhas foram marcadas, e então alterna novamente para garantir que eles foram desmarcados, usando o novo método `desmarcarTodosCheckboxes`.
+5. Dois testes adicionais lidam com a ação "Alterar Grupo": um garante que o modal aparece após selecionar um produto e que o `<select>` apresenta uma opção não vazia (além do campo oculto com os IDs), e outro escolhe a primeira opção diferente daquela exibida na linha da tabela, clica em "Salvar", aguarda o fechamento do modal e recarrega a listagem antes de validar que o grupo exibido refletirá o novo valor.
+
+---
+
+### Arquitetura: `vendas/listagem-vendas.spec.js`
+
+**Objetivo**:
+- Garantir que o menu **Vendas e NF-e > Vendas** apresenta a tabela principal com dados, paginação e form de filtros, permitindo alternar o painel de busca sem recarregar.
+- Validar a submissão de filtros chave (código, situação e período), confirmando que os parâmetros são enviados para `/vendas` e que o resultado mantém o código informado visível.
+- Cobrir os botões de massa (`Selecionar todos`, `Excluir selecionados`) e o dropdown de ações por linha, assegurando que o modal de exclusão aparece apenas quando há seleção e que a ação **Clonar Venda** fica disponível.
+- Considerar o estado onde nenhuma venda é retornada no primeiro carregamento, mantendo os testes estáveis e registrando logs informativos em vez de falhar os cenários dependentes de registros.
+
+**Importações e dependências**:
+- `ListagemVendasPage` em `cypress/support/pages/Venda/ListagemVendasPage.js` centraliza o acesso via `MenulateralVendaPage`, abertura de filtros, preenchimento de inputs/selects/datepicker, submissão com `#pesquisar`, controle de checkboxes e interações com dropdown/modal.
+- `ListagemVendasLocators` em `cypress/support/locators/Venda/ListagemVendasLocators.js` concentra seletores da tela (inputs `#id`, `#auto_cliente_id`, `#periodo`, selects `#nfe_nfce_faturada` e `#situacao`, tabela `.table-hover`, checkbox `.check_all`, dropdown de ações etc.).
+- Reuso do `ClienteLocators.modalConfirmDestroy` para validar o SweetAlert disparado pelo botão **Excluir selecionados**.
+- `cy.loginArmazenandoSessao()` + `cy.visit('/')` garantem sessão válida antes de abrir o menu; hooks globais (`support/e2e.js`) mantêm intercept de erro 500 e integrações Allure/Percy ativas.
+
+**Estrutura do teste**:
+1. `beforeEach`: login com sessão armazenada, `cy.visit('/')` e `ListagemVendasPage.acessarTelaListagem()` para aguardar a tabela.
+2. Teste 1 valida linhas/paginação inicial e garante que o botão `#btn-pesquisa` exibe o painel `.form-pesquisa`, conferindo o campo `#periodo`.
+3. Teste 2 lê o primeiro código visível, preenche filtros de código/situação, dispara `#pesquisar` e assegura (via `cy.intercept('GET', '**/vendas**')`) que a URL contém `id=<codigo>` e `situacao=FATURADA`, além de conferir o código na tabela.
+4. Teste 3 foca no `#periodo`, preenchendo manualmente o range (`DD/MM/YYYY - DD/MM/YYYY`) e verificando que o parâmetro chega na query string (`periodo=`) após a submissão.
+5. Teste 4 alterna o checkbox geral `.check_all`, confirmando seleção e desmarcação de todos os `input[name='simplecheck[]']`.
+6. Teste 5 cobre exclusão em massa: primeiro clica sem seleção (espera o alerta "Aviso"), depois marca até duas vendas com status **NÃO FATURADA**, abre o modal SweetAlert e confirma utilizando o botão que contém "pode excluir".
+7. Teste 6 abre o dropdown da primeira linha (botão `.dropdown-toggle` que é deslocado para o `body`) e verifica se existe a opção **Clonar Venda**, garantindo também o fechamento do menu ao clicar fora.
+
+---
+
+### Arquitetura: `compras/movimentacoes.spec.js`
+
+**Objetivo**: Validar o filtro "Operação" na listagem de Movimentações dentro do menu Compras e Estoque, assegurando que a requisição GET a `/movimentacao` retorne com sucesso e apresente resultados na tabela.
+
+**Importações e dependências**:
+- `MenulateralProdutoPage` (em `cypress/support/pages/menulateral`) disponibiliza o acesso pelo menu "Compras e Estoque › Movimentações" e lança o botão "Novo Cadastro".
+- `ListagemMovimentacoesPage` encapsula a interação com o select `#operacao`, o botão "Pesquisar" e a verificação da tabela `table.table-hover`.
+- `CadastroMovimentacoesPage` cobre os campos do formulário de cadastro (`#data_operacao`, `#operacao`, `#auto_tipo_ajuste_id`, `#observacao`, `#btn-salvar`), e `ItensMovimentacoesPage` valida os campos de produto, quantidade e preço exibidos após salvar.
+- Hooks e plugins de `support/e2e.js` continuam ativos; `cy.loginArmazenandoSessao()` + `cy.visit('/')` garantem sessão e estado inicial.
+- O spec está registrado no `specPattern` (`cypress.config.js`) sob o bloco `// compras e estoque`.
+
+**Estrutura do teste**:
+1. `beforeEach` realiza login, abre a página inicial (`cy.visit('/')`) e navega via menu lateral.
+2. O primeiro `it` intercepta o GET `/movimentacao*`, seleciona "ENTRADA" no filtro de operação e clica em "Pesquisar".
+3. Aguarda a interceptação (`cy.wait("@pesquisarMovimentacao")`) e exige status 200; em seguida valida a presença e quantidade de registros na tabela.
+4. O segundo `it` usa `MenulateralProdutoPage.acessarCadastroNovaMovimentacoes()` para abrir `movimentacao/novo`, valida a URL e garante que os campos data, operação e tipo estão visíveis antes de preencher a observação e clicar em "Salvar". Depois confirma que o painel de itens (`ItensMovimentacoesPage`) aparece, expande o autocomplete do produto para selecionar o primeiro item disponível, preenche quantidade/preço na nova sessão, clica no botão "Salvar" próprio dessa área e valida que a tabela apresenta pelo menos uma linha e que os totalizadores (itens, volumes, total) refletem os valores adicionados.
+5. A terceira execução repete os passos iniciais, redefine a operação para "SAIDA", verifica o valor exibido, salva o cabeçalho, abre novamente a sessão de itens, adiciona o primeiro produto disponível com quantidade e preço diferentes, salva esse item e valida a mesma tabela/totais para garantir o comportamento da operação de saída.
+
+**Boas práticas**:
+- Page Objects mantêm o spec focado no fluxo sem expor seletores complexos.
+- `ItensMovimentacoesPage` abstrai as ações do formulário de itens, mantendo o spec em um nível mais alto ao preencher produto, quantidade e preço.
+- Tags `@compras` e `@regressivo` no describe permitem filtrar este cenário nos pipelines.
+- O helper `ListagemMovimentacoesPage.obterLinhasVisiveis()` facilita assertivas quantitativas.
+- O novo `CadastroMovimentacoesPage` abstrai as verificações do formulário de cadastro, mantendo o spec focado no comportamento em vez de nos seletores.
+
+---
+
+### Arquitetura: `financeiro/novaReceita.spec.js`
+
+**Objetivo**: Verificar o cadastro de uma nova receita no módulo financeiro, garantindo que o fluxo fique disponível para cada forma de pagamento listada no fixture `formasPagamento.json` e que o formulário seja preenchido completamente antes do salvamento.
+
+**Importações e dependências**:
+- `NovaReceitaPage` e `ListagemContasAReceberPage` (ambas em `cypress/support/pages/Financeiro`) encapsulam a interação com o modal e o formulário de receitas.
+- Fixture `cypress/fixtures/formasPagamento.json` provê os valores iterados pelo `forEach`.
+- Custom commands `cy.loginArmazenandoSessao()` e `.abrirNovoCadastro()` (via Page Objects/commands) garantem que o estado da sessão e da página esteja pronto antes de preencher o formulário.
+- Plugins carregados em `support/e2e.js` (como Allure, Percy e `@cypress/grep`) também se aplicam a este caso, fornecendo relatórios e filtragem.
+
+**Estrutura do teste**:
+1. **BeforeEach implícito**: `cy.loginArmazenandoSessao()` reutiliza `cy.session` para acelerar o login; chama `ListagemContasAReceberPage.abrirNovoCadastro()` para iniciar o modal.
+2. **Iteração dinâmica**: o array `formasPagamento` determina quantos `it` são gerados, cada um com uma `formaPagamento` diferente e com o identificador no título (`Deve preencher...`).
+3. **Preenchimento do formulário**:
+   - Título e categoria são definidos (`NovaReceitaPage.preencherDescricao`, `.selecionarCategoria`).
+   - Conta padrão (`CAIXA`) e forma de pagamento são escolhidas via autocomplete e seleção com comparação case-insensitive.
+   - Datas e valor aleatório (1-230) são calculados no próprio teste, garantindo registros únicos.
+   - Cliente e tipo de documento são selecionados via dropdowns padrão do layout.
+4. **Salvamento e validação**: após clicar em salvar (`.clicarSalvar()`), o teste espera o elemento `#loading` sumir; a validação explícita de toast está comentada, mas o cenário considera que a ausência de erro indica sucesso.
+
+**Padrões e boas práticas evidenciadas**:
+- **Page Object** separa seletores (`locators/NovaReceitaLocators`) de ações, facilitando reuso e manutenção.
+- **Fixtures + iteração** permitem testar o mesmo fluxo com múltiplas formas de pagamento sem duplicar lógica.
+- **Comandos personalizados** encapsulam login com persistência de sessão e interação com o menu lateral, simplificando os specs.
+- **Dados dinâmicos** (descrição com timestamp e valor randômico) evitam colisões no ambiente compartilhado.
+- **Controle de carregamento** com `cy.get('#loading').should('not.exist')` garante que o back-end terminou antes de prosseguir.
+
+---
+
+### Arquitetura: `sintegra/gerarArquivo.spec.js`
+
+**Objetivo**: Validar a geração do arquivo Sintegra via menu Fiscal › Sintegra › Gerar Arquivo, garantindo que período, inventário e valor sejam preenchidos corretamente e que o POST `sintegra/arquivo/consultar` retorne sucesso.
+
+**Importações e dependências**:
+- `GerarArquivoSintegraPage` (em `cypress/support/pages/Sintegra`) encapsula a navegação pelo menu lateral (`menulateralfiscalpage`), o preenchimento dos campos de período, data do inventário e valor, além do controle do switch "Informar Valor".
+- Locators em `cypress/support/locators/Sintegra/SintegraGerarArquivoLocators.js` mantêm os seletores principais para o formulário.
+- Plugins de `support/e2e.js` (Allure, Percy, `@cypress/grep`) e o comando `cy.loginArmazenandoSessao()` seguem aplicados.
+- O spec está registrado no `specPattern` (`cypress.config.js`) sob o bloco `// sintegra`, garantindo execução ordenada e compatibilidade com `@cypress/grep`.
+
+**Estrutura do teste**:
+1. `beforeEach` realiza login com sessão persistida, executa `cy.visit('/')` e acessa o fluxo via Page Object.
+2. O único `it` intercepta o POST `/sintegra/arquivo/consultar`, preenche o período (daterangepicker), define a data de inventário e ativa o switch de informar valor.
+3. Preenche o valor do inventário e dispara o botão "Gerar Arquivo".
+4. Aguarda a interceptação e exige que o status da resposta seja `200` para garantir que o backend aceitou os dados.
+
+**Boas práticas**:
+- O Page Object delega todos os comandos UI (menu, campos, switches) ao arquivo dedicado, deixando o spec legível.
+- `setToggleState` permite controlar switches mesmo se o DOM já estiver em um estado diferente, evitando cliques redundantes.
+- `cy.intercept` garante que o backend respondeu, complementando as validações guiadas por toast.
+- Tags `@sintegra` e `@regressivo` no describe facilitam filtragem em pipelines com `@cypress/grep`.
+
+---
+
+### Arquitetura: `sped/gerarArquivo.spec.js`
+
+**Objetivo**: Validar a geração do arquivo SPED pelo menu Fiscal > SPED > Gerar Arquivo, assegurando que inventário e valor informado estejam ativos e que a requisição para `/sped/arquivo` seja bem-sucedida.
+
+**Importações e dependências**:
+- `GerarArquivoPage` em `cypress/support/pages/Sped` encapsula a navegação no menu fiscal, a manipulação de switches e o clique no botão gerar.
+- Locators em `cypress/support/locators/Sped/SpedGerarArquivoLocators.js` mantém os seletores críticos (período, tipo, switches e botão).
+- Hooks e plugins definidos em `support/e2e.js` (Allure, Percy, `@cypress/grep`) continuam ativos, e o comando `cy.loginArmazenandoSessao()` fornece sessão logada e persistente.
+- O spec está registrado no `specPattern` de `cypress.config.js` para seguir a ordem da suíte e ser executado nos pipelines.
+
+**Estrutura do teste**:
+1. `beforeEach` faz login (`cy.loginArmazenandoSessao()`), chama `cy.visit('/')` para restabelecer o estado inicial e acessa o fluxo via `GerarArquivoPage.acessarViaMenu()`.
+2. O `it` intercepta `GET /sped/arquivo*`, preenche período e tipo, ativa inventário e informar valor, define o valor do inventário e posiciona o switch de retificação.
+3. Chama `GerarArquivoPage.gerarArquivo()` e aguarda `cy.wait("@gerarArquivo")` com status 200, garantindo que a API respondeu com sucesso.
+
+**Boas práticas**:
+- Page Object centraliza interações complexas (menus, switches) e deixa o spec focado em validações.
+- O método `setToggleState` garante toggles coerentes mesmo se a UI estiver em estado inesperado.
+- Tags `@sped` e `@regressivo` no `describe` permitem executar o caso isolado via `@cypress/grep`.
+- `cy.intercept` confirma a chamada de backend em vez de depender exclusivamente de elementos visuais.
+
+---
+
+## Próximos Passos Recomendados
+
+1. Manter `docs/testes.md` sincronizado com os novos specs e suites adicionadas em `cypress/e2e`.
+2. Atualizar `cypress/support/pages` e `locators` quando a interface sofrer refinamentos para evitar flakiness.
+3. Explorar `Percy` e `@percy/cypress` para cobertura visual adicional em telas críticas.
+4. Sempre criar um documento em `docs/cases/` para novos specs importantes (atributos, grupos, sintegra, etc.), mantendo a arquitetura detalhada e atualizada.
+

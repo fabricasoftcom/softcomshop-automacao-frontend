@@ -1,0 +1,177 @@
+---
+alwaysApply: true
+---
+
+## Architecture Decision Records
+
+This project uses **Architecture Decision Records (ADRs)** to document architectural decisions. For context and rationale, see [docs/adr/README.md](../docs/adr/README.md).
+
+**Key ADRs:**
+- [ADR-0002](../docs/adr/0002-use-page-object-pattern.md): Page Object Pattern
+- [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md): Separate Locators
+- [ADR-0004](../docs/adr/0004-use-cy-session-for-login-persistence.md): Session Persistence
+- [ADR-0005](../docs/adr/0005-use-allure-for-test-reporting.md): Allure Reporting
+- [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md): Mandatory Documentation
+- [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md): Separate Specs
+- [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md): Page Object Hierarchy
+- [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md): Faker for Dynamic Data
+- [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
+- [ADR-0011](../docs/adr/0011-use-conditional-intercepts.md): Conditional Intercepts
+
+---
+
+## Directory Structure
+
+- `cypress/e2e`: specifications organized by module. The `specPattern` in `cypress.config.js` ensures execution order. **See [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md)**
+- `cypress/support/pages`: Page Object classes with interaction logic. **See [ADR-0002](../docs/adr/0002-use-page-object-pattern.md)** and [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md)
+- `cypress/support/locators`: files that centralize selectors. **See [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md)**
+- `cypress/support/factory`: data factories built with Faker. **See [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md)**
+- `cypress/support/commands.js`: utility commands (login, menu navigation, validations).
+- `cypress/support/e2e.js`: loads plugins (Allure, cypress-xpath, Percy, cypress-grep) and global hooks.
+- `cypress/fixtures`: static test data.
+- `docs/cases/`: architecture documentation for each spec. **See [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md)**
+- `allure-results` and `allure-report`: test reports. **See [ADR-0005](../docs/adr/0005-use-allure-for-test-reporting.md)**
+
+---
+
+## Main Configuration
+
+- `cypress.config.js`: `baseUrl`, `viewport` 1366x768, `defaultCommandTimeout` 50s.
+- `setupNodeEvents`: registers `allure-cypress` and `@cypress/grep`.
+- `testIsolation: false` preserves states between tests.
+
+---
+
+## Execution Flows
+
+**npm scripts:**
+- `npm run e2e`: runs Cypress with Allure enabled
+- `npm run test:chrome|test:firefox`: specific browser
+- `npm run test:allure`: generates and opens Allure report
+- `npm run lint`: validates ESLint standards
+
+---
+
+## Data Flow
+
+- Use fixtures/factories for test data (Faker for dynamic values). **See [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md)**
+- Use `cy.session` for login: **For fiscal functionalities** (NFe, NFCe, SPED, Sintegra), use `cy.login()` with fiscal user. **For other functionalities**, use `cy.loginArmazenandoSessao()` with default user. **See [ADR-0004](../docs/adr/0004-use-cy-session-for-login-persistence.md)**
+- Global hooks in `support/e2e.js` intercept HTTP 500 errors. **See [ADR-0011](../docs/adr/0011-use-conditional-intercepts.md)** for conditional intercepts
+
+---
+
+## Reports and Evidence
+
+- Allure reports: `npm run report:allure` generates HTML from `allure-results`. **See [ADR-0005](../docs/adr/0005-use-allure-for-test-reporting.md)**
+- Screenshots: `cypress/screenshots` folder
+- CI integration: `allure-results` can be published in pipelines
+
+---
+
+## Test Case Architecture
+
+### 1. Expected Case Structure
+
+1. **Clear objective**: describe tested behavior and success criteria
+2. **Organized imports**: Page Objects, Locators, Fixtures, Commands
+3. **Hooks**: `beforeEach` with login command (`cy.login()` for fiscal functionalities, `cy.loginArmazenandoSessao()` for others) + `cy.visit('/')`
+4. **Test steps**: navigation → filling → submission → validation
+5. **Assertions**: toasts, DOM states, API responses
+
+### 1.5. Registration in `specPattern` (MANDATORY)
+
+- **ALWAYS** add new spec to `specPattern` in `cypress.config.js` immediately after creating the file
+- Maintain logical sequence within corresponding block (e.g., `// producao`, `// vendas`)
+- Example: `"./cypress/e2e/producao/cadastro-producao.spec.js"` → add in `// producao` block
+- **See [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md)** for spec separation patterns
+
+### 2. Main Dependencies
+
+- Cypress 13+ with plugins: `allure-cypress`, `@shelex/cypress-allure-plugin`, `@percy/cypress`, `cypress-xpath`, `@cypress/grep`
+- Data fixtures: `cypress/fixtures/users.json`, `formasPagamento.json`, etc.
+- Custom commands: `cy.login()` (fiscal functionalities), `cy.loginArmazenandoSessao` (other functionalities), `cy.loginRestoreSession`, `cy.clicarMenu`, etc.
+
+### 3. Classes and Page Objects
+
+> **Context**: See [ADR-0002](../docs/adr/0002-use-page-object-pattern.md), [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md), and [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md)
+
+**Rules:**
+- Each critical page has a class in `cypress/support/pages`
+- Use PascalCase names and verb methods (e.g., `preencherFormulario`, `clicarSalvar`)
+- Import specific locators from `cypress/support/locators/...`
+- Centralize waits and complex selectors within classes
+- **For modules with multiple variants**: consider Page Object hierarchy with base class and specific classes. **See [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md)**
+
+**Examples:**
+- `Financeiro/NovaReceitaPage.js`
+- `Balanco/BalancoPage.js`
+- `menulateral/menulateralfinanceiropage.js`
+
+### 4. Implementation Patterns
+
+> **Context**: See [ADR-0004](../docs/adr/0004-use-cy-session-for-login-persistence.md) for session persistence, [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md) for spec separation, [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md) for dynamic data, [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md) for tags, [ADR-0011](../docs/adr/0011-use-conditional-intercepts.md) for conditional intercepts
+
+**Rules:**
+- Use `cy.session` for login: **For fiscal functionalities** (NFe, NFCe, SPED, Sintegra), use `cy.login()`. **For other functionalities**, use `cy.loginArmazenandoSessao()`. **See [ADR-0004](../docs/adr/0004-use-cy-session-for-login-persistence.md)**
+- **Separate specs by functionality and type** when applicable. **See [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md)**
+- Avoid unnecessary hooks; keep each `it` focused
+- Use fixtures and dynamic data (Faker for random values). **See [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md)**
+- Validate loading: `cy.get('#loading').should('not.exist')`
+- SweetAlert: wait for visibility before interacting
+- Native modals: wait for all elements visible before filling
+- **Use conditional intercepts** when requests may or may not occur. **See [ADR-0011](../docs/adr/0011-use-conditional-intercepts.md)**
+- Document tags: `{ tags: ['@financeiro', '@regressivo'] }` for `@cypress/grep`. **See [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md)**
+
+### 5. Common Hooks and Monitoring
+
+- `cypress/support/e2e.js` intercepts 500 errors automatically
+- Use `beforeEach` to reset states
+- Avoid long `afterEach` commands that may mask failures
+
+### 6. Continuous Integration and Evidence
+
+> **Context**: See [ADR-0005](../docs/adr/0005-use-allure-for-test-reporting.md)
+
+- Results: `allure-results` → `npm run report:allure` → `allure-report`
+- Screenshots: `cypress/screenshots`
+- Keep documentation updated: `docs/testes.md` and `docs/cases/architecture-*.md`
+
+### 7. Mandatory Documentation (MANDATORY)
+
+> **Context**: See [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md) for complete decision
+
+**When creating a new test, you MUST:**
+
+1. Create spec in `cypress/e2e/...`
+2. Create Page Objects/Locators (if necessary)
+3. **Add to `specPattern` in `cypress.config.js`** (MANDATORY)
+4. **Create `docs/cases/architecture-<nome>.md`** (MANDATORY)
+   - Must contain: Objective, Imports and dependencies, Test structure, Patterns and best practices
+   - Reference examples: `architecture-cadastro-nfe.md`, `architecture-producao-listagem.md`
+5. **Update `docs/testes.md`** (MANDATORY)
+   - Include: Section title, Spec file, Test suite, List of all tests (`it`)
+6. Apply tags in `describe` for filtering (`@cypress/grep`). **See [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md)**
+
+---
+
+## New Test Creation Checklist
+
+**Follow this mandatory order:**
+
+- [ ] Create spec in `cypress/e2e/...`
+- [ ] Create Page Objects/Locators (if necessary)
+- [ ] **Add to `specPattern` in `cypress.config.js`** (MANDATORY)
+- [ ] **Create documentation in `docs/cases/architecture-<nome>.md`** (MANDATORY)
+- [ ] **Update `docs/testes.md`** (MANDATORY)
+- [ ] Apply tags in `describe` for filtering (`@cypress/grep`). **See [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md)**
+
+**IMPORTANT**: Do not consider the test complete until all items above are finalized.
+
+---
+
+## Reference Examples
+
+For detailed architecture examples, see:
+- `docs/cases/architecture-cadastro-nfe.md`
+- `docs/cases/architecture-producao-listagem.md`
+- `docs/cases/architecture-listagem-produtos.md`

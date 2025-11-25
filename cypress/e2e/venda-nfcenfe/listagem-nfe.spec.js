@@ -48,4 +48,13 @@ describe('Listagem NFe', { tags: ['@nfe', '@vendas', '@regressivo'] }, () => {
     cy.wait('@buscarNfePeriodo');
     ListagemNfePage.validarParametrosNaUrl({ periodo });
   });
+
+  it('abre a edicao do primeiro registro da listagem', () => {
+    ListagemNfePage.abrirEdicaoPrimeiraLinha();
+    cy.url().should('match', /nfe2\/\d+\/editar/);
+  });
+
+  it('acessa a impressao (DANFE) do primeiro registro', () => {
+    ListagemNfePage.abrirImpressaoPrimeiraLinha();
+  });
 });

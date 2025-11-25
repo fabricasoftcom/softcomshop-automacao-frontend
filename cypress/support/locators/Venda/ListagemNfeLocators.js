@@ -4,6 +4,8 @@ const ListagemNfeLocators = {
   botaoPesquisarInferior: '#pesquisar',
   botaoNovoCadastro: 'a[href*="/nfe2/novo"]',
   botaoExcluirSelecionados: '#btn-excluir-selecionados',
+  botaoEditarPrimeiraLinha: '.ibox-content table tbody tr:first-child a.button-edit',
+  botaoImprimirPrimeiraLinha: '.ibox-content table tbody tr:first-child a.fa-print',
   campoPeriodo: '#periodo',
   botaoCalendarioPeriodo: '.btn-daterangepicker[data-label="periodo"]',
   formPesquisaAvancada: '.form-pesquisa',

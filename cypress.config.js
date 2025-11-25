@@ -27,7 +27,11 @@ module.exports = defineConfig({
       "./cypress/e2e/compras/cadastro-compra.spec.js",
       "./cypress/e2e/compras/cadastro-fornecedor.spec.js",
       // compras e estoque
-      "./cypress/e2e/compras/movimentacoes.spec.js",
+      "./cypress/e2e/compras/listagem-movimentacoes.spec.js",
+      "./cypress/e2e/compras/cadastro-movimentacoes.spec.js",
+      // producao
+      "./cypress/e2e/producao/producao-listagem.spec.js",
+      "./cypress/e2e/producao/cadastro-producao.spec.js",
       // produto
       "./cypress/e2e/cadastro-produto/cadastro-produto.spec.js",
       "./cypress/e2e/produtos/atributos.spec.js",
@@ -66,6 +70,11 @@ module.exports = defineConfig({
       "./cypress/e2e/vendas/listagem-vendas.spec.js",
       "./cypress/e2e/venda-nfcenfe/venda-nfce.spec.js",
       "./cypress/e2e/venda-nfcenfe/venda-nfe.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cadastro-nfe.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cadastro-nfe-normal.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cadastro-nfe-devolucao.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cadastro-nfe-ajuste.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cadastro-nfe-complementar.spec.js",
       "./cypress/e2e/venda-nfcenfe/listagem-nfe.spec.js",
       // sped
       "./cypress/e2e/sped/gerarArquivo.spec.js",

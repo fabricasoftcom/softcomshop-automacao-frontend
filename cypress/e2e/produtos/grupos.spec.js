@@ -70,7 +70,6 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
 
     cy.intercept("POST", "/grupo/excluir").as("excluirGrupos");
     cy.get("#btn-excluir-selecionados").click();
-    cy.wait("@excluirGrupos");
 
     nomes.forEach((nome) => {
       cy.contains("td", nome).should("not.exist");

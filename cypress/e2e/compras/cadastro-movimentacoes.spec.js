@@ -1,0 +1,64 @@
+import MenulateralProdutoPage from '../../support/pages/menulateral/menulateralprodutopage';
+import CadastroMovimentacoesPage from '../../support/pages/Movimentacoes/CadastroMovimentacoesPage';
+import ItensMovimentacoesPage from '../../support/pages/Movimentacoes/ItensMovimentacoesPage';
+
+describe('Cadastro de Movimentações', { tags: ['@compras', '@regressivo', '@cadastro-movimentacoes'] }, () => {
+  beforeEach(() => {
+    cy.loginArmazenandoSessao();
+    cy.visit('/');
+    MenulateralProdutoPage.acessarListagemMovimentacoes();
+  });
+
+  it('Deve abrir o formulário de novo cadastro de movimentação para operação Entrada', () => {
+    MenulateralProdutoPage.acessarCadastroNovaMovimentacoes();
+    cy.url().should('include', '/movimentacao/novo');
+
+    CadastroMovimentacoesPage.verificarFormularioVisivel();
+    CadastroMovimentacoesPage.verificarCampoDataOperacao();
+    CadastroMovimentacoesPage.verificarSelectOperacao();
+    CadastroMovimentacoesPage.verificarCampoTipoAjuste();
+    CadastroMovimentacoesPage.verificarBotaoSalvar();
+    CadastroMovimentacoesPage.definirOperacao('ENTRADA');
+    CadastroMovimentacoesPage.verificarOperacaoEsperada('ENTRADA');
+    CadastroMovimentacoesPage.preencherObservacao('Teste de movimentação');
+
+    CadastroMovimentacoesPage.clicarSalvar();
+    CadastroMovimentacoesPage.verificarFormularioExpandido();
+    ItensMovimentacoesPage.verificarPainelVisivel();
+    ItensMovimentacoesPage.verificarCamposBasicos();
+    ItensMovimentacoesPage.selecionarPrimeiroProdutoDisponivel();
+    ItensMovimentacoesPage.preencherQuantidade('2,00');
+    ItensMovimentacoesPage.preencherPreco('10,00');
+    ItensMovimentacoesPage.clicarSalvarItem();
+    ItensMovimentacoesPage.verificarTabelaDeItens();
+    ItensMovimentacoesPage.verificarLinhasVisiveis(1);
+    ItensMovimentacoesPage.verificarTotais('1', '2,00', '20,00');
+  });
+
+  it('Deve abrir o formulário de novo cadastro de movimentação para operação Saída', () => {
+    MenulateralProdutoPage.acessarCadastroNovaMovimentacoes();
+    cy.url().should('include', '/movimentacao/novo');
+
+    CadastroMovimentacoesPage.verificarFormularioVisivel();
+    CadastroMovimentacoesPage.verificarCampoDataOperacao();
+    CadastroMovimentacoesPage.verificarSelectOperacao();
+    CadastroMovimentacoesPage.verificarCampoTipoAjuste();
+    CadastroMovimentacoesPage.verificarBotaoSalvar();
+    CadastroMovimentacoesPage.definirOperacao('SAIDA');
+    CadastroMovimentacoesPage.verificarOperacaoEsperada('SAIDA');
+    CadastroMovimentacoesPage.preencherObservacao('Teste de movimentação - saída');
+
+    CadastroMovimentacoesPage.clicarSalvar();
+    CadastroMovimentacoesPage.verificarFormularioExpandido();
+    ItensMovimentacoesPage.verificarPainelVisivel();
+    ItensMovimentacoesPage.verificarCamposBasicos();
+    ItensMovimentacoesPage.selecionarPrimeiroProdutoDisponivel();
+    ItensMovimentacoesPage.preencherQuantidade('1,00');
+    ItensMovimentacoesPage.preencherPreco('5,00');
+    ItensMovimentacoesPage.clicarSalvarItem();
+    ItensMovimentacoesPage.verificarTabelaDeItens();
+    ItensMovimentacoesPage.verificarLinhasVisiveis(1);
+    ItensMovimentacoesPage.verificarTotais('1', '1,00', '5,00');
+  });
+});
+
