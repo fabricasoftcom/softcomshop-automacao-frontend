@@ -423,6 +423,46 @@ class CadastroNfeDevolucaoPage extends CadastroNfeBasePage {
   }
 
   pesquisarDevolucaoMovimentacao(fornecedor = null, cnpj = null, notaFiscal = null, chaveAcesso = null) {
+    // Aguarda o loading desaparecer se existir
+    cy.get('body').then(($body) => {
+      if ($body.find('#loading').length > 0) {
+        cy.get('#loading', { timeout: 20000 }).should('not.exist');
+      }
+    });
+
+    // Aguarda alguns instantes após o loading para garantir que os objetos estejam totalmente carregados
+    cy.wait(1500);
+
+    // Aguarda o campo de data estar visível e pronto para interação
+    cy.get(CadastroNfeLocators.devolucao.movimentacao.campoData, { timeout: 10000 })
+      .should('be.visible')
+      .should('not.be.disabled');
+
+    // Calcula a data dos últimos 60 dias (não pode ser maior que 60 dias)
+    const hoje = new Date();
+    const dataFim = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+    // Data de início: exatamente 60 dias atrás
+    const dataInicio = new Date(hoje);
+    dataInicio.setDate(dataInicio.getDate() - 60);
+
+    // Formata as datas no padrão DD/MM/YYYY
+    const formatarData = (data) => {
+      const dia = String(data.getDate()).padStart(2, '0');
+      const mes = String(data.getMonth() + 1).padStart(2, '0');
+      const ano = data.getFullYear();
+      return `${dia}/${mes}/${ano}`;
+    };
+
+    const dataInicioFormatada = formatarData(dataInicio);
+    const dataFimFormatada = formatarData(dataFim);
+    const periodoData = `${dataInicioFormatada} - ${dataFimFormatada}`;
+
+    // Limpa o campo e digita a data dos últimos 60 dias
+    cy.get(CadastroNfeLocators.devolucao.movimentacao.campoData)
+      .clear()
+      .type(periodoData, { delay: 100 });
+
     if (fornecedor) {
       cy.get(CadastroNfeLocators.devolucao.movimentacao.campoFornecedor).clear().type(fornecedor, { delay: 200 });
       cy.get(CadastroNfeLocators.typeaheadPrimeiroItem, { timeout: 10000 })
@@ -475,10 +515,23 @@ class CadastroNfeDevolucaoPage extends CadastroNfeBasePage {
             .click({ force: true });
         });
     }
+    // Clica no botão pesquisar
     cy.get(CadastroNfeLocators.devolucao.movimentacao.botaoPesquisar).click({ force: true });
-    // Aguarda a tabela de resultados aparecer e ter pelo menos uma linha
-    cy.get(CadastroNfeLocators.devolucao.movimentacao.tabelaResultados, { timeout: 10000 })
+
+    // Aguarda o loading desaparecer se existir
+    cy.get('body').then(($body) => {
+      if ($body.find('#loading').length > 0) {
+        cy.get('#loading', { timeout: 20000 }).should('not.exist');
+      }
+    });
+
+    // Aguarda a tabela de resultados aparecer e estar completamente visível
+    cy.get(CadastroNfeLocators.devolucao.movimentacao.tabelaResultados, { timeout: 15000 })
       .should('exist')
+      .should('be.visible');
+
+    // Verifica se há linhas na tabela
+    cy.get(CadastroNfeLocators.devolucao.movimentacao.tabelaResultados)
       .find('tr')
       .filter(':visible')
       .should('have.length.at.least', 1);
@@ -492,17 +545,79 @@ class CadastroNfeDevolucaoPage extends CadastroNfeBasePage {
       .filter(':visible')
       .should('have.length.at.least', 1)
       .then(() => {
-        // Seleciona a primeira linha visível dentro do escopo da tabela de resultados
+        // Encontra a primeira linha com valor maior que 0
+        let linhaEncontrada = false;
         cy.get(CadastroNfeLocators.devolucao.movimentacao.tabelaResultados)
           .find('tr')
           .filter(':visible')
-          .first()
-          .should('be.visible')
+          .each(($row) => {
+            if (linhaEncontrada) return false; // Para a iteração se já encontrou
+
+            // Obtém o valor da coluna (geralmente a coluna de valor está na posição 5 ou 6)
+            // A estrutura da tabela: checkbox, código, data, operação, tipo, valor
+            const cells = $row.find('td');
+            if (cells.length >= 6) {
+              const valorText = cells.eq(5).text().trim(); // Coluna de valor (índice 5)
+              // Remove caracteres não numéricos e converte para número
+              const valor = parseFloat(valorText.replace(/[^\d,]/g, '').replace(',', '.'));
+
+              if (valor > 0) {
+                linhaEncontrada = true;
+                // Clica no checkbox da linha para selecioná-la (pode estar oculto com opacity: 0)
+                cy.wrap($row)
+                  .find('input[type="checkbox"]')
+                  .first()
+                  .check({ force: true });
+
+                return false; // Para a iteração
+              }
+            }
+          });
+      });
+
+    // Aguarda um momento após selecionar o checkbox
+    cy.wait(500);
+
+    // Clica no botão "Continuar" no rodapé após selecionar
+    cy.get('body')
+      .find('button')
+      .filter(':visible')
+      .filter((_, el) => /continuar/i.test(Cypress.$(el).text().trim()))
+      .then(($btns) => {
+        expect($btns.length, 'Botão "Continuar" visível na tela').to.be.greaterThan(0);
+        const botaoContinuar = $btns.last();
+        cy.wrap(botaoContinuar)
           .scrollIntoView()
+          .should('not.be.disabled')
           .click({ force: true });
       });
+
+    // Aguarda o loading desaparecer após o clique
+    cy.get('body').then(($body) => {
+      if ($body.find('#loading').length > 0) {
+        cy.get('#loading', { timeout: 20000 }).should('not.exist');
+      }
+    });
+
+    // Verifica se há algum modal de confirmação ou alerta que precisa ser tratado
+    cy.get('body').then(($body) => {
+      if ($body.find('.sweet-alert.showSweetAlert.visible').length > 0) {
+        cy.get('.sweet-alert.showSweetAlert.visible')
+          .should('be.visible')
+          .within(() => {
+            cy.contains('button', /confirmar|ok|sim/i)
+              .should('be.visible')
+              .click({ force: true });
+          });
+        cy.get('.sweet-alert.showSweetAlert.visible', { timeout: 10000 }).should('not.exist');
+      }
+    });
+
+    // Aguarda alguns instantes para garantir que a navegação/redirecionamento ocorreu
+    cy.wait(1500);
+
     // Valida que o formulário foi carregado após a seleção
-    cy.get(CadastroNfeLocators.formularioPadrao, { timeout: 15000 }).should('exist');
+    cy.get(CadastroNfeLocators.formularioPadrao, { timeout: 30000 }).should('exist');
     cy.get(CadastroNfeLocators.formulario).should('exist');
   }
 
@@ -717,32 +832,76 @@ class CadastroNfeDevolucaoPage extends CadastroNfeBasePage {
     cy.get(CadastroNfeLocators.destinatario.nome).should('exist');
   }
 
+  adicionarNotaReferenciada() {
+    const notasRef = CadastroNfeLocators.notasReferenciadas;
+    // Expande o accordion "Notas referenciadas"
+    cy.get(notasRef.botaoExpandirAccordion, { timeout: 10000 })
+      .should('exist')
+      .scrollIntoView()
+      .click({ force: true });
+    // Aguarda o formulário renderizar completamente
+    cy.wait(3000);
+    // Aguarda o campo de chave de acesso ficar visível (pode estar com display: none inicialmente)
+    cy.get(notasRef.campoChaveAcesso, { timeout: 20000 })
+      .should('exist')
+      .should('not.have.css', 'display', 'none', { timeout: 15000 })
+      .should('be.visible', { timeout: 10000 })
+      .scrollIntoView()
+      .click({ force: true });
+    // Clica no ícone de busca para expandir a listagem
+    cy.get(notasRef.campoChaveAcessoIcone, { timeout: 10000 })
+      .should('exist')
+      .should('be.visible')
+      .scrollIntoView()
+      .click({ force: true });
+    // Aguarda o autocomplete carregar e seleciona o primeiro resultado válido
+    cy.get(CadastroNfeLocators.typeaheadPrimeiroItem, { timeout: 15000 })
+      .should('have.length.at.least', 1)
+      .filter(':visible')
+      .first()
+      .should(($el) => {
+        const texto = $el.text().trim();
+        // Verifica se o texto é válido
+        expect(texto, 'Texto do autocomplete deve ser válido').to.not.be.empty;
+        expect(texto.toLowerCase(), 'Texto não deve indicar ausência de resultados').to.not.include('não foram encontrados');
+        expect(texto.toLowerCase(), 'Texto não deve indicar ausência de resultados').to.not.include('nenhum');
+        expect(texto.toLowerCase(), 'Texto não deve indicar ausência de resultados').to.not.include('nenhum resultado');
+      })
+      .click({ force: true });
+    // Aguarda um momento após selecionar o item
+    cy.wait(1000);
+    // Clica no botão Salvar
+    cy.get(notasRef.botaoSalvar, { timeout: 10000 })
+      .should('be.visible')
+      .scrollIntoView()
+      .click({ force: true });
+    // Aguarda a requisição de salvamento ser concluída
+    cy.wait(2000);
+    // Valida mensagem de sucesso
+    // cy.get('.alert-success, .alert', { timeout: 5000 })
+    //   .should('be.visible')
+    //   .should('contain', 'Nota Referenciada');
+  }
   finalizarEmissaoDevolucao() {
     // Fecha o tutorial se estiver visível
     this.fecharTutorialSeVisivel();
-
     // Aguarda o loading desaparecer se existir
     cy.get('body').then(($body) => {
       if ($body.find('#loading').length > 0) {
         cy.get('#loading', { timeout: 20000 }).should('not.exist');
       }
     });
-
     // Avança do passo 2 (Cadastro) para o passo 3 (Produtos)
     this.clicarBotaoContinuarRodape();
     this.validarTelaSelecaoItens();
-
     // Avança do passo 3 (Produtos) para o passo 4 (Financeiro)
     this.clicarBotaoContinuarRodape();
     this.validarTelaPagamentos();
-
     // Avança do passo 4 (Financeiro) para o passo 5 (Finalizar)
     this.clicarBotaoContinuarRodape();
     this.validarTelaEmitirNota();
-
     // Emite a nota
     this.emitirNota();
-
     // Valida o modal de sucesso da emissão
     this.validarModalSucessoEmissao('listagem');
   }

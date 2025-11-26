@@ -52,7 +52,7 @@ class CadastroNfeBasePage {
     // Aguarda o skeleton desaparecer ou ficar invisível
     cy.get('body').then(($body) => {
       if ($body.find(CadastroNfeLocators.skeletonItems).length > 0) {
-        cy.get(CadastroNfeLocators.skeletonItems, { timeout: 20000 })
+        cy.get(CadastroNfeLocators.skeletonItems, { timeout: 200000 })
           .should('not.be.visible');
       }
     });

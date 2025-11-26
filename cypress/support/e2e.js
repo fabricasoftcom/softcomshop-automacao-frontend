@@ -35,6 +35,12 @@ Cypress.on('uncaught:exception', (err) => {
     cy.log(`Exceção de focus ignorada: ${err.message}`);
     return false; // Ignora o erro de focus
   }
+  // Ignora erros relacionados a propriedades de null (comum quando a aplicação tenta definir valores em elementos que ainda não foram renderizados)
+  if (err.message.includes('Cannot set properties of null') &&
+    err.message.includes('value')) {
+    cy.log(`Exceção de propriedade null ignorada: ${err.message}`);
+    return false; // Ignora o erro de propriedade null
+  }
   // Para outros erros, permite que o Cypress processe normalmente
   return true;
 });

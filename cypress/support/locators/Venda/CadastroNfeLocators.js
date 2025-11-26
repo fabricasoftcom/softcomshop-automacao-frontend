@@ -37,6 +37,18 @@ const CadastroNfeLocators = {
     nomeHidden: '#destinatario_nome',
     cpfCnpj: '#destinatario_cpf_cnpj',
   },
+  notasReferenciadas: {
+    painel: '#notas-referenciadas, [id*="notas-referenciadas"], .notas-referenciadas',
+    painelAccordion: '#panel_referenced_nfe',
+    botaoExpandirAccordion: '#panel_referenced_nfe > .col-sm-12 > .ibox > .ibox-title > .row > .m-b-xs > .col-lg-1 > .ibox-tools > .collapse-link > .fa',
+    botaoAdicionar: '#btn-adicionar-nota-referenciada, button:contains("Adicionar"), [id*="adicionar-nota"]',
+    campoChaveAcesso: '#auto_referenced_chave_acesso',
+    campoChaveAcessoIcone: '#auto_icon_referenced_chave_acesso',
+    campoChaveAcessoContainer: '#div_auto_chave_acesso_referenciada, [id*="div_auto_chave_acesso_referenciada"]',
+    tabelaNotas: '#table-notas-referenciadas, table tbody[id*="notas-referenciadas"]',
+    linhasTabela: '#table-notas-referenciadas tbody tr, table tbody[id*="notas-referenciadas"] tr',
+    botaoSalvar: '#form-notas-referenciadas >> .btn-primary:contains("Salvar")',
+  },
   typeaheadPrimeiroItem: '.typeahead-list li a',
   radiosTipoNfe: {
     venda: '#radio_toggle_tipo_nfe_VENDA',

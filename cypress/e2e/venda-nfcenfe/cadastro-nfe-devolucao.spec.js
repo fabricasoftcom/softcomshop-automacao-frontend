@@ -45,27 +45,36 @@ describe('Cadastro NFe Devolução', { tags: ['@nfe', '@vendas', '@regressivo', 
   //   CadastroNfeDevolucaoPage.finalizarEmissaoDevolucao();
   // });
 
-  it('abre formulario de NFe devolucao movimentacao apos pesquisar e selecionar', () => {
-    CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoMovimentacao();
-    CadastroNfeDevolucaoPage.pesquisarDevolucaoMovimentacao();
-    CadastroNfeDevolucaoPage.selecionarPrimeiraDevolucaoMovimentacao();
-    CadastroNfeDevolucaoPage.validarFormularioDevolucaoMovimentacao();
-  });
-
-  // it('realiza fluxo completo da NFe devolucao movimentacao', () => {
+  // it('abre formulario de NFe devolucao movimentacao apos pesquisar e selecionar', () => {
   //   CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoMovimentacao();
   //   CadastroNfeDevolucaoPage.pesquisarDevolucaoMovimentacao();
   //   CadastroNfeDevolucaoPage.selecionarPrimeiraDevolucaoMovimentacao();
-  //   CadastroNfeDevolucaoPage.preencherNatureza('1202');
-  //   CadastroNfeDevolucaoPage.validarTelaSelecaoItens();
-  //   CadastroNfeDevolucaoPage.adicionarItem(null, '1');
-  //   CadastroNfeDevolucaoPage.validarTelaPagamentos();
-  //   CadastroNfeDevolucaoPage.adicionarPagamentoBasico();
-  //   CadastroNfeDevolucaoPage.clicarBotaoContinuarRodape();
-  //   CadastroNfeDevolucaoPage.validarTelaEmitirNota();
-  //   CadastroNfeDevolucaoPage.emitirNota();
-  //   CadastroNfeDevolucaoPage.validarModalSucessoEmissao('listagem');
+  //   CadastroNfeDevolucaoPage.validarFormularioDevolucaoMovimentacao();
   // });
+
+  it('realiza fluxo completo da NFe devolucao movimentacao', () => {
+    CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoMovimentacao();
+    CadastroNfeDevolucaoPage.pesquisarDevolucaoMovimentacao();
+    // Seleciona a primeira movimentação com valor > 0 e clica em Continuar
+    CadastroNfeDevolucaoPage.selecionarPrimeiraDevolucaoMovimentacao();
+    // A natureza já vem preenchida automaticamente ao selecionar a movimentação
+    // Adiciona uma nota referenciada (obrigatório para devolução)
+    CadastroNfeDevolucaoPage.adicionarNotaReferenciada();
+    // Intercepta a requisição de itens para aguardar o carregamento completo
+    cy.intercept('GET', '**/nfe2/**/itens').as('carregarItens');
+    CadastroNfeDevolucaoPage.clicarBotaoContinuarRodape();
+    // Aguarda a requisição de itens ser concluída antes de validar
+    cy.wait('@carregarItens', { timeout: 30000 }).its('response.statusCode').should('eq', 200);
+    CadastroNfeDevolucaoPage.validarTelaSelecaoItens();
+    CadastroNfeDevolucaoPage.clicarBotaoContinuarRodape();
+    // Avança para a tela de pagamentos
+    CadastroNfeDevolucaoPage.validarTelaPagamentos();
+    // Avança para a tela de finalizar
+    CadastroNfeDevolucaoPage.clicarBotaoContinuarRodape();
+    CadastroNfeDevolucaoPage.validarTelaEmitirNota();
+    CadastroNfeDevolucaoPage.emitirNota();
+    CadastroNfeDevolucaoPage.validarModalSucessoEmissao('listagem');
+  });
 
   // it('abre formulario de NFe devolucao nota fiscal saida apos pesquisar e selecionar', () => {
   //   CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoNotaFiscalSaida();
