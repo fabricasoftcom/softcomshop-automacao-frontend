@@ -34,8 +34,21 @@ cypress/support/pages/Venda/
 ├── CadastroNfePage.js                    # Metodos gerais (tela inicial, navegacao)
 └── NFe/
     ├── CadastroNfeBasePage.js            # Classe base com metodos comuns
-    ├── CadastroNfeNormalPage.js          # Metodos especificos NFe Normal
-    ├── CadastroNfeDevolucaoPage.js       # Metodos especificos NFe Devolucao
+    ├── Normal/                            # Diretorio com classes de normal (Page Object Hierarchy)
+    │   ├── CadastroNfeNormalBasePage.js
+    │   ├── CadastroNfeNormalAvulsaPage.js
+    │   ├── CadastroNfeNormalVendaPage.js
+    │   ├── CadastroNfeNormalNfcePage.js
+    │   ├── CadastroNfeNormalMovimentacaoPage.js
+    │   └── index.js                       # Facade que mantem compatibilidade
+    ├── Devolucao/                         # Diretorio com classes de devolucao (Page Object Hierarchy)
+    │   ├── CadastroNfeDevolucaoBasePage.js
+    │   ├── CadastroNfeDevolucaoAvulsaPage.js
+    │   ├── CadastroNfeDevolucaoCompraPage.js
+    │   ├── CadastroNfeDevolucaoMovimentacaoPage.js
+    │   ├── CadastroNfeDevolucaoNotaFiscalSaidaPage.js
+    │   ├── CadastroNfeDevolucaoTrocasPage.js
+    │   └── index.js                       # Facade que mantem compatibilidade
     ├── CadastroNfeAjustePage.js          # Metodos especificos NFe Ajuste
     └── CadastroNfeComplementarPage.js    # Metodos especificos NFe Complementar
 ```
@@ -45,17 +58,18 @@ Cada classe especifica herda de `CadastroNfeBasePage`, permitindo reutilizacao d
 ## Importacoes e dependencias
 - `CadastroNfePage` (`cypress/support/pages/Venda/CadastroNfePage.js`): metodos gerais para tela inicial, validacao de passos/tabs e navegacao entre abas.
 - `CadastroNfeBasePage` (`cypress/support/pages/Venda/NFe/CadastroNfeBasePage.js`): classe base com metodos comuns a todos os tipos de NFe (itens, pagamentos, emissao, natureza, destinatario).
-- `CadastroNfeNormalPage` (`cypress/support/pages/Venda/NFe/CadastroNfeNormalPage.js`): metodos especificos para NFe Normal, incluindo:
+- `CadastroNfeNormalPage` (`cypress/support/pages/Venda/NFe/Normal/index.js`): facade que agrupa todas as classes especificas de normal (estrutura refatorada seguindo Page Object Hierarchy - ADR-0008). Metodos disponiveis:
   - Avulsa: `avancarParaCadastroNormalAvulsa()`, `validarFormularioNormalAvulsa()`
   - Venda: `avancarParaCadastroNormalVenda()`, `pesquisarVenda()`, `selecionarPrimeiraVenda()`, `selecionarVendaClienteDiferenteConsumidor()`, `validarFormularioNormalVenda()`
   - NFCe: `avancarParaCadastroNormalNfce()`, `pesquisarNfce()`, `selecionarPrimeiraNfce()`, `validarFormularioNormalNfce()`
   - Movimentacao: `avancarParaCadastroNormalMovimentacao()`, `pesquisarMovimentacao()`, `selecionarPrimeiraMovimentacao()`, `validarFormularioNormalMovimentacao()`
-- `CadastroNfeDevolucaoPage` (`cypress/support/pages/Venda/NFe/CadastroNfeDevolucaoPage.js`): metodos especificos para NFe Devolucao, incluindo:
+- `CadastroNfeDevolucaoPage` (`cypress/support/pages/Venda/NFe/Devolucao/index.js`): facade que agrupa todas as classes especificas de devolucao (estrutura refatorada seguindo Page Object Hierarchy - ADR-0008). Metodos disponiveis:
   - Avulsa: `avancarParaCadastroDevolucaoAvulsa()`, `validarFormularioDevolucaoAvulsa()`
-  - Compra: `avancarParaCadastroDevolucaoCompra()`, `pesquisarDevolucaoCompra()`, `selecionarPrimeiraDevolucaoCompra()`, `validarFormularioDevolucaoCompra()`
+  - Compra: `avancarParaCadastroDevolucaoCompra()`, `pesquisarDevolucaoCompra()`, `selecionarPrimeiraDevolucaoCompra()`, `validarModalSelecaoItensDevolucaoCompra()`, `preencherQuantidadeDevolverMetade()`, `gerarNotaDevolucaoCompra()`, `validarFormularioDevolucaoCompra()`
   - Movimentacao: `avancarParaCadastroDevolucaoMovimentacao()`, `pesquisarDevolucaoMovimentacao()`, `selecionarPrimeiraDevolucaoMovimentacao()`, `validarFormularioDevolucaoMovimentacao()`
   - Nota Fiscal Saida: `avancarParaCadastroDevolucaoNotaFiscalSaida()`, `pesquisarDevolucaoNotaFiscalSaida()`, `selecionarPrimeiraDevolucaoNotaFiscalSaida()`, `validarFormularioDevolucaoNotaFiscalSaida()`
   - Trocas: `avancarParaCadastroDevolucaoTrocas()`, `pesquisarDevolucaoTrocas()`, `selecionarPrimeiraDevolucaoTrocas()`, `validarFormularioDevolucaoTrocas()`
+  - Comum: `adicionarNotaReferenciada()`, `finalizarEmissaoDevolucao()`
 - `CadastroNfeAjustePage` (`cypress/support/pages/Venda/NFe/CadastroNfeAjustePage.js`): metodos especificos para NFe Ajuste (avancar, validar formulario, preencher dados de nota de ajuste).
 - `CadastroNfeComplementarPage` (`cypress/support/pages/Venda/NFe/CadastroNfeComplementarPage.js`): metodos especificos para NFe Complementar (avancar, validar formulario, preencher dados de nota complementar, adicionar item com quantidade e valores zerados).
 - `ListagemNfePage` (`cypress/support/pages/Venda/ListagemNfePage.js`): abre a listagem e aciona "Novo Cadastro".

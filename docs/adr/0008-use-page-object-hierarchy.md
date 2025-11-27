@@ -39,8 +39,21 @@ We will use Page Object hierarchy with a base class and specific classes that in
    ```
    cypress/support/pages/Venda/NFe/
    ├── CadastroNfeBasePage.js            # Base class with common methods
-   ├── CadastroNfeNormalPage.js          # Inherits from Base, Normal-specific methods
-   ├── CadastroNfeDevolucaoPage.js        # Inherits from Base, Devolução-specific methods
+   ├── Normal/                            # Directory with Normal classes (hierarchical structure)
+   │   ├── CadastroNfeNormalBasePage.js
+   │   ├── CadastroNfeNormalAvulsaPage.js
+   │   ├── CadastroNfeNormalVendaPage.js
+   │   ├── CadastroNfeNormalNfcePage.js
+   │   ├── CadastroNfeNormalMovimentacaoPage.js
+   │   └── index.js                       # Facade pattern for backward compatibility
+   ├── Devolucao/                         # Directory with Devolução classes (hierarchical structure)
+   │   ├── CadastroNfeDevolucaoBasePage.js
+   │   ├── CadastroNfeDevolucaoAvulsaPage.js
+   │   ├── CadastroNfeDevolucaoCompraPage.js
+   │   ├── CadastroNfeDevolucaoMovimentacaoPage.js
+   │   ├── CadastroNfeDevolucaoNotaFiscalSaidaPage.js
+   │   ├── CadastroNfeDevolucaoTrocasPage.js
+   │   └── index.js                       # Facade pattern for backward compatibility
    ├── CadastroNfeAjustePage.js          # Inherits from Base, Ajuste-specific methods
    └── CadastroNfeComplementarPage.js    # Inherits from Base, Complementar-specific methods
    ```
@@ -205,19 +218,46 @@ class CadastroNfeBasePage {
   emitirNota() { /* common code */ }
 }
 
-// CadastroNfeNormalPage.js - Only specific methods
-class CadastroNfeNormalPage extends CadastroNfeBasePage {
-  avancarParaCadastroNormalVenda() { /* specific */ }
-  pesquisarVenda() { /* specific */ }
-  // Inherits all base methods automatically
+// Normal/CadastroNfeNormalBasePage.js - Common methods for all normal types
+class CadastroNfeNormalBasePage extends CadastroNfeBasePage {
+  selecionarPrimeiraLinhaDaListagem() { /* common to all normal types */ }
+  prosseguirAposSelecao() { /* common to all normal types */ }
 }
 
-// CadastroNfeDevolucaoPage.js - Only specific methods
-class CadastroNfeDevolucaoPage extends CadastroNfeBasePage {
-  avancarParaCadastroDevolucaoCompra() { /* specific */ }
-  pesquisarDevolucaoCompra() { /* specific */ }
-  // Inherits all base methods automatically
+// Normal/CadastroNfeNormalVendaPage.js - Specific methods for venda type
+class CadastroNfeNormalVendaPage extends CadastroNfeNormalBasePage {
+  pesquisarVenda() { /* specific to venda */ }
+  selecionarPrimeiraVenda() { /* specific to venda */ }
+  // Inherits from CadastroNfeNormalBasePage and CadastroNfeBasePage
 }
+
+// Normal/index.js - Facade pattern for backward compatibility
+class CadastroNfeNormalPage extends CadastroNfeNormalBasePage {
+  // Delegates to specific classes (Venda, NFCe, Movimentacao, etc.)
+}
+
+// Devolucao/CadastroNfeDevolucaoBasePage.js - Common methods for all devolução types
+class CadastroNfeDevolucaoBasePage extends CadastroNfeBasePage {
+  adicionarNotaReferenciada() { /* common to all devolução types */ }
+  finalizarEmissaoDevolucao() { /* common to all devolução types */ }
+}
+
+// Devolucao/CadastroNfeDevolucaoCompraPage.js - Specific methods for compra type
+class CadastroNfeDevolucaoCompraPage extends CadastroNfeDevolucaoBasePage {
+  pesquisarDevolucaoCompra() { /* specific to compra */ }
+  selecionarPrimeiraDevolucaoCompra() { /* specific to compra */ }
+  // Inherits from CadastroNfeDevolucaoBasePage and CadastroNfeBasePage
+}
+
+// Devolucao/index.js - Facade pattern for backward compatibility
+class CadastroNfeDevolucaoPage extends CadastroNfeDevolucaoBasePage {
+  // Delegates to specific classes (Compra, Movimentacao, etc.)
+}
+
+// Note: CadastroNfeDevolucaoPage was refactored into a hierarchy:
+// - CadastroNfeDevolucaoBasePage (common devolução methods)
+// - Multiple specific classes (Compra, Movimentacao, NotaFiscalSaida, etc.)
+// - index.js facade for backward compatibility
 ```
 
 ### Implementation Details

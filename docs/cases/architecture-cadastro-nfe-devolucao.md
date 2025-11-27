@@ -16,13 +16,23 @@
 ## Importações e dependências
 - `ListagemNfePage` (`cypress/support/pages/Venda/ListagemNfePage.js`): encapsula navegação até a listagem de NFe e acionamento do botão "Novo Cadastro".
 - `CadastroNfePage` (`cypress/support/pages/Venda/CadastroNfePage.js`): encapsula métodos gerais como `desabilitarTourFinalidadeNormal()`.
-- `CadastroNfeDevolucaoPage` (`cypress/support/pages/Venda/NFe/CadastroNfeDevolucaoPage.js`): métodos específicos para NFe Devolução, incluindo:
-  - **Avulsa**: `avancarParaCadastroDevolucaoAvulsa()`, `validarFormularioDevolucaoAvulsa()`
-  - **Compra**: `avancarParaCadastroDevolucaoCompra()`, `pesquisarDevolucaoCompra()`, `selecionarPrimeiraDevolucaoCompra()`, `validarModalSelecaoItensDevolucaoCompra()`, `preencherQuantidadeDevolverMetade()`, `gerarNotaDevolucaoCompra()`, `validarFormularioDevolucaoCompra()`
-  - **Movimentação**: `avancarParaCadastroDevolucaoMovimentacao()`, `pesquisarDevolucaoMovimentacao()`, `selecionarPrimeiraDevolucaoMovimentacao()`, `validarFormularioDevolucaoMovimentacao()`
-  - **Nota Fiscal Saída**: `avancarParaCadastroDevolucaoNotaFiscalSaida()`, `pesquisarDevolucaoNotaFiscalSaida()`, `selecionarPrimeiraDevolucaoNotaFiscalSaida()`, `validarFormularioDevolucaoNotaFiscalSaida()`
-  - **Trocas**: `avancarParaCadastroDevolucaoTrocas()`, `pesquisarDevolucaoTrocas()`, `selecionarPrimeiraDevolucaoTrocas()`, `validarFormularioDevolucaoTrocas()`
-  - **Comum**: `finalizarEmissaoDevolucao()` (método que executa fluxo completo: itens → pagamentos → emissão)
+- `CadastroNfeDevolucaoPage` (`cypress/support/pages/Venda/NFe/Devolucao/index.js`): facade que agrupa todas as classes específicas de devolução, mantendo compatibilidade com testes existentes. A estrutura foi refatorada seguindo o padrão de Page Object Hierarchy (ADR-0008):
+  - **Estrutura de classes**:
+    - `CadastroNfeDevolucaoBasePage` (`cypress/support/pages/Venda/NFe/Devolucao/CadastroNfeDevolucaoBasePage.js`): classe base com métodos compartilhados:
+      - `fecharTutorialSeVisivel()`: fecha tutorial se estiver visível
+      - `adicionarNotaReferenciada()`: adiciona nota referenciada (obrigatório para devolução)
+      - `finalizarEmissaoDevolucao()`: executa fluxo completo (itens → pagamentos → emissão)
+    - `CadastroNfeDevolucaoAvulsaPage` (`cypress/support/pages/Venda/NFe/Devolucao/CadastroNfeDevolucaoAvulsaPage.js`): métodos específicos para devolução avulsa:
+      - `avancarParaCadastroDevolucaoAvulsa()`, `validarFormularioDevolucaoAvulsa()`
+    - `CadastroNfeDevolucaoCompraPage` (`cypress/support/pages/Venda/NFe/Devolucao/CadastroNfeDevolucaoCompraPage.js`): métodos específicos para devolução de compra:
+      - `avancarParaCadastroDevolucaoCompra()`, `pesquisarDevolucaoCompra()`, `selecionarPrimeiraDevolucaoCompra()`, `validarModalSelecaoItensDevolucaoCompra()`, `preencherQuantidadeDevolverMetade()`, `gerarNotaDevolucaoCompra()`, `validarFormularioDevolucaoCompra()`
+    - `CadastroNfeDevolucaoMovimentacaoPage` (`cypress/support/pages/Venda/NFe/Devolucao/CadastroNfeDevolucaoMovimentacaoPage.js`): métodos específicos para devolução de movimentação:
+      - `avancarParaCadastroDevolucaoMovimentacao()`, `pesquisarDevolucaoMovimentacao()`, `selecionarPrimeiraDevolucaoMovimentacao()`, `validarFormularioDevolucaoMovimentacao()`
+    - `CadastroNfeDevolucaoNotaFiscalSaidaPage` (`cypress/support/pages/Venda/NFe/Devolucao/CadastroNfeDevolucaoNotaFiscalSaidaPage.js`): métodos específicos para devolução de nota fiscal saída:
+      - `avancarParaCadastroDevolucaoNotaFiscalSaida()`, `pesquisarDevolucaoNotaFiscalSaida()`, `selecionarPrimeiraDevolucaoNotaFiscalSaida()`, `validarFormularioDevolucaoNotaFiscalSaida()`
+    - `CadastroNfeDevolucaoTrocasPage` (`cypress/support/pages/Venda/NFe/Devolucao/CadastroNfeDevolucaoTrocasPage.js`): métodos específicos para devolução de trocas:
+      - `avancarParaCadastroDevolucaoTrocas()`, `pesquisarDevolucaoTrocas()`, `selecionarPrimeiraDevolucaoTrocas()`, `validarFormularioDevolucaoTrocas()`
+  - **Facade Pattern**: O `index.js` exporta uma instância de `CadastroNfeDevolucaoPage` que delega chamadas para as classes específicas, mantendo compatibilidade total com os testes existentes.
 - `CadastroNfeBasePage` (`cypress/support/pages/Venda/NFe/CadastroNfeBasePage.js`): classe base com métodos comuns herdados:
   - `preencherNatureza(cfop)`: preenche natureza CFOP via autocomplete
   - `preencherDestinatario(nome)`: preenche destinatário via autocomplete e aguarda salvamento
@@ -87,31 +97,27 @@
 - `abre formulario de NFe devolucao movimentacao apos pesquisar e selecionar`:
   - `avancarParaCadastroDevolucaoMovimentacao()`: fecha tutorial, seleciona aba Devolução, seleciona tipo Movimentação e aguarda formulário de pesquisa carregar.
   - `pesquisarDevolucaoMovimentacao()`: preenche período de data (últimos 60 dias), opcionalmente fornecedor/CNPJ/nota fiscal/chave de acesso, clica em "Pesquisar" e aguarda tabela de resultados.
-  - `selecionarPrimeiraDevolucaoMovimentacao()`: clica na primeira linha da tabela, trata modais de confirmação se aparecerem e aguarda formulário carregar.
+  - `selecionarPrimeiraDevolucaoMovimentacao()`: encontra primeira linha com valor > 0, marca checkbox, clica em "Continuar", trata modais de confirmação se aparecerem e aguarda formulário carregar.
   - `validarFormularioDevolucaoMovimentacao()`: valida campos principais (finalidade 4, série, natureza, painel destinatário).
 
 - `realiza fluxo completo da NFe devolucao movimentacao` (comentado):
   - Repete pesquisa e seleção.
-  - `preencherNatureza('1202')`: preenche CFOP 1202.
-  - `validarTelaSelecaoItens()`: valida tela de itens.
-  - `adicionarItem(null, '1')`: adiciona item.
-  - `validarTelaPagamentos()`: valida tela de pagamentos.
-  - `adicionarPagamentoBasico()`: adiciona pagamento.
-  - `clicarBotaoContinuarRodape()`: avança para emissão.
-  - `validarTelaEmitirNota()`: valida tela de emissão.
-  - `emitirNota()`: emite nota.
-  - `validarModalSucessoEmissao('listagem')`: valida modal e retorna para listagem.
+  - `adicionarNotaReferenciada()`: adiciona nota referenciada (obrigatório para devolução).
+  - Intercepta requisição de itens e aguarda carregamento completo.
+  - Segue fluxo completo (itens → pagamentos → emissão).
 
-#### 4. Devolução Nota Fiscal Saída (comentado)
+#### 4. Devolução Nota Fiscal Saída (ativo)
 - `abre formulario de NFe devolucao nota fiscal saida apos pesquisar e selecionar`:
   - `avancarParaCadastroDevolucaoNotaFiscalSaida()`: fecha tutorial, seleciona aba Devolução, seleciona tipo Nota Fiscal Saída e aguarda formulário de pesquisa carregar.
-  - `pesquisarDevolucaoNotaFiscalSaida()`: opcionalmente preenche fornecedor/CNPJ/nota fiscal/chave de acesso, clica em "Pesquisar" e aguarda tabela de resultados.
-  - `selecionarPrimeiraDevolucaoNotaFiscalSaida()`: clica na primeira linha e aguarda formulário carregar.
-  - `validarFormularioDevolucaoNotaFiscalSaida()`: valida campos principais.
+  - `pesquisarDevolucaoNotaFiscalSaida()`: preenche período de data (últimos 60 dias), opcionalmente cliente/CNPJ/nota fiscal/chave de acesso, clica em "Pesquisar" e aguarda tabela de resultados.
+  - `selecionarPrimeiraDevolucaoNotaFiscalSaida()`: marca checkbox da primeira linha, clica em "Continuar" e aguarda formulário carregar.
+  - `validarFormularioDevolucaoNotaFiscalSaida()`: valida campos principais (finalidade 4, série, natureza, painel destinatário).
 
-- `realiza fluxo completo da NFe devolucao nota fiscal saida` (comentado):
+- `realiza fluxo completo da NFe devolucao nota fiscal saida` (ativo):
   - Repete pesquisa e seleção.
-  - Segue fluxo completo (natureza → itens → pagamentos → emissão).
+  - `adicionarNotaReferenciada()`: adiciona nota referenciada (obrigatório para devolução).
+  - Intercepta requisição de itens e aguarda carregamento completo.
+  - Segue fluxo completo (itens → pagamentos → emissão).
 
 #### 5. Devolução Trocas (comentado)
 - `abre formulario de NFe devolucao trocas apos pesquisar e selecionar`:
@@ -124,9 +130,37 @@
   - Repete pesquisa e seleção.
   - Segue fluxo completo (natureza → itens → pagamentos → emissão).
 
+## Estrutura de arquivos
+
+A implementação segue uma estrutura modular organizada no diretório `cypress/support/pages/Venda/NFe/Devolucao/`:
+
+```
+Devolucao/
+├── CadastroNfeDevolucaoBasePage.js          # Classe base com métodos compartilhados
+├── CadastroNfeDevolucaoAvulsaPage.js        # Métodos específicos para devolução avulsa
+├── CadastroNfeDevolucaoCompraPage.js         # Métodos específicos para devolução de compra
+├── CadastroNfeDevolucaoMovimentacaoPage.js   # Métodos específicos para devolução de movimentação
+├── CadastroNfeDevolucaoNotaFiscalSaidaPage.js # Métodos específicos para devolução de nota fiscal saída
+├── CadastroNfeDevolucaoTrocasPage.js         # Métodos específicos para devolução de trocas
+└── index.js                                  # Facade que exporta todas as classes e mantém compatibilidade
+```
+
+### Benefícios da estrutura modular:
+- **Manutenibilidade**: Cada classe tem responsabilidade única e bem definida
+- **Escalabilidade**: Fácil adicionar novos tipos de devolução sem modificar classes existentes
+- **Testabilidade**: Classes menores são mais fáceis de testar e debugar
+- **Reutilização**: Métodos comuns na classe base evitam duplicação de código
+- **Compatibilidade**: O facade mantém a interface original, permitindo migração gradual
+
 ## Padrões e boas práticas
-- **Herança de classe base**: `CadastroNfeDevolucaoPage` herda de `CadastroNfeBasePage`, reutilizando métodos comuns (itens, pagamentos, emissão, natureza, destinatário).
-- **Métodos específicos por tipo**: cada tipo de devolução possui métodos específicos para navegação, pesquisa e seleção, mantendo a lógica isolada.
+- **Page Object Hierarchy (ADR-0008)**: A estrutura segue o padrão de hierarquia de Page Objects, com uma classe base (`CadastroNfeDevolucaoBasePage`) que estende `CadastroNfeBasePage`, e classes específicas para cada tipo de devolução que estendem a base. Isso permite:
+  - Separação clara de responsabilidades
+  - Classes menores e mais fáceis de manter
+  - Reutilização de código através da herança
+  - Facilidade para adicionar novos tipos de devolução
+- **Facade Pattern**: O `index.js` implementa um padrão facade que mantém compatibilidade com testes existentes, delegando chamadas para as classes específicas.
+- **Herança de classe base**: `CadastroNfeDevolucaoBasePage` herda de `CadastroNfeBasePage`, reutilizando métodos comuns (itens, pagamentos, emissão, natureza, destinatário).
+- **Métodos específicos por tipo**: cada tipo de devolução possui uma classe dedicada com métodos específicos para navegação, pesquisa e seleção, mantendo a lógica isolada e organizada.
 - **Pesquisa com período de data**: métodos de pesquisa calculam automaticamente períodos (últimos 2 meses para compra, últimos 60 dias para movimentação) para garantir resultados.
 - **Modal de seleção de itens (Compra)**: validação completa do modal antes de gerar nota, incluindo título, informações da nota, tabela de itens, totais e botões.
 - **Preenchimento inteligente de quantidade**: `preencherQuantidadeDevolverMetade()` calcula metade da quantidade original, mas usa 1 se a quantidade for 1, evitando valores decimais inválidos.
@@ -141,7 +175,7 @@
 - ✅ **Avulsa**: Fluxo completo validado (CFOP 1202) - teste comentado
 - ✅ **Compra**: Pesquisa (fornecedor, CNPJ, nota fiscal, chave de acesso), seleção, modal de itens e fluxo completo validados - testes comentados
 - ✅ **Movimentação**: Pesquisa, seleção e fluxo completo validados - 1 teste ativo, 1 comentado
-- ✅ **Nota Fiscal Saída**: Pesquisa, seleção e fluxo completo validados - testes comentados
+- ✅ **Nota Fiscal Saída**: Pesquisa (cliente, CNPJ, nota fiscal, chave de acesso), seleção e fluxo completo validados - 2 testes ativos
 - ✅ **Trocas**: Pesquisa, seleção e fluxo completo validados - testes comentados
 
 ## Diferenças entre tipos de devolução

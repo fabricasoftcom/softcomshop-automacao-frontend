@@ -87,6 +87,7 @@ module.exports = defineConfig({
     ],
     testIsolation: false,
     baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    //  baseUrl: 'https://softcomshop.meusoftcom.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
 

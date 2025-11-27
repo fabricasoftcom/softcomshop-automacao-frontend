@@ -1,6 +1,6 @@
 import ListagemNfePage from '../../support/pages/Venda/ListagemNfePage';
 import CadastroNfePage from '../../support/pages/Venda/CadastroNfePage';
-import CadastroNfeNormalPage from '../../support/pages/Venda/NFe/CadastroNfeNormalPage';
+import CadastroNfeNormalPage from '../../support/pages/Venda/NFe/Normal';
 
 describe('Cadastro NFe Normal', { tags: ['@nfe', '@vendas', '@regressivo', '@nfe-normal'] }, () => {
   beforeEach(() => {
