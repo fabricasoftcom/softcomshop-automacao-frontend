@@ -78,7 +78,7 @@ Cada classe especifica herda de `CadastroNfeBasePage`, permitindo reutilizacao d
 - Intercepts utilizados:
   - `POST **/nfe2/salvar*` (destinatario - aguardado antes de continuar, com logica condicional).
   - `GET **/nfe2/**/itens*` (carregamento da tela de itens, com flag condicional).
-  - `POST **/nfe2/**/itens/salvar` (insercao de item).
+  - `POST **/nfe2/**/itens/salvar` (insercao de item - com intercept condicional para evitar timeouts quando a requisicao nao e interceptada ou ja foi feita antes do intercept ser configurado).
   - `POST **/nfe2/**/pagamentos/salvar` (modal de pagamento).
   - `POST **/nfe-nfce/vinculos-fiscais/autocomplete/cfop` (autocomplete de natureza).
   - `GET /movimentacao*` (para pesquisa de movimentacoes na devolucao).

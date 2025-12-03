@@ -12,7 +12,7 @@ describe('Cadastro de Conta Corrente', { tags: ['@cadastro-conta-corrente', '@fi
   ];
 
   beforeEach(() => {
-    cy.loginArmazenandoSessao();
+    cy.loginArmazenandoSessaoCobranca();
     cy.visit("/");
     contaCorrenteCadastroPage.visit();
   });

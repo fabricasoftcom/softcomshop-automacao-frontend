@@ -215,8 +215,62 @@ preencherDestinatario(nome) {
 **Use Cases:**
 - Destinatário already filled (doesn't trigger request)
 - Items already loaded (doesn't trigger request)
+- Saving items where request may be triggered automatically before intercept is configured
 - Optional fields that may or may not trigger requests
 - Conditional flows with different paths
+
+### Additional Example: Saving Items
+
+**Implementation for `salvarItem` method:**
+
+```javascript
+// Global variable at top of Page Object file
+let salvarItemRequestInterceptada = false;
+
+adicionarItem(produto = null, quantidade = '1', preco = null, descricao = null) {
+  // Reset flag at beginning
+  salvarItemRequestInterceptada = false;
+  
+  // Configure intercept with middleware before filling fields
+  cy.intercept(
+    { method: 'POST', url: '**/nfe2/**/itens/salvar', middleware: true },
+    (req) => {
+      salvarItemRequestInterceptada = true; // Mark as intercepted
+      req.continue();
+    },
+  ).as('salvarItem');
+  
+  // Fill fields (may trigger automatic save)
+  this.preencherQuantidadeItem(quantidade);
+  this.preencherPrecoItem(preco);
+  
+  // Save item (waits conditionally)
+  this.salvarItem();
+}
+
+salvarItem() {
+  // Check if request was intercepted before waiting
+  cy.wrap(null).then(() => {
+    if (salvarItemRequestInterceptada) {
+      return cy
+        .wait('@salvarItem', { timeout: 30000 })
+        .then((interception) => {
+          salvarItemRequestInterceptada = false;
+          // Handle response...
+        });
+    }
+    
+    cy.log('Nenhuma requisição de salvar item foi interceptada; a requisição pode ter sido feita antes do intercept ou não foi disparada.');
+    cy.wait(1000); // Additional wait in case request was already made
+  });
+}
+```
+
+**Why this pattern is needed:**
+- Request may be triggered automatically when fields lose focus
+- Request may occur before intercept is configured
+- Avoids timeout errors when request doesn't match intercept timing
+- More robust handling of dynamic form behavior
 
 ### Related ADRs
 

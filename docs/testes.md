@@ -242,6 +242,12 @@
 
 ## ??? compras
 
+### ?? Arquivo: `compras/cadastro-compra.spec.js`
+
+#### ?? Suite: Cadastro de compra
+- Importando NFe pelo XML: executa fluxo completo de importacao de NFe via XML, preenchendo CFOP (1102) e vinculo fiscal (usa XML aleatorio da pasta comprasxml)
+- Importando NFe pelo XML e excluindo: executa fluxo completo de importacao usando apenas XMLs sem faturas (pasta xmlSemFaturas) e em seguida exclui a NFe importada (regra de negocio: so e possivel excluir NFe sem tag <dup>)
+
 ### ?? Arquivo: `compras/listagem-movimentacoes.spec.js`
 
 #### ?? Suite: Listagem de Movimentações
@@ -332,6 +338,46 @@
 
 #### ?? Suite: Listagem de NFe
 - (Verificar testes ativos no arquivo)
+
+### ?? Arquivo: `venda-nfcenfe/cancelamento-nfe-normal.spec.js`
+
+#### ?? Suite: Cancelamento NFe Normal
+- Emite e cancela NFe normal avulsa: realiza fluxo completo de emissao (natureza, destinatario, itens, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e cancela a NFe
+
+### ?? Arquivo: `venda-nfcenfe/cancelamento-nfe-devolucao.spec.js`
+
+#### ?? Suite: Cancelamento NFe Devolução
+- Emite e cancela NFe devolucao avulsa: realiza fluxo completo de emissao de NFe devolucao avulsa (natureza CFOP 1202, destinatario, itens, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e cancela a NFe
+
+### ?? Arquivo: `venda-nfcenfe/cancelamento-nfe-ajuste.spec.js`
+
+#### ?? Suite: Cancelamento NFe Ajuste
+- Emite e cancela NFe ajuste avulsa: realiza fluxo completo de emissao de NFe ajuste avulsa (preenchimento de nota de ajuste, natureza CFOP 5102, destinatario, itens, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e cancela a NFe
+
+### ?? Arquivo: `venda-nfcenfe/cancelamento-nfe-complementar.spec.js`
+
+#### ?? Suite: Cancelamento NFe Complementar
+- Emite e cancela NFe complementar avulsa: realiza fluxo completo de emissao de NFe complementar avulsa (preenchimento de nota complementar, natureza CFOP 5102, destinatario, itens zerados, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e cancela a NFe
+
+### ?? Arquivo: `venda-nfcenfe/carta-correcao-nfe-normal.spec.js`
+
+#### ?? Suite: Carta de Correção NFe Normal
+- Emite e gera carta de correção NFe normal avulsa: realiza fluxo completo de emissao (natureza, destinatario, itens, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e emite carta de correção
+
+### ?? Arquivo: `venda-nfcenfe/carta-correcao-nfe-devolucao.spec.js`
+
+#### ?? Suite: Carta de Correção NFe Devolução
+- Emite e gera carta de correção NFe devolucao avulsa: realiza fluxo completo de emissao de NFe devolucao avulsa (natureza CFOP 1202, destinatario, itens, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e emite carta de correção
+
+### ?? Arquivo: `venda-nfcenfe/carta-correcao-nfe-ajuste.spec.js`
+
+#### ?? Suite: Carta de Correção NFe Ajuste
+- Emite e gera carta de correção NFe ajuste avulsa: realiza fluxo completo de emissao de NFe ajuste avulsa (preenchimento de nota de ajuste, natureza CFOP 5102, destinatario, itens, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e emite carta de correção
+
+### ?? Arquivo: `venda-nfcenfe/carta-correcao-nfe-complementar.spec.js`
+
+#### ?? Suite: Carta de Correção NFe Complementar
+- Emite e gera carta de correção NFe complementar avulsa: realiza fluxo completo de emissao de NFe complementar avulsa (preenchimento de nota complementar, natureza CFOP 5102, destinatario, itens zerados, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e emite carta de correção
 
 ## ??? vinculo-fiscal
 

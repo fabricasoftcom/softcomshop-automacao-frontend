@@ -48,11 +48,12 @@ class CadastroNfePage {
   }
 
   desabilitarTourFinalidadeNormal() {
-    const baseKey = 'tour_https://stage-hotfix.softcomshop.com.br_1_finalidade_';
+    const baseUrl = Cypress.config('baseUrl');
+    const baseKey = `tour_${baseUrl}_1_finalidade_`;
     const chaves = ['normal', 'devolucao', 'ajuste', 'complementar'];
     cy.window().then((win) => {
       chaves.forEach((k) => win.localStorage.setItem(`${baseKey}${k}`, '1'));
-      win.localStorage.setItem('tour_https://stage-hotfix.softcomshop.com.br_1_produto_padrao', '1');
+      win.localStorage.setItem(`tour_${baseUrl}_1_produto_padrao`, '1');
     });
   }
 

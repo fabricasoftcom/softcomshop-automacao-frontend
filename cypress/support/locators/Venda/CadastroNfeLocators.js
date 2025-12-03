@@ -1,10 +1,11 @@
 const CadastroNfeLocators = {
   tituloPagina: '.ibox-title h5',
   botaoVoltarListagem: '.ibox-title .btn-default',
-  botaoMaisAcoes: '#more-options',
+  botaoMaisAcoes: '#more-options, button:contains("Mais ações"), button.dropdown-toggle:contains("Mais ações")',
   botaoNovoCadastroheader: '.ibox-title a.btn.btn-warning[href*="/nfe2/novo"]',
   botaoExcluir: '#destroy-nfe-btn',
   widgetStatus: '#nfe-status-widget',
+  badgeStatus: '#status_da_nota_cancelada, button:contains("Autorizada"), button:contains("Cancelada"), button:contains("Em Elaboração"), button:contains("Aguardando"), #nfe-status-widget button',
   stepsHeader: '.dto-step-header-item',
   stepFinalidadeAtivo: '.dto-step-header-item[data-step="0"].active',
   tabsTipoNota: {
@@ -75,6 +76,64 @@ const CadastroNfeLocators = {
     descricao: '.sweet-alert p',
     botaoListagem: '.sweet-alert .cancel',
     botaoNovaNota: '.sweet-alert .confirm',
+  },
+  cancelamento: {
+    botaoCancelar: '#cancel-nfe-btn, button:contains("Cancelar"), a:contains("Cancelar")',
+    dropdownAcoes: '#more-options, button.dropdown-toggle',
+    opcaoCancelar: '.dropdown-menu a:contains("Cancelar NFe"), .dropdown-menu a:contains("Cancelar"), .dropdown-menu button:contains("Cancelar")',
+    // SweetAlert de confirmação inicial: "Deseja cancelar esta Nota?"
+    sweetAlertConfirmacao: {
+      container: '.sweet-alert.showSweetAlert.visible',
+      titulo: '.sweet-alert h2',
+      botaoConfirmar: '.sweet-alert .confirm:contains("Sim, pode continuar!"), button:contains("Sim, pode continuar!")',
+      botaoCancelar: '.sweet-alert .cancel:contains("Não, desejo voltar!"), button:contains("Não, desejo voltar!")',
+    },
+    // Modal nativo de cancelamento: "Cancelamento da Nota" com campo de justificativa
+    modalCancelamento: {
+      container: '[role="dialog"], .modal.show, .modal.in, dialog',
+      titulo: 'h2:contains("Cancelamento da Nota"), .modal-title:contains("Cancelamento")',
+      campoMotivo: '[role="dialog"] input[type="text"], [role="dialog"] textarea, .modal input[type="text"], .modal textarea, input[placeholder*="motivo"], input[placeholder*="justificativa"]',
+      botaoConfirmar: '[role="dialog"] button:contains("Cancelar"), .modal button:contains("Cancelar"), button:contains("Cancelar"):not(:contains("Voltar"))',
+      botaoVoltar: '[role="dialog"] button:contains("Voltar"), .modal button:contains("Voltar")',
+    },
+    // Alerta de sucesso após cancelamento
+    alertaSucesso: {
+      container: '.alert-success, .alert, [role="alert"]',
+      titulo: '.alert-success strong, .alert strong, [role="alert"] strong',
+      mensagem: '.alert-success, .alert',
+    },
+  },
+  maisAcoes: {
+    dropdown: '#more-options, button.dropdown-toggle',
+    opcoes: {
+      cancelar: 'a:contains("Cancelar NFe"), a[href*="cancelar"]',
+      downloadXml: 'a:contains("Download XML"), a[href*="baixar-xml"], a[href*="download-xml"]',
+      visualizarDanfe: 'a:contains("Visualizar Danfe"), a[href*="visualizar-danfe"], a[href*="danfe"]',
+      cartaCorrecao: '#correction-letter, a[href*="carta-correcao"], a[id*="correction"]',
+      enviarEmail: 'a:contains("Enviar email"), a[href*="enviar-email"], button:contains("Enviar email")',
+      clonar: 'a:contains("Clonar NFe"), a[href*="clonar"], a[id*="clonar"]',
+    },
+  },
+  cartaCorrecao: {
+    botaoCartaCorrecao: '#carta-correcao-nfe-btn, #correction-letter',
+    dropdownAcoes: '#more-options, button.dropdown-toggle',
+    opcaoCartaCorrecao: '#correction-letter, a[href*="carta-correcao"], a[id*="correction"]',
+    // Modal de carta de correção: "Carta de Correção Eletrônica" com campo de correção
+    modalCartaCorrecao: {
+      container: '[role="dialog"], .modal.show, .modal.in, dialog, #content-plus.modal',
+      titulo: 'h2, .modal-title, heading[level="2"]',
+      campoCorrecao: '[role="dialog"] textarea, .modal textarea, textarea[placeholder*="correção"], textarea[placeholder*="corrigir"], textarea[name*="correcao"], [role="dialog"] input[type="text"], .modal input[type="text"], input[placeholder*="Mensagem"], textbox[aria-label*="Mensagem"], #content-plus textarea, #content-plus input[type="text"], #content-plus input[type="text"][name*="mensagem"], #content-plus input[type="text"][name*="correcao"]',
+      botaoConfirmar: '[role="dialog"] button, .modal button, #content-plus button',
+      botaoVoltar: '[role="dialog"] button, .modal button, #content-plus button',
+    },
+    // Alerta de sucesso após emissão da carta de correção
+    alertaSucesso: {
+      container: '.alert-success, .alert, [role="alert"]',
+      titulo: '.alert-success strong, .alert strong, [role="alert"] strong',
+      mensagem: '.alert-success, .alert',
+    },
+    // Badge ou indicador de carta de correção emitida
+    badgeCartaCorrecao: '#status_carta_correcao, button:contains("CCe"), [data-carta-correcao]',
   },
   tour: {
     container: '.shepherd-content',

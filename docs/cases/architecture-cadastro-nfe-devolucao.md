@@ -49,7 +49,7 @@
 - Intercepts utilizados:
   - `POST **/nfe2/salvar*` (destinatário - aguardado antes de continuar, com lógica condicional).
   - `GET **/nfe2/**/itens*` (carregamento da tela de itens, com flag condicional).
-  - `POST **/nfe2/**/itens/salvar` (inserção de item).
+  - `POST **/nfe2/**/itens/salvar` (inserção de item - com intercept condicional para evitar timeouts quando a requisição não é interceptada ou já foi feita antes do intercept ser configurado).
   - `POST **/nfe2/**/pagamentos/salvar` (modal de pagamento).
   - `POST **/nfe-nfce/vinculos-fiscais/autocomplete/cfop` (autocomplete de natureza).
 

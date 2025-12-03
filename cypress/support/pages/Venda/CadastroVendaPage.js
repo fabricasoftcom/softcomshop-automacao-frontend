@@ -199,23 +199,9 @@ class CadastroVendaPage {
   }
 
   gerarPagamentoPadrao() {
-    cy.get(cadastroVendaLocators.btnGerarPagamento)
-      .should('be.visible')
-      .and('not.have.class', 'ocultar')
-      .scrollIntoView()
-      .click({ force: true });
-
-    cy.get(cadastroVendaLocators.modalFormaPagamentoIcon).click({ force: true });
-    this.aguardarElementosModal([cadastroVendaLocators.modalVisivel]);
-
-    cy.get(cadastroVendaLocators.modalSugestoesFormaPagamento)
-      .should('have.length.at.least', 1)
-      .first()
-      .then(($li) => {
-        const clickable =
-          Cypress.$($li).find('a').length > 0 ? Cypress.$($li).find('a').get(0) : $li.get(0);
-        cy.wrap(clickable).click({ force: true });
-      });
+    cy.get('#btn-gerar-pagamento').should('be.visible')
+    cy.get('#btn-gerar-pagamento').click()
+    cy.get('#auto_icon_forma_pagamento_id').click()
 
     cy.get(cadastroVendaLocators.modalBtnSalvarPagamento).click();
     this.aguardarFechamentoModal(cadastroVendaLocators.modalVisivel);

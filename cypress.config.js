@@ -75,6 +75,14 @@ module.exports = defineConfig({
       "./cypress/e2e/venda-nfcenfe/cadastro-nfe-devolucao.spec.js",
       "./cypress/e2e/venda-nfcenfe/cadastro-nfe-ajuste.spec.js",
       "./cypress/e2e/venda-nfcenfe/cadastro-nfe-complementar.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cancelamento-nfe-normal.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cancelamento-nfe-devolucao.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cancelamento-nfe-ajuste.spec.js",
+      "./cypress/e2e/venda-nfcenfe/cancelamento-nfe-complementar.spec.js",
+      "./cypress/e2e/venda-nfcenfe/carta-correcao-nfe-normal.spec.js",
+      "./cypress/e2e/venda-nfcenfe/carta-correcao-nfe-devolucao.spec.js",
+      "./cypress/e2e/venda-nfcenfe/carta-correcao-nfe-ajuste.spec.js",
+      "./cypress/e2e/venda-nfcenfe/carta-correcao-nfe-complementar.spec.js",
       "./cypress/e2e/venda-nfcenfe/listagem-nfe.spec.js",
       // sped
       "./cypress/e2e/sped/gerarArquivo.spec.js",
@@ -86,8 +94,9 @@ module.exports = defineConfig({
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    baseUrl: 'https://stage-hotfix.softcomshop.com.br',
-    //  baseUrl: 'https://softcomshop.meusoftcom.com.br',
+    // baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
+    //  baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
 
