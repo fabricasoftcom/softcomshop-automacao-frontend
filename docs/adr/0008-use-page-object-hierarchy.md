@@ -170,21 +170,40 @@ We will use Page Object hierarchy with a base class and specific classes that in
 - **Hierarchy should be used when:**
   - Module has 3+ variants with significant common functionality
   - Common methods represent >30% of total methods
-  - Variants share complex workflows
-  - Maintenance of common code is difficult
+  - Variants share complex workflows (e.g., items, payments, emission)
+  - Maintenance of common code is difficult without hierarchy
 
 - **Hierarchy should NOT be used when:**
   - Only 1-2 variants exist
   - Variants are very different
-  - Common methods are minimal
+  - Common methods are minimal (<30% of total methods)
   - Hierarchy adds more complexity than value
+  - Variants don't share significant workflows
 
 - **Best practices observed:**
-  - Base class contains only truly common methods
+  - Base class contains only truly common methods (used by ALL variants)
   - Specific classes contain only variant-specific methods
-  - Maximum 2 levels of inheritance
+  - Maximum 2 levels of inheritance (Base → Specific)
   - Clear naming convention (BasePage, SpecificPage)
   - Document what goes in base vs specific
+  - Use Facade pattern (`index.js`) for backward compatibility when needed
+  - Keep hierarchy shallow (avoid deep inheritance chains)
+
+- **Current Implementation Status:**
+  - ✅ **NFe module** - Fully implemented and compliant with ADR-0008
+    - Structure: `CadastroNfeBasePage` → `CadastroNfeNormalBasePage` → Specific classes
+    - Maximum 2 levels of inheritance
+    - Facade pattern used for backward compatibility
+    - Well-organized and maintainable
+  - ⚠️ **Other modules** - Currently using flat structure (appropriate for their use cases)
+    - Financeiro (Receitas/Despesas) - Potential candidate (optional, benefit medium)
+    - Financeiro (Listagens) - Not recommended (benefit low, complexity medium)
+
+- **Analysis and Patterns:**
+  - See `docs/referencias/analise-page-objects-hierarquicos.md` for detailed analysis
+  - Analysis identified 1 fully implemented hierarchy (NFe)
+  - Analysis identified 2 optional opportunities (Financeiro modules)
+  - Patterns documented and validated
 
 ### Example
 
@@ -287,9 +306,35 @@ class CadastroNfeDevolucaoPage extends CadastroNfeDevolucaoBasePage {
 - Explain inheritance relationship
 - Provide examples of usage
 
+### Analysis and Validation
+
+A comprehensive analysis of Page Objects was performed to validate hierarchy implementation and identify opportunities. The analysis covered ~60 Page Objects and confirmed:
+
+- ✅ **NFe module** is fully compliant with ADR-0008
+  - Well-structured hierarchy with maximum 2 levels
+  - Clear separation of common vs specific methods
+  - Facade pattern for backward compatibility
+  - Proper naming conventions
+
+- ⚠️ **Optional opportunities identified:**
+  - Financeiro (Receitas/Despesas): 4 pages with ~7 common methods (>50% code common)
+    - Benefit: Medium | Complexity: Low
+    - Recommendation: Optional - consider if new types are added
+  - Financeiro (Listagens): 3 pages with ~3-4 similar methods (~30% code common)
+    - Benefit: Low | Complexity: Medium
+    - Recommendation: Not recommended - maintain current structure
+
+- **Modules that DON'T need hierarchy:**
+  - Single-page modules (Login, Menu, Home, etc.)
+  - Modules with only 2 variants (Cliente, Produto, Orçamento)
+  - Modules with very different variants (Vínculo Fiscal, Relatórios)
+
+**Reference:** See `docs/referencias/analise-page-objects-hierarquicos.md` for complete analysis, patterns, and recommendations.
+
 ### Related ADRs
 
 - ADR-0002: Use Page Object Pattern (hierarchy extends this pattern)
 - ADR-0003: Separate Locators from Page Objects (locators used by both base and specific classes)
 - ADR-0007: Separate Specs by Functionality and Type (hierarchy complements spec separation)
+- ADR-0013: Continuous Validation Checklist (validates hierarchy compliance)
 

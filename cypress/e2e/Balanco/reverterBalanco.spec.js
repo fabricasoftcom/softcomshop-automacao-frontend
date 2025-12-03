@@ -1,5 +1,5 @@
 import ReverterBalancoPage from "../../support/pages/Balanco/ReverterBalancoPage";
-import menulateralprodutopage from "../../support/pages/menulateral/menulateralprodutopage";
+import MenulateralProdutoPage from "../../support/pages/menulateral/MenulateralProdutoPage";
 
 describe("Reverter Balanço", { tags: ["@balanco", "@regressivo"] }, () => {
     beforeEach(() => {
@@ -8,7 +8,7 @@ describe("Reverter Balanço", { tags: ["@balanco", "@regressivo"] }, () => {
     })
 
     it("Deve acessar a tela de balanco e reverter um balanco em andamento", () => {
-        menulateralprodutopage.acessarListagemBalanco()
+        MenulateralProdutoPage.acessarListagemBalanco()
 
         ReverterBalancoPage.acessarPrimeiroBalancoFinalizado()
 

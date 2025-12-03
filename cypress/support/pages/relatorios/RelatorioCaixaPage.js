@@ -1,11 +1,11 @@
 // RelatorioCaixaPage.js
-import relatoriospage from "./relatoriospage";
+import RelatoriosPage from "./RelatoriosPage";
 import RelatorioCaixaLocators from "../../locators/RelatorioCaixaLocators";
 
 class RelatorioCaixaPage {
 
     acessarRelatorioCaixa() {
-        relatoriospage.acessarRelatorioFinanceiroCaixa();
+        RelatoriosPage.acessarRelatorioFinanceiroCaixa();
         cy.url().should('contain', '/relatorio/vendas-caixa');
     }
 

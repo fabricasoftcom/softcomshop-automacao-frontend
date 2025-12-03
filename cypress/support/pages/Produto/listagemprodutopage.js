@@ -1,10 +1,10 @@
-import menulateralprodutopage from "../menulateral/menulateralprodutopage";
+import MenulateralProdutoPage from "../menulateral/MenulateralProdutoPage";
 
-class listagemprodutopage{
+class ListagemProdutoPage {
     // acessar cadastro de novo produto
-    acessarCadastroNovoProduto(){
-        menulateralprodutopage.acessarListagemProdutos();
+    acessarCadastroNovoProduto() {
+        MenulateralProdutoPage.acessarListagemProdutos();
         cy.get('#btn-novo').click();
     }
 }
-export default new listagemprodutopage;
+export default new ListagemProdutoPage();

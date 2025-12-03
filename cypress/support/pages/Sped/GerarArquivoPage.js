@@ -1,9 +1,9 @@
-import menulateralFiscais from "../menulateral/menulateralfiscalpage";
+import MenulateralFiscalPage from "../menulateral/MenulateralFiscalPage";
 import SpedGerarArquivoLocators from "../../locators/Sped/SpedGerarArquivoLocators";
 
 class GerarArquivoPage {
   acessarViaMenu() {
-    menulateralFiscais.acessarSpedGerarArquivo();
+    MenulateralFiscalPage.acessarSpedGerarArquivo();
   }
 
   preencherPeriodo(periodo) {

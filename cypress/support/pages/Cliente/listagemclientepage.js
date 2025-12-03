@@ -1,10 +1,10 @@
-import menulateralvendapage from "../menulateral/menulateralvendapage";
+import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 import clienteLocators from "../../locators/ClienteLocators";
 import listagemClienteLocators from "../../locators/Cliente/ListagemClienteLocators";
 
 class ListagemClientePage {
   acessarTelaListagem() {
-    menulateralvendapage.acessarListagemClientes();
+    MenulateralVendaPage.acessarListagemClientes();
     cy.get(listagemClienteLocators.tabelaClientes).should('be.visible');
   }
 

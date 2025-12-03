@@ -1,10 +1,10 @@
 import ListagemContasLocators from "../../locators/ListagemContasLocators";
-import menulateralfinanceiropage from "../menulateral/menulateralfinanceiropage";
+import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
 
 class ListagemContasPage {
   // Método para visitar a página de listagem de contas
   visit() {
-    menulateralfinanceiropage.acessarListagemContas();
+    MenulateralFinanceiroPage.acessarListagemContas();
     cy.get('h5').contains('Listagem de contas').should('be.visible');
   }
 

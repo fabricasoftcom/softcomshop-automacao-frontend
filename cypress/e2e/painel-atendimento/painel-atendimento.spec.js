@@ -1,28 +1,28 @@
-import painelAtendimentoPage from "../../support/pages/painel-atendimento/painelAtendimentoPage";
+import PainelAtendimentoPage from "../../support/pages/painel-atendimento/PainelAtendimentoPage";
 
-describe('Testes no Painel de Atendimento', () => {
+describe('Testes no Painel de Atendimento', { tags: ['@painel-atendimento', '@regressivo'] }, () => {
     before(()=>{
         cy.setupSistemaPetshop()
     })
     beforeEach(() => {
         cy.loginArmazenandoSessao(); // Faz login antes de cada teste
-        painelAtendimentoPage.visit(); // Visita a página do painel de atendimento
+        PainelAtendimentoPage.visit(); // Visita a página do painel de atendimento
     });
     describe('Testes de novo atendimento quando Gerar atendimento por serviço = nao e registro tempo = turno', () => {
         it('Deve gerar um novo atendimento', () => {
-            painelAtendimentoPage.desmarcarCheckboxGerarAtendimentoServicoSeMarcado();
-            painelAtendimentoPage.registroTempoTurno();
-            painelAtendimentoPage.iniciarNovoAtendimento();
+            PainelAtendimentoPage.desmarcarCheckboxGerarAtendimentoServicoSeMarcado();
+            PainelAtendimentoPage.registroTempoTurno();
+            PainelAtendimentoPage.iniciarNovoAtendimento();
         });
         it('Deve alterar o status para em atendimento e gerar Venda', () => {
             // Clica no primeiro card da coluna Agendado
-            painelAtendimentoPage.clicarNoPrimeiroCardAgendado();
-            painelAtendimentoPage.selecionarStatus('Em Atendimento');
+            PainelAtendimentoPage.clicarNoPrimeiroCardAgendado();
+            PainelAtendimentoPage.selecionarStatus('Em Atendimento');
             // cy.get('.modal #div_status > #status').select('Em Atendimento');
-            painelAtendimentoPage.salvarAtendimento();
-            painelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
-            painelAtendimentoPage.clicarAbaOrdemServico();
-            painelAtendimentoPage.gerarVenda();
+            PainelAtendimentoPage.salvarAtendimento();
+            PainelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
+            PainelAtendimentoPage.clicarAbaOrdemServico();
+            PainelAtendimentoPage.gerarVenda();
             cy.wait(4000)
             cy.url().then(url => {
                 expect(url).to.include('/vendas');
@@ -32,19 +32,19 @@ describe('Testes no Painel de Atendimento', () => {
     });
     describe('Testes de novo atendimento quando Gerar atendimento por serviço = sim e registro tempo =turno', () => {
         it('Deve gerar um novo atendimento', () => {
-            painelAtendimentoPage.marcarCheckboxGerarAtendimentoServicoSeDesmarcado();
-            painelAtendimentoPage.registroTempoTurno();
-            painelAtendimentoPage.iniciarNovoAtendimento();
+            PainelAtendimentoPage.marcarCheckboxGerarAtendimentoServicoSeDesmarcado();
+            PainelAtendimentoPage.registroTempoTurno();
+            PainelAtendimentoPage.iniciarNovoAtendimento();
         });
         it('Deve alterar o status para em atendimento e gerar Venda', () => {
             // Clica no primeiro card da coluna Agendado
-            painelAtendimentoPage.clicarNoPrimeiroCardAgendado();
-            painelAtendimentoPage.selecionarStatus('Em Atendimento');
+            PainelAtendimentoPage.clicarNoPrimeiroCardAgendado();
+            PainelAtendimentoPage.selecionarStatus('Em Atendimento');
             // cy.get('.modal #div_status > #status').select('Em Atendimento');
-            painelAtendimentoPage.salvarAtendimento();
-            painelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
-            painelAtendimentoPage.clicarAbaOrdemServico();
-            painelAtendimentoPage.gerarVenda();
+            PainelAtendimentoPage.salvarAtendimento();
+            PainelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
+            PainelAtendimentoPage.clicarAbaOrdemServico();
+            PainelAtendimentoPage.gerarVenda();
             cy.wait(4000)
             cy.url().then(url => {
                 expect(url).to.include('/vendas');
@@ -54,19 +54,19 @@ describe('Testes no Painel de Atendimento', () => {
 
         describe('Testes de novo atendimento quando Gerar atendimento por serviço = nao e registro tempo = horario', () => {
         it('Deve gerar um novo atendimento', () => {
-            painelAtendimentoPage.desmarcarCheckboxGerarAtendimentoServicoSeMarcado();
-            painelAtendimentoPage.registroTempoHorario();
-            painelAtendimentoPage.iniciarNovoAtendimento();
+            PainelAtendimentoPage.desmarcarCheckboxGerarAtendimentoServicoSeMarcado();
+            PainelAtendimentoPage.registroTempoHorario();
+            PainelAtendimentoPage.iniciarNovoAtendimento();
         });
         it('Deve alterar o status para em atendimento e gerar Venda', () => {
             // Clica no primeiro card da coluna Agendado
-            painelAtendimentoPage.clicarNoPrimeiroCardAgendado();
-            painelAtendimentoPage.selecionarStatus('Em Atendimento');
+            PainelAtendimentoPage.clicarNoPrimeiroCardAgendado();
+            PainelAtendimentoPage.selecionarStatus('Em Atendimento');
             // cy.get('.modal #div_status > #status').select('Em Atendimento');
-            painelAtendimentoPage.salvarAtendimento();
-            painelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
-            painelAtendimentoPage.clicarAbaOrdemServico();
-            painelAtendimentoPage.gerarVenda();
+            PainelAtendimentoPage.salvarAtendimento();
+            PainelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
+            PainelAtendimentoPage.clicarAbaOrdemServico();
+            PainelAtendimentoPage.gerarVenda();
             cy.wait(4000)
             cy.url().then(url => {
                 expect(url).to.include('/vendas');
@@ -76,19 +76,19 @@ describe('Testes no Painel de Atendimento', () => {
     });
     describe('Testes de novo atendimento quando Gerar atendimento por serviço = sim e registro tempo =horario', () => {
         it('Deve gerar um novo atendimento', () => {
-            painelAtendimentoPage.marcarCheckboxGerarAtendimentoServicoSeDesmarcado();
-            painelAtendimentoPage.registroTempoHorario();
-            painelAtendimentoPage.iniciarNovoAtendimento();
+            PainelAtendimentoPage.marcarCheckboxGerarAtendimentoServicoSeDesmarcado();
+            PainelAtendimentoPage.registroTempoHorario();
+            PainelAtendimentoPage.iniciarNovoAtendimento();
         });
         it('Deve alterar o status para em atendimento e gerar Venda', () => {
             // Clica no primeiro card da coluna Agendado
-            painelAtendimentoPage.clicarNoPrimeiroCardAgendado();
-            painelAtendimentoPage.selecionarStatus('Em Atendimento');
+            PainelAtendimentoPage.clicarNoPrimeiroCardAgendado();
+            PainelAtendimentoPage.selecionarStatus('Em Atendimento');
             // cy.get('.modal #div_status > #status').select('Em Atendimento');
-            painelAtendimentoPage.salvarAtendimento();
-            painelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
-            painelAtendimentoPage.clicarAbaOrdemServico();
-            painelAtendimentoPage.gerarVenda();
+            PainelAtendimentoPage.salvarAtendimento();
+            PainelAtendimentoPage.clicarNoPrimeiroCardDaColunaEmAtendimento();
+            PainelAtendimentoPage.clicarAbaOrdemServico();
+            PainelAtendimentoPage.gerarVenda();
             cy.wait(4000)
             cy.url().then(url => {
                 expect(url).to.include('/vendas');

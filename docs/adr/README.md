@@ -93,6 +93,27 @@ Each ADR follows this structure:
 
 [View ADR-0011](./0011-use-conditional-intercepts.md)
 
+### ADR-0012: Documentation of Custom Commands
+**Status**: Accepted  
+**Date**: 2024-12-19  
+**Summary**: Decision to maintain centralized documentation for all custom Cypress commands, ensuring discoverability, correct usage, and easier maintenance.
+
+[View ADR-0012](./0012-documentation-of-custom-commands.md)
+
+### ADR-0013: Continuous Validation Checklist
+**Status**: Accepted  
+**Date**: 2024-12-19  
+**Summary**: Decision to use a continuous validation checklist during code reviews to ensure continuous compliance with all ADRs, preventing regressions and maintaining code quality.
+
+[View ADR-0013](./0013-continuous-validation-checklist.md)
+
+### ADR-0014: Standardized Architectural Documentation Process
+**Status**: Accepted  
+**Date**: 2024-12-19  
+**Summary**: Decision to follow a standardized process for creating architectural documentation, ensuring consistency, maintainability, and quality across all test documentation.
+
+[View ADR-0014](./0014-standardized-architectural-documentation-process.md)
+
 ---
 
 ## How to Create a New ADR

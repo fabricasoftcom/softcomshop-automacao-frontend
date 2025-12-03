@@ -2,7 +2,7 @@ import OrcamentoCadastroPage from "../../support/pages/Orcamento/OrcamentoCadast
 import {generateRandomDadosOrcamento} from "../../support/factory/generateRandomData";
 import {generateRandomDadosOrcamentoProduto} from "../../support/factory/generateRandomData";
 
-describe('Cadastro de Novo Orçamento', () => {
+describe('Cadastro de Novo Orçamento', { tags: ['@orcamento', '@cadastro-orcamento', '@regressivo'] }, () => {
     const condicaoPagamento = 'À vista';
 
     beforeEach(() => {

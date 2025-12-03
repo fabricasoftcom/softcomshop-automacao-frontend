@@ -68,7 +68,14 @@ We will make documentation **mandatory** for all new tests, following a defined 
 3. **Add to `specPattern` in `cypress.config.js`** (MANDATORY)
 4. **Create documentation in `docs/cases/architecture-<nome>.md`** (MANDATORY)
 5. **Update `docs/testes.md`** (MANDATORY)
-6. Apply tags in `describe` for filtering (`@cypress/grep`)
+6. **Update `docs/cases/README.md`** (MANDATORY) - Add to central index
+7. Apply tags in `describe` for filtering (`@cypress/grep`)
+
+**Standardized Process:**
+- Follow the standardized process defined in `docs/referencias/processo-documentacao.md`
+- Use the template provided in the process document
+- Ensure all required sections are included
+- Reference related ADRs in documentation
 
 ## Consequences
 
@@ -205,9 +212,16 @@ docs/testes.md
 
 **Documentation Structure:**
 - Each test spec must have a corresponding `architecture-<nome>.md` file
-- File should follow the standard template
-- Include all required sections
+- File should follow the standard template (see `docs/referencias/processo-documentacao.md`)
+- Include all required sections:
+  - Objective
+  - File structure (specs, Page Objects, Locators, Factories)
+  - Imports and dependencies
+  - Test structure (detailed steps)
+  - Patterns and best practices
+  - Related ADRs
 - Reference examples from existing documentation
+- All documentations are indexed in `docs/cases/README.md`
 
 **Update Process:**
 - Update `docs/testes.md` immediately after creating test
@@ -227,10 +241,19 @@ docs/testes.md
 - Documentation should be reviewed for completeness
 - Templates should be used for consistency
 
+### Documentation Resources
+
+- **Process:** `docs/referencias/processo-documentacao.md` - Standardized process for creating documentation
+- **Index:** `docs/cases/README.md` - Central index of all architectural documentations
+- **Template:** Included in process document
+- **Examples:** See existing documentations in `docs/cases/` for reference
+
 ### Related ADRs
 
 - ADR-0001: Record Architecture Decisions (documentation of decisions)
 - ADR-0002: Use Page Object Pattern (documented in architecture files)
 - ADR-0003: Separate Locators from Page Objects (documented in architecture files)
 - ADR-0005: Use Allure for Test Reporting (reports complement documentation)
+- ADR-0013: Continuous Validation Checklist (validates documentation creation)
+- ADR-0014: Standardized Architectural Documentation Process (establishes the process)
 

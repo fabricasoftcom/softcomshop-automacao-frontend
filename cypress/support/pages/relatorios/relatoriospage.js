@@ -1,11 +1,11 @@
 // RelatoriosPage.js
-import menulateralrelatoriospage from "../menulateral/menulateralrelatoriospage";
+import MenulateralRelatoriosPage from "../menulateral/MenulateralRelatoriosPage";
 import RelatoriosLocators from "../../locators/RelatoriosLocators";
 
 class RelatoriosPage {
 
     acessarMenuRelatorios() {
-        menulateralrelatoriospage.acessarRelatorios();
+        MenulateralRelatoriosPage.acessarRelatorios();
     }
 
     // Acessa o menu relatórios e abre o link especificado

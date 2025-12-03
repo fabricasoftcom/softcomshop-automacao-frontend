@@ -225,8 +225,41 @@ beforeEach(() => {
 - **Other functionalities**: Use `cy.loginArmazenandoSessao()` for all other tests
 - Both commands utilize `cy.session` for performance optimization
 
+### Custom Commands Reference
+
+For complete documentation of all custom login commands, including detailed usage examples, parameters, and when to use each command, see:
+
+- **`docs/referencias/referencia-comandos-customizados.md`** - Complete reference of all custom commands
+- **ADR-0012: Documentation of Custom Commands** - ADR that establishes the documentation standard
+
+**Available Login Commands Summary:**
+
+1. **`cy.login()`** - Fiscal functionalities
+   - User: `user.validFiscal`
+   - Use for: NFe, NFCe, SPED, Sintegra, and other fiscal/tax-related features
+   - Session ID: `'user_session'`
+
+2. **`cy.loginArmazenandoSessao()`** - General functionalities
+   - User: `user.valid`
+   - Use for: Sales, Purchases, Production, Financial, Clients, Products, etc.
+   - Session ID: `'user_session'`
+
+3. **`cy.loginRestoreSession()`** - Iterative tests
+   - User: `user.valid`
+   - Use for: Tests with loops (`cy.wrap().each()`) where session may expire
+   - Handles SweetAlert automatically
+   - Session ID: `'user_session'`
+
+4. **`cy.loginArmazenandoSessaoCobranca()`** - Billing functionalities
+   - User: `user.validApiCobranca`
+   - Use for: Billing-related features requiring specific API permissions
+   - Session ID: `'user_session'`
+
+**Important:** All commands use `cy.session()` for session persistence and performance optimization.
+
 ### Related ADRs
 
 - ADR-0002: Use Page Object Pattern (Page Objects used in login commands)
 - ADR-0003: Separate Locators from Page Objects (Locators used in login flow)
+- ADR-0012: Documentation of Custom Commands (complete command documentation)
 

@@ -1,4 +1,4 @@
-import MenulateralProdutoPage from '../../support/pages/menulateral/menulateralprodutopage';
+import MenulateralProdutoPage from '../../support/pages/menulateral/MenulateralProdutoPage';
 import ListagemMovimentacoesPage from '../../support/pages/Movimentacoes/ListagemMovimentacoesPage';
 
 describe('Listagem de Movimentações', { tags: ['@compras', '@regressivo', '@listagem-movimentacoes'] }, () => {

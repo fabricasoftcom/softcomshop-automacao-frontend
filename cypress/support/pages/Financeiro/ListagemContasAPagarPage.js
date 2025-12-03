@@ -1,10 +1,10 @@
 import ListagemContasAPagarLocators from "../../locators/ListagemContasAPagarLocators";
-import menulateralfinanceiropage from "../menulateral/menulateralfinanceiropage";
+import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
 
 class ListagemContasAPagarPage {
   // Navegação para a página
   visit() {
-    menulateralfinanceiropage.acessarContasPagar();
+    MenulateralFinanceiroPage.acessarContasPagar();
     this.verificarCarregamentoDaPagina();
   }
 

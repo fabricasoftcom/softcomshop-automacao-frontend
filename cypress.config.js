@@ -14,8 +14,8 @@ module.exports = defineConfig({
     defaultCommandTimeout: 50000,
     specPattern: [
       "./cypress/e2e/setup/_beforeConfigPadrao.spec.js",
-      // debounce-autocomplete
-      "./cypress/e2e/debounce-autocomplete/debounce-autocomplete.spec.js",
+      // debounce-autocomplete (arquivo removido/não existe)
+      // "./cypress/e2e/debounce-autocomplete/debounce-autocomplete.spec.js",
       // login
       "./cypress/e2e/login/login.spec.js",
       // menu lateral
@@ -36,7 +36,6 @@ module.exports = defineConfig({
       "./cypress/e2e/cadastro-produto/cadastro-produto.spec.js",
       "./cypress/e2e/produtos/atributos.spec.js",
       "./cypress/e2e/produtos/grupos.spec.js",
-      "./cypress/e2e/produtos/atributos.spec.js",
       "./cypress/e2e/produtos/listagem-produtos.spec.js",
       // vinculo fiscal
       "./cypress/e2e/vinculo-fiscal/novocadastrovinculofiscal.spec.js",
@@ -94,8 +93,8 @@ module.exports = defineConfig({
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    // baseUrl: 'https://stage-hotfix.softcomshop.com.br',
-    baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
+    baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    // baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
     //  baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,

@@ -1,9 +1,9 @@
 import ListagemNfeLocators from "../../locators/Venda/ListagemNfeLocators";
-import menulateralvendapage from "../menulateral/menulateralvendapage";
+import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 
 class ListagemNfePage {
   visitar() {
-    menulateralvendapage.acessarListagemNFe();
+    MenulateralVendaPage.acessarListagemNFe();
   }
 
   validarCarregamento() {

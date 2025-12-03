@@ -1,4 +1,4 @@
-import MenulateralProdutoPage from '../../support/pages/menulateral/menulateralprodutopage';
+import MenulateralProdutoPage from '../../support/pages/menulateral/MenulateralProdutoPage';
 import CadastroMovimentacoesPage from '../../support/pages/Movimentacoes/CadastroMovimentacoesPage';
 import ItensMovimentacoesPage from '../../support/pages/Movimentacoes/ItensMovimentacoesPage';
 

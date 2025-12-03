@@ -1,9 +1,9 @@
-import menulateralFiscais from "../menulateral/menulateralfiscalpage";
+import MenulateralFiscalPage from "../menulateral/MenulateralFiscalPage";
 import SintegraGerarArquivoLocators from "../../locators/Sintegra/SintegraGerarArquivoLocators";
 
 class GerarArquivoSintegraPage {
   acessarViaMenu() {
-    menulateralFiscais.acessarSintegraGerarArquivo();
+    MenulateralFiscalPage.acessarSintegraGerarArquivo();
   }
 
   preencherPeriodo(periodo) {

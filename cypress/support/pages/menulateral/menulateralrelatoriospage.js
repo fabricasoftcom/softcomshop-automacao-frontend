@@ -1,8 +1,8 @@
-class menulateralrelatoriospage{
+class MenulateralRelatoriosPage {
     // Acessar o dashboard do ta em ordem
-    acessarRelatorios(){
+    acessarRelatorios() {
         cy.clicarMenu('Relatórios');
     }
-
 }
-export default new menulateralrelatoriospage;
+
+export default new MenulateralRelatoriosPage();

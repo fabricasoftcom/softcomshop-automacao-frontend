@@ -2,7 +2,7 @@ import GerarArquivoPage from "../../support/pages/Sped/GerarArquivoPage";
 
 describe("SPED > Gerar Arquivo", { tags: ["@sped", "@regressivo"] }, () => {
   beforeEach(() => {
-    cy.loginArmazenandoSessao();
+    cy.login(); // ADR-0004: Funcionalidades fiscais (SPED) devem usar cy.login()
     cy.visit('/');
     GerarArquivoPage.acessarViaMenu();
   });

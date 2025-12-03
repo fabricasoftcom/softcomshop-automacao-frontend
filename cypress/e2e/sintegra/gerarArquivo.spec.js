@@ -2,7 +2,7 @@ import GerarArquivoSintegraPage from "../../support/pages/Sintegra/GerarArquivoP
 
 describe("Sintegra > Gerar Arquivo", { tags: ["@sintegra", "@regressivo"] }, () => {
   beforeEach(() => {
-    cy.loginArmazenandoSessao();
+    cy.login(); // ADR-0004: Funcionalidades fiscais (Sintegra) devem usar cy.login()
     cy.visit('/');
     GerarArquivoSintegraPage.acessarViaMenu();
   });

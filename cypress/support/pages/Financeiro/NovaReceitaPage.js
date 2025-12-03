@@ -1,11 +1,11 @@
 import 'cypress-wait-until'; // Certifique-se de que o pacote esteja instalado
-import menulateralfinanceiropage from "../menulateral/menulateralfinanceiropage";
+import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
 import NovaReceitaLocators from "../../locators/NovaReceitaLocators";
 import ListagemContasAReceberPage from "./ListagemContasAReceberPage";
 
 class NovaReceitaPage {
   abrirModal() {
-    menulateralfinanceiropage.acessarListagemContasReceberReceita();
+    MenulateralFinanceiroPage.acessarListagemContasReceberReceita();
     ListagemContasAReceberPage.abrirNovoCadastro();
     cy.get(NovaReceitaLocators.modalContent, { timeout: 30000 }).should('be.visible');
   }

@@ -1,12 +1,12 @@
 import ListagemContasAReceberLocators from "../../locators/ListagemContasAReceberLocators";
-import menulateralfinanceiropage from "../menulateral/menulateralfinanceiropage";
+import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
 
 class ListagemContasAReceberPage {
 
   // ====== Navegação e Carregamento da Página ======
 
   visit() {
-    menulateralfinanceiropage.acessarListagemContasReceberReceita();
+    MenulateralFinanceiroPage.acessarListagemContasReceberReceita();
   }
 
   verificarCarregamentoDaPagina() {

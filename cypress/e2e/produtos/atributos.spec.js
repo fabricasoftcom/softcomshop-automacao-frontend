@@ -1,4 +1,4 @@
-import MenulateralProdutoPage from "../../support/pages/menulateral/menulateralprodutopage";
+import MenulateralProdutoPage from "../../support/pages/menulateral/MenulateralProdutoPage";
 import AtributosListPage from "../../support/pages/Produtos/AtributosListPage";
 import AtributosFormPage from "../../support/pages/Produtos/AtributosFormPage";
 import AtributosOpcoesPage from "../../support/pages/Produtos/AtributosOpcoesPage";

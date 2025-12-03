@@ -1,5 +1,5 @@
 import VinculoFiscalListagemLocators from "../../locators/VinculoFiscalListagemLocators";
-import menulateralprodutopage from "../menulateral/menulateralprodutopage";
+import MenulateralProdutoPage from "../menulateral/MenulateralProdutoPage";
 
 class VinculoFiscalListagemPage {
     /**
@@ -7,7 +7,7 @@ class VinculoFiscalListagemPage {
      * e valida que a página foi carregada com sucesso.
      */
     visit() {
-        menulateralprodutopage.acessarListagemVinculosFiscais();
+        MenulateralProdutoPage.acessarListagemVinculosFiscais();
         cy.get('h5:contains("Listagem")').should('be.visible'); // Valida o título "Listagem"
     }
 

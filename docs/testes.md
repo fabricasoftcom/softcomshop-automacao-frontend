@@ -37,11 +37,11 @@
 - Seleciona um registro, abre o modal de exclusao e cancela a acao
 
 
-## ??? debounce-autocomplete
+## debounce-autocomplete
 
-### ?? Arquivo: `debounce-autocomplete/debounce-autocomplete.spec.js`
+### Arquivo: `debounce-autocomplete/debounce-autocomplete.spec.js`
 
-- ? Deve contar as requisições de autocomplete
+- Deve contar as requisições de autocomplete (arquivo removido/não existe)
 
 ## ??? financeiro
 
@@ -69,9 +69,6 @@
 - ? Deve selecionar a Conta Corrente
 - ? Deve selecionar a Caixinha
 - ? Deve retornar à listagem ao clicar em Voltar
-
-### ?? Arquivo: `financeiro/detalhes-do-titulo.spec.js`
-
 
 ### ?? Arquivo: `financeiro/edicao-conta-corrente.spec.js`
 
@@ -224,13 +221,18 @@
 - Deve finalizar uma produção com modo de preparo preenchido: adiciona item inicial, valida página de edição, adiciona produto na tabela, preenche modo de preparo, salva e finaliza a produção
 - Deve localizar produção finalizada na listagem, abrir edição e reverter produção: acessa a listagem, localiza uma produção finalizada, abre para edição e reverte a produção
 
-## ??? relatorio
+## relatorio
 
-### ?? Arquivo: `relatorio/relatorios.spec.js`
+### Arquivo: `relatorio/relatorios.spec.js`
 
-#### ?? Suite: Acessar relatorios: 
-- ? Deve validar os relatorios
-- ? /softcomtecnologia/relatorios-gerais
+#### Suite: Acessar relatorios: 
+- Deve validar os relatorios
+- /softcomtecnologia/relatorios-gerais
+
+### Arquivo: `relatorio/relatorio-caixa.spec.js`
+
+#### Suite: Relatório de Caixa
+- Deve acessar o relatório de caixa e validar os dados
 
 ## ??? setup
 
@@ -242,7 +244,12 @@
 
 ## ??? compras
 
-### ?? Arquivo: `compras/cadastro-compra.spec.js`
+### Arquivo: `compras/cadastro-fornecedor.spec.js`
+
+#### Suite: Cadastro de Fornecedor
+- Deve cadastrar um novo fornecedor com sucesso
+
+### Arquivo: `compras/cadastro-compra.spec.js`
 
 #### ?? Suite: Cadastro de compra
 - Importando NFe pelo XML: executa fluxo completo de importacao de NFe via XML, preenchendo CFOP (1102) e vinculo fiscal (usa XML aleatorio da pasta comprasxml)
@@ -283,14 +290,17 @@
 
 
 
-## ??? venda-nfce
+## venda-nfcenfe
 
-### ?? Arquivo: `venda-nfce/venda-nfce.spec.js`
+### Arquivo: `venda-nfcenfe/venda-nfe.spec.js`
 
-#### ?? Suite: Realizar venda
-- ? Realizar venda com sucesso
+#### Suite: Realizar venda NFe
+- Realizar venda com sucesso
 
-## ??? venda-nfcenfe
+### Arquivo: `venda-nfcenfe/venda-nfce.spec.js`
+
+#### Suite: Realizar venda NFCe
+- Realizar venda com sucesso
 
 ### ?? Arquivo: `venda-nfcenfe/cadastro-nfe.spec.js`
 

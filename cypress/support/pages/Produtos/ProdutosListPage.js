@@ -1,9 +1,9 @@
-import menulateralprodutopage from "../menulateral/menulateralprodutopage";
+import MenulateralProdutoPage from "../menulateral/MenulateralProdutoPage";
 import ProdutosListLocators from "../../locators/Produtos/ProdutosListLocators";
 
 class ProdutosListPage {
   acessarListagem() {
-    menulateralprodutopage.acessarListagemProdutos();
+    MenulateralProdutoPage.acessarListagemProdutos();
   }
   abrirFormularioPesquisa() {
     cy.get(ProdutosListLocators.btnPesquisar).click();

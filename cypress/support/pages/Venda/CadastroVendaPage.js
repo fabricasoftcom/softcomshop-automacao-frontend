@@ -1,10 +1,10 @@
-﻿import menulateralvendapage from "../menulateral/menulateralvendapage";
+﻿import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 import listagemVendasLocators from "../../locators/Venda/ListagemVendasLocators";
 import cadastroVendaLocators from "../../locators/Venda/CadastroVendaLocators";
 
 class CadastroVendaPage {
   acessarNovoCadastro() {
-    menulateralvendapage.acessarListagemVendas();
+    MenulateralVendaPage.acessarListagemVendas();
     cy.get(listagemVendasLocators.tabelaVendas).should('be.visible');
     cy.get(listagemVendasLocators.btnNovo).first().click();
     cy.url().should('include', '/vendas/novo');

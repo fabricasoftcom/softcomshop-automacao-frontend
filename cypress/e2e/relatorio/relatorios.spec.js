@@ -1,4 +1,4 @@
-import relatoriospage from "../../support/pages/relatorios/relatoriospage";
+import RelatoriosPage from "../../support/pages/relatorios/RelatoriosPage";
 
 describe('Acessar relatorios: ', { tags: ['@relatorios', '@regressivo'] }, () => {
 
@@ -23,7 +23,7 @@ describe('Acessar relatorios: ', { tags: ['@relatorios', '@regressivo'] }, () =>
         .should('exist')
         .should('be.visible')
         .click()
-      relatoriospage.validateRoute(option.relatorioURL);
+      RelatoriosPage.validateRoute(option.relatorioURL);
       cy.verificarErro500Visual();
     });
   });

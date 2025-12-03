@@ -17,6 +17,9 @@ This project uses **Architecture Decision Records (ADRs)** to document architect
 - [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md): Faker for Dynamic Data
 - [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
 - [ADR-0011](../docs/adr/0011-use-conditional-intercepts.md): Conditional Intercepts
+- [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md): Documentation of Custom Commands
+- [ADR-0013](../docs/adr/0013-continuous-validation-checklist.md): Continuous Validation Checklist
+- [ADR-0014](../docs/adr/0014-standardized-architectural-documentation-process.md): Standardized Architectural Documentation Process
 
 ---
 
@@ -138,7 +141,7 @@ This project uses **Architecture Decision Records (ADRs)** to document architect
 
 ### 7. Mandatory Documentation (MANDATORY)
 
-> **Context**: See [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md) for complete decision
+> **Context**: See [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md) and [ADR-0014](../docs/adr/0014-standardized-architectural-documentation-process.md) for complete decision
 
 **When creating a new test, you MUST:**
 
@@ -147,10 +150,13 @@ This project uses **Architecture Decision Records (ADRs)** to document architect
 3. **Add to `specPattern` in `cypress.config.js`** (MANDATORY)
 4. **Create `docs/cases/architecture-<nome>.md`** (MANDATORY)
    - Must contain: Objective, Imports and dependencies, Test structure, Patterns and best practices
+   - Follow the standardized process: `docs/referencias/processo-documentacao.md`
    - Reference examples: `architecture-cadastro-nfe.md`, `architecture-producao-listagem.md`
 5. **Update `docs/testes.md`** (MANDATORY)
    - Include: Section title, Spec file, Test suite, List of all tests (`it`)
-6. Apply tags in `describe` for filtering (`@cypress/grep`). **See [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md)**
+6. **Update `docs/cases/README.md`** (MANDATORY)
+   - Add to central index organized by module
+7. Apply tags in `describe` for filtering (`@cypress/grep`). **See [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md)**
 
 ---
 
@@ -162,10 +168,48 @@ This project uses **Architecture Decision Records (ADRs)** to document architect
 - [ ] Create Page Objects/Locators (if necessary)
 - [ ] **Add to `specPattern` in `cypress.config.js`** (MANDATORY)
 - [ ] **Create documentation in `docs/cases/architecture-<nome>.md`** (MANDATORY)
+  - Follow template: `docs/referencias/processo-documentacao.md`
 - [ ] **Update `docs/testes.md`** (MANDATORY)
+- [ ] **Update `docs/cases/README.md`** (MANDATORY) - Add to central index
 - [ ] Apply tags in `describe` for filtering (`@cypress/grep`). **See [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md)**
+- [ ] Validate using checklist: `docs/referencias/checklist-validacao-continua.md`
 
 **IMPORTANT**: Do not consider the test complete until all items above are finalized.
+
+**Process Documentation:** `docs/referencias/processo-documentacao.md`
+
+---
+
+## Quick Decision Guide
+
+> **Context**: For common questions and quick architectural decisions, consult the Quick Decision Guide
+
+**⭐ PRIMARY REFERENCE FOR COMMON QUESTIONS:** `docs/referencias/guia-decisoes-rapidas.md`
+
+**Use this guide when:**
+- Creating a new test and unsure which pattern to follow
+- Modifying an existing test and have doubts
+- Validating decisions during code review
+- Onboarding new developers
+
+**Quick answers for 8 common questions:**
+1. **Which login command to use?** (Fiscal vs General vs Iterative)
+2. **Do I need to create documentation?** (Mandatory checklist)
+3. **Do I need to create a Page Object?** (YES/NO criteria)
+4. **Do I need to use hierarchy?** (When to use/not use)
+5. **Which tags to use?** (Patterns and examples)
+6. **Do I need to use Faker?** (Decision criteria)
+7. **Do I need to use conditional intercept?** (When necessary)
+8. **Where to place the new spec?** (Directory structure)
+
+**Additional resources in the guide:**
+- Decision tree (visual flowchart for creating new tests)
+- Common problems and solutions (timeouts, Page Objects, performance)
+- Quick references (tables of documents and ADRs)
+- Quick tips (Do/Don't)
+- Summary of critical decisions (4 main decisions)
+
+**Complete Guide:** `docs/referencias/guia-decisoes-rapidas.md`
 
 ---
 
@@ -175,3 +219,183 @@ For detailed architecture examples, see:
 - `docs/cases/architecture-cadastro-nfe.md`
 - `docs/cases/architecture-producao-listagem.md`
 - `docs/cases/architecture-listagem-produtos.md`
+
+---
+
+## Custom Login Commands
+
+> **Context**: See [ADR-0004](../docs/adr/0004-use-cy-session-for-login-persistence.md) and [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md)
+
+**IMPORTANT:** Choose the correct login command based on functionality type:
+
+### `cy.login()` - Fiscal Functionalities
+- **Use for:** NFe, NFCe, SPED, Sintegra, and other fiscal/tax-related features
+- **User:** `user.validFiscal` (from `cypress/fixtures/users.json`)
+- **Session ID:** `'user_session'`
+- **Example:**
+  ```javascript
+  describe('Cadastro NFe', () => {
+    beforeEach(() => {
+      cy.login(); // ✅ Correct for fiscal functionalities
+      cy.visit('/');
+    });
+  });
+  ```
+
+### `cy.loginArmazenandoSessao()` - General Functionalities
+- **Use for:** Most functionalities (Sales, Purchases, Production, Financial, Clients, Products, etc.)
+- **User:** `user.valid` (from `cypress/fixtures/users.json`)
+- **Session ID:** `'user_session'`
+- **Example:**
+  ```javascript
+  describe('Cadastro de Cliente', () => {
+    beforeEach(() => {
+      cy.loginArmazenandoSessao(); // ✅ Correct for non-fiscal functionalities
+      cy.visit('/');
+    });
+  });
+  ```
+
+### `cy.loginRestoreSession()` - Iterative Tests
+- **Use for:** Tests with loops (`cy.wrap().each()`) where session may expire
+- **User:** `user.valid` (from `cypress/fixtures/users.json`)
+- **Difference:** Automatically handles SweetAlert after login
+- **Example:**
+  ```javascript
+  describe('Menu Lateral', () => {
+    it('Deve validar os menus', () => {
+      cy.wrap(menuOptions).each((option) => {
+        cy.loginRestoreSession(); // Restores session in each iteration
+        cy.visit('/');
+        // ... test actions
+      });
+    });
+  });
+  ```
+
+### `cy.loginArmazenandoSessaoCobranca()` - Billing Functionalities
+- **Use for:** Billing-related features requiring specific API permissions
+- **User:** `user.validApiCobranca` (from `cypress/fixtures/users.json`)
+- **Session ID:** `'user_session'`
+
+**Complete Reference:** `docs/referencias/referencia-comandos-customizados.md`
+
+---
+
+## Continuous Validation Checklist
+
+> **Context**: See [ADR-0013](../docs/adr/0013-continuous-validation-checklist.md)
+
+**Use this checklist during code review to ensure continuous ADR compliance:**
+
+### Quick Validation Checklist
+
+1. **ADR-0002 (Page Objects):**
+   - [ ] No CSS/XPath selectors directly in spec
+   - [ ] UI interactions encapsulated in Page Objects
+
+2. **ADR-0003 (Locators):**
+   - [ ] Locators in separate files
+   - [ ] File name in PascalCase
+
+3. **ADR-0004 (Login):**
+   - [ ] Correct login command (fiscal vs non-fiscal)
+   - [ ] Uses `cy.session()` for caching
+
+4. **ADR-0010 (Tags):**
+   - [ ] Tags applied in `describe`
+   - [ ] Tags follow pattern: `['@modulo', '@tipo', '@regressivo']`
+
+5. **ADR-0006 (Documentation):**
+   - [ ] Architecture documentation created
+   - [ ] `docs/testes.md` updated
+   - [ ] `docs/cases/README.md` updated
+
+**Complete Checklist:** `docs/referencias/checklist-validacao-continua.md`
+
+---
+
+## Standardized Documentation Process
+
+> **Context**: See [ADR-0014](../docs/adr/0014-standardized-architectural-documentation-process.md)
+
+**When creating a new test, you MUST follow this process:**
+
+1. ✅ Create spec in `cypress/e2e/...`
+2. ✅ Create Page Objects/Locators (if necessary)
+3. ✅ **Add to `specPattern` in `cypress.config.js`** (MANDATORY)
+4. ✅ **Create `docs/cases/architecture-<nome>.md`** (MANDATORY)
+   - Follow template from `docs/referencias/PROCESSO_DOCUMENTACAO.md`
+   - Include all required sections
+5. ✅ **Update `docs/testes.md`** (MANDATORY)
+6. ✅ **Update `docs/cases/README.md`** (MANDATORY) - Add to central index
+7. ✅ Apply tags in `describe` (ADR-0010)
+
+**Process Documentation:** `docs/referencias/processo-documentacao.md`  
+**Documentation Index:** `docs/cases/README.md`
+
+---
+
+## Page Object Hierarchy Guidelines
+
+> **Context**: See [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md)
+
+### When to Use Hierarchy
+
+✅ **Use hierarchy when:**
+- Module has 3+ variants with significant common functionality
+- Common methods represent >30% of total methods
+- Variants share complex workflows (e.g., items, payments, emission)
+- Maintenance of common code is difficult without hierarchy
+
+❌ **Do NOT use hierarchy when:**
+- Only 1-2 variants exist
+- Variants are very different
+- Common methods are minimal (<30% of total methods)
+- Hierarchy adds more complexity than value
+
+### Recommended Structure
+
+```
+Module/
+├── ModuleBasePage.js           # Base class (common methods)
+├── ModuleVariant1Page.js      # Inherits from Base
+└── ModuleVariant2Page.js      # Inherits from Base
+```
+
+**Maximum:** 2 levels of inheritance (Base → Specific)
+
+### Current Implementation Status
+
+- ✅ **NFe module** - Fully implemented and compliant
+  - Structure: `CadastroNfeBasePage` → `CadastroNfeNormalBasePage` → Specific classes
+  - Maximum 2 levels of inheritance
+  - Facade pattern used for backward compatibility
+
+**Reference:** `docs/referencias/analise-page-objects-hierarquicos.md` for complete analysis
+
+---
+
+## Custom Commands Status
+
+> **Context**: See [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md)
+
+### Commands Not in Use (Consider Removing)
+
+⚠️ **`cy.salvarRegistroCadsatro()`**
+- Status: Not being used in any spec
+- Issue: Typo in name ("Cadsatro" → "Cadastro")
+- Recommendation: Consider removing
+
+⚠️ **`cy.expandirClicarMenuDoisNiveis()`**
+- Status: Not being used in any spec
+- Recommendation: Consider removing
+
+### When Creating New Commands
+
+✅ **Document in:** `docs/referencias/referencia-comandos-customizados.md`
+✅ **Add usage examples**
+✅ **Reference related ADRs**
+✅ **Update command reference when modifying**
+
+**Complete Reference:** `docs/referencias/referencia-comandos-customizados.md`
