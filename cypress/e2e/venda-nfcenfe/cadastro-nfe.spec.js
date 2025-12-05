@@ -5,27 +5,27 @@ import CadastroNfeBasePage from '../../support/pages/Venda/NFe/CadastroNfeBasePa
 
 const cadastroNfeBasePage = new CadastroNfeBasePage();
 
-// describe('Cadastro NFe - Validações Gerais', { tags: ['@nfe', '@vendas', '@regressivo', '@nfe-geral'] }, () => {
-//   beforeEach(() => {
-//     cy.login();
-//     cy.visit('/');
-//     CadastroNfePage.desabilitarTourFinalidadeNormal();
-//     ListagemNfePage.visitar();
-//     ListagemNfePage.clicarNovoCadastro();
-//   });
+describe('Cadastro NFe - Validações Gerais', { tags: ['@nfe', '@vendas', '@regressivo', '@nfe-geral'] }, () => {
+  beforeEach(() => {
+    cy.loginArmazenandoSessao();
+    cy.visit('/');
+    CadastroNfePage.desabilitarTourFinalidadeNormal();
+    ListagemNfePage.visitar();
+    ListagemNfePage.clicarNovoCadastro();
+  });
 
-//   it('abre tela de novo cadastro com passos e tipo Avulsa pre-selecionados', () => {
-//     CadastroNfePage.validarTelaInicial();
-//     CadastroNfePage.validarPassosETabs();
-//     CadastroNfePage.validarTipoAvulsaPreSelecionado();
-//     CadastroNfePage.validarSkeletonsIniciais();
-//   });
+  it('abre tela de novo cadastro com passos e tipo Avulsa pre-selecionados', () => {
+    CadastroNfePage.validarTelaInicial();
+    CadastroNfePage.validarPassosETabs();
+    CadastroNfePage.validarTipoAvulsaPreSelecionado();
+    CadastroNfePage.validarSkeletonsIniciais();
+  });
 
-//   it('permite alternar e exibe conteudos das abas de finalidade', () => {
-//     CadastroNfePage.fecharTutorialSeVisivel();
-//     CadastroNfePage.validarAbasFinalidade();
-//   });
-// });
+  it('permite alternar e exibe conteudos das abas de finalidade', () => {
+    CadastroNfePage.fecharTutorialSeVisivel();
+    CadastroNfePage.validarAbasFinalidade();
+  });
+});
 
 describe('Cadastro NFe - Validações Dropdown Mais Ações', { tags: ['@nfe', '@vendas', '@regressivo', '@nfe-geral', '@dropdown-acoes'] }, () => {
   before(() => {

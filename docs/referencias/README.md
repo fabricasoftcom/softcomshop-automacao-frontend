@@ -159,6 +159,31 @@ Documento reflexivo que captura os principais aprendizados, insights e lições 
 
 ---
 
+### 🔄 `guia-replicacao-estrutura-documentacao.md`
+
+**Guia completo para replicar a estrutura de documentação, regras e ADRs em outros projetos.**
+
+Este guia fornece instruções passo a passo para criar a mesma estrutura de documentação organizada, incluindo ADRs, documentações arquiteturais, guias de referência e regras do Cursor.
+
+**Conteúdo:**
+- Estrutura completa de diretórios
+- Passo a passo detalhado para criação
+- Templates de ADRs e documentações
+- Processo de manutenção
+- Adaptação para diferentes tipos de projetos
+- Checklist de implementação
+- Guia de onboarding
+
+**Quando usar:**
+- Ao iniciar um novo projeto e querer replicar esta estrutura
+- Para entender como a estrutura foi criada
+- Para adaptar a estrutura para outro tipo de projeto
+- Para onboarding de novos projetos
+
+**Status:** Guia de referência para replicação
+
+---
+
 ## 🔗 Fluxo de Uso Recomendado
 
 ### Criando um Novo Teste
@@ -214,7 +239,8 @@ docs/referencias/
 ├── checklist-validacao-continua.md       # Checklist de validação
 ├── processo-documentacao.md               # Processo de documentação
 ├── analise-page-objects-hierarquicos.md # Análise de hierarquia
-└── aprendizagens-e-licoes.md             # Aprendizados históricos
+├── aprendizagens-e-licoes.md             # Aprendizados históricos
+└── guia-replicacao-estrutura-documentacao.md # Guia de replicação
 ```
 
 ---
@@ -257,5 +283,5 @@ docs/referencias/
 
 ---
 
-**Última atualização:** 2024-12-19  
+**Última atualização:** 2024-12-20  
 **Status:** ✅ Documentos Ativos e Mantidos

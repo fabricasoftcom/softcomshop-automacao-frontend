@@ -249,11 +249,24 @@
 #### Suite: Cadastro de Fornecedor
 - Deve cadastrar um novo fornecedor com sucesso
 
-### Arquivo: `compras/cadastro-compra.spec.js`
+### Arquivo: `compras/cadastro-compra-xml.spec.js`
 
-#### ?? Suite: Cadastro de compra
+#### ?? Suite: Cadastro de compra - Importação XML
 - Importando NFe pelo XML: executa fluxo completo de importacao de NFe via XML, preenchendo CFOP (1102) e vinculo fiscal (usa XML aleatorio da pasta comprasxml)
 - Importando NFe pelo XML e excluindo: executa fluxo completo de importacao usando apenas XMLs sem faturas (pasta xmlSemFaturas) e em seguida exclui a NFe importada (regra de negocio: so e possivel excluir NFe sem tag <dup>)
+- Deve aplicar grupo para todos os itens na importacao: prepara tela de importacao, aplica grupo para todos os itens, preenche CFOP, confirma natureza, informa vinculo fiscal, importa e valida sucesso
+- Deve relacionar produto na importacao: prepara tela de importacao, relaciona produto no primeiro item, preenche CFOP, confirma natureza, informa vinculo fiscal, importa e valida sucesso
+- Deve adicionar grupo na importacao: prepara tela de importacao, adiciona grupo, preenche CFOP, confirma natureza, informa vinculo fiscal, importa e valida sucesso
+- Deve adicionar vinculo na importacao: prepara tela de importacao, adiciona vinculo, preenche CFOP, confirma natureza, importa e valida sucesso
+- Deve alterar CFOP do item na importacao: prepara tela de importacao, altera CFOP do primeiro item para 5102, preenche CFOP geral, confirma natureza, informa vinculo fiscal, importa e valida sucesso
+- Deve lancar categoria na importacao: prepara tela de importacao, lanca categoria no primeiro item, preenche CFOP, confirma natureza, informa vinculo fiscal, importa e valida sucesso
+
+### Arquivo: `compras/cadastro-compra-manual.spec.js`
+
+#### ?? Suite: Cadastro manual de compra
+- realiza fluxo completo alterando fornecedor, adicionando item e gerando pagamento: seleciona fornecedor, adiciona produto e gera pagamento padrao
+- adiciona tres itens, aplica desconto e gera pagamento: seleciona fornecedor, adiciona tres produtos distintos, aplica desconto de 5% e gera pagamento
+- cria compra sem pagamentos e exclui o registro: seleciona fornecedor, adiciona dois produtos, salva compra e exclui o registro
 
 ### ?? Arquivo: `compras/listagem-movimentacoes.spec.js`
 
@@ -265,6 +278,11 @@
 #### ?? Suite: Cadastro de Movimentações
 - Deve abrir o formulario de novo cadastro de movimentacao para operacao Entrada: navega ate o formulario, valida campos principais, define operacao ENTRADA, preenche observacao, salva, adiciona item com quantidade 2,00 e preco 10,00, validando tabela e totalizadores
 - Deve abrir o formulario de novo cadastro de movimentacao para operacao Saida: navega ate o formulario, valida campos principais, define operacao SAIDA, preenche observacao, salva, adiciona item com quantidade 1,00 e preco 5,00, validando tabela e totalizadores
+
+### ?? Arquivo: `compras/importacao-compra-nuvem-fiscal.spec.js`
+
+#### ?? Suite: Importação de Compra pela Nuvem Fiscal
+- Deve importar compra pela Nuvem Fiscal filtrando por Ciência da Operação: acessa Nuvem Fiscal, filtra por tipo de manifestação "Ciência da Operação", pesquisa, seleciona primeiro item para importar, preenche natureza (1102 - COMPRA PARA COMERCIALIZAÇÃO), aplica vínculo fiscal para todos os itens, importa e valida sucesso
 
 ## vendas
 
@@ -388,6 +406,24 @@
 
 #### ?? Suite: Carta de Correção NFe Complementar
 - Emite e gera carta de correção NFe complementar avulsa: realiza fluxo completo de emissao de NFe complementar avulsa (preenchimento de nota complementar, natureza CFOP 5102, destinatario, itens zerados, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e emite carta de correção
+
+## ??? produtos
+
+### ?? Arquivo: `produtos/gestor-promocoes.spec.js`
+
+#### ?? Suite: Gestor de Promoções
+#### ?? Suite: Listagem de Promoções
+- ? Deve exibir a listagem de promoções
+- ? Deve permitir ordenar por código (crescente)
+- ? Deve permitir ordenar por código (decrescente)
+- ? Deve permitir ordenar por descrição (crescente)
+- ? Deve permitir acessar novo cadastro
+
+#### ?? Suite: Cadastro de Promoção
+- ? Deve exibir formulário de novo cadastro
+- ? Deve cadastrar promoção com sucesso
+- ? Deve permitir voltar para listagem
+- ? Deve cadastrar promoção com todos os dias da semana
 
 ## ??? vinculo-fiscal
 

@@ -384,6 +384,164 @@ Este documento captura os principais aprendizados, insights e lições aprendida
 
 ---
 
+## 🎯 Lições Aprendidas: Problemas com Locators
+
+### Contexto
+Durante a implementação dos testes de cadastro de compra manual, encontramos múltiplos problemas com locators que causaram falhas e retrabalho significativo.
+
+### Problemas Identificados
+
+#### 1. Locators Genéricos Demais
+**Problema:**
+- Seletores como `input[id^="auto_produto"]` capturavam elementos ocultos ou incorretos
+- O campo `#produto_id` (oculto) era encontrado antes do campo visível `#auto_produto_id`
+- Seletores baseados em atributos parciais (`id^=`, `name*=`) não eram específicos o suficiente
+
+**Solução:**
+- Usar IDs específicos com contexto do modal: `.modal #auto_produto_id`
+- Priorizar IDs únicos sobre seletores genéricos
+- Validar locators manualmente no browser antes de usar
+
+**Lição:**
+> "Locators genéricos economizam tempo inicialmente, mas causam problemas de manutenção. Sempre prefira IDs específicos quando disponíveis."
+
+#### 2. Não Uso de IDs Quando Disponíveis
+**Problema:**
+- Locators baseados em classes ou atributos genéricos em vez de IDs únicos
+- Exemplo: `input[placeholder*="Preço"]` em vez de `#valor_unitario_comercial`
+- Seletores por texto (`:contains()`) são frágeis e dependem de tradução
+
+**Solução:**
+- Priorizar IDs únicos: `.modal #valor_unitario_comercial`
+- Usar contexto do modal quando necessário: `.modal #auto_produto_id`
+- Validar IDs no DOM antes de criar locators
+
+**Lição:**
+> "IDs são os seletores mais estáveis e rápidos. Sempre use IDs quando disponíveis, mesmo que requeira inspeção manual do DOM."
+
+#### 3. Locators Não Refletiam Estrutura Real do DOM
+**Problema:**
+- Locators assumiam estrutura que não existia no DOM
+- Exemplo: `.panel_content_adicione_os_itens_na_compra` não existia, mas a tabela tinha classe `tabela-itens`
+- Seletores baseados em estrutura esperada, não na estrutura real
+
+**Solução:**
+- Sempre inspecionar o DOM real antes de criar locators
+- Usar classes específicas encontradas no DOM: `table.tabela-itens`
+- Validar locators no browser antes de usar nos testes
+
+**Lição:**
+> "Nunca assuma a estrutura do DOM. Sempre inspecione o DOM real antes de criar locators."
+
+#### 4. Locators Não Consideravam Contexto do Modal
+**Problema:**
+- Locators sem contexto do modal capturavam elementos fora do modal
+- Exemplo: `#btn-salvar` capturava botão da página principal, não do modal
+- Falta de especificidade causava cliques em elementos errados
+
+**Solução:**
+- Sempre usar contexto do modal: `.modal #btn-adicionar`
+- Validar que o elemento está dentro do modal antes de interagir
+- Usar seletores compostos quando necessário
+
+**Lição:**
+> "Contexto é crucial para locators. Sempre especifique o contexto (modal, painel, seção) quando houver múltiplos elementos similares."
+
+#### 5. Nomes de Classes Incorretos
+**Problema:**
+- Locators usavam nomes de classes que não existiam
+- Exemplo: `.table-pagamentos` não existia, a classe real era `tabela-pagamento`
+- Diferenças sutis (singular vs plural) causavam falhas
+
+**Solução:**
+- Sempre copiar nomes de classes diretamente do DOM
+- Validar nomes de classes no browser antes de usar
+- Manter fallbacks para compatibilidade quando necessário
+
+**Lição:**
+> "Nomes de classes podem ser enganosos. Sempre copie diretamente do DOM, não tente adivinhar."
+
+### Correções Aplicadas
+
+1. **Campo de Produto:**
+   - ❌ Antes: `input[id^="auto_produto"]`
+   - ✅ Depois: `.modal #auto_produto_id`
+
+2. **Campo de Preço:**
+   - ❌ Antes: `input[placeholder*="Preço"]`
+   - ✅ Depois: `.modal #valor_unitario_comercial`
+
+3. **Campo de Quantidade:**
+   - ❌ Antes: `input[name*="quantidade"]`
+   - ✅ Depois: `.modal #quantidade_comercial`
+
+4. **Botão Adicionar:**
+   - ❌ Antes: `.modal #btn-salvar`
+   - ✅ Depois: `.modal #btn-adicionar`
+
+5. **Tabela de Itens:**
+   - ❌ Antes: `.panel_content_adicione_os_itens_na_compra table.table-form`
+   - ✅ Depois: `table.tabela-itens tbody tr[data-id]`
+
+6. **Tabela de Pagamentos:**
+   - ❌ Antes: `.table-pagamentos tbody tr`
+   - ✅ Depois: `table.tabela-pagamento tbody tr`
+
+### Boas Práticas Estabelecidas
+
+1. **Sempre inspecionar o DOM antes de criar locators:**
+   - Abrir o browser
+   - Navegar até a tela
+   - Inspecionar elementos manualmente
+   - Copiar IDs e classes diretamente do DOM
+
+2. **Priorizar IDs sobre outros seletores:**
+   - IDs são únicos e estáveis
+   - IDs são mais rápidos que classes
+   - IDs não dependem de estrutura HTML
+
+3. **Usar contexto quando necessário:**
+   - Modais: `.modal #elemento`
+   - Painéis: `.painel #elemento`
+   - Seções: `.secao #elemento`
+
+4. **Validar locators antes de usar:**
+   - Testar no browser
+   - Verificar se encontra o elemento correto
+   - Verificar se não encontra elementos incorretos
+
+5. **Manter fallbacks quando apropriado:**
+   - Para compatibilidade com versões antigas
+   - Para elementos que podem ter múltiplos seletores
+   - Sempre testar ambos os seletores
+
+### Impacto
+
+- ✅ **6 locators corrigidos** no teste de compra manual
+- ✅ **Processo de validação** estabelecido
+- ✅ **Boas práticas** documentadas
+- ✅ **Tempo de debug** reduzido significativamente
+
+### Recomendações Futuras
+
+1. **Criar checklist de validação de locators:**
+   - [ ] Locator usa ID quando disponível?
+   - [ ] Locator tem contexto apropriado?
+   - [ ] Locator foi validado no browser?
+   - [ ] Locator não captura elementos incorretos?
+
+2. **Documentar padrões de locators:**
+   - Quando usar IDs vs classes
+   - Quando usar contexto
+   - Quando usar fallbacks
+
+3. **Validar locators em code review:**
+   - Verificar se locators seguem boas práticas
+   - Validar se locators foram testados no browser
+   - Verificar se locators não são genéricos demais
+
+---
+
 ## 💭 Reflexões Finais
 
 ### O que funcionou bem:
@@ -392,6 +550,7 @@ Este documento captura os principais aprendizados, insights e lições aprendida
 2. **Validação incremental:** Problemas detectados e corrigidos cedo
 3. **Documentação durante execução:** Mais eficiente que documentação retrospectiva
 4. **Foco em padrões:** Estabelecer padrões claros facilitou adesão
+5. **Validação manual de locators:** Inspeção no browser preveniu problemas
 
 ### O que poderia ser melhorado:
 
@@ -399,6 +558,7 @@ Este documento captura os principais aprendizados, insights e lições aprendida
 2. **Comunicação:** Mais comunicação com equipe durante execução
 3. **Métricas:** Mais métricas quantificáveis poderiam ser coletadas
 4. **Feedback:** Mais feedback da equipe durante execução
+5. **Validação de locators:** Processo mais sistemático de validação de locators antes de usar
 
 ### Lição Principal:
 
@@ -416,6 +576,282 @@ Este documento captura os principais aprendizados, insights e lições aprendida
 
 ---
 
-**Última atualização:** 2024-12-19  
+---
+
+## 🎓 Lições Aprendidas: Simplificação de Código Complexo
+
+**Data:** 2025-01-XX  
+**Contexto:** Simplificação do módulo Nuvem Fiscal - Remoção de complexidade desnecessária e consolidação de código duplicado
+
+### Contexto
+Durante a análise e simplificação do teste de importação de compra pela Nuvem Fiscal, identificamos código excessivamente complexo, métodos duplicados e práticas que violavam os princípios de manutenibilidade. A simplificação resultou em redução de ~209 linhas de código e melhoria significativa na legibilidade.
+
+### Problemas Identificados
+
+#### 1. Métodos Duplicados com Lógica Similar
+**Problema:**
+- `verificarStatusNaoImportadaPrimeiraLinha()` e `encontrarPrimeiraLinhaNaoImportada()` faziam essencialmente a mesma coisa
+- Ambos verificavam a coluna 9, procuravam `btn-danger`, iteravam sobre linhas
+- Validação redundante sendo executada duas vezes
+
+**Impacto:**
+- Código difícil de manter (alterações precisam ser feitas em dois lugares)
+- Performance degradada (validação dupla desnecessária)
+- Confusão sobre qual método usar
+
+**Solução:**
+- Consolidamos em um único método `encontrarLinhaNaoImportada()`
+- Reduzimos de 140+ linhas para 24 linhas
+- Uso de constantes para números mágicos (`COLUNA_STATUS_IMPORTADA = 9`)
+
+**Lição:**
+> "Duplicação de código é uma dívida técnica que só aumenta com o tempo. Consolidar cedo economiza tempo e previne bugs."
+
+#### 2. Métodos Não Utilizados Acumulando
+**Problema:**
+- 11 métodos não utilizados permanecendo no código
+- `verificarNotaJaImportada()`, `preencherNatureza()`, `selecionarVinculoFiscal()`, etc.
+- Código morto dificultando navegação e compreensão
+
+**Impacto:**
+- Aumento desnecessário do tamanho do arquivo
+- Confusão sobre qual método usar
+- Manutenção de código que nunca será usado
+
+**Solução:**
+- Removidos todos os métodos não utilizados após verificação
+- Redução de ~107 linhas em `NuvemFiscalImportacaoPage.js`
+
+**Lição:**
+> "Código não utilizado é ruído. Remover código morto melhora legibilidade e reduz sobrecarga cognitiva."
+
+#### 3. Selectores Hardcoded no Código
+**Problema:**
+- Selectores longos e frágeis diretamente no código dos métodos
+- `'#div_auto_vinculo_fiscal_id_all > .typeahead-container > .typeahead-result > .typeahead-list > :nth-child(1) > a'`
+- Violação do ADR-0003 (Separate Locators)
+
+**Impacto:**
+- Difícil manutenção quando DOM muda
+- Código difícil de ler e entender
+- Violação de padrões estabelecidos
+
+**Solução:**
+- Movidos todos os selectores para `NuvemFiscalImportacaoLocators.js`
+- Adicionados 8 novos locators organizados e nomeados
+- Código mais limpo e manutenível
+
+**Lição:**
+> "Selectores hardcoded são bombas-relógio. Centralizar em locators facilita manutenção e segue padrões estabelecidos (ADR-0003)."
+
+#### 4. Uso Excessivo de cy.wait() Fixo
+**Problema:**
+- 9 `cy.wait()` fixos espalhados pelo código
+- `cy.wait(2000)`, `cy.wait(1500)`, `cy.wait(1000)`, etc.
+- Waits fixos são frágeis e não escalam bem
+
+**Impacto:**
+- Testes mais lentos do que necessário
+- Possíveis falhas intermitentes em ambientes mais rápidos
+- Não aproveitam o retry automático do Cypress
+
+**Solução:**
+- Removidos todos os waits fixos
+- Substituídos por validações condicionais (`.should('be.visible')`)
+- Aproveitamento do retry automático do Cypress
+
+**Lição:**
+> "cy.wait() fixo é um code smell. Validações condicionais são mais robustas e aproveitam o retry automático do Cypress."
+
+#### 5. Imports Não Utilizados
+**Problema:**
+- `import CompraPage` importado mas nunca usado
+- Linter pode não detectar em alguns casos
+- Confusão sobre dependências reais
+
+**Impacto:**
+- Aumento desnecessário do bundle
+- Confusão sobre dependências
+- Violação de princípios SOLID
+
+**Solução:**
+- Removido import não utilizado
+- Verificação manual de todas as dependências
+
+**Lição:**
+> "Imports não utilizados são como bagagem extra. Mantenha apenas o necessário para clareza e performance."
+
+### Aprendizados Principais
+
+#### 1. Análise Antes de Refatoração
+**Aprendizado:**
+- Identificar métodos não utilizados antes de refatorar
+- Mapear dependências e complexidade
+- Planejar consolidação de código duplicado
+
+**Processo:**
+1. Mapear todos os métodos e seus usos
+2. Identificar duplicação e sobreposição
+3. Consolidar antes de otimizar
+4. Remover código não utilizado por último
+
+**Lição:**
+> "Análise estruturada antes de refatoração evita retrabalho e garante que todas as oportunidades sejam identificadas."
+
+#### 2. Simplificação Incremental
+**Aprendizado:**
+- Simplificar em etapas facilita validação
+- Cada simplificação pode ser testada independentemente
+- Mudanças grandes são mais arriscadas
+
+**Processo:**
+1. Consolidar métodos duplicados
+2. Mover selectores para locators
+3. Remover código não utilizado
+4. Substituir waits fixos
+
+**Lição:**
+> "Simplificação incremental reduz risco e facilita validação. Grandes refatorações podem quebrar muitas coisas de uma vez."
+
+#### 3. Uso de Constantes para Números Mágicos
+**Aprendizado:**
+- Números hardcoded (como `9` para coluna) são difíceis de manter
+- Constantes nomeadas melhoram legibilidade
+- Facilita alterações futuras
+
+**Exemplo:**
+```javascript
+// ❌ Antes
+const $colunaStatus = $linha.find('td:nth-child(9)');
+
+// ✅ Depois
+const COLUNA_STATUS_IMPORTADA = 9;
+const $colunaStatus = $linha.find(`td:nth-child(${COLUNA_STATUS_IMPORTADA})`);
+```
+
+**Lição:**
+> "Números mágicos devem ser constantes nomeadas. Melhora legibilidade e facilita manutenção."
+
+#### 4. Centralização de Locators
+**Aprendizado:**
+- Locators centralizados facilitam manutenção
+- Nomes descritivos melhoram legibilidade
+- Seguir ADRs garante consistência
+
+**Benefícios:**
+- Mudanças no DOM requerem alteração em um único lugar
+- Reuso de locators entre métodos
+- Facilita testes e validação
+
+**Lição:**
+> "Centralizar locators não é apenas organização - é investimento em manutenibilidade futura."
+
+### Métricas de Simplificação
+
+| Métrica | Antes | Depois | Redução |
+|---------|-------|--------|---------|
+| Linhas de código (Listagem) | 263 | 161 | -102 linhas (-39%) |
+| Linhas de código (Importação) | 246 | 142 | -104 linhas (-42%) |
+| Métodos não utilizados | 11 | 0 | -11 métodos |
+| Métodos duplicados | 2 | 0 | -2 métodos |
+| cy.wait() fixos | 9 | 0 | -9 waits |
+| Selectores hardcoded | 6 | 0 | -6 selectores |
+| Complexidade ciclomática | Alta | Média | ~40% redução |
+
+### Benefícios Alcançados
+
+#### Técnicos
+- ✅ **Redução de 39-42% no código**: Menos código para manter
+- ✅ **Zero métodos não utilizados**: Código limpo e focado
+- ✅ **Zero código duplicado**: Fonte única de verdade
+- ✅ **Zero waits fixos**: Testes mais robustos
+- ✅ **100% de locators centralizados**: Conformidade com ADR-0003
+
+#### Manutenibilidade
+- ✅ **Código mais legível**: Métodos consolidados e simplificados
+- ✅ **Mais fácil de entender**: Menos código, menos complexidade
+- ✅ **Mais fácil de modificar**: Alterações em um único lugar
+- ✅ **Melhor conformidade**: Seguindo ADRs estabelecidos
+
+#### Performance
+- ✅ **Testes mais rápidos**: Menos waits desnecessários
+- ✅ **Melhor aproveitamento do retry**: Validações condicionais
+- ✅ **Menos código para carregar**: Redução de 209 linhas
+
+### Recomendações Futuras
+
+#### Para Novos Desenvolvimentos
+1. **Evitar duplicação desde o início:**
+   - Consolidar lógica similar imediatamente
+   - Reusar métodos existentes quando possível
+   - Criar métodos genéricos quando apropriado
+
+2. **Remover código não utilizado regularmente:**
+   - Revisar métodos não utilizados periodicamente
+   - Usar ferramentas de análise estática
+   - Validar durante code review
+
+3. **Centralizar locators desde o início:**
+   - Nunca hardcodar selectores no código
+   - Criar locators antes de usar
+   - Seguir ADR-0003 consistentemente
+
+4. **Evitar waits fixos:**
+   - Usar validações condicionais
+   - Aproveitar retry automático do Cypress
+   - Validar durante code review
+
+#### Para Manutenção Contínua
+1. **Análise periódica de complexidade:**
+   - Identificar métodos que cresceram muito
+   - Procurar por duplicação acumulada
+   - Simplificar quando complexidade aumentar
+
+2. **Revisão de código não utilizado:**
+   - Remover métodos não utilizados regularmente
+   - Validar imports não utilizados
+   - Limpar código morto
+
+3. **Validação de conformidade:**
+   - Verificar uso de locators centralizados
+   - Validar ausência de waits fixos
+   - Garantir conformidade com ADRs
+
+### Checklist de Simplificação
+
+Use este checklist ao simplificar código existente:
+
+- [ ] Identificar métodos não utilizados (grep, análise de uso)
+- [ ] Identificar métodos duplicados (buscar lógica similar)
+- [ ] Mapear selectores hardcoded no código
+- [ ] Identificar waits fixos
+- [ ] Consolidar métodos duplicados
+- [ ] Mover selectores para locators
+- [ ] Substituir waits fixos por validações condicionais
+- [ ] Remover código não utilizado
+- [ ] Remover imports não utilizados
+- [ ] Testar após cada simplificação
+- [ ] Validar conformidade com ADRs
+
+### Lições Principais
+
+1. **Simplificação é investimento:**
+   > "Código complexo custa caro em manutenção. Simplificar é investir em produtividade futura."
+
+2. **Duplicação deve ser eliminada:**
+   > "Código duplicado é dívida técnica. Consolide antes que se multiplique."
+
+3. **Padrões existem por razões:**
+   > "ADRs não são sugestões - são decisões arquiteturais. Seguí-las previne problemas futuros."
+
+4. **Código morto é ruído:**
+   > "Código não utilizado confunde mais do que ajuda. Remova sem medo."
+
+5. **Simplicidade é virtude:**
+   > "Código simples é mais fácil de entender, manter e modificar. Busque simplicidade."
+
+---
+
+**Última atualização:** 2025-01-XX  
 **Status:** ✅ Documento completo - Pronto para uso como referência futura
 

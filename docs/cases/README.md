@@ -3,7 +3,7 @@
 Este diretório contém a documentação arquitetural detalhada de todos os casos de teste do projeto.
 
 **Última atualização:** 2024-12-19  
-**Total de documentações:** 51
+**Total de documentações:** 54
 
 ---
 
@@ -71,17 +71,20 @@ Cada documentação contém:
 
 ---
 
-### 📦 Produtos e Compras (6 documentações)
+### 📦 Produtos e Compras (8 documentações)
 
 #### Produtos
 - `architecture-cadastro-produto.md` - Cadastro completo de produto (grade, combo, vínculo fiscal)
 - `architecture-listagem-produtos.md` - Listagem e filtragem de produtos
 - `architecture-atributos.md` - Cadastro e listagem de atributos
 - `architecture-grupos.md` - Cadastro e listagem de grupos
+- `architecture-gestor-promocoes.md` - Gestor de Promoções (listagem e cadastro)
 
 #### Compras
 - `architecture-cadastro-compra.md` - Cadastro de compra com importação de NFe
+- `architecture-cadastro-compra-manual.md` - Cadastro manual de compra (fornecedor, produtos, pagamentos)
 - `architecture-cadastro-fornecedor.md` - Cadastro de fornecedor com Faker
+- `architecture-nuvem-fiscal.md` - Importação de compra pela Nuvem Fiscal (filtro e importação)
 
 ---
 
@@ -152,7 +155,7 @@ Cada documentação contém:
 ### Por Prioridade
 - **Prioridade Alta:** 10 documentações (100% concluído)
 - **Prioridade Média:** 17 documentações (94% concluído)
-- **Total:** 51 documentações (91% do total de specs)
+- **Total:** 52 documentações (92% do total de specs)
 
 ### Por Semana de Criação
 - **Semana 1:** 6 documentações (Financeiro - Contas a Pagar/Receber)

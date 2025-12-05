@@ -322,6 +322,83 @@ cypress/e2e/
 
 ---
 
+## 🎯 Como criar locators corretos?
+
+### ❓ Dúvida: "Como criar locators que não vão quebrar?"
+
+### ✅ Decisão Rápida:
+
+**SEMPRE siga esta ordem:**
+
+1. ✅ **Inspecione o DOM no browser:**
+   - Abra o browser e navegue até a tela
+   - Use DevTools para inspecionar elementos
+   - Copie IDs e classes diretamente do DOM
+
+2. ✅ **Priorize IDs sobre outros seletores:**
+   - IDs são únicos e estáveis
+   - IDs são mais rápidos que classes
+   - Exemplo: `#valor_unitario_comercial` é melhor que `input[placeholder*="Preço"]`
+
+3. ✅ **Use contexto quando necessário:**
+   - Modais: `.modal #elemento`
+   - Painéis: `.painel #elemento`
+   - Seções: `.secao #elemento`
+
+4. ✅ **Valide locators antes de usar:**
+   - Teste no browser
+   - Verifique se encontra o elemento correto
+   - Verifique se não encontra elementos incorretos
+
+### ❌ NÃO Faça:
+
+- ❌ **Nunca** use seletores genéricos demais (`input[id^="auto"]`)
+- ❌ **Nunca** assuma estrutura do DOM sem inspecionar
+- ❌ **Nunca** use seletores por texto quando há IDs disponíveis
+- ❌ **Nunca** crie locators sem validar no browser
+
+### 📋 Checklist de Validação:
+
+- [ ] Locator usa ID quando disponível?
+- [ ] Locator tem contexto apropriado (modal, painel)?
+- [ ] Locator foi validado no browser?
+- [ ] Locator não captura elementos incorretos?
+- [ ] Locator não é genérico demais?
+
+### 📋 Exemplos:
+
+**❌ Ruim:**
+```javascript
+// Genérico demais, pode capturar elemento oculto
+campoProduto: 'input[id^="auto_produto"]'
+
+// Não usa ID disponível
+campoPreco: 'input[placeholder*="Preço"]'
+
+// Sem contexto do modal
+btnSalvar: '#btn-salvar'
+```
+
+**✅ Bom:**
+```javascript
+// ID específico com contexto do modal
+modalCampoProduto: '.modal #auto_produto_id'
+
+// ID único disponível
+modalCampoPreco: '.modal #valor_unitario_comercial'
+
+// Contexto do modal + ID específico
+modalBtnAdicionar: '.modal #btn-adicionar'
+```
+
+### 📚 Referência Completa:
+- [ADR-0003](../adr/0003-separate-locators-from-page-objects.md): Separate Locators from Page Objects
+- [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
+- `docs/referencias/aprendizagens-e-licoes.md` - Seção "Lições Aprendidas: Problemas com Locators"
+- `docs/cases/architecture-cadastro-compra-manual.md` - Seção "Lições Aprendidas: Problemas com Locators"
+
+---
+
 ## ✅ Como validar meu código?
 
 ### ❓ Dúvida: "Como valido se meu código está conforme os padrões?"
@@ -358,6 +435,30 @@ cypress/e2e/
 ---
 
 ## 🚨 Problemas Comuns e Soluções
+
+### ❓ Problema: "Locator não encontra o elemento correto"
+
+### ✅ Soluções Rápidas:
+
+1. **Verificar se locator usa ID quando disponível:**
+   - Inspecionar elemento no browser
+   - Verificar se há ID único disponível
+   - Atualizar locator para usar ID
+
+2. **Verificar contexto do locator:**
+   - Se elemento está em modal, usar `.modal #elemento`
+   - Se elemento está em painel, usar `.painel #elemento`
+   - Validar que contexto está correto
+
+3. **Verificar se locator não é genérico demais:**
+   - Locators genéricos podem capturar elementos incorretos
+   - Preferir IDs específicos sobre seletores genéricos
+   - Validar que locator encontra apenas o elemento desejado
+
+4. **Validar locator no browser:**
+   - Abrir console do browser
+   - Executar `document.querySelector('seu-locator')`
+   - Verificar se retorna o elemento correto
 
 ### ❓ Problema: "Teste está falhando com timeout"
 
@@ -459,6 +560,13 @@ cypress/e2e/
 8. Aplicar tags?
    └─ SIM → Sempre! (OBRIGATÓRIO)
       └─ Padrão: ['@modulo', '@tipo', '@regressivo']
+
+9. Criar locators?
+   └─ SIM → Sempre! (OBRIGATÓRIO)
+      ├─ Inspecionar DOM no browser
+      ├─ Priorizar IDs sobre outros seletores
+      ├─ Usar contexto quando necessário
+      └─ Validar locator antes de usar
 ```
 
 ---
@@ -482,6 +590,7 @@ cypress/e2e/
 | Qual comando de login usar? | ADR-0004 |
 | Preciso criar Page Object? | ADR-0002 |
 | Locators separados? | ADR-0003 |
+| Como criar locators corretos? | ADR-0015 |
 | Preciso documentar? | ADR-0006, ADR-0014 |
 | Quais tags usar? | ADR-0010 |
 | Usar Faker? | ADR-0009 |
@@ -502,6 +611,9 @@ cypress/e2e/
 - ✅ **Sempre** aplique tags
 - ✅ **Sempre** use `cy.session()` para login
 - ✅ **Sempre** valide com checklist antes de PR
+- ✅ **Sempre** inspecione DOM antes de criar locators
+- ✅ **Sempre** priorize IDs sobre outros seletores
+- ✅ **Sempre** use contexto quando necessário (`.modal #elemento`)
 
 ### ❌ Não Faça
 
@@ -512,6 +624,9 @@ cypress/e2e/
 - ❌ **Nunca** use `cy.loginArmazenandoSessao()` para funcionalidades fiscais
 - ❌ **Nunca** crie hierarquia sem necessidade
 - ❌ **Nunca** use waits fixos quando pode aguardar elementos
+- ❌ **Nunca** use seletores genéricos demais (`input[id^="auto"]`)
+- ❌ **Nunca** assuma estrutura do DOM sem inspecionar
+- ❌ **Nunca** crie locators sem validar no browser
 
 ---
 
@@ -547,6 +662,6 @@ cypress/e2e/
 
 ---
 
-**Última atualização:** 2024-12-19  
+**Última atualização:** 2024-12-20  
 **Status:** ✅ Ativo - Use como referência rápida
 

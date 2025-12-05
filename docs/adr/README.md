@@ -114,6 +114,20 @@ Each ADR follows this structure:
 
 [View ADR-0014](./0014-standardized-architectural-documentation-process.md)
 
+### ADR-0015: Prioritize IDs and Context in Locators
+**Status**: Accepted  
+**Date**: 2024-12-20  
+**Summary**: Decision to prioritize IDs over other selectors and use context when necessary when creating locators, based on lessons learned from real problems encountered during test implementation.
+
+[View ADR-0015](./0015-prioritize-ids-and-context-in-locators.md)
+
+### ADR-0016: Planning Before Implementation
+**Status**: Accepted  
+**Date**: 2025-01-XX  
+**Summary**: Decision to always use planning before implementation for complex features, clarifying requirements upfront and creating structured plans to ensure faster and more accurate implementations.
+
+[View ADR-0016](./0016-planning-before-implementation.md)
+
 ---
 
 ## How to Create a New ADR

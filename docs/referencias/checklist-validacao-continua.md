@@ -69,6 +69,41 @@ cy.get('#nome').type('João');
 
 ---
 
+### ADR-0015: Prioritize IDs and Context in Locators
+
+- [ ] **Locators seguem boas práticas?**
+  - [ ] Locators usam IDs quando disponíveis (não seletores genéricos)
+  - [ ] Locators têm contexto apropriado quando necessário (`.modal #elemento`)
+  - [ ] Locators não são genéricos demais (`input[id^="auto"]` é ruim)
+  - [ ] Locators foram validados no browser antes de usar
+
+- [ ] **Processo de criação foi seguido?**
+  - [ ] DOM foi inspecionado antes de criar locators
+  - [ ] IDs e classes foram copiados diretamente do DOM
+  - [ ] Locator foi testado no browser console
+  - [ ] Locator não captura elementos incorretos
+
+**Exemplo de conformidade:**
+```javascript
+// ✅ Correto - ID com contexto
+modalCampoProduto: '.modal #auto_produto_id'
+modalCampoPreco: '.modal #valor_unitario_comercial'
+modalBtnAdicionar: '.modal #btn-adicionar'
+
+// ❌ Incorreto - Genérico demais
+campoProduto: 'input[id^="auto_produto"]'  // Pode capturar elemento oculto
+
+// ❌ Incorreto - Não usa ID disponível
+campoPreco: 'input[placeholder*="Preço"]'  // Frágil, depende de texto
+
+// ❌ Incorreto - Sem contexto
+btnSalvar: '#btn-salvar'  // Pode capturar botão errado
+```
+
+**Referência:** [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md)
+
+---
+
 ### ADR-0004: Session Persistence
 
 - [ ] **Comando de login correto?**
@@ -315,6 +350,63 @@ cy.wait('@buscarClientes');
   - [ ] Faker usado para dados dinâmicos
   - [ ] Dados de teste são realistas
 
+### Simplificação e Manutenibilidade
+
+> **Context**: Based on lessons learned from code simplification. See [Lições Aprendidas - Simplificação](../referencias/aprendizagens-e-licoes.md#-lições-aprendidas-simplificação-de-código-complexo)
+
+- [ ] **Código duplicado eliminado?**
+  - [ ] Métodos similares foram consolidados
+  - [ ] Lógica repetida foi extraída para métodos reutilizáveis
+  - [ ] Não há validações redundantes sendo executadas múltiplas vezes
+  - [ ] Constantes usadas para números mágicos (ex: colunas de tabela)
+
+- [ ] **Código não utilizado removido?**
+  - [ ] Métodos não utilizados foram removidos
+  - [ ] Imports não utilizados foram removidos
+  - [ ] Código morto foi limpo
+  - [ ] Verificação feita antes de remover (grep/análise de uso)
+
+- [ ] **Selectores centralizados?**
+  - [ ] Nenhum seletor hardcoded no código dos Page Objects
+  - [ ] Todos os selectores estão em arquivos de Locators
+  - [ ] Locators seguem ADR-0003 e ADR-0015
+  - [ ] Selectores longos/complexos foram movidos para locators
+
+- [ ] **Waits fixos evitados?**
+  - [ ] Nenhum `cy.wait()` fixo no código (ex: `cy.wait(2000)`)
+  - [ ] Validações condicionais usadas quando necessário (`.should('be.visible')`)
+  - [ ] Retry automático do Cypress aproveitado
+  - [ ] Aguardos baseados em condições, não em tempo fixo
+
+- [ ] **Complexidade gerenciada?**
+  - [ ] Métodos não são excessivamente longos (>50 linhas merecem revisão)
+  - [ ] Constantes usadas para números mágicos
+  - [ ] Código é legível e fácil de entender
+  - [ ] Métodos têm responsabilidade única
+
+**Exemplo de conformidade:**
+```javascript
+// ✅ Correto - Método consolidado, constante para número mágico
+encontrarLinhaNaoImportada() {
+    const COLUNA_STATUS = 9;
+    return cy.get(Locators.linhasTabela).then(($linhas) => {
+        // Lógica única, sem duplicação
+    });
+}
+
+// ❌ Incorreto - Código duplicado
+verificarStatusNaoImportada() { /* ... lógica ... */ }
+encontrarPrimeiraLinhaNaoImportada() { /* mesma lógica ... */ }
+
+// ✅ Correto - Validação condicional
+cy.get(Locators.loading).should('not.exist');
+
+// ❌ Incorreto - Wait fixo
+cy.wait(2000);
+```
+
+**Referência:** [Lições Aprendidas - Simplificação](../referencias/aprendizagens-e-licoes.md#-lições-aprendidas-simplificação-de-código-complexo)
+
 ---
 
 ## 🔍 Checklist de Code Review
@@ -341,6 +433,9 @@ cy.wait('@buscarClientes');
 - ⚠️ **Dados hardcoded que deveriam ser dinâmicos** - Atenção
 - ⚠️ **Intercepts sem lógica condicional quando necessário** - Atenção
 - ⚠️ **Waits fixos altos desnecessários** - Atenção
+- ⚠️ **Código duplicado sem justificativa** - Atenção
+- ⚠️ **Métodos não utilizados no código** - Atenção
+- ⚠️ **Selectores hardcoded em Page Objects** - Atenção (viola ADR-0003)
 
 ---
 
@@ -367,6 +462,7 @@ cy.wait('@buscarClientes');
 - [ ] Estrutura do teste correta
 - [ ] Validações adequadas
 - [ ] Boas práticas seguidas
+- [ ] Simplificação e manutenibilidade validadas
 
 ### Observações
 [Adicionar observações específicas aqui]
@@ -389,6 +485,6 @@ cy.wait('@buscarClientes');
 
 ---
 
-**Última atualização:** 2024-12-19  
+**Última atualização:** 2025-01-XX  
 **Mantido por:** Equipe de Automação
 

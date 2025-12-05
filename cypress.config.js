@@ -1,11 +1,33 @@
 const { defineConfig } = require("cypress");
 const { allureCypress } = require("allure-cypress/reporter");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       allureCypress(on, config);
       require('@cypress/grep/src/plugin')(config)
+
+      // Task para listar arquivos XML da pasta comprasxml
+      on('task', {
+        listarXMLs({ usarApenasSemFaturas = false } = {}) {
+          const basePath = path.join(__dirname, 'cypress', 'fixtures', 'comprasxml');
+          const xmlPath = usarApenasSemFaturas
+            ? path.join(basePath, 'xmlSemFaturas')
+            : basePath;
+
+          try {
+            const arquivos = fs.readdirSync(xmlPath);
+            const xmls = arquivos.filter(arquivo => arquivo.endsWith('.xml'));
+            return xmls;
+          } catch (error) {
+            log('Erro ao listar XMLs:', error);
+            return [];
+          }
+        }
+      });
+
       return config;
     },
     env: {
@@ -24,11 +46,13 @@ module.exports = defineConfig({
       "./cypress/e2e/relatorio/relatorios.spec.js",
       "./cypress/e2e/relatorio/relatorio-caixa.spec.js",
       // compra
-      "./cypress/e2e/compras/cadastro-compra.spec.js",
+      "./cypress/e2e/compras/cadastro-compra-xml.spec.js",
+      "./cypress/e2e/compras/cadastro-compra-manual.spec.js",
       "./cypress/e2e/compras/cadastro-fornecedor.spec.js",
       // compras e estoque
       "./cypress/e2e/compras/listagem-movimentacoes.spec.js",
       "./cypress/e2e/compras/cadastro-movimentacoes.spec.js",
+      "./cypress/e2e/compras/importacao-compra-nuvem-fiscal.spec.js",
       // producao
       "./cypress/e2e/producao/producao-listagem.spec.js",
       "./cypress/e2e/producao/cadastro-producao.spec.js",
@@ -37,6 +61,8 @@ module.exports = defineConfig({
       "./cypress/e2e/produtos/atributos.spec.js",
       "./cypress/e2e/produtos/grupos.spec.js",
       "./cypress/e2e/produtos/listagem-produtos.spec.js",
+      "./cypress/e2e/produtos/gestor-promocoes-listagem.spec.js",
+      "./cypress/e2e/produtos/gestor-promocoes.spec.js",
       // vinculo fiscal
       "./cypress/e2e/vinculo-fiscal/novocadastrovinculofiscal.spec.js",
       "./cypress/e2e/vinculo-fiscal/vinculo-fiscal-listagem.spec.js",

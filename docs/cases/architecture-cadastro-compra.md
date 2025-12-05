@@ -1,4 +1,4 @@
-# Arquitetura do caso de teste: `compras/cadastro-compra.spec.js`
+# Arquitetura do caso de teste: `compras/cadastro-compra-xml.spec.js`
 
 ## Objetivo
 - Exercitar o fluxo completo de importação de NFe pelo XML no módulo de compras.
@@ -45,6 +45,42 @@
      - Confirma a exclusão no SweetAlert.
      - Aguarda o modal desaparecer e o carregamento finalizar.
 
+4. **Teste: Deve aplicar grupo para todos os itens na importação**
+   - `CompraPage.prepararTelaImportacao()`: prepara a tela de importação (anexa XML e clica em importar).
+   - `CompraPage.aplicarGrupoParaTodosItens()`: aplica grupo para todos os itens da importação.
+   - Preenche CFOP, confirma natureza, informa vínculo fiscal e importa.
+   - Valida que o grupo foi aplicado e verifica mensagem de sucesso.
+
+5. **Teste: Deve relacionar produto na importação**
+   - `CompraPage.prepararTelaImportacao()`: prepara a tela de importação.
+   - `CompraPage.relacionarProduto(0)`: relaciona produto no primeiro item da tabela.
+   - Preenche CFOP, confirma natureza, informa vínculo fiscal e importa.
+   - Valida que o produto foi relacionado e verifica mensagem de sucesso.
+
+6. **Teste: Deve adicionar grupo na importação**
+   - `CompraPage.prepararTelaImportacao()`: prepara a tela de importação.
+   - `CompraPage.adicionarGrupo()`: adiciona grupo na importação.
+   - Preenche CFOP, confirma natureza, informa vínculo fiscal e importa.
+   - Valida que o grupo foi adicionado e verifica mensagem de sucesso.
+
+7. **Teste: Deve adicionar vínculo na importação**
+   - `CompraPage.prepararTelaImportacao()`: prepara a tela de importação.
+   - `CompraPage.adicionarVinculo()`: adiciona vínculo na importação.
+   - Preenche CFOP, confirma natureza e importa (sem informar vínculo fiscal padrão).
+   - Valida que o vínculo foi adicionado e verifica mensagem de sucesso.
+
+8. **Teste: Deve alterar CFOP do item na importação**
+   - `CompraPage.prepararTelaImportacao()`: prepara a tela de importação.
+   - `CompraPage.alterarCFOPItem(0, '5102')`: altera CFOP do primeiro item para '5102'.
+   - Preenche CFOP geral, confirma natureza, informa vínculo fiscal e importa.
+   - Valida que o CFOP foi alterado e verifica mensagem de sucesso.
+
+9. **Teste: Deve lançar categoria na importação**
+   - `CompraPage.prepararTelaImportacao()`: prepara a tela de importação.
+   - `CompraPage.lancarCategoria(0)`: lança categoria no primeiro item da tabela.
+   - Preenche CFOP, confirma natureza, informa vínculo fiscal e importa.
+   - Valida que a categoria foi lançada e verifica mensagem de sucesso.
+
 ## Métodos do Page Object
 
 ### Navegação
@@ -77,6 +113,9 @@
 - `confirmarExclusao()`: valida o SweetAlert de confirmação e confirma a exclusão.
 
 ### Métodos compostos
+- `prepararTelaImportacao(nomeArquivoXML = null, usarApenasSemFaturas = false)`: prepara a tela de importação executando o fluxo até chegar na tela de configuração (anexar XML, clicar importar, aguardar carregamento).
+  - Evita duplicação de código nos testes que precisam executar ações na tela de importação
+  - Aguarda o formulário `#form-importacao` estar visível antes de retornar
 - `importarNFePorXML(nomeArquivoXML = null, usarApenasSemFaturas = false)`: executa todo o fluxo de importação em sequência.
   - Se `nomeArquivoXML` não for especificado, usa seleção aleatória de XML
   - Se `usarApenasSemFaturas = true`, usa apenas XMLs da pasta `xmlSemFaturas` (sem tag `<dup>`)
@@ -84,9 +123,37 @@
 - `excluirNFeImportada()`: executa todo o fluxo de exclusão em sequência.
   - Seleciona automaticamente a primeira linha da tabela (compra mais recente) e exclui
 
+### Ações na tela de importação
+- `aplicarGrupoParaTodosItens(grupoId = null)`: aplica grupo para todos os itens da importação.
+  - Procura pelo botão de aplicar grupo e clica
+  - Se `grupoId` for especificado, pode ser usado para selecionar grupo específico (implementação futura)
+- `relacionarProduto(itemIndex = 0, termoProduto = null)`: relaciona produto em um item específico da tabela.
+  - `itemIndex`: índice do item na tabela (0 = primeiro item)
+  - `termoProduto`: termo para buscar produto (se não especificado, seleciona primeiro disponível)
+- `adicionarGrupo(grupoId = null)`: adiciona grupo na importação.
+  - Abre autocomplete de grupo e seleciona primeiro disponível ou grupo específico
+  - Se houver botão de salvar grupo, clica automaticamente
+- `adicionarVinculo(vinculoId = null)`: adiciona vínculo na importação.
+  - Se houver campo específico para adicionar novo vínculo, usa ele
+  - Caso contrário, usa o método existente `informarVinculoFiscal()`
+- `alterarCFOPItem(itemIndex = 0, novoCFOP = '1102')`: altera CFOP de um item específico.
+  - `itemIndex`: índice do item na tabela
+  - `novoCFOP`: novo CFOP a ser aplicado
+  - Preenche campo CFOP do item e seleciona do autocomplete
+- `lancarCategoria(itemIndex = 0, categoriaId = null)`: lança categoria para um item específico.
+  - `itemIndex`: índice do item na tabela
+  - `categoriaId`: ID da categoria (se não especificado, seleciona primeira disponível)
+  - Se houver botão de lançar categoria, clica automaticamente
+
 ### Validações
 - `validarMensagemSucesso()`: valida mensagem de sucesso "Pronto, tudo organizado.".
 - `validarMensagemErro()`: valida mensagem de erro de campo obrigatório.
+- `validarGrupoAplicado()`: valida que o grupo foi aplicado aos itens (verifica tabela de itens).
+- `validarProdutoRelacionado(itemIndex = 0)`: valida que o produto foi relacionado no item específico.
+- `validarGrupoAdicionado()`: valida que o grupo foi adicionado (verifica formulário de importação).
+- `validarVinculoAdicionado()`: valida que o vínculo foi adicionado (verifica formulário de importação).
+- `validarCFOPAlterado(itemIndex = 0, cfopEsperado = '1102')`: valida que o CFOP foi alterado no item específico.
+- `validarCategoriaLancada(itemIndex = 0)`: valida que a categoria foi lançada no item específico.
 
 ## Padrões e boas práticas
 - **Page Object completo**: métodos com responsabilidade clara e retorno de `this` para encadeamento.
@@ -130,9 +197,10 @@
 
 ## Sugestões futuras
 1. Parametrizar CFOP e vínculo fiscal via factory para diversificar dados de teste.
-2. Adicionar validação de mensagem de sucesso após importação.
-3. Validar se a NFe importada aparece corretamente na listagem antes de excluir.
-4. Adicionar cenários negativos (XML inválido, CFOP inexistente, vínculo fiscal obrigatório não preenchido).
-5. Testar importação de múltiplas NFe em sequência.
-6. Validar campos preenchidos automaticamente após importação do XML.
+2. Validar se a NFe importada aparece corretamente na listagem antes de excluir.
+3. Adicionar cenários negativos (XML inválido, CFOP inexistente, vínculo fiscal obrigatório não preenchido).
+4. Testar importação de múltiplas NFe em sequência.
+5. Validar campos preenchidos automaticamente após importação do XML.
+6. Expandir validações específicas para cada ação (verificar se grupo foi realmente aplicado, se produto foi relacionado, etc.).
+7. Adicionar testes combinando múltiplas ações na mesma importação.
 

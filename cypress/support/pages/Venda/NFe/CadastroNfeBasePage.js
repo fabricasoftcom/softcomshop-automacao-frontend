@@ -639,7 +639,19 @@ class CadastroNfeBasePage {
 
   // Métodos de cancelamento de NFe
   abrirMenuAcoes() {
-    cy.get(CadastroNfeLocators.botaoMaisAcoes, { timeout: 10000 })
+    // Aguarda o carregamento da página terminar primeiro
+    cy.get('body').then(($body) => {
+      if ($body.find('#loading').length > 0) {
+        cy.get('#loading', { timeout: 20000 }).should('not.exist');
+      }
+    });
+    // Aguarda o botão existir no DOM
+    cy.get(CadastroNfeLocators.botaoMaisAcoes, { timeout: 20000 })
+      .should('exist');
+    // Aguarda um pouco para garantir que a página terminou de carregar completamente
+    cy.wait(1000);
+    // Aguarda o botão ficar visível (pode estar oculto por CSS inicialmente)
+    cy.get(CadastroNfeLocators.botaoMaisAcoes, { timeout: 15000 })
       .should('be.visible')
       .click({ force: true });
   }

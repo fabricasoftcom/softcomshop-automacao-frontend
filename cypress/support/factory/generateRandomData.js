@@ -105,5 +105,100 @@ const generateRandomContact = () => {
   };
 };
 
-module.exports = { generateRandomCustomer, generateRandomProduct, generateRandomDadosOrcamento, generateRandomDadosOrcamentoProduto, gerarFornecedorAleatorio, generateRandomContact }
+/**
+ * Calcula o dígito verificador (cDV) da chave de acesso NFe usando módulo 11
+ * @param {string} chaveSemDV - Os 43 primeiros dígitos da chave
+ * @returns {string} - Dígito verificador (1 dígito)
+ */
+const calcularDigitoVerificador = (chaveSemDV) => {
+  const pesos = [2, 3, 4, 5, 6, 7, 8, 9];
+  let soma = 0;
+  let pesoIndex = 0;
+
+  // Percorre a chave da direita para a esquerda
+  for (let i = chaveSemDV.length - 1; i >= 0; i--) {
+    soma += parseInt(chaveSemDV[i]) * pesos[pesoIndex];
+    pesoIndex = (pesoIndex + 1) % pesos.length;
+  }
+
+  const resto = soma % 11;
+  const digito = resto < 2 ? 0 : 11 - resto;
+
+  return digito.toString();
+};
+
+/**
+ * Gera uma chave de acesso NFe válida e única (44 dígitos)
+ *
+ * Estrutura da chave:
+ * - cUF (2 dígitos): Código da UF do emitente
+ * - AAMM (4 dígitos): Ano e mês de emissão (ex: 2512 = dezembro 2025)
+ * - CNPJ (14 dígitos): CNPJ do emitente
+ * - mod (2 dígitos): Modelo do documento (55 = NFe)
+ * - serie (3 dígitos): Série do documento
+ * - nNF (9 dígitos): Número do documento fiscal
+ * - tpEmis (1 dígito): Tipo de emissão (1 = normal)
+ * - cNF (8 dígitos): Código numérico aleatório
+ * - cDV (1 dígito): Dígito verificador (calculado)
+ *
+ * @param {Object} options - Opções para gerar a chave
+ * @param {string} options.cUF - Código da UF (padrão: '35' para SP)
+ * @param {string} options.cnpj - CNPJ do emitente (padrão: gera aleatório)
+ * @param {string} options.serie - Série do documento (padrão: '001')
+ * @param {number} options.numeroNota - Número da nota (padrão: aleatório)
+ * @returns {string} - Chave de acesso completa (44 dígitos)
+ */
+const gerarChaveAcessoNFe = (options = {}) => {
+  const {
+    cUF = '35', // SP
+    cnpj = null,
+    serie = '001',
+    numeroNota = null
+  } = options;
+
+  // Gera ano e mês atual (AAMM)
+  const agora = new Date();
+  const ano = agora.getFullYear().toString().slice(-2);
+  const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
+  const aamm = ano + mes;
+
+  // Gera ou usa CNPJ fornecido
+  const cnpjEmitente = cnpj || gerarCNPJValido().replace(/[^\d]/g, '');
+
+  // Modelo NFe
+  const mod = '55';
+
+  // Série formatada com 3 dígitos
+  const serieFormatada = serie.padStart(3, '0');
+
+  // Número da nota (9 dígitos) - gera aleatório se não fornecido
+  const nNF = numeroNota
+    ? numeroNota.toString().padStart(9, '0')
+    : faker.number.int({ min: 1, max: 999999999 }).toString().padStart(9, '0');
+
+  // Tipo de emissão (1 = normal)
+  const tpEmis = '1';
+
+  // Código numérico aleatório (8 dígitos)
+  const cNF = faker.string.numeric(8);
+
+  // Concatena os 43 primeiros dígitos
+  const chaveSemDV = `${cUF}${aamm}${cnpjEmitente}${mod}${serieFormatada}${nNF}${tpEmis}${cNF}`;
+
+  // Calcula o dígito verificador
+  const cDV = calcularDigitoVerificador(chaveSemDV);
+
+  // Retorna a chave completa (44 dígitos)
+  return chaveSemDV + cDV;
+};
+
+module.exports = {
+  generateRandomCustomer,
+  generateRandomProduct,
+  generateRandomDadosOrcamento,
+  generateRandomDadosOrcamentoProduto,
+  gerarFornecedorAleatorio,
+  generateRandomContact,
+  gerarChaveAcessoNFe
+}
 
