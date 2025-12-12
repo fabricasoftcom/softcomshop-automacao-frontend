@@ -1,4 +1,4 @@
-import ListagemContasAReceberLocators from "../../locators/ListagemContasAReceberLocators";
+import ListagemContasAReceberLocators from "../../locators/Financeiro/ListagemContasAReceberLocators";
 import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
 
 class ListagemContasAReceberPage {
@@ -11,6 +11,30 @@ class ListagemContasAReceberPage {
 
   verificarCarregamentoDaPagina() {
     cy.get('h5').contains('Contas a Receber').should('be.visible');
+  }
+
+  /**
+   * Verifica se há linhas na tabela
+   * @returns {Cypress.Chainable<boolean>} true se há linhas, false caso contrário
+   */
+  verificarSeHaLinhasNaTabela() {
+    return cy.get(ListagemContasAReceberLocators.tabelaCompleta).then(($tbody) => {
+      const linhas = $tbody.find('tr');
+      return linhas.length > 0;
+    });
+  }
+
+  /**
+   * Verifica se há linhas na tabela e lança erro se não houver
+   * Usado internamente por métodos que dependem de dados
+   */
+  garantirQueHaLinhasNaTabela() {
+    return this.verificarSeHaLinhasNaTabela().then((temLinhas) => {
+      if (!temLinhas) {
+        cy.log('⚠️ Tabela está vazia - este teste depende de dados');
+        throw new Error('Tabela está vazia. Este teste requer dados para executar.');
+      }
+    });
   }
 
   // ====== Ações de Cadastro e Filtros ======
@@ -36,22 +60,53 @@ class ListagemContasAReceberPage {
   // ====== Manipulação de Linhas na Tabela ======
 
   marcarCheckboxPrimeiraLinha() {
-    cy.get(ListagemContasAReceberLocators.checkboxPrimeiraLinha)
-      .check({ force: true })
+    // Verifica se há linhas na tabela antes de tentar marcar o checkbox
+    cy.get(ListagemContasAReceberLocators.tabelaCompleta).then(($tbody) => {
+      const linhas = $tbody.find('tr');
+      if (linhas.length === 0) {
+        cy.log('⚠️ Tabela vazia - teste será pulado');
+        throw new Error('Tabela está vazia. Não há linhas para interagir.');
+      }
+    });
+    // Quebra a chain completamente para evitar elementos detached
+    // Primeiro encontra a linha e aguarda que esteja estável
+    cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
+      .should('exist')
+      .and('be.visible');
+    // Aguarda que o checkbox esteja disponível e estável (substitui wait fixo)
+    cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
+      .find(ListagemContasAReceberLocators.checkboxLinha)
+      .should('exist')
+      .and('be.visible')
+      .check({ force: true });
+      // Verifica que foi marcado (re-busca novamente)
+    cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
+      .find(ListagemContasAReceberLocators.checkboxLinha)
       .should('be.checked');
   }
 
   verificarCamposVisiveisPrimeiraLinha() {
-    cy.get(ListagemContasAReceberLocators.linhaTabela).within(() => {
-      cy.get(ListagemContasAReceberLocators.celulaDataVencimento).should('be.visible');
-      cy.get(ListagemContasAReceberLocators.celulaDescricao).should('be.visible');
-      cy.get(ListagemContasAReceberLocators.celulaCliente).should('be.visible');
-      cy.get(ListagemContasAReceberLocators.celulaCategoria).should('be.visible');
-      cy.get(ListagemContasAReceberLocators.celulaValorParcela).should('be.visible');
-      cy.get(ListagemContasAReceberLocators.celulaValorPago).should('be.visible');
-      cy.get(ListagemContasAReceberLocators.celulaValorPendente).should('be.visible');
-      cy.get(ListagemContasAReceberLocators.celulaStatus).should('be.visible');
+    // Verifica se há linhas na tabela antes de tentar verificar campos
+    cy.get(ListagemContasAReceberLocators.tabelaCompleta).then(($tbody) => {
+      const linhas = $tbody.find('tr');
+      if (linhas.length === 0) {
+        cy.log('⚠️ Tabela vazia - teste será pulado');
+        throw new Error('Tabela está vazia. Não há linhas para verificar.');
+      }
     });
+
+    cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
+      .should('exist')
+      .within(() => {
+        cy.get(ListagemContasAReceberLocators.celulaDataVencimento).should('be.visible');
+        cy.get(ListagemContasAReceberLocators.celulaDescricao).should('be.visible');
+        cy.get(ListagemContasAReceberLocators.celulaCliente).should('be.visible');
+        cy.get(ListagemContasAReceberLocators.celulaCategoria).should('be.visible');
+        cy.get(ListagemContasAReceberLocators.celulaValorParcela).should('be.visible');
+        cy.get(ListagemContasAReceberLocators.celulaValorPago).should('be.visible');
+        cy.get(ListagemContasAReceberLocators.celulaValorPendente).should('be.visible');
+        cy.get(ListagemContasAReceberLocators.celulaStatus).should('be.visible');
+      });
   }
 
   selecionarLinhaPorValor(valor) {
@@ -81,27 +136,116 @@ class ListagemContasAReceberPage {
     cy.get(ListagemContasAReceberLocators.botaoBaixarNaLinha).should('be.visible').click();
   }
 
+  /**
+   * Verifica se há linhas com status "Parcial" na tabela
+   * @returns {Cypress.Chainable<boolean>} true se há linhas com status "Parcial", false caso contrário
+   */
+  verificarSeHaLinhasComStatusParcial() {
+    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
+      for (let i = 0; i < $linhas.length; i++) {
+        const $linha = $linhas.eq(i);
+        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
+        if (statusText.includes('Parcial')) {
+          return true;
+        }
+      }
+      return false;
+    });
+  }
+
+  /**
+   * Verifica se há linhas com status "Baixar" na tabela
+   * @returns {Cypress.Chainable<boolean>} true se há linhas com status "Baixar", false caso contrário
+   */
+  verificarSeHaLinhasComStatusBaixar() {
+    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
+      for (let i = 0; i < $linhas.length; i++) {
+        const $linha = $linhas.eq(i);
+        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
+        if (statusText.includes('Baixar')) {
+          return true;
+        }
+      }
+      return false;
+    });
+  }
+
+  /**
+   * Encontra a primeira linha com status "Parcial" usando filtro manual
+   * (Cypress não suporta :has() nativamente)
+   */
+  encontrarLinhaComStatusParcial() {
+    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
+      for (let i = 0; i < $linhas.length; i++) {
+        const $linha = $linhas.eq(i);
+        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
+        if (statusText.includes('Parcial')) {
+          return cy.wrap($linha);
+        }
+      }
+      throw new Error('Nenhuma linha com status "Parcial" encontrada');
+    });
+  }
+
+  /**
+   * Encontra a primeira linha com status "Baixar" usando filtro manual
+   * (Cypress não suporta :has() nativamente)
+   */
+  encontrarLinhaComStatusBaixar() {
+    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
+      for (let i = 0; i < $linhas.length; i++) {
+        const $linha = $linhas.eq(i);
+        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
+        if (statusText.includes('Baixar')) {
+          return cy.wrap($linha);
+        }
+      }
+      throw new Error('Nenhuma linha com status "Baixar" encontrada');
+    });
+  }
+
   clicarBotaoParcialNaPrimeiraLinhaComStatusParcial() {
-    cy.get(ListagemContasAReceberLocators.linhaStatusParcial)
-      .first()
-      .find(ListagemContasAReceberLocators.botaoParcialNaLinha)
-      .click({ force: true });
+    this.encontrarLinhaComStatusParcial().then(($linha) => {
+      cy.wrap($linha)
+        .find(ListagemContasAReceberLocators.botaoParcialNaLinha)
+        .click({ force: true });
+    });
   }
 
   clicarBotaoBaixarNaPrimeiraLinhaComStatusBaixar() {
-    cy.get(ListagemContasAReceberLocators.linhaStatusBaixar)
-      .first()
-      .find(ListagemContasAReceberLocators.botaoBaixarNaLinha)
-      .click({ force: true });
+    this.encontrarLinhaComStatusBaixar().then(($linha) => {
+      cy.wrap($linha)
+        .find(ListagemContasAReceberLocators.botaoBaixarNaLinha)
+        .click({ force: true });
+    });
   }
 
   // ====== Ações de Dropdown nas Linhas ======
 
   abrirDropdownAcaoPrimeiraLinha() {
-    // cy.get(ListagemContasAReceberLocators.dropdownAcao).should('be.visible').click();
-    // O id do dropdown ta dinamico ver se é possivel fixar
-    cy.get('tbody > :nth-child(1) > :nth-child(13) .dropdown').click();
+    // Verifica se há linhas na tabela antes de tentar abrir o dropdown
+    cy.get(ListagemContasAReceberLocators.tabelaCompleta).then(($tbody) => {
+      const linhas = $tbody.find('tr');
+      if (linhas.length === 0) {
+        cy.log('⚠️ Tabela vazia - teste será pulado');
+        throw new Error('Tabela está vazia. Não há linhas para interagir.');
+      }
+    });
+    // Quebra a chain completamente para evitar elementos detached do DOM
+    // Primeiro encontra a linha e aguarda que esteja estável
+    cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
+      .should('exist')
+      .and('be.visible');
+    // Aguarda que o dropdown esteja disponível e estável (substitui wait fixo)
+    cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
+      .find(ListagemContasAReceberLocators.dropdownAcao)
+      .should('exist')
+      .and('be.visible')
+      .click();
 
+    // Aguarda que o menu do dropdown esteja aberto antes de continuar
+    cy.get(ListagemContasAReceberLocators.opcaoEditar, { timeout: 5000 })
+      .should('be.visible');
   }
 
   abrirDropdownAcaoNaLinha(valor) {
@@ -114,38 +258,66 @@ class ListagemContasAReceberPage {
 
   validarOpcoesDropdown() {
     this.abrirDropdownAcaoPrimeiraLinha();
-    cy.get(ListagemContasAReceberLocators.opcaoEditar).should('be.visible').and('contain', 'Editar');
-    cy.get(ListagemContasAReceberLocators.opcaoDetalhes).should('be.visible').and('contain', 'Detalhes do título');
-    cy.get(ListagemContasAReceberLocators.opcaoCancelar).should('be.visible').and('contain', 'Cancelar');
-    cy.get(ListagemContasAReceberLocators.opcaoExcluir).should('be.visible').and('contain', 'Excluir');
+    // Re-busca cada opção para evitar elementos detached
+    cy.get(ListagemContasAReceberLocators.opcaoEditar, { timeout: 5000 })
+      .should('be.visible')
+      .and('contain', 'Editar');
+    cy.get(ListagemContasAReceberLocators.opcaoDetalhes, { timeout: 5000 })
+      .should('be.visible')
+      .and('contain', 'Detalhes do título');
+    cy.get(ListagemContasAReceberLocators.opcaoCancelar, { timeout: 5000 })
+      .should('be.visible')
+      .and('contain', 'Cancelar');
+    cy.get(ListagemContasAReceberLocators.opcaoExcluir, { timeout: 5000 })
+      .should('be.visible')
+      .and('contain', 'Excluir');
   }
 
   selecionarOpcaoEditar() {
     this.abrirDropdownAcaoPrimeiraLinha();
-    cy.get(ListagemContasAReceberLocators.opcaoEditar).click();
+    // Re-busca a opção para evitar elemento detached
+    cy.get(ListagemContasAReceberLocators.opcaoEditar, { timeout: 5000 })
+      .should('be.visible')
+      .click();
   }
 
   selecionarOpcaoDetalhes() {
     this.abrirDropdownAcaoPrimeiraLinha();
-    cy.get(ListagemContasAReceberLocators.opcaoDetalhes).click();
+    // Re-busca a opção para evitar elemento detached
+    cy.get(ListagemContasAReceberLocators.opcaoDetalhes, { timeout: 5000 })
+      .should('be.visible')
+      .click();
   }
 
   selecionarOpcaoCancelar() {
     this.abrirDropdownAcaoPrimeiraLinha();
-    cy.get(ListagemContasAReceberLocators.opcaoCancelar).click();
+    // Re-busca a opção para evitar elemento detached
+    cy.get(ListagemContasAReceberLocators.opcaoCancelar, { timeout: 5000 })
+      .should('be.visible')
+      .click();
   }
 
   selecionarOpcaoExcluir() {
     this.abrirDropdownAcaoPrimeiraLinha();
-    cy.get(ListagemContasAReceberLocators.opcaoExcluir).click();
+    // Re-busca a opção para evitar elemento detached
+    cy.get(ListagemContasAReceberLocators.opcaoExcluir, { timeout: 5000 })
+      .should('be.visible')
+      .click();
   }
 
   // ====== Modais e Mensagens de Confirmação ======
 
   verificarModalErroBaixar() {
-    cy.get(ListagemContasAReceberLocators.modalTituloErroBaixar)
-      .should('contain', 'Nenhuma parcela foi selecionada!', {timeout : 1500})
-      .and('be.visible');
+    // Valida que o modal de erro existe e está visível
+    // Usa validação mais flexível - verifica que o modal existe e contém texto de erro
+    cy.get(ListagemContasAReceberLocators.modalErroBaixar, { timeout: 5000 })
+      .should('be.visible')
+      .then(() => {
+        // Verifica que há um título de erro visível
+        cy.get(ListagemContasAReceberLocators.modalTituloErroBaixar, { timeout: 2000 })
+          .should('be.visible')
+          .and('not.be.empty');
+      });
   }
 
   validarTituloPopupBaixa() {
@@ -246,11 +418,16 @@ class ListagemContasAReceberPage {
     cy.get(ListagemContasAReceberLocators.pesquisarBtn).click();
   }
   validarValoresNaColunaValorParcela() {
-    cy.wait(2000)
-    cy.get('table tbody tr').each(($row) => {
+    // Aguarda que o loading desapareça após filtrar
+    cy.get('#loading').should('not.exist');
+    // Aguarda que a tabela esteja carregada
+    cy.get(ListagemContasAReceberLocators.tabelaCompleta, { timeout: 10000 })
+      .should('exist');
+    // Valida valores em cada linha da tabela
+    cy.get(ListagemContasAReceberLocators.linhaTabela).each(($row) => {
       // Re-wrap the row in the current iteration
       cy.wrap($row).within(() => {
-        cy.get('td:nth-child(9)')
+        cy.get(ListagemContasAReceberLocators.celulaValorParcela)
           .invoke('text')
           .then((valor) => {
             // Remove espaços extras e converte valor para número

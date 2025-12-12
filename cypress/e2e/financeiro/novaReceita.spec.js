@@ -35,28 +35,10 @@ describe('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@
         NovaReceitaPage.selecionarTipoDocumento('Padrão');
         NovaReceitaPage.clicarSalvar();
         cy.get('#loading').should('not.exist');
-        // cy.contains('Sucesso').should('be.visible');
+        // Validação de sucesso reativada com padrão do módulo financeiro
+        cy.get('.Toastify__toast--success', { timeout: 15000 })
+            .should('be.visible')
+            .and('contain.text', 'Sucesso');
 
     }
-    // it('Valida erro ao tentar criar receita com tipo "Duplicata" para cliente "Consumidor"', { tags: ["@teste"] }, () => {
-    //     cy.loginRestoreSession()
-    //     cy.visit('/financeiro/contas-a-receber')
-    //     cy.get('h5').contains('Receita').should('be.visible');
-    //     ListagemContasAReceberPage.abrirNovoCadastro();
-    //     NovaReceitaPage.preencherDescricao('Teste - Receita Duplicata para Consumidor');
-    //     NovaReceitaPage.selecionarCategoria('Receita');
-    //     NovaReceitaPage.selecionarConta('CAIXA');
-    //     NovaReceitaPage.selecionarFormaPagamento('Duplicata');
-    //     NovaReceitaPage.selecionarDataCompetencia('04/11/2024');
-    //     NovaReceitaPage.selecionarDataVencimento('04/11/2024');
-    //     NovaReceitaPage.preencherValor('100,00');
-    //     cy.get('#autocomplete_client')
-    //         .type('Consumidor', { force: true });
-    //     cy.xpath("//li[@class='client_result '][contains(.,'CONSUMIDOR')]").click();
-    //     NovaReceitaPage.selecionarTipoDocumento('Padrão');
-    //     NovaReceitaPage.clicarSalvar();
-    //     cy.xpath("//div[contains(@class,'toast--error')]", { timeout: 10000 })
-    //         .should('be.visible')
-    //         .and('contain', 'Forma de pagamento DUPLICATA não permitida para o cliente CONSUMIDOR na categoria RECEITA.');
-    // });
 });

@@ -1,0 +1,31 @@
+// RelatoriosLocators.js
+const RelatoriosLocators = {
+    menuRelatoriosLink: 'a[href*="/relatorio"]',
+    vendasPeriodo: 'a[href*="/relatorio/periodo"]',
+    vendasMaisVendidos: 'a[href*="/relatorio/mais-vendidos"]',
+    vendasFormaPagamento: 'a[href*="/relatorio/forma-pagamento"]',
+    vendasGerenteVendas: 'a[href*="/relatorio/gerente-vendas"]',
+    vendasEvolucao: 'a[href*="/relatorio/evolucao"]',
+    vendasComissao: 'a[href*="/relatorio/comissao"]',
+    notasFiscaisSaidaAnalitico: 'a[href*="/relatorio/relatorio-fiscal"]',
+    notasFiscaisSaidaSintetico: 'a[href*="/relatorio/relatorio-fiscal-sintetico"]',
+    notasFiscaisEntradaSintetico: 'a[href*="/relatorio/relatorio-fiscal-entrada-sintetico"]',
+    notasFiscaisEntradaAnalitico: 'a[href*="/relatorio/relatorio-fiscal-entrada"]',
+    notasFiscaisPisCofins: 'a[href*="/relatorio/relatorio-fiscal-pis-cofins"]',
+    notasFiscaisNFSe: 'a[href*="/relatorio/relatorio-nfse"]',
+    financeiroCaixa: 'a[href*="/relatorio/vendas-caixa"]',
+    financeiroContasReceber: 'a[href*="/relatorio/contas-a-receber"]',
+    financeiroContasPagar: 'a[href*="/relatorio/contas-a-pagar"]',
+    financeiroProjecaoCartoes: 'a[href*="/relatorio/projecao-de-cartoes"]',
+    produtosExibirEstoque: 'a[href*="/relatorio/exibir-estoque"]',
+    produtosTabelaPreco: 'a[href*="/relatorio/tabela-preco"]',
+    produtosFichaEstoque: 'a[href*="/relatorio/ficha-estoque"]',
+    produtosInventario: 'a[href*="/relatorio/inventario"]',
+    produtosNCM: 'a[href*="/relatorio/ncm"]',
+    produtosMovimentacaoEstoque: 'a[href*="/relatorios/movimentacao-estoque"]',
+    clientesAniversariantes: 'a[href*="/relatorio/aniversariante"]',
+    clientesDadosClientes: 'a[href*="/relatorio/dados-clientes"]',
+    clientesUltimasCompras: 'a[href*="/cliente/relatorio/ultimas-compras"]',
+};
+
+export default RelatoriosLocators;

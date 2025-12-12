@@ -262,6 +262,323 @@ if (destinatarioRequestInterceptada) {
 
 ---
 
+## 📅 Como validar Date Range Picker?
+
+### ❓ Dúvida: "Como validar que o date picker foi preenchido corretamente?"
+
+### ✅ Decisão Rápida:
+
+**NUNCA valide desaparecimento do botão:**
+```javascript
+// ❌ ERRADO - Botão pode permanecer no DOM
+cy.get(datePickerAplicar).should('not.exist');
+```
+
+**SEMPRE valide o resultado:**
+```javascript
+// ✅ CORRETO - Valida que campo foi preenchido
+cy.get(campoPeriodo)
+    .should('be.visible')
+    .should('not.have.value', '');
+```
+
+**Padrão completo:**
+```javascript
+preencherPeriodo(dataInicio, dataFim) {
+    const periodo = `${dataInicio} - ${dataFim}`;
+    cy.get(campoPeriodo)
+        .should('be.visible')
+        .click();
+    cy.get(campoPeriodo)
+        .clear()
+        .type(periodo);
+    // Clica em Aplicar se visível
+    cy.get('body').then(($body) => {
+        if ($body.find(datePickerAplicar).length > 0) {
+            cy.get(datePickerAplicar)
+                .should('be.visible')
+                .click();
+            // Valida resultado, não desaparecimento do botão
+            cy.get(campoPeriodo)
+                .should('be.visible')
+                .should('not.have.value', '');
+        }
+    });
+}
+```
+
+**Lição:** "Valide o resultado da ação, não o estado intermediário do componente."
+
+### 📚 Referência Completa:
+- [Lições Aprendidas - Date Picker](../referencias/aprendizagens-e-licoes.md#1-validação-de-date-range-picker)
+
+---
+
+## 🪟 Como lidar com modais que têm display: none?
+
+### ❓ Dúvida: "O modal aparece na tela mas os testes não encontram os elementos. O container tem `display: none`. Como validar?"
+
+### ✅ Decisão Rápida:
+
+**NUNCA valide o container do modal:**
+```javascript
+// ❌ ERRADO - Container pode ter display: none
+cy.get('#content-plus.modal.in').should('be.visible');
+```
+
+**SEMPRE valide elementos funcionais:**
+```javascript
+// ✅ CORRETO - Valida elemento funcional (campo, botão)
+cy.get(CategoriasLocators.campoDescricao, { timeout: 20000 })
+  .should('be.visible')
+  .and('not.be.disabled');
+```
+
+**Para validar título do modal:**
+```javascript
+// ❌ ERRADO - Container pode ter display: none
+cy.get('#content-plus .modal-title').should('be.visible');
+
+// ✅ CORRETO - Valida texto no body
+cy.get('body', { timeout: 15000 })
+  .should('contain.text', tipoCategoria);
+```
+
+**Para validar fechamento:**
+```javascript
+// ❌ ERRADO - Container pode persistir no DOM
+cy.get('#content-plus.modal.in').should('not.exist');
+
+// ✅ CORRETO - Elemento funcional desaparece ao fechar
+cy.get(CategoriasLocators.campoDescricao, { timeout: 10000 })
+  .should('not.exist');
+```
+
+**Padrão completo:**
+```javascript
+verificarModalVisivel() {
+  // Aguarda o campo de descrição aparecer e ficar visível
+  // O campo tem ID dinâmico, então usamos o placeholder como seletor
+  // Não procuramos dentro do modalContent porque ele pode ter display: none
+  cy.get(CategoriasLocators.campoDescricao, { timeout: 20000 })
+    .should('be.visible')
+    .and('not.be.disabled');
+}
+```
+
+**Lição:** "Um elemento pode estar funcional mesmo com `display: none` no container. Valide elementos funcionais, não containers."
+
+### 📚 Referência Completa:
+- [Lições Aprendidas - Implementação de Categorias](../referencias/aprendizagens-e-licoes.md#-lições-aprendidas-implementação-de-categorias)
+- [Checklist de Validação - Modais e Elementos Dinâmicos](../referencias/checklist-validacao-continua.md#validação-de-modais-e-elementos-dinâmicos)
+
+---
+
+## 🔢 Como lidar com IDs dinâmicos em elementos?
+
+### ❓ Dúvida: "O elemento tem um ID que muda a cada execução (ex: `#1765308555654`). Como criar um locator estável?"
+
+### ✅ Decisão Rápida:
+
+**NUNCA use IDs dinâmicos diretamente:**
+```javascript
+// ❌ ERRADO - ID muda a cada execução
+campoDescricao: '#1765308555654'
+```
+
+**SEMPRE use atributos estáveis:**
+```javascript
+// ✅ CORRETO - Placeholder é estável
+campoDescricao: 'input[placeholder*="Ex."]:visible, input[placeholder*="Receita de Vendas"]:visible, input[placeholder*="Despesa"]:visible'
+```
+
+**Alternativas para IDs dinâmicos:**
+1. **Placeholder:** `input[placeholder*="texto"]`
+2. **Name:** `input[name="campo"]`
+3. **Data attributes:** `[data-testid="campo"]`
+4. **Classes estáveis:** `.classe-estavel`
+5. **Combinação:** Combine múltiplos seletores para cobertura
+
+**Sempre adicione `:visible` quando apropriado:**
+```javascript
+// ✅ CORRETO - Evita elementos ocultos
+campoDescricao: 'input[placeholder*="Ex."]:visible'
+```
+
+**Processo de criação:**
+1. Inspecione o DOM manualmente no browser
+2. Identifique atributos estáveis (placeholder, name, data-*)
+3. Teste o locator no console do browser
+4. Combine múltiplos seletores se necessário
+5. Adicione `:visible` para evitar elementos ocultos
+
+**Exemplo completo:**
+```javascript
+// Locator com múltiplos seletores para cobertura
+campoDescricao: 'input[placeholder*="Ex."]:visible, input[placeholder*="Receita de Vendas"]:visible, input[placeholder*="Despesa"]:visible'
+
+// Uso no Page Object
+preencherDescricao(descricao) {
+  cy.get(CategoriasLocators.campoDescricao, { timeout: 15000 })
+    .should('be.visible')
+    .clear()
+    .type(descricao);
+}
+```
+
+**Lição:** "Quando IDs são dinâmicos, use atributos estáveis (placeholder, name, data-*) como alternativa. Sempre valide no browser antes de usar."
+
+### 📚 Referência Completa:
+- [Lições Aprendidas - Implementação de Categorias](../referencias/aprendizagens-e-licoes.md#-lições-aprendidas-implementação-de-categorias)
+- [Checklist de Validação - Modais e Elementos Dinâmicos](../referencias/checklist-validacao-continua.md#validação-de-modais-e-elementos-dinâmicos)
+
+---
+
+## ⏱️ Como remover waits fixos?
+
+### ❓ Dúvida: "Como substituir `cy.wait()` fixos por validações condicionais?"
+
+### ✅ Decisão Rápida:
+
+**Substitua waits fixos por validações:**
+```javascript
+// ❌ ANTES
+cy.wait(2000); // Aguarda processamento
+
+// ✅ DEPOIS
+cy.get('#loading').should('not.exist'); // Valida que loading terminou
+```
+
+**Padrões comuns de substituição:**
+
+| Wait Fixo | Validação Condicional |
+|-----------|----------------------|
+| `cy.wait(1000)` | `cy.get(elemento).should('be.visible')` |
+| `cy.wait(2000)` | `cy.get('#loading').should('not.exist')` |
+| `cy.wait(500)` | `cy.get(resultado).should('exist')` |
+| `cy.wait(3000)` | `cy.get(toast).should('be.visible')` |
+
+**Exemplos práticos:**
+```javascript
+// ❌ ANTES - Wait fixo após salvar
+salvar() {
+    cy.get(btnSalvar).click();
+    cy.wait(2000); // Aguarda processamento
+}
+
+// ✅ DEPOIS - Validação condicional
+salvar() {
+    cy.get(btnSalvar).click();
+    cy.get('#loading').should('not.exist'); // Valida que loading terminou
+}
+
+// ❌ ANTES - Wait fixo após selecionar tipo
+selecionarTipoProduto(tipo) {
+    cy.get(selectTipo).select(tipo);
+    cy.wait(1000); // Aguarda campo aparecer
+}
+
+// ✅ DEPOIS - Validação condicional
+selecionarTipoProduto(tipo) {
+    cy.get(selectTipo).select(tipo);
+    if (tipo === 'Produto') {
+        cy.get(campoProduto, { timeout: 10000 }).should('be.visible');
+    }
+}
+```
+
+**Lição:** "Waits fixos são code smell. Use validações condicionais que se adaptam ao tempo real de execução."
+
+### 📚 Referência Completa:
+- [ADR-0013](../adr/0013-continuous-validation-checklist.md)
+- [Lições Aprendidas - Waits Fixos](../referencias/aprendizagens-e-licoes.md#2-remoção-de-waits-fixos)
+
+---
+
+## 🛡️ Como tornar métodos resilientes?
+
+### ❓ Dúvida: "Como lidar com falhas esperadas em ambiente compartilhado?"
+
+### ✅ Decisão Rápida:
+
+**Use verificações condicionais:**
+```javascript
+// ✅ Método resiliente
+desativarPromocao() {
+    cy.get('body').then(($body) => {
+        const link = $body.find(linkDesativar);
+        if (link.length > 0 && link.is(':visible')) {
+            // Pode desativar
+            cy.get(linkDesativar).click();
+            cy.get('#loading').should('not.exist');
+        } else {
+            // Apenas loga - não falha o teste
+            cy.log('⚠️ Link não encontrado - ação não aplicável');
+            cy.log('ℹ️ Isso pode ocorrer se a ativação falhou devido a conflitos');
+        }
+    });
+}
+```
+
+**Quando usar:**
+- ✅ Ações que podem falhar em ambiente compartilhado
+- ✅ Validações que dependem de estado externo
+- ✅ Operações que podem ter conflitos esperados
+
+**Quando NÃO usar:**
+- ❌ Validações críticas que devem sempre funcionar
+- ❌ Operações que são pré-requisito para o teste
+- ❌ Falhas que indicam bug real
+
+**Lição:** "Em ambientes compartilhados, métodos devem ser resilientes a falhas esperadas, logando sem quebrar o teste."
+
+### 📚 Referência Completa:
+- [Lições Aprendidas - Métodos Resilientes](../referencias/aprendizagens-e-licoes.md#3-tratamento-de-falhas-em-ambiente-compartilhado)
+
+---
+
+## 🔍 Como validar autocomplete com debounce?
+
+### ❓ Dúvida: "Como aguardar resultados de autocomplete aparecerem?"
+
+### ✅ Decisão Rápida:
+
+**Valide que resultados apareceram:**
+```javascript
+// ✅ CORRETO - Valida que resultados apareceram
+selecionarProduto(termo) {
+    cy.get(campoProduto)
+        .click()
+        .clear()
+        .type(termo);
+    // Aguarda debounce - valida que resultados apareceram
+    cy.get(campoProdutoResultado, { timeout: 10000 })
+        .should('exist')
+        .should('be.visible');
+    // Seleciona primeiro resultado
+    cy.get(campoProdutoResultado).first().click();
+    // Valida que campos foram preenchidos
+    cy.get(campoDesconto, { timeout: 10000 })
+        .should('be.visible')
+        .should('not.be.disabled');
+}
+```
+
+**NUNCA use wait fixo para debounce:**
+```javascript
+// ❌ ERRADO - Wait fixo não é confiável
+cy.get(campoProduto).type(termo);
+cy.wait(500); // Pode não ser suficiente
+cy.get(resultado).click();
+```
+
+**Lição:** "Para componentes com debounce, valide que o resultado apareceu antes de interagir."
+
+### 📚 Referência Completa:
+- [Lições Aprendidas - Autocomplete](../referencias/aprendizagens-e-licoes.md#5-validação-de-autocomplete-com-debounce)
+
+---
+
 ## 📂 Onde colocar o novo spec?
 
 ### ❓ Dúvida: "Onde devo criar o arquivo do novo teste?"
@@ -345,6 +662,40 @@ cypress/e2e/
    - Painéis: `.painel #elemento`
    - Seções: `.secao #elemento`
 
+**Quando seletor retorna múltiplos elementos:**
+
+**Problema**: Seletor genérico retorna múltiplos elementos (ex: `a[href="#"]` retorna 24 elementos)
+
+**Solução**: Usar contexto próximo a um elemento único (título, seção)
+
+**Exemplo**:
+```javascript
+// ❌ Incorreto - Múltiplos matches
+cy.get('a[href="#"]').click(); // Erro: 24 elementos encontrados
+
+// ✅ Correto - Contexto próximo ao título
+cy.contains('h5', 'Listagem de Devoluções').parent().within(() => {
+  cy.get('a[href="#"]').first().click();
+});
+```
+
+**Cypress não suporta `:has()` nativamente:**
+
+**IMPORTANTE**: Cypress não suporta o seletor `:has()` (é extensão jQuery, não CSS nativo)
+
+**Solução**: Usar `cy.contains()` + `.parent().next().within()` no Page Object
+
+**Exemplo**:
+```javascript
+// ❌ Incorreto - Não funciona no Cypress
+campoProduto: 'form:has(h5:contains("Produtos")) input.autocompleter.typeahead'
+
+// ✅ Correto - Usar cy.contains() no Page Object
+cy.contains('h5', 'Produtos').parent().next().within(() => {
+  cy.get('input.autocompleter.typeahead').first().clear().type(nomeProduto);
+});
+```
+
 4. ✅ **Valide locators antes de usar:**
    - Teste no browser
    - Verifique se encontra o elemento correto
@@ -396,6 +747,36 @@ modalBtnAdicionar: '.modal #btn-adicionar'
 - [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
 - `docs/referencias/aprendizagens-e-licoes.md` - Seção "Lições Aprendidas: Problemas com Locators"
 - `docs/cases/architecture-cadastro-compra-manual.md` - Seção "Lições Aprendidas: Problemas com Locators"
+
+---
+
+## 🔍 Como abrir formulário de pesquisa corretamente?
+
+### ❓ Dúvida: "Como implementar método para abrir formulário de pesquisa?"
+
+### ✅ Decisão Rápida:
+
+**SEMPRE verifique se o formulário já está visível antes de clicar no botão toggle**
+
+**Padrão recomendado**:
+```javascript
+abrirFormularioPesquisa() {
+  cy.get(locators.formPesquisa).then(($form) => {
+    if ($form.is(':visible')) {
+      return; // Já está aberto
+    }
+    cy.get(locators.btnPesquisaToggle).click();
+  });
+  cy.get(locators.formPesquisa).should('be.visible');
+}
+```
+
+**Benefícios**:
+- Previne cliques desnecessários
+- Torna código mais robusto
+- Segue padrão estabelecido em outras implementações (Vendas, Cliente, Produção)
+
+**Referência**: Lições aprendidas da implementação Devolução/Venda de Consignação
 
 ---
 
@@ -662,6 +1043,6 @@ modalBtnAdicionar: '.modal #btn-adicionar'
 
 ---
 
-**Última atualização:** 2024-12-20  
+**Última atualização:** 2025-12-09  
 **Status:** ✅ Ativo - Use como referência rápida
 

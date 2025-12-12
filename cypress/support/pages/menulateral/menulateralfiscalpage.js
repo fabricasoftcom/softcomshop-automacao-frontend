@@ -1,5 +1,5 @@
 // MenulateralFiscalPage.js
-import MenulateralFiscalLocators from "../../locators/MenulateralFiscalLocators";
+import MenulateralFiscalLocators from "../../locators/Menu/MenulateralFiscalLocators";
 
 class MenulateralFiscalPage {
 

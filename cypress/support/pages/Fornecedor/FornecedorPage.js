@@ -1,4 +1,4 @@
-import FornecedorLocators from "../../locators/FornecedorLocators"
+import FornecedorLocators from "../../locators/Fornecedor/FornecedorLocators"
 
 class FornecedorPage {
     acessarPaginaFornecedor() {

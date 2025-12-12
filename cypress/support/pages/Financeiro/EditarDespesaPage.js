@@ -1,4 +1,4 @@
-import EditarDespesaLocators from "../../locators/EditarDespesaLocators";
+import EditarDespesaLocators from "../../locators/Financeiro/EditarDespesaLocators";
 import ListagemContasAPagarPage from "./ListagemContasAPagarPage";
 
 class EditarDespesaPage {
@@ -6,7 +6,9 @@ class EditarDespesaPage {
     visit() {
         ListagemContasAPagarPage.visit();
         this.abrirModal();
-        cy.wait(500);
+        // Wait fixo removido - validação de elemento funcional já garante que modal está pronto
+        cy.get(EditarDespesaLocators.descricaoInput, { timeout: 10000 })
+            .should('be.visible');
     }
 
     abrirModal() {

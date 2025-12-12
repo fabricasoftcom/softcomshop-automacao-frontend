@@ -1,5 +1,5 @@
 // EditarReceitaPage.js
-import EditarReceitaLocators from "../../locators/EditarReceitaLocators";
+import EditarReceitaLocators from "../../locators/Financeiro/EditarReceitaLocators";
 import ListagemContasAReceberPage from "./ListagemContasAReceberPage";
 
 class EditarReceitaPage {
@@ -8,7 +8,9 @@ class EditarReceitaPage {
     visit() {
         ListagemContasAReceberPage.visit();
         this.abrirModal();
-        cy.wait(499)
+        // Wait fixo removido - validação de elemento funcional já garante que modal está pronto
+        cy.get(EditarReceitaLocators.descricaoInput, { timeout: 10000 })
+            .should('be.visible');
     }
 
     // Ações no modal

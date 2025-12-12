@@ -1,6 +1,7 @@
 import { beforeEach } from 'mocha';
 import { faker } from '@faker-js/faker';
 import PromocoesCadastroPage from '../../support/pages/Promocoes/PromocoesCadastroPage';
+import PromocoesListagemPage from '../../support/pages/Promocoes/PromocoesListagemPage';
 
 describe('Gestor de Promoções - Cadastro', { tags: ['@produtos', '@promocoes', '@regressivo'] }, () => {
     beforeEach(() => {
@@ -28,59 +29,59 @@ describe('Gestor de Promoções - Cadastro', { tags: ['@produtos', '@promocoes',
             PromocoesCadastroPage.validarFormularioVisivel();
         });
 
-        // it('Deve cadastrar promoção com sucesso', () => {
-        //     // Gera dados aleatórios
-        //     const descricao = `Promoção ${faker.commerce.productName()} - ${faker.string.alphanumeric(6)}`;
-        //     const dataInicio = gerarDataFutura(1); // 1 dia a partir de hoje
-        //     const dataFim = gerarDataFutura(60); // 60 dias a partir de hoje
-        //     const diasSemana = ['segunda', 'terca', 'quarta', 'quinta', 'sexta'];
-        //     const horaInicio = '08:00';
-        //     const horaFim = '20:00';
+        it('Deve cadastrar promoção com sucesso', () => {
+            // Gera dados aleatórios
+            const descricao = `Promoção ${faker.commerce.productName()} - ${faker.string.alphanumeric(6)}`;
+            const dataInicio = gerarDataFutura(1); // 1 dia a partir de hoje
+            const dataFim = gerarDataFutura(60); // 60 dias a partir de hoje
+            const diasSemana = ['segunda', 'terca', 'quarta', 'quinta', 'sexta'];
+            const horaInicio = '08:00';
+            const horaFim = '20:00';
 
-        //     // Acessa o formulário diretamente
-        //     PromocoesCadastroPage.visit();
+            // Acessa o formulário diretamente
+            PromocoesCadastroPage.visit();
 
-        //     // Preenche o formulário
-        //     PromocoesCadastroPage.preencherFormularioCompleto({
-        //         descricao,
-        //         dataInicio,
-        //         dataFim,
-        //         dias: diasSemana,
-        //         horaInicio,
-        //         horaFim
-        //     });
+            // Preenche o formulário
+            PromocoesCadastroPage.preencherFormularioCompleto({
+                descricao,
+                dataInicio,
+                dataFim,
+                dias: diasSemana,
+                horaInicio,
+                horaFim
+            });
 
-        //     // Salva e valida
-        //     PromocoesCadastroPage.salvar();
-        //     PromocoesCadastroPage.validarSucesso();
-        // });
+            // Salva e valida
+            PromocoesCadastroPage.salvar();
+            PromocoesCadastroPage.validarSucesso();
+        });
 
-        // it('Deve permitir voltar para listagem', () => {
-        //     PromocoesCadastroPage.visit();
-        //     PromocoesCadastroPage.voltar();
-        //     PromocoesListagemPage.validarTabela();
-        // });
+        it('Deve permitir voltar para listagem', () => {
+            PromocoesCadastroPage.visit();
+            PromocoesCadastroPage.voltar();
+            PromocoesListagemPage.validarTabela();
+        });
 
-        // it('Deve cadastrar promoção com todos os dias da semana', () => {
-        //     const descricao = `Promoção Completa ${faker.commerce.productName()} - ${faker.string.alphanumeric(6)}`;
-        //     const dataInicio = gerarDataFutura(1);
-        //     const dataFim = gerarDataFutura(90);
-        //     const todosOsDias = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'];
+        it('Deve cadastrar promoção com todos os dias da semana', () => {
+            const descricao = `Promoção Completa ${faker.commerce.productName()} - ${faker.string.alphanumeric(6)}`;
+            const dataInicio = gerarDataFutura(1);
+            const dataFim = gerarDataFutura(90);
+            const todosOsDias = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'];
 
-        //     PromocoesCadastroPage.visit();
+            PromocoesCadastroPage.visit();
 
-        //     PromocoesCadastroPage.preencherFormularioCompleto({
-        //         descricao,
-        //         dataInicio,
-        //         dataFim,
-        //         dias: todosOsDias,
-        //         horaInicio: '00:00',
-        //         horaFim: '23:59'
-        //     });
+            PromocoesCadastroPage.preencherFormularioCompleto({
+                descricao,
+                dataInicio,
+                dataFim,
+                dias: todosOsDias,
+                horaInicio: '00:00',
+                horaFim: '23:59'
+            });
 
-        //     PromocoesCadastroPage.salvar();
-        //     PromocoesCadastroPage.validarSucesso();
-        // });
+            PromocoesCadastroPage.salvar();
+            PromocoesCadastroPage.validarSucesso();
+        });
 
         it('Deve exibir seção de produtos após salvar', () => {
             const descricao = `Promoção Teste Produtos ${faker.string.alphanumeric(6)}`;
@@ -128,7 +129,7 @@ describe('Gestor de Promoções - Cadastro', { tags: ['@produtos', '@promocoes',
             });
 
             // Valida que o botão de ativação aparece após adicionar produto
-            cy.get('a:contains("Ativar Promoção")').should('be.visible');
+            PromocoesCadastroPage.validarLinkAtivacaoVisivel();
         });
 
         it('Deve cadastrar promoção completa com produtos e ativar', () => {
@@ -155,12 +156,6 @@ describe('Gestor de Promoções - Cadastro', { tags: ['@produtos', '@promocoes',
                 termoBusca: 'produto',
                 descontoReais: '5,00'
             });
-            PromocoesCadastroPage.adicionarProdutoCompleto({
-                tipo: 'Grupo',
-                termoBusca: 'grupo',
-                descontoPercentual: '15,00'
-            });
-
             // Ativa a promoção
             PromocoesCadastroPage.ativarPromocao();
             PromocoesCadastroPage.validarPromocaoAtiva();

@@ -127,6 +127,6 @@
     {
         "relatorioName": "Últimas Compras",
         "relatorioElement": "//a[contains(.,'Últimas Compras')]",
-        "relatorioURL": "/relatorio/ultimas-compras"
+        "relatorioURL": "/cliente/relatorio/ultimas-compras"
     }
 ]

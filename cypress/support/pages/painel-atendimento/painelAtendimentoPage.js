@@ -1,4 +1,4 @@
-import PainelAtendimentoLocators from "../../locators/PainelAtendimentoLocators";
+import PainelAtendimentoLocators from "../../locators/PainelAtendimento/PainelAtendimentoLocators";
 
 class PainelAtendimentoPage {
 

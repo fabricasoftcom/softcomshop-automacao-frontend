@@ -1,4 +1,4 @@
-import { ReverterBalancoLocator } from "../../locators/ReverterBalancoLocator"
+import { ReverterBalancoLocator } from "../../locators/Balanco/ReverterBalancoLocator"
 
 class ReverterBalancoPage {
     acessarPrimeiroBalancoFinalizado () {

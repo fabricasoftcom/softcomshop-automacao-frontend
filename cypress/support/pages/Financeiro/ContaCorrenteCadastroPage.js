@@ -1,4 +1,4 @@
-import contaCorrenteCadastroLocator from '../../locators/ContaCorrenteCadastroLocator';
+import contaCorrenteCadastroLocator from '../../locators/Financeiro/ContaCorrenteCadastroLocator';
 import contaCadastroPage from './ContaCadastroPage';
 
 class ContaCorrenteCadastroPage {

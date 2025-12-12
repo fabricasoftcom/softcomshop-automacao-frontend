@@ -95,6 +95,28 @@ const generateRandomDadosOrcamentoProduto = () => {
   }
 };
 
+const generateRandomCompany = () => {
+  const nome = faker.company.name();
+  return {
+    cnpj: gerarCNPJValido(),
+    nome: nome.substring(0, 50), // Unidade
+    fantasia: nome.substring(0, 50),
+    razaoSocial: `${nome} LTDA`,
+    nomeImpressao: 'FANTASIA',
+    inscricaoEstadual: faker.number.int({ min: 100000, max: 999999 }).toString(),
+    inscricaoMunicipal: faker.number.int({ min: 10000, max: 99999 }).toString(),
+    cep: faker.location.zipCode('#####-###'),
+    endereco: faker.location.streetAddress(),
+    numero: faker.number.int({ min: 1, max: 9999 }),
+    complemento: faker.location.secondaryAddress(),
+    bairro: 'CENTRO',
+    cidade: 'SAO PAULO - SP',
+    ddd: '11',
+    telefone: faker.phone.number('####-####'),
+    email: faker.internet.email()
+  };
+};
+
 const generateRandomContact = () => {
   return {
     tipo: 'PRINCIPAL',
@@ -102,6 +124,34 @@ const generateRandomContact = () => {
     ddd: faker.string.numeric({ length: 2 }),
     telefone: faker.string.numeric({ length: 9 }),
     email: faker.internet.email()
+  };
+};
+
+const generateRandomFuncionario = () => {
+  const nome = faker.person.fullName();
+  return {
+    // Campos obrigatórios
+    nome: nome.substring(0, 100),
+    funcao: 'VENDEDOR', // Função padrão (pode ser VENDEDOR, ATENDENTE, ENTREGADOR, etc.)
+
+    // Campos opcionais
+    setor: null, // Pode ser preenchido se necessário
+    cpf: generateValidCPF(),
+    rg: faker.string.numeric(9),
+    dataAdmissao: faker.date.past({ years: 2 }).toLocaleDateString('pt-BR'),
+    dataDemissao: null, // Geralmente não preenchido no cadastro
+    cep: faker.location.zipCode('#####-###'),
+    endereco: faker.location.streetAddress(),
+    numero: faker.number.int({ min: 1, max: 9999 }),
+    complemento: faker.location.secondaryAddress(),
+    bairro: 'CENTRO',
+    cidade: 'SAO PAULO - SP',
+    desconto: faker.number.float({ min: 0, max: 50, precision: 0.01 }).toFixed(2),
+    comissao: faker.number.float({ min: 0, max: 100, precision: 0.01 }).toFixed(2),
+    supervisor: false,
+    numeroCartaoSupervisor: null,
+    observacao: faker.lorem.sentence(),
+    desativado: false
   };
 };
 
@@ -198,7 +248,9 @@ module.exports = {
   generateRandomDadosOrcamento,
   generateRandomDadosOrcamentoProduto,
   gerarFornecedorAleatorio,
+  generateRandomCompany,
   generateRandomContact,
-  gerarChaveAcessoNFe
+  gerarChaveAcessoNFe,
+  generateRandomFuncionario
 }
 

@@ -1,5 +1,5 @@
 import CompraBasePage from "./CompraBasePage";
-import CompraLocators from "../../locators/CompraLocators";
+import CompraLocators from "../../locators/Compra/CompraLocators";
 
 class CompraXmlPage extends CompraBasePage {
     // ========== MÉTODOS ESPECÍFICOS PARA IMPORTAÇÃO XML ==========

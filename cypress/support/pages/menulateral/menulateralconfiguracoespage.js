@@ -1,4 +1,4 @@
-import MenulateralConfiguracoesLocators from "../../locators/ConfiguracoesLocators";
+import MenulateralConfiguracoesLocators from "../../locators/Fiscal/ConfiguracoesLocators";
 
 class MenulateralConfiguracoesPage {
 

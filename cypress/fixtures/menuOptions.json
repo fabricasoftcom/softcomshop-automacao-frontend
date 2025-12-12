@@ -1,6 +1,6 @@
 [
   {
-    "mainMenu":{
+    "mainMenu": {
       "text": "Tá em ordem"
     },
     "route": "/ta-em-ordem"

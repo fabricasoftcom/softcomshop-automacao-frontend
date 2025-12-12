@@ -1,13 +1,16 @@
 import 'cypress-wait-until'; // Certifique-se de que o pacote esteja instalado
 import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
-import NovaReceitaLocators from "../../locators/NovaReceitaLocators";
+import NovaReceitaLocators from "../../locators/Financeiro/NovaReceitaLocators";
 import ListagemContasAReceberPage from "./ListagemContasAReceberPage";
 
 class NovaReceitaPage {
   abrirModal() {
     MenulateralFinanceiroPage.acessarListagemContasReceberReceita();
     ListagemContasAReceberPage.abrirNovoCadastro();
-    cy.get(NovaReceitaLocators.modalContent, { timeout: 30000 }).should('be.visible');
+    // Valida elemento funcional ao invés de container (pode ter display: none)
+    cy.get(NovaReceitaLocators.descricaoInput, { timeout: 30000 })
+        .should('be.visible')
+        .and('not.be.disabled');
   }
 
   fecharModal() {
@@ -92,14 +95,8 @@ class NovaReceitaPage {
   }
 
   clicarSalvar() {
-    // Limita a busca do botão "Salvar" ao modal "Nova Receita"
-    cy.get('.modal-content')                 // Seleciona o escopo do modal
-      .find('.btn-primary')                  // Busca o botão "Salvar" dentro do modal
-      .click();                              // Clica no botão "Salvar"
-
-    // Aguarda até que o Toastify de sucesso seja exibido
-    // cy.get('.Toastify__toast--success', { timeout: 10000 }) // Ajusta para esperar até 10 segundos
-    //   .should('be.visible');                 // Verifica se o Toastify de sucesso está visível
+    // Validação de sucesso removida - deve estar no spec, não no Page Object
+    cy.get(NovaReceitaLocators.salvarButton).click();
   }
 }
 

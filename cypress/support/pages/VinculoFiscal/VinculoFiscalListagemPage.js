@@ -1,4 +1,4 @@
-import VinculoFiscalListagemLocators from "../../locators/VinculoFiscalListagemLocators";
+import VinculoFiscalListagemLocators from "../../locators/VinculoFiscal/VinculoFiscalListagemLocators";
 import MenulateralProdutoPage from "../menulateral/MenulateralProdutoPage";
 
 class VinculoFiscalListagemPage {

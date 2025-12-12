@@ -173,6 +173,59 @@
 - ? Deve expandir os detalhes de pagamento e verificar tabela vazia
 - ? Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status 
 
+### ?? Arquivo: `financeiro/transferencia-contas.spec.js`
+
+#### ?? Suite: Testes de Transferência Entre Contas
+- ? Deve realizar transferência completa entre contas
+- ? Deve validar que o modal está visível ao acessar a página
+- ? Deve exibir erro ao tentar salvar sem preencher campos obrigatórios
+- ? Deve exibir erro ao tentar transferir de uma conta para ela mesma
+- ? Deve cancelar a operação ao clicar no botão Voltar
+- ? Deve exibir erro ao tentar transferir valor zero
+- ? Deve validar que o modal está visível ao acessar a página
+
+### ?? Arquivo: `financeiro/lancamento-conta.spec.js`
+
+#### ?? Suite: Testes de Lançamento Conta
+- ? Deve realizar lançamento conta completo
+- ? Deve validar que a tela está visível ao acessar
+- ? Deve realizar lançamento conta com operação CRÉDITO
+- ? Deve realizar lançamento conta com tipo de data LANÇAMENTO
+- ? Deve cancelar lançamento clicando em Voltar
+- ? Deve exibir erro ao tentar salvar sem preencher campos obrigatórios
+
+### ?? Arquivo: `financeiro/recibo.spec.js`
+
+#### ?? Suite: Testes de Recibo
+- ? Deve validar que a página de listagem está visível ao acessar
+- ? Deve abrir o formulário de novo cadastro ao clicar no botão Novo Cadastro
+- ? Deve validar que o formulário de novo cadastro está visível ao acessar diretamente
+- ? Deve preencher e salvar um novo recibo com sucesso
+- ? Deve cancelar o cadastro clicando em Voltar
+- ? Deve exibir erro ao tentar salvar sem preencher campos obrigatórios
+
+### ?? Arquivo: `financeiro/listagem-categorias.spec.js`
+
+#### ?? Suite: Testes de Listagem de Categorias
+- ? Deve exibir a página de listagem de categorias corretamente
+- ? Deve abrir modal de nova categoria de receita
+- ? Deve abrir modal de nova categoria de despesa
+- ? Deve filtrar categorias de receita por "Todas"
+- ? Deve filtrar categorias de receita por "Ativas"
+- ? Deve filtrar categorias de receita por "Inativas"
+- ? Deve filtrar categorias de despesa por "Todas"
+- ? Deve filtrar categorias de despesa por "Ativas"
+- ? Deve filtrar categorias de despesa por "Inativas"
+
+### ?? Arquivo: `financeiro/cadastro-categoria.spec.js`
+
+#### ?? Suite: Cadastro de Categorias
+- ? Deve cadastrar uma nova categoria de receita com descrição apenas
+- ? Deve cadastrar uma nova categoria de despesa com descrição apenas
+- ? Deve cadastrar uma nova categoria de receita com todos os campos
+- ? Deve cadastrar uma nova categoria de despesa com checkbox "Não Exibir DRE" marcado
+- ? Deve cancelar o cadastro clicando em Voltar
+
 ## ??? login
 
 ### ?? Arquivo: `login/login.spec.js`
@@ -232,7 +285,158 @@
 ### Arquivo: `relatorio/relatorio-caixa.spec.js`
 
 #### Suite: Relatório de Caixa
-- Deve acessar o relatório de caixa e validar os dados
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Caixa
+- Deve permitir pesquisar o relatorio de Caixa com periodo diario
+- Deve gerar o relatorio de Caixa do tipo sintetico
+- Deve pesquisar o periodo atual sem turno e exibir dados em tela
+- Deve listar vendas no relatorio analitico sem informar turno
+
+### Arquivo: `relatorio/relatorio-periodo.spec.js`
+
+#### Suite: Relatorio de Periodo
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Periodo
+- Deve permitir pesquisar o relatorio de Periodo com periodo diario
+
+### Arquivo: `relatorio/relatorio-mais-vendidos.spec.js`
+
+#### Suite: Relatorio de Mais Vendidos
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Mais Vendidos
+- Deve permitir pesquisar o relatorio de Mais Vendidos com periodo diario
+
+### Arquivo: `relatorio/relatorio-forma-pagamento.spec.js`
+
+#### Suite: Relatorio de Forma Pagamento
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Forma Pagamento
+- Deve permitir pesquisar o relatorio de Forma Pagamento com periodo diario
+
+### Arquivo: `relatorio/relatorio-gerente-vendas.spec.js`
+
+#### Suite: Relatorio de Gerente de Vendas
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Gerente de Vendas
+- Deve permitir pesquisar o relatorio de Gerente de Vendas com periodo diario
+
+### Arquivo: `relatorio/relatorio-evolucao.spec.js`
+
+#### Suite: Relatorio de Evolucao
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Evolucao
+- Deve permitir pesquisar o relatorio de Evolucao
+
+### Arquivo: `relatorio/relatorio-comissao.spec.js`
+
+#### Suite: Relatorio de Comissao
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Comissao
+- Deve permitir pesquisar o relatorio de Comissao com periodo diario
+
+### Arquivo: `relatorio/relatorio-fiscal-saida-analitico.spec.js`
+
+#### Suite: Relatorio Fiscal Saida Analitico
+- Deve exibir os filtros e acoes disponiveis para o relatorio Fiscal Saida Analitico
+- Deve permitir pesquisar o relatorio Fiscal Saida Analitico com periodo diario
+
+### Arquivo: `relatorio/relatorio-fiscal-saida-sintetico.spec.js`
+
+#### Suite: Relatorio Fiscal Saida Sintetico
+- Deve exibir os filtros e acoes disponiveis para o relatorio Fiscal Saida Sintetico
+- Deve permitir pesquisar o relatorio Fiscal Saida Sintetico com periodo diario
+
+### Arquivo: `relatorio/relatorio-fiscal-entrada-analitico.spec.js`
+
+#### Suite: Relatorio Fiscal Entrada Analitico
+- Deve exibir os filtros e acoes disponiveis para o relatorio Fiscal Entrada Analitico
+- Deve permitir pesquisar o relatorio Fiscal Entrada Analitico com periodo diario
+
+### Arquivo: `relatorio/relatorio-fiscal-entrada-sintetico.spec.js`
+
+#### Suite: Relatorio Fiscal Entrada Sintetico
+- Deve exibir os filtros e acoes disponiveis para o relatorio Fiscal Entrada Sintetico
+- Deve permitir pesquisar o relatorio Fiscal Entrada Sintetico com periodo diario
+
+### Arquivo: `relatorio/relatorio-fiscal-pis-cofins.spec.js`
+
+#### Suite: Relatorio Fiscal Pis/Cofins
+- Deve exibir os filtros e acoes disponiveis para o relatorio Fiscal Pis/Cofins
+- Deve permitir pesquisar o relatorio Fiscal Pis/Cofins com periodo diario
+
+### Arquivo: `relatorio/relatorio-nfse.spec.js`
+
+#### Suite: Relatorio NFSe
+- Deve exibir os filtros e acoes disponiveis para o relatorio NFSe
+- Deve permitir pesquisar o relatorio NFSe com periodo diario
+
+### Arquivo: `relatorio/relatorio-contas-receber.spec.js`
+
+#### Suite: Relatorio de Contas a Receber
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Contas a Receber
+- Deve permitir pesquisar o relatorio de Contas a Receber com periodo diario
+
+### Arquivo: `relatorio/relatorio-contas-pagar.spec.js`
+
+#### Suite: Relatorio de Contas a Pagar
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Contas a Pagar
+- Deve permitir pesquisar o relatorio de Contas a Pagar com periodo diario
+
+### Arquivo: `relatorio/relatorio-projecao-cartoes.spec.js`
+
+#### Suite: Relatorio de Projecao de Cartoes
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Projecao de Cartoes
+- Deve permitir pesquisar o relatorio de Projecao de Cartoes com periodo diario
+
+### Arquivo: `relatorio/relatorio-exibir-estoque.spec.js`
+
+#### Suite: Relatorio de Exibir Estoque
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Exibir Estoque
+- Deve permitir pesquisar o relatorio de Exibir Estoque
+
+### Arquivo: `relatorio/relatorio-tabela-preco.spec.js`
+
+#### Suite: Relatorio de Tabela de Preco
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Tabela de Preco
+- Deve permitir pesquisar o relatorio de Tabela de Preco
+
+### Arquivo: `relatorio/relatorio-ficha-estoque.spec.js`
+
+#### Suite: Relatorio de Ficha Estoque
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Ficha Estoque
+- Deve permitir pesquisar o relatorio de Ficha Estoque com periodo diario
+
+### Arquivo: `relatorio/relatorio-inventario.spec.js`
+
+#### Suite: Relatorio de Inventario
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Inventario
+- Deve permitir gerar o relatorio de Inventario
+
+### Arquivo: `relatorio/relatorio-ncm.spec.js`
+
+#### Suite: Relatorio de NCM
+- Deve exibir os filtros e acoes disponiveis para o relatorio de NCM
+- Deve permitir pesquisar o relatorio de NCM
+
+### Arquivo: `relatorio/relatorio-movimentacao-estoque.spec.js`
+
+#### Suite: Relatorio de Movimentacao de Estoque
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Movimentacao de Estoque
+- Deve permitir pesquisar o relatorio de Movimentacao de Estoque com periodo diario
+
+### Arquivo: `relatorio/relatorio-aniversariantes.spec.js`
+
+#### Suite: Relatorio de Aniversariantes
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Aniversariantes
+- Deve permitir pesquisar o relatorio de Aniversariantes com mes atual
+- Deve permitir pesquisar o relatorio de Aniversariantes sem filtros
+
+### Arquivo: `relatorio/relatorio-listagem-clientes.spec.js`
+
+#### Suite: Relatorio de Listagem dos Clientes
+- Deve exibir os filtros e acoes disponiveis para o relatorio de Listagem dos Clientes
+- Deve permitir pesquisar o relatorio de Listagem dos Clientes sem filtros
+- Deve permitir pesquisar o relatorio de Listagem dos Clientes com filtros basicos
+
+### Arquivo: `relatorio/relatorio-ultimas-compras.spec.js`
+
+#### Suite: Relatorio de Ultimas Compras
+- Deve exibir os elementos basicos do relatorio de Ultimas Compras
+- Deve exibir vendas no relatorio de Ultimas Compras
+- Deve exibir paginacao quando houver multiplas paginas
 
 ## ??? setup
 
@@ -407,7 +611,57 @@
 #### ?? Suite: Carta de Correção NFe Complementar
 - Emite e gera carta de correção NFe complementar avulsa: realiza fluxo completo de emissao de NFe complementar avulsa (preenchimento de nota complementar, natureza CFOP 5102, destinatario, itens zerados, pagamentos, emissao), retorna a listagem, abre edicao da primeira linha e emite carta de correção
 
+## ??? consignacao
+
+### ?? Arquivo: `consignacao/requisicao-consignacao-listagem.spec.js`
+
+#### ?? Suite: Listagem de Requisições de Consignação
+- Deve exibir a tabela de requisições e permitir abrir o formulário de pesquisa
+- Deve permitir navegar para novo cadastro
+- Deve aplicar filtros de pesquisa
+- Deve selecionar e desmarcar todos os registros
+
+### ?? Arquivo: `consignacao/requisicao-consignacao-cadastro.spec.js`
+
+#### ?? Suite: Cadastro de Requisição de Consignação
+- Deve abrir a tela de cadastro de requisição
+- Deve realizar o cadastro de uma requisição com sucesso
+- Deve adicionar um produto à requisição após o cadastro
+
+### ?? Arquivo: `consignacao/devolucao-consignacao-listagem.spec.js`
+
+#### ?? Suite: Listagem de Devoluções/Vendas de Consignação
+- Deve exibir a tabela de devoluções e permitir abrir o formulário de pesquisa
+- Deve permitir navegar para novo cadastro
+- Deve aplicar filtros de pesquisa
+- Deve selecionar e desmarcar todos os registros
+
+### ?? Arquivo: `consignacao/devolucao-consignacao-cadastro.spec.js`
+
+#### ?? Suite: Cadastro de Devolução/Venda de Consignação
+- Deve abrir a tela de cadastro de devolução/venda
+- Deve realizar o cadastro de uma devolução/venda com sucesso
+- Deve adicionar um produto à devolução/venda após o cadastro
+
 ## ??? produtos
+
+### ?? Arquivo: `produtos/gestor-precos-listagem.spec.js`
+
+#### ?? Suite: Gestor de Preços - Listagem
+- Deve exibir a listagem de preços
+- Deve validar que a tabela contém dados
+- Deve permitir acessar novo cadastro
+
+### ?? Arquivo: `produtos/gestor-precos.spec.js`
+
+#### ?? Suite: Gestor de Preços - Cadastro
+- Deve exibir formulário de novo cadastro
+- Deve cadastrar reajuste de preço com sucesso
+- Deve permitir voltar para listagem
+- Deve cadastrar reajuste com filtro de tipo NOTAS DE ENTRADA
+- Deve cadastrar reajuste com operação FORMAR PREÇO
+- Deve exibir tabela de itens afetados após salvar
+- Deve cadastrar reajuste completo com filtros opcionais
 
 ### ?? Arquivo: `produtos/gestor-promocoes.spec.js`
 
@@ -424,6 +678,68 @@
 - ? Deve cadastrar promoção com sucesso
 - ? Deve permitir voltar para listagem
 - ? Deve cadastrar promoção com todos os dias da semana
+- ? Deve exibir seção de produtos após salvar
+- ? Deve adicionar produto à promoção
+- ? Deve cadastrar promoção completa com produtos e ativar
+- ? Deve ativar promoção após cadastro completo
+- ? Deve permitir desativar promoção ativa
+
+## ??? configuracoes
+
+### ?? Arquivo: `configuracoes/empresa-listagem.spec.js`
+
+#### ?? Suite: Listagem de empresas
+- Exibe a listagem e permite abrir o formulario de filtros
+- Valida paginacao inicial da listagem
+- Navega para novo cadastro ao clicar no botao Novo Cadastro
+- Aplica filtro por nome e limpa o campo apos a pesquisa
+- Abre e fecha o formulario de pesquisa corretamente
+- Aplica filtro por CNPJ e valida resultado
+- Aplica filtro por Fantasia e valida resultado
+- Aplica filtro por Razao Social e valida resultado
+- Limpa todos os campos do formulario de pesquisa
+- Seleciona e limpa todos os checkboxes da tabela
+- Alerta quando tentar excluir sem selecionar registros
+- Abre o modal de exclusao ao selecionar registros e cancela a acao
+- Abre a edicao do primeiro registro da listagem
+
+### ?? Arquivo: `configuracoes/empresa-cadastro.spec.js`
+
+#### ?? Suite: Cadastro de empresa
+- Deve exibir as abas e botoes principais do formulario
+- Deve realizar cadastro completo de empresa
+- Deve exibir erro ao tentar salvar sem preencher campos obrigatorios
+- Deve permitir navegar entre todas as abas do formulario
+- Deve retornar para listagem ao clicar em Voltar
+- Deve validar autocomplete de bairro
+- Deve validar autocomplete de cidade
+- Deve editar empresa existente e validar alteracao
+
+### ?? Arquivo: `configuracoes/funcionario-listagem.spec.js`
+
+#### ?? Suite: Listagem de funcionários
+- Exibe a listagem e permite abrir o formulario de filtros
+- Valida paginacao inicial da listagem
+- Navega para novo cadastro ao clicar no botao Novo Cadastro
+- Aplica filtro por nome e limpa o campo apos a pesquisa
+- Abre e fecha o formulario de pesquisa corretamente
+- Aplica filtro por codigo e valida resultado
+- Seleciona e limpa todos os checkboxes da tabela
+- Alerta quando tentar excluir sem selecionar registros
+- Abre o modal de exclusao ao selecionar registros e cancela a acao
+
+### ?? Arquivo: `configuracoes/funcionario-cadastro.spec.js`
+
+#### ?? Suite: Cadastro de funcionário
+- Deve exibir as abas e botoes principais do formulario
+- Deve realizar cadastro completo de funcionario
+- Deve exibir erro ao tentar salvar sem preencher campos obrigatorios
+- Deve permitir navegar entre todas as abas do formulario
+- Deve retornar para listagem ao clicar em Voltar
+- Deve validar autocomplete de funcao
+- Deve validar autocomplete de bairro
+- Deve validar autocomplete de cidade
+- Deve editar funcionario existente e validar alteracao
 
 ## ??? vinculo-fiscal
 

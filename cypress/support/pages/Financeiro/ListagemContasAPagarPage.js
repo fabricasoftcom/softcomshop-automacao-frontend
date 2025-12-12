@@ -1,4 +1,4 @@
-import ListagemContasAPagarLocators from "../../locators/ListagemContasAPagarLocators";
+import ListagemContasAPagarLocators from "../../locators/Financeiro/ListagemContasAPagarLocators";
 import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
 
 class ListagemContasAPagarPage {

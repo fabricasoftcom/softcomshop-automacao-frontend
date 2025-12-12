@@ -45,6 +45,35 @@ module.exports = defineConfig({
       // relatorio
       "./cypress/e2e/relatorio/relatorios.spec.js",
       "./cypress/e2e/relatorio/relatorio-caixa.spec.js",
+      // relatorios vendas
+      "./cypress/e2e/relatorio/relatorio-periodo.spec.js",
+      "./cypress/e2e/relatorio/relatorio-mais-vendidos.spec.js",
+      "./cypress/e2e/relatorio/relatorio-forma-pagamento.spec.js",
+      "./cypress/e2e/relatorio/relatorio-gerente-vendas.spec.js",
+      "./cypress/e2e/relatorio/relatorio-evolucao.spec.js",
+      "./cypress/e2e/relatorio/relatorio-comissao.spec.js",
+      // relatorios fiscal
+      "./cypress/e2e/relatorio/relatorio-fiscal-saida-analitico.spec.js",
+      "./cypress/e2e/relatorio/relatorio-fiscal-saida-sintetico.spec.js",
+      "./cypress/e2e/relatorio/relatorio-fiscal-entrada-analitico.spec.js",
+      "./cypress/e2e/relatorio/relatorio-fiscal-entrada-sintetico.spec.js",
+      "./cypress/e2e/relatorio/relatorio-fiscal-pis-cofins.spec.js",
+      "./cypress/e2e/relatorio/relatorio-nfse.spec.js",
+      // relatorios financeiro
+      "./cypress/e2e/relatorio/relatorio-contas-receber.spec.js",
+      "./cypress/e2e/relatorio/relatorio-contas-pagar.spec.js",
+      "./cypress/e2e/relatorio/relatorio-projecao-cartoes.spec.js",
+      // relatorios produtos
+      "./cypress/e2e/relatorio/relatorio-exibir-estoque.spec.js",
+      "./cypress/e2e/relatorio/relatorio-tabela-preco.spec.js",
+      "./cypress/e2e/relatorio/relatorio-ficha-estoque.spec.js",
+      "./cypress/e2e/relatorio/relatorio-inventario.spec.js",
+      "./cypress/e2e/relatorio/relatorio-ncm.spec.js",
+      "./cypress/e2e/relatorio/relatorio-movimentacao-estoque.spec.js",
+      // relatorios clientes
+      "./cypress/e2e/relatorio/relatorio-aniversariantes.spec.js",
+      "./cypress/e2e/relatorio/relatorio-listagem-clientes.spec.js",
+      "./cypress/e2e/relatorio/relatorio-ultimas-compras.spec.js",
       // compra
       "./cypress/e2e/compras/cadastro-compra-xml.spec.js",
       "./cypress/e2e/compras/cadastro-compra-manual.spec.js",
@@ -63,6 +92,8 @@ module.exports = defineConfig({
       "./cypress/e2e/produtos/listagem-produtos.spec.js",
       "./cypress/e2e/produtos/gestor-promocoes-listagem.spec.js",
       "./cypress/e2e/produtos/gestor-promocoes.spec.js",
+      "./cypress/e2e/produtos/gestor-precos-listagem.spec.js",
+      "./cypress/e2e/produtos/gestor-precos.spec.js",
       // vinculo fiscal
       "./cypress/e2e/vinculo-fiscal/novocadastrovinculofiscal.spec.js",
       "./cypress/e2e/vinculo-fiscal/vinculo-fiscal-listagem.spec.js",
@@ -90,6 +121,12 @@ module.exports = defineConfig({
       "./cypress/e2e/financeiro/cadastro-conta.spec.js",
       "./cypress/e2e/financeiro/edicao-conta-corrente.spec.js",
       "./cypress/e2e/financeiro/listagem-conta.spec.js",
+      "./cypress/e2e/financeiro/transferencia-contas.spec.js",
+      "./cypress/e2e/financeiro/lancamento-conta.spec.js",
+      "./cypress/e2e/financeiro/recibo.spec.js",
+      // categorias
+      "./cypress/e2e/financeiro/listagem-categorias.spec.js",
+      "./cypress/e2e/financeiro/cadastro-categoria.spec.js",
       // vendas
       "./cypress/e2e/vendas/cadastro-venda.spec.js",
       "./cypress/e2e/vendas/listagem-vendas.spec.js",
@@ -109,17 +146,27 @@ module.exports = defineConfig({
       "./cypress/e2e/venda-nfcenfe/carta-correcao-nfe-ajuste.spec.js",
       "./cypress/e2e/venda-nfcenfe/carta-correcao-nfe-complementar.spec.js",
       "./cypress/e2e/venda-nfcenfe/listagem-nfe.spec.js",
+      // consignacao
+      "./cypress/e2e/consignacao/requisicao-consignacao-listagem.spec.js",
+      "./cypress/e2e/consignacao/requisicao-consignacao-cadastro.spec.js",
+      "./cypress/e2e/consignacao/devolucao-consignacao-listagem.spec.js",
+      "./cypress/e2e/consignacao/devolucao-consignacao-cadastro.spec.js",
       // sped
       "./cypress/e2e/sped/gerarArquivo.spec.js",
       // sintegra
       "./cypress/e2e/sintegra/gerarArquivo.spec.js",
+      // configuracoes
+      "./cypress/e2e/configuracoes/empresa-listagem.spec.js",
+      "./cypress/e2e/configuracoes/empresa-cadastro.spec.js",
+      "./cypress/e2e/configuracoes/funcionario-listagem.spec.js",
+      "./cypress/e2e/configuracoes/funcionario-cadastro.spec.js",
       // petshop
       // "./cypress/e2e/painel-atendimento/painel-atendimento.spec.js",
       // "./cypress/e2e/**/*.{feature,cy.js}",
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    baseUrl: 'https://stage-release-2.softcomshop.com.br',
     // baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
     //  baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,

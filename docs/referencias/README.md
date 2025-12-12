@@ -70,6 +70,7 @@ Use este checklist durante o code review de novos testes ou modificações para 
 - Exemplos de conformidade e não-conformidade
 - Template para revisões de Pull Requests
 - Critérios objetivos de validação
+- Seção de validação de anti-padrões
 
 **Quando usar:**
 - Durante code review de Pull Requests
@@ -80,6 +81,31 @@ Use este checklist durante o code review de novos testes ou modificações para 
 - ADR-0013 (Continuous Validation Checklist)
 - `.cursor/rules/architeture.mdc`
 - `GUIA_DECISOES_RAPIDAS.md`
+
+---
+
+### 🚨 `checklist-anti-padroes.md`
+
+**Checklist específico para prevenir problemas comuns identificados em implementações anteriores.**
+
+Este checklist previne anti-padrões críticos como testes com muitas condicionais, locators não validados, falta de exploração manual, estrutura assumida e testes não assertivos.
+
+**Conteúdo:**
+- 5 anti-padrões críticos com validações específicas
+- Exemplos de código correto e incorreto para cada anti-padrão
+- Checklist de validação antes de considerar completo
+- Referências a ADRs e lições aprendidas
+
+**Quando usar:**
+- Durante o desenvolvimento de novos testes
+- Durante code review de Pull Requests
+- Para auto-validação antes de submeter código
+- Em revisões periódicas do código
+
+**Referenciado em:**
+- `checklist-validacao-continua.md`
+- `.cursor/rules/architeture.mdc`
+- Lições aprendidas do caso Gestão de Estoque
 
 ---
 
@@ -106,6 +132,32 @@ Template e processo obrigatório para criar documentações de novos testes, gar
 - ADR-0014 (Standardized Architectural Documentation Process)
 - `.cursor/rules/architeture.mdc`
 - `GUIA_DECISOES_RAPIDAS.md`
+
+---
+
+### 📋 `template-plano-implementacao.md`
+
+**Template padronizado para criar planos de implementação.**
+
+Template completo e estruturado baseado nos padrões identificados nas implementações de Gestor de Promoções e Gestor de Preços, garantindo coerência e acertividade em futuras implementações.
+
+**Conteúdo:**
+- Estrutura completa de fases (Exploração, Estrutura, Implementação, Documentação, Validação)
+- Padrões de nomenclatura de TODOs
+- Dependências entre tarefas
+- Checklist de qualidade do plano
+- Exemplo completo de uso
+- Lições aprendidas
+
+**Quando usar:**
+- Ao criar plano para nova funcionalidade (3+ arquivos)
+- Ao implementar novo módulo de testes
+- Ao criar fluxo completo (listagem + cadastro)
+- Para garantir consistência em planos futuros
+
+**Referenciado em:**
+- ADR-0016 (Planning Before Implementation)
+- `.cursor/rules/architeture.mdc`
 
 ---
 
@@ -148,6 +200,7 @@ Documento reflexivo que captura os principais aprendizados, insights e lições 
 - Lições para futuros projetos
 - Estatísticas e métricas
 - Recomendações
+- Case study: Implementação do módulo Funcionários
 
 **Quando usar:**
 - Para entender o contexto histórico do projeto
@@ -156,6 +209,38 @@ Documento reflexivo que captura os principais aprendizados, insights e lições 
 - Para entender as decisões arquiteturais
 
 **Status:** Documento histórico e educacional
+
+---
+
+### 📖 `exemplo-implementacao-funcionarios.md`
+
+**Case study completo da implementação bem-sucedida do módulo de Funcionários.**
+
+Documento detalhado que demonstra a aplicação prática do template padronizado de plano de implementação, servindo como referência e exemplo para futuras implementações.
+
+**Conteúdo:**
+- Resumo executivo e métricas
+- Processo completo seguido (5 fases)
+- Lições aprendidas específicas
+- Problemas encontrados e soluções
+- Conformidade com ADRs (100%)
+- Estrutura de arquivos criados
+- Referências e documentações relacionadas
+
+**Quando usar:**
+- Como referência ao criar novo plano de implementação
+- Para entender como aplicar o template corretamente
+- Para ver exemplo prático de implementação completa
+- Para onboarding de novos desenvolvedores
+- Para validar se implementação está seguindo padrões
+
+**Referenciado em:**
+- Template de Plano de Implementação
+- ADR-0016 (Planning Before Implementation)
+- Aprendizagens e Lições
+- `.cursor/rules/architeture.mdc`
+
+**Status:** ✅ Exemplo completo e funcional
 
 ---
 
@@ -188,18 +273,24 @@ Este guia fornece instruções passo a passo para criar a mesma estrutura de doc
 
 ### Criando um Novo Teste
 
-1. **Consulte:** `guia-decisoes-rapidas.md`
+1. **Planeje:** `template-plano-implementacao.md`
+   - Crie plano estruturado (se 3+ arquivos)
+   - Siga fases: Exploração → Estrutura → Implementação → Documentação → Validação
+   - Use nomenclatura padronizada
+
+2. **Consulte:** `guia-decisoes-rapidas.md`
    - Qual comando de login usar?
    - Preciso criar Page Object?
    - Quais tags usar?
 
-2. **Siga:** `processo-documentacao.md`
+3. **Siga:** `processo-documentacao.md`
    - Crie a documentação obrigatória
    - Use o template padronizado
 
-3. **Valide:** `checklist-validacao-continua.md`
+4. **Valide:** `checklist-validacao-continua.md` e `checklist-anti-padroes.md`
    - Antes de submeter o PR
    - Garanta conformidade com ADRs
+   - Prevenha anti-padrões comuns
 
 ### Modificando um Teste Existente
 
@@ -212,8 +303,9 @@ Este guia fornece instruções passo a passo para criar a mesma estrutura de doc
 
 ### Code Review
 
-1. **Use:** `checklist-validacao-continua.md`
+1. **Use:** `checklist-validacao-continua.md` e `checklist-anti-padroes.md`
    - Valide conformidade com todas as ADRs
+   - Prevenha anti-padrões comuns
    - Verifique documentação quando aplicável
 
 2. **Consulte:** `referencia-comandos-customizados.md`
@@ -237,7 +329,10 @@ docs/referencias/
 ├── guia-decisoes-rapidas.md              # ⭐ Guia principal de referência
 ├── referencia-comandos-customizados.md   # Referência de comandos
 ├── checklist-validacao-continua.md       # Checklist de validação
+├── checklist-anti-padroes.md              # 🚨 Checklist de anti-padrões
 ├── processo-documentacao.md               # Processo de documentação
+├── template-plano-implementacao.md        # 📋 Template de plano
+├── exemplo-implementacao-funcionarios.md # 📖 Exemplo real de implementação
 ├── analise-page-objects-hierarquicos.md # Análise de hierarquia
 ├── aprendizagens-e-licoes.md             # Aprendizados históricos
 └── guia-replicacao-estrutura-documentacao.md # Guia de replicação
@@ -262,6 +357,7 @@ docs/referencias/
 - **ADR-0012:** Documentation of Custom Commands
 - **ADR-0013:** Continuous Validation Checklist
 - **ADR-0014:** Standardized Architectural Documentation Process
+- **ADR-0016:** Planning Before Implementation
 
 ---
 
@@ -272,7 +368,9 @@ docs/referencias/
 - **guia-decisoes-rapidas.md:** Atualizar quando novas dúvidas comuns surgirem
 - **referencia-comandos-customizados.md:** Atualizar quando novos comandos forem criados
 - **checklist-validacao-continua.md:** Atualizar quando novas ADRs forem criadas
+- **checklist-anti-padroes.md:** Atualizar quando novos anti-padrões forem identificados
 - **processo-documentacao.md:** Atualizar quando o processo mudar
+- **template-plano-implementacao.md:** Atualizar quando novos padrões de plano forem identificados
 
 ### Adicionar Novos Documentos
 
@@ -283,5 +381,5 @@ docs/referencias/
 
 ---
 
-**Última atualização:** 2024-12-20  
+**Última atualização:** 2025-01-XX  
 **Status:** ✅ Documentos Ativos e Mantidos

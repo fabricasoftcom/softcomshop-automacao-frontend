@@ -1,6 +1,6 @@
 import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 import listagemVendasLocators from "../../locators/Venda/ListagemVendasLocators";
-import clienteLocators from "../../locators/ClienteLocators";
+import clienteLocators from "../../locators/Cliente/ClienteLocators";
 
 class ListagemVendasPage {
   acessarTelaListagem() {

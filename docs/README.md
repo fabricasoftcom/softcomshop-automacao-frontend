@@ -1,241 +1,137 @@
-# 📌 Testes Automatizados no Cypress
+# 📚 Documentação do Projeto
 
-> 🚀 Este documento lista os testes organizados por módulo.
+Este diretório contém toda a documentação arquitetural, decisões e guias do projeto de automação de testes.
 
-## 🗂️ Balanco
+---
 
-### 📂 Arquivo: `Balanco/balanco.spec.js`
+## 📂 Estrutura
 
-#### 🔹 Suite: Balanco
-- ✅ /
-- ✅ Deve realizar um novo balanco
+### 📋 ADRs (Architecture Decision Records)
+- `adr/` - Decisões arquiteturais importantes do projeto
+- [Ver índice completo](./adr/README.md)
 
-### 📂 Arquivo: `Balanco/reverterBalanco.spec.js`
+### 📝 Documentações de Casos
+- `cases/` - Documentações arquiteturais detalhadas de cada spec
+- [Ver índice completo](./cases/README.md)
 
-#### 🔹 Suite: Reverter Balanço
-- ✅ Deve acessar a tela de balanco e reverter um balanco em andamento
+### 📖 Referências e Guias
+- `referencias/` - Guias práticos e ferramentas de apoio
+- [Ver índice completo](./referencias/README.md)
 
-## 🗂️ cadastro-clientes
+### 📋 Lista de Testes
+- `testes.md` - Inventário completo de todos os testes organizados por módulo
 
-### 📂 Arquivo: `cadastro-clientes/cadastro-cliente.spec.js`
+---
 
-#### 🔹 Suite: Cadastro de cliente
-- ✅ Realizar cadastro de cliente
+## 🚀 Início Rápido
 
-## 🗂️ cadastro-produto
+### Para Desenvolvedores
 
-### 📂 Arquivo: `cadastro-produto/cadastro-produto.spec.js`
-#### Cadastro de produtos
-- Cadastra produto habilitando combo, valida retorno para Dados Cadastrais, verifica a aba Combo zerada e inclui um item via modal.
-- Cadastra produto com o switch "Vender" desativado e garante que o estado permanece desmarcado apos salvar.
-- Edita um produto a partir da listagem, altera a observacao, salva e valida que o valor foi persistido na tela de edicao.
-- ✅ Realizar cadastro de produto valido informando o vinculo fiscal
+1. Leia [Guia de Decisões Rápidas](./referencias/guia-decisoes-rapidas.md) - Guia principal para dúvidas comuns
+2. Consulte [ADRs](./adr/README.md) para entender decisões arquiteturais
+3. Siga [Processo de Documentação](./referencias/processo-documentacao.md) ao criar novos recursos
+4. Consulte [Lista de Testes](./testes.md) para ver todos os testes disponíveis
 
-## 🗂️ debounce-autocomplete
+### Para Revisores
 
-### 📂 Arquivo: `debounce-autocomplete/debounce-autocomplete.spec.js`
+1. Use [Checklist de Validação](./referencias/checklist-validacao-continua.md) durante code review
+2. Valide conformidade com ADRs
+3. Verifique documentação quando aplicável
 
-- ✅ Deve contar as requisições de autocomplete
+---
 
-## 🗂️ financeiro
+## 🎓 Onboarding
 
-### 📂 Arquivo: `financeiro/baixar-despesa.spec.js`
-
-#### 🔹 Suite: Testes de Baixa de Despesas
-- ✅ /
-- ✅ Deve realizar baixa completa e verificar status 
-- ✅ Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status 
-- ✅ Deve realizar baixa parcial (50%) e verificar status 
-- ✅ Deve localizar e clicar no botão 
-- ✅ Deve desfazer baixa e verificar valor pendente restaurado
-- ✅ Deve expandir os detalhes de pagamento e verificar tabela vazia
-
-### 📂 Arquivo: `financeiro/cadastro-conta-corrente.spec.js`
-
-#### 🔹 Suite: Cadastro de Conta Corrente
-- ✅ /
-- ✅ Deve cadastrar uma conta para o banco: ${nome} (Código: ${codigo}) com cobrança bancária
-
-### 📂 Arquivo: `financeiro/cadastro-conta.spec.js`
-
-#### 🔹 Suite: Cadastro de Contas
-- ✅ /
-- ✅ Deve selecionar a Conta Corrente
-- ✅ Deve selecionar a Caixinha
-- ✅ Deve retornar à listagem ao clicar em Voltar
-
-### 📂 Arquivo: `financeiro/detalhes-do-titulo.spec.js`
-
-
-### 📂 Arquivo: `financeiro/edicao-conta-corrente.spec.js`
-
-#### 🔹 Suite: Testes de Edição de Conta Corrente
-- ✅ /
-- ✅ Deve acessar uma conta ativa com nome 
-- ✅ Deve desativar uma conta ativa
-- ✅ Deve alterar o último número da remessa, salvar e validar a alteração
-- ✅ Deve ativar uma conta inativa
-
-### 📂 Arquivo: `financeiro/editarDespesa.spec.js`
-
-#### 🔹 Suite: Edição Completa de Despesa
-- ✅ /
-- ✅ Deve editar completamente uma despesa e salvar
+### Para Novos Desenvolvedores
 
-### 📂 Arquivo: `financeiro/editarReceita.spec.js`
+1. **Leitura obrigatória:**
+   - Este README (visão geral)
+   - [Guia de Decisões Rápidas](./referencias/guia-decisoes-rapidas.md) - Guia principal
+   - [ADRs](./adr/README.md) - Decisões arquiteturais
 
-#### 🔹 Suite: Edição Completa de Receita
-- ✅ /
-- ✅ Deve realizar uma edição completa e salvar a receita
-- ✅ Deve cancelar a edição clicando no botão 
+2. **Leitura recomendada:**
+   - ADRs principais relacionadas ao trabalho
+   - Documentações dos módulos que vai trabalhar
+   - [Processo de Documentação](./referencias/processo-documentacao.md)
 
-### 📂 Arquivo: `financeiro/listagem-conta.spec.js`
+3. **Prática:**
+   - Criar primeiro ADR (com supervisão)
+   - Criar primeira documentação (seguindo template)
+   - Participar de code review usando checklist
 
-#### 🔹 Suite: Testes de Listagem de Contas
-- ✅ /
-- ✅ Deve clicar no botão de novo cadastro e redirecionar para a página de cadastro
+---
 
-### 📂 Arquivo: `financeiro/listagem-contas-a-pagar.spec.js`
+## 🔄 Manutenção
 
-#### 🔹 Suite: Testes de Listagem de Contas a Pagar
-- ✅ /
-- ✅ Deve validar a exibição da tabela de contas a pagar e linhas da tabela
-- ✅ Deve validar a exibição dos totalizadores corretamente
-- ✅ Deve filtrar despesas por período e tipo de data
-- ✅ Deve efetuar pagamento da primeira despesa com status 
-- ✅ Deve abrir a página de novo cadastro de despesa
-- ✅ Deve selecionar todas as linhas da tabela
-- ✅ Deve abrir o dropdown da primeira linha com status 
-- ✅ Deve abrir o dropdown e selecionar a opção 
-- ✅ Deve abrir o dropdown e selecionar a opção 
-- ✅ Deve abrir o dropdown e selecionar a opção 
-- ✅ Deve abrir o dropdown e selecionar a opção 
-- ✅ Não deve cancelar a despesa se a confirmação for cancelada
-- ✅ Não deve excluir a despesa se a confirmação for cancelada
-- ✅ Deve abrir o dropdown na primeira linha com status 
-- ✅ Deve abrir o dropdown e selecionar a opção 
-- ✅ Deve selecionar o período 
-
-### 📂 Arquivo: `financeiro/listagem-contas-a-receber.spec.js`
-
-#### 🔹 Suite: Testes da Listagem de Contas a Receber
-#### 🔹 Suite: Ações de Cadastro
-#### 🔹 Suite: Ações de Baixa e Confirmações
-#### 🔹 Suite: Validações de Campos e Totalizadores
-#### 🔹 Suite: Ações de Dropdown
-#### 🔹 Suite: Exclusão e Confirmações
-#### 🔹 Suite: Cancelamento de Parcelas
-- ✅ /
-- ✅ Deve abrir o modal de novo cadastro ao clicar no botão 
-- ✅ Deve exibir erro ao tentar baixar sem selecionar parcelas
-- ✅ Deve marcar o checkbox da primeira parcela, realizar a baixa e confirmar
-- ✅ Deve exibir o popup de confirmação e cancelar a ação de baixa
-- ✅ Deve validar os totalizadores de valores e rótulos
-- ✅ Deve verificar que os campos estão visíveis na primeira linha
-- ✅ Deve abrir o dropdown de ações e verificar que as opções estão visíveis
-- ✅ Deve validar as opções do dropdown de ações
-- ✅ Deve clicar na opção 
-- ✅ Deve clicar na opção 
-- ✅ Deve clicar na opção 
-- ✅ Deve clicar na opção 
-- ✅ Deve realizar a exclusão com sucesso e validar que o tamanho da tabela diminuiu
-- ✅ Deve cancelar a exclusão e verificar que a parcela permanece na tabela
-- ✅ Deve preencher o motivo, confirmar o cancelamento e verificar o status atualizado
-- ✅ Deve preencher o motivo e cancelar a ação de cancelamento
-- ✅ Deve selecionar o período 
-
-### 📂 Arquivo: `financeiro/novaDespesa.spec.js`
-
-#### 🔹 Suite: Cadastro de Nova Despesa
-- ✅ Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}
-- ✅ /financeiro/contas-a-pagar
-
-### 📂 Arquivo: `financeiro/novaReceita.spec.js`
-
-#### 🔹 Suite: Cadastro de Nova Receita
-- ✅ Deve preencher o formulário de Nova Despesa com Categoria: ${categoria} e Forma de Pagamento: ${formaPagamento}
-- ✅ /financeiro/contas-a-receber
-- ✅ Valida erro ao tentar criar receita com tipo 
-- ✅ /financeiro/contas-a-receber
-
-### 📂 Arquivo: `financeiro/recebimento.spec.js`
-
-#### 🔹 Suite: Testes do Modal de Recebimento
-- ✅ /
-- ✅ Deve verificar os dados principais do modal
-- ✅ Deve preencher todas as informações de pagamento, clicar em voltar e verificar que o status permanece 
-- ✅ Deve preencher as informações de pagamento, salvar e verificar status Pago
-- ✅ Deve preencher as informações de pagamento com baixa parcial de 20% e salvar
-- ✅ Deve localizar e clicar no botão 
-- ✅ Deve expandir os detalhes de pagamento e verificar tabela vazia
-- ✅ Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status 
-
-## 🗂️ login
-
-### 📂 Arquivo: `login/login.spec.js`
-
-#### 🔹 Suite: Login com credenciais validas
-#### 🔹 Suite: Login com credenciais invalidas
-- ✅ Login não deve ser realizado e deve ser apresentado uma mensagem informando que as credenciais são inválidas
-
-## 🗂️ menulateral
-
-### 📂 Arquivo: `menulateral/menuLateralTeste.spec.js`
-
-#### 🔹 Suite: Validação do Menu Lateral do Softcomshop
-- ✅ Deve validar os menus e submenus
-- ✅ /
-- ✅ /
-- ✅ /
-
-## 🗂️ orcamento
-
-### 📂 Arquivo: `orcamento/orcamento-cadastro.spec.js`
-
-#### 🔹 Suite: Cadastro de Novo Orçamento
-- ✅ Deve preencher e salvar um novo orçamento com sucesso
-
-### 📂 Arquivo: `orcamento/orcamento-listagem.spec.js`
-
-#### 🔹 Suite: Testes de Listagem de Orçamento
-- ✅ Deve realizar cadastro de novo orçamento
-
-## 🗂️ relatorio
-
-### 📂 Arquivo: `relatorio/relatorios.spec.js`
-
-#### 🔹 Suite: Acessar relatorios: 
-- ✅ Deve validar os relatorios
-- ✅ /softcomtecnologia/relatorios-gerais
-
-## 🗂️ setup
-
-### 📂 Arquivo: `setup/_beforeConfigPadrao.spec.js`
-
-#### 🔹 Suite: _beforeAll
-#### 🔹 Suite: cypress setup
-- ✅ Configurar sistema Padrao com NFSe
-
-## 🗂️ venda-nfce
-
-### 📂 Arquivo: `venda-nfce/venda-nfce.spec.js`
-
-#### 🔹 Suite: Realizar venda
-- ✅ Realizar venda com sucesso
-
-## 🗂️ vinculo-fiscal
-
-### 📂 Arquivo: `vinculo-fiscal/novocadastrovinculofiscal.spec.js`
-
-#### 🔹 Suite: Cadastro de Novo Vínculo Fiscal
-- ✅ /
-- ✅ Deve preencher o formulário de vínculo fiscal, salvar e validar as informações exibidas
-
-### 📂 Arquivo: `vinculo-fiscal/vinculo-fiscal-listagem.spec.js`
-
-#### 🔹 Suite: Testes de Listagem de Vínculo Fiscal
-- ✅ /
-- ✅ Deve realizar cadastro de novo vínculo fiscal
-- ✅ Deve excluir todos os itens selecionados
-- ✅ Deve editar o primeiro vínculo fiscal da tabela
+### Atualização de ADRs
 
+1. **Quando atualizar:**
+   - Decisão mudou → Atualizar status para "Deprecated" ou "Superseded"
+   - Nova informação relevante → Adicionar na seção "Notes"
+   - Contexto mudou → Atualizar seção "Context"
+
+2. **Como atualizar:**
+   - Editar o arquivo do ADR
+   - Atualizar status se necessário
+   - Adicionar referência ao novo ADR se houver supersedência
+   - Atualizar README dos ADRs
+
+### Criação de Novos ADRs
+
+1. **Quando criar:**
+   - Decisão arquitetural significativa
+   - Escolha de tecnologia importante
+   - Padrão que afeta múltiplas partes do projeto
+   - Decisão que pode ser questionada no futuro
+
+2. **Processo:**
+   - Criar arquivo seguindo nomenclatura: `XXXX-descriptive-title.md`
+   - Usar próximo número sequencial
+   - Seguir template padrão
+   - Atualizar README dos ADRs
+   - Referenciar em código/documentação relacionada
+
+### Atualização de Documentações
+
+1. **Quando atualizar:**
+   - Código relacionado mudou significativamente
+   - Novos padrões foram aplicados
+   - ADRs relacionadas mudaram
+
+2. **Processo:**
+   - Identificar o que mudou
+   - Atualizar seções relevantes
+   - Manter histórico se necessário
+   - Revisar referências a ADRs
+
+---
+
+## 📊 Métricas e Indicadores
+
+### Indicadores de Qualidade
+
+- **Cobertura de ADRs:** 16 ADRs documentadas
+- **Documentações:** 54 documentações de casos
+- **Atualização:** Verificar data da última atualização de cada ADR
+- **Referências:** Número de referências a ADRs no código
+
+### Revisão Periódica
+
+- **Mensal:** Revisar ADRs antigas (>6 meses sem atualização)
+- **Trimestral:** Revisar estrutura de documentação
+- **Semestral:** Avaliar necessidade de novos guias/referências
+
+---
+
+## 🔗 Links Importantes
+
+- [ADRs](./adr/README.md) - Todas as decisões arquiteturais
+- [Documentações](./cases/README.md) - Documentações detalhadas
+- [Referências](./referencias/README.md) - Guias e ferramentas
+- [Lista de Testes](./testes.md) - Inventário completo de testes
+- [Guia de Replicação](./referencias/guia-replicacao-estrutura-documentacao.md) - Como replicar esta estrutura em outros projetos
+
+---
+
+**Última atualização:** 2025-01-XX  
+**Mantido por:** Equipe de Automação

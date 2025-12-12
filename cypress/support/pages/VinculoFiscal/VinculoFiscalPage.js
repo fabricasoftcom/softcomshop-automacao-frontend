@@ -1,4 +1,4 @@
-import VinculoFiscalPageLocators from "../../locators/VinculoFiscalPageLocators";
+import VinculoFiscalPageLocators from "../../locators/VinculoFiscal/VinculoFiscalPageLocators";
 
 class VinculoFiscalPage {
   acessarMenuDetalhesFiscais() {

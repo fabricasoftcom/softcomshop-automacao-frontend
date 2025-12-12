@@ -62,8 +62,8 @@ const PromocoesCadastroLocators = {
     // **Modal SweetAlert - Produto já existe na promoção**
     sweetAlertModalProdutoExistente: '.sweet-alert, .swal2-container', // Modal SweetAlert que aparece quando produto já existe
     sweetAlertMensagemProdutoExistente: 'h2:contains("Você já possui itens lançados nesta promoção")', // Mensagem do modal
-    sweetAlertBtnApagarEAdicionar: 'button:contains("Apagar e Adicionar")', // Botão "Apagar e Adicionar"
-    sweetAlertBtnAdicionar: 'button:contains("Adicionar")', // Botão "Adicionar"
+    sweetAlertBtnApagarEAdicionar: '.sweet-alert button:contains("Apagar e Adicionar"), .swal2-container button:contains("Apagar e Adicionar")', // Botão "Apagar e Adicionar"
+    sweetAlertBtnAdicionar: '.sweet-alert button:contains("Adicionar"), .swal2-container button:contains("Adicionar")', // Botão "Adicionar" dentro do modal SweetAlert
 
     // **Toast de sucesso - Adição de produto**
     toastSucessoItem: '.alert-success, .toast-success', // Toast de sucesso ao adicionar item

@@ -1,5 +1,5 @@
 import RelatorioCaixaPage from "../../support/pages/relatorios/RelatorioCaixaPage";
-import RelatorioCaixaLocators from "../../support/locators/RelatorioCaixaLocators";
+import RelatorioCaixaLocators from "../../support/locators/Relatorios/RelatorioCaixaLocators";
 
 const formatDateTime = (date, time) => {
   const zeroPad = (value) => String(value).padStart(2, '0');

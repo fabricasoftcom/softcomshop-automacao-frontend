@@ -1,4 +1,4 @@
-import OrcamentoCadastroLocators from "../../locators/OrcamentoCadastroLocators";
+import OrcamentoCadastroLocators from "../../locators/Orcamento/OrcamentoCadastroLocators";
 
 class OrcamentoCadastroPage {
     visit() {

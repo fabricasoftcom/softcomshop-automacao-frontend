@@ -1,4 +1,4 @@
-import ListagemContasLocators from "../../locators/ListagemContasLocators";
+import ListagemContasLocators from "../../locators/Financeiro/ListagemContasLocators";
 import MenulateralFinanceiroPage from "../menulateral/MenulateralFinanceiroPage";
 
 class ListagemContasPage {
@@ -95,6 +95,72 @@ class ListagemContasPage {
             cy.log(`Conta inativa selecionada para edição: ${nomeConta}`);
             return false; // Encerra a iteração após encontrar a conta válida
         }
+    });
+  }
+
+  /**
+   * Verifica se há contas bancárias disponíveis na tabela
+   * @returns {Cypress.Chainable<boolean>} true se houver contas, false caso contrário
+   */
+  verificarSeHaContasBancarias() {
+    return cy.get(ListagemContasLocators.tabelaLinhas).then(($linhas) => {
+      if ($linhas.length === 0) {
+        return false;
+      }
+      // Verifica se há pelo menos uma conta com "banco" no nome
+      let temContaBanco = false;
+      $linhas.each((index, row) => {
+        const nomeConta = Cypress.$(row).find(ListagemContasLocators.colunaNomeConta).text().trim();
+        if (nomeConta.toLowerCase().includes('banco')) {
+          temContaBanco = true;
+          return false; // Encerra o loop
+        }
+      });
+      return temContaBanco;
+    });
+  }
+
+  /**
+   * Verifica se há contas bancárias ativas disponíveis
+   * @returns {Cypress.Chainable<boolean>} true se houver contas ativas, false caso contrário
+   */
+  verificarSeHaContasBancariasAtivas() {
+    return cy.get(ListagemContasLocators.tabelaLinhas).then(($linhas) => {
+      if ($linhas.length === 0) {
+        return false;
+      }
+      let temContaAtiva = false;
+      $linhas.each((index, row) => {
+        const nomeConta = Cypress.$(row).find(ListagemContasLocators.colunaNomeConta).text().trim();
+        const statusConta = Cypress.$(row).find(ListagemContasLocators.colunaStatus).text().trim();
+        if (nomeConta.toLowerCase().includes('banco') && statusConta.toLowerCase().includes('ativa')) {
+          temContaAtiva = true;
+          return false; // Encerra o loop
+        }
+      });
+      return temContaAtiva;
+    });
+  }
+
+  /**
+   * Verifica se há contas bancárias inativas disponíveis
+   * @returns {Cypress.Chainable<boolean>} true se houver contas inativas, false caso contrário
+   */
+  verificarSeHaContasBancariasInativas() {
+    return cy.get(ListagemContasLocators.tabelaLinhas).then(($linhas) => {
+      if ($linhas.length === 0) {
+        return false;
+      }
+      let temContaInativa = false;
+      $linhas.each((index, row) => {
+        const nomeConta = Cypress.$(row).find(ListagemContasLocators.colunaNomeConta).text().trim();
+        const statusConta = Cypress.$(row).find(ListagemContasLocators.colunaStatus).text().trim();
+        if (nomeConta.toLowerCase().includes('banco') && statusConta.toLowerCase().includes('inativa')) {
+          temContaInativa = true;
+          return false; // Encerra o loop
+        }
+      });
+      return temContaInativa;
     });
   }
 

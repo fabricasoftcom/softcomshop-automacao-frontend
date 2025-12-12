@@ -1,5 +1,5 @@
 // MenulateralFinanceiroPage.js
-import MenulateralFinanceiroLocators from "../../locators/MenulateralFinanceiroLocators";
+import MenulateralFinanceiroLocators from "../../locators/Menu/MenulateralFinanceiroLocators";
 
 class MenulateralFinanceiroPage {
 

@@ -1,8 +1,36 @@
 # 📚 Guia de Replicação: Estrutura de Documentação, Regras e ADRs
 
-**Versão:** 1.0  
-**Data:** 2024-12-20  
+**Versão:** 2.0  
+**Data:** 2025-01-XX  
 **Status:** ✅ Guia de Referência
+
+---
+
+## 📝 Changelog
+
+### Versão 2.0 (2025-01-XX)
+
+**Melhorias e Adições:**
+
+- ✅ **Passo 4 Expandido:** Template completo do `.cursor/rules/architeture.mdc` incluindo todas as seções avançadas
+- ✅ **Passo 4.1 Adicionado:** Mode Selection Guide com Automatic Evaluation Criteria, Mode Selection Rules, Decision Flow e Quick Reference
+- ✅ **Passo 4.2 Adicionado:** Automatic Test Execution com regras de execução automática, identificação de testes afetados e exceções
+- ✅ **Seção Best Practices Detalhadas:** Locators Best Practices, Code Simplification Best Practices, Custom Commands Documentation, Page Object Hierarchy Guidelines
+- ✅ **Seção Adaptação Expandida:** Exemplos de como adaptar Mode Selection Guide e Automatic Test Execution para diferentes tipos de projetos (Testes, Desenvolvimento, Infraestrutura)
+- ✅ **Referências a Múltiplas ADRs:** Template agora referencia todas as 16 ADRs do projeto de referência (não apenas ADR-0001)
+
+**Baseado em:**
+- Projeto de referência: IAsoftcomshop-automacao-frontend
+- ADRs implementadas: 16 ADRs documentadas
+- Melhores práticas validadas em produção
+
+### Versão 1.0 (2024-12-20)
+
+- Versão inicial do guia
+- Estrutura básica de diretórios
+- Template básico para `.cursor/rules/architeture.mdc`
+- Processo de criação de ADRs
+- Guias de referência básicos
 
 ---
 
@@ -171,9 +199,33 @@ Each ADR follows this structure:
 
 **Arquivo:** `.cursor/rules/architeture.mdc`
 
+> **Nota:** Este passo foi expandido na versão 2.0 do guia para incluir todas as seções avançadas implementadas no projeto de referência, incluindo Mode Selection Guide, Automatic Test Execution, Best Practices detalhadas e referências a múltiplas ADRs.
+
+**Template Completo:**
+
 ```markdown
 ---
 alwaysApply: true
+---
+
+## Table of Contents
+
+- [Architecture Decision Records](#architecture-decision-records)
+- [Mode Selection Guide](#mode-selection-guide)
+  - [Automatic Test Execution After Implementation](#automatic-test-execution-after-implementation)
+- [Directory Structure](#directory-structure)
+- [Main Configuration](#main-configuration)
+- [Execution Flows](#execution-flows)
+- [Data Flow](#data-flow)
+- [Implementation Patterns](#implementation-patterns)
+- [Best Practices](#best-practices)
+  - [Locators Best Practices](#locators-best-practices)
+  - [Code Simplification Best Practices](#code-simplification-best-practices)
+- [Documentation Process](#documentation-process)
+- [Quick Decision Guide](#quick-decision-guide)
+- [Validation and Quality](#validation-and-quality)
+- [Custom Commands](#custom-commands)
+
 ---
 
 ## Architecture Decision Records
@@ -182,24 +234,206 @@ This project uses **Architecture Decision Records (ADRs)** to document architect
 
 **Key ADRs:**
 - [ADR-0001](../docs/adr/0001-record-architecture-decisions.md): Record Architecture Decisions
+- [ADR-0002](../docs/adr/0002-use-page-object-pattern.md): Page Object Pattern
+- [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md): Separate Locators
+- [ADR-0004](../docs/adr/0004-use-cy-session-for-login-persistence.md): Session Persistence
+- [ADR-0005](../docs/adr/0005-use-allure-for-test-reporting.md): Allure Reporting
+- [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md): Mandatory Documentation
+- [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md): Separate Specs
+- [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md): Page Object Hierarchy
+- [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md): Faker for Dynamic Data
+- [ADR-0010](../docs/adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
+- [ADR-0011](../docs/adr/0011-use-conditional-intercepts.md): Conditional Intercepts
+- [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md): Documentation of Custom Commands
+- [ADR-0013](../docs/adr/0013-continuous-validation-checklist.md): Continuous Validation Checklist
+- [ADR-0014](../docs/adr/0014-standardized-architectural-documentation-process.md): Standardized Architectural Documentation Process
+- [ADR-0015](../docs/adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
+- [ADR-0016](../docs/adr/0016-planning-before-implementation.md): Planning Before Implementation
+
+---
+
+## Mode Selection Guide
+
+> **Context**: See [ADR-0016](../docs/adr/0016-planning-before-implementation.md) for complete decision
+
+**When receiving a task, automatically evaluate and suggest the appropriate mode:**
+
+### Automatic Evaluation Criteria:
+
+1. **Complexity**: Count files to modify, assess logic complexity
+2. **Clarity**: Are requirements clear? Any ambiguity?
+3. **Dependencies**: Are there dependencies between tasks?
+4. **Type**: Implementation, consultation, or execution?
+
+### Mode Selection Rules:
+
+**Use Plan Mode when:**
+- ✅ 3+ files need modification
+- ✅ Requirements are unclear or ambiguous
+- ✅ Multiple dependencies between tasks
+- ✅ New patterns or architectures
+- ✅ Significant refactoring
+- ✅ Features affecting multiple modules
+
+**Use Agent Mode when:**
+- ✅ Single file modification
+- ✅ Clear, straightforward task
+- ✅ Approved plan exists
+- ✅ Simple bug fix or trivial change
+- ✅ Following existing pattern
+- ✅ Adding simple method to existing class
+
+**Use Ask Mode when:**
+- ✅ Question about existing code
+- ✅ Understanding how something works
+- ✅ Reviewing implementation
+- ✅ Clarifying ADRs or patterns
+- ✅ No code changes needed
+
+### Decision Flow:
+
+```
+Task Received
+    │
+    ├─ Is it a question/consultation only?
+    │   └─ YES → Suggest Ask Mode
+    │
+    ├─ Is there an approved plan?
+    │   └─ YES → Suggest Agent Mode (execute plan)
+    │
+    ├─ Is it a simple task (1 file, clear fix)?
+    │   └─ YES → Suggest Agent Mode
+    │
+    └─ Is it complex (3+ files, unclear, dependencies)?
+        └─ YES → Suggest Plan Mode → After approval → Agent Mode
+```
+
+### Quick Reference:
+
+| Situation | Suggested Mode | Next Step |
+|-----------|----------------|-----------|
+| Complex feature (3+ files) | Plan | Create plan, get approval |
+| Unclear requirements | Plan | Ask questions, clarify |
+| Multiple dependencies | Plan | Map dependencies |
+| Simple bug fix (1 file) | Agent | Implement directly |
+| Typo/formatting | Agent | Fix directly |
+| Approved plan exists | Agent | Execute plan |
+| Question only | Ask | Answer question |
+| Review code | Ask | Provide review |
+
+**Always reference ADR-0016 when suggesting mode selection.**
+
+### Automatic Test Execution After Implementation
+
+**After completing any implementation or fix in Agent Mode, ALWAYS:**
+
+1. **Identify the affected test spec(s):**
+   - If modifying a Page Object → find the spec that uses it
+   - If modifying a spec → execute that spec directly
+   - If modifying shared code (Locators, Commands) → execute related specs
+   - If modifying config files → execute a representative test to validate
+
+2. **Execute the test automatically:**
+   - Use appropriate test command for your framework
+   - Wait for completion and verify results
+
+3. **Report results:**
+   - ✅ If tests pass: Confirm implementation successful
+   - ❌ If tests fail: Analyze errors, fix issues, and re-run tests before considering task complete
+
+**Exceptions (when NOT to run tests):**
+- Documentation-only changes (`.md` files)
+- Comments or formatting-only changes
+- Changes to non-test files that don't affect test behavior
+- Changes to ADR files or documentation
+
+**IMPORTANT:** Never consider an implementation complete until the affected tests pass successfully.
 
 ---
 
 ## Directory Structure
 
-[Descreva a estrutura de diretórios do seu projeto]
+[Descreva a estrutura de diretórios do seu projeto, organizada por funcionalidade]
 
 ---
 
 ## Main Configuration
 
-[Descreva configurações principais do projeto]
+[Descreva configurações principais do projeto: frameworks, ferramentas, padrões]
+
+---
+
+## Execution Flows
+
+[Descreva fluxos de execução: scripts npm, comandos principais, pipelines]
+
+---
+
+## Data Flow
+
+[Descreva fluxo de dados: fixtures, factories, sessões, autenticação]
 
 ---
 
 ## Implementation Patterns
 
-[Descreva padrões de implementação do projeto]
+[Descreva padrões de implementação específicos do projeto]
+
+---
+
+## Best Practices
+
+### Locators Best Practices
+
+> **Context**: See [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md) and [ADR-0015](../docs/adr/0015-prioritize-ids-and-context-in-locators.md)
+
+**CRITICAL RULES for creating locators:**
+
+1. **ALWAYS inspect DOM before creating locators**
+2. **PRIORITIZE IDs over other selectors**
+3. **USE context when necessary** (modals, panels, sections)
+4. **VALIDATE locators before using**
+5. **AVOID generic selectors**
+
+**Validation checklist:**
+- [ ] Locator uses ID when available?
+- [ ] Locator has appropriate context?
+- [ ] Locator was validated in browser?
+- [ ] Locator doesn't capture incorrect elements?
+
+### Code Simplification Best Practices
+
+**CRITICAL RULES:**
+
+1. **ELIMINATE code duplication**
+2. **REMOVE unused code**
+3. **CENTRALIZE selectors** (enforces ADR-0003)
+4. **AVOID fixed waits** (use conditional validations)
+5. **MANAGE complexity** (constants for magic numbers)
+
+**Red Flags:**
+- ❌ Duplicate methods with similar logic
+- ❌ Multiple fixed waits in code
+- ❌ Hardcoded selectors
+- ❌ Very long methods (>50 lines)
+- ❌ Unused imports
+- ❌ Magic numbers without constants
+
+---
+
+## Documentation Process
+
+> **Context**: See [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md) and [ADR-0014](../docs/adr/0014-standardized-architectural-documentation-process.md)
+
+**When creating a new feature/test, you MUST:**
+
+1. Create implementation files
+2. **Add to configuration files** (if applicable)
+3. **Create documentation** (MANDATORY)
+4. **Update indexes** (MANDATORY)
+5. Apply tags/filters (if applicable)
+
+**For complete documentation process, see:** `docs/referencias/processo-documentacao.md`
 
 ---
 
@@ -222,16 +456,210 @@ For detailed architecture examples, see:
 
 ---
 
-## Continuous Validation Checklist
+## Validation and Quality
+
+### Continuous Validation Checklist
+
+> **Context**: See [ADR-0013](../docs/adr/0013-continuous-validation-checklist.md)
 
 **Use this checklist during code review to ensure continuous ADR compliance:**
 
-1. **ADR-0001 (ADRs):**
-   - [ ] Significant decisions documented as ADRs
-   - [ ] ADRs referenced in related code
+1. **ADRs:** Significant decisions documented?
+2. **Patterns:** Following established patterns?
+3. **Documentation:** Complete and updated?
+4. **Code Quality:** No duplication, unused code removed?
+5. **Best Practices:** Locators, simplification, complexity managed?
 
 **Complete Checklist:** `docs/referencias/checklist-validacao-continua.md`
+
+---
+
+## Custom Commands
+
+> **Context**: See [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md)
+
+**When creating new commands:**
+- ✅ Document in reference file
+- ✅ Add usage examples
+- ✅ Reference related ADRs
+- ✅ Update command reference when modifying
+
+**Complete Reference:** `docs/referencias/referencia-comandos-customizados.md`
 ```
+
+> **Nota:** Este template é um exemplo completo baseado no projeto de referência. Adapte as seções conforme a necessidade do seu projeto, mantendo a estrutura e referências às ADRs relevantes.
+
+### Passo 4.1: Adicionar Mode Selection Guide (Opcional mas Recomendado)
+
+> **Context**: Esta seção é baseada na [ADR-0016](../docs/adr/0016-planning-before-implementation.md) e é altamente recomendada para projetos que usam ferramentas de IA assistente como Cursor.
+
+**Objetivo:** Implementar um guia de seleção de modo que ajuda a determinar quando usar Plan Mode, Agent Mode ou Ask Mode ao trabalhar com assistentes de IA.
+
+**Quando adicionar:**
+- ✅ Projeto usa Cursor ou ferramentas similares com modos diferentes
+- ✅ Equipe precisa de orientação sobre quando planejar vs. implementar diretamente
+- ✅ Há necessidade de padronizar o processo de desenvolvimento
+
+**Como implementar:**
+
+1. **Criar ADR sobre Planning Before Implementation** (se ainda não existir)
+   - Documentar a decisão de usar planejamento para features complexas
+   - Referenciar exemplos de sucesso
+
+2. **Adicionar seção no `.cursor/rules/architeture.mdc`:**
+   - Automatic Evaluation Criteria
+   - Mode Selection Rules
+   - Decision Flow visual
+   - Quick Reference Table
+
+3. **Adaptar para seu contexto:**
+   - Ajustar critérios de complexidade conforme seu projeto
+   - Adaptar exemplos para sua linguagem/framework
+   - Incluir referências às suas ADRs relevantes
+
+**Exemplo de seção para adicionar:**
+
+```markdown
+## Mode Selection Guide
+
+> **Context**: See [ADR-0016](../docs/adr/0016-planning-before-implementation.md) for complete decision
+
+**When receiving a task, automatically evaluate and suggest the appropriate mode:**
+
+### Automatic Evaluation Criteria:
+
+1. **Complexity**: Count files to modify, assess logic complexity
+2. **Clarity**: Are requirements clear? Any ambiguity?
+3. **Dependencies**: Are there dependencies between tasks?
+4. **Type**: Implementation, consultation, or execution?
+
+### Mode Selection Rules:
+
+**Use Plan Mode when:**
+- ✅ 3+ files need modification
+- ✅ Requirements are unclear or ambiguous
+- ✅ Multiple dependencies between tasks
+- ✅ New patterns or architectures
+- ✅ Significant refactoring
+- ✅ Features affecting multiple modules
+
+**Use Agent Mode when:**
+- ✅ Single file modification
+- ✅ Clear, straightforward task
+- ✅ Approved plan exists
+- ✅ Simple bug fix or trivial change
+- ✅ Following existing pattern
+- ✅ Adding simple method to existing class
+
+**Use Ask Mode when:**
+- ✅ Question about existing code
+- ✅ Understanding how something works
+- ✅ Reviewing implementation
+- ✅ Clarifying ADRs or patterns
+- ✅ No code changes needed
+
+### Decision Flow:
+
+```
+Task Received
+    │
+    ├─ Is it a question/consultation only?
+    │   └─ YES → Suggest Ask Mode
+    │
+    ├─ Is there an approved plan?
+    │   └─ YES → Suggest Agent Mode (execute plan)
+    │
+    ├─ Is it a simple task (1 file, clear fix)?
+    │   └─ YES → Suggest Agent Mode
+    │
+    └─ Is it complex (3+ files, unclear, dependencies)?
+        └─ YES → Suggest Plan Mode → After approval → Agent Mode
+```
+
+**Always reference ADR-0016 when suggesting mode selection.**
+```
+
+**Benefícios:**
+- Reduz retrabalho e iterações
+- Clarifica requisitos antes da implementação
+- Acelera implementações complexas
+- Padroniza processo de desenvolvimento
+
+**Referências:**
+- [ADR-0016](../docs/adr/0016-planning-before-implementation.md): Planning Before Implementation
+- Seção Mode Selection Guide no template do Passo 4
+
+---
+
+### Passo 4.2: Adicionar Automatic Test Execution (Opcional mas Recomendado)
+
+> **Context**: Esta seção garante que implementações sejam validadas automaticamente através de testes, reduzindo bugs e melhorando qualidade.
+
+**Objetivo:** Implementar regra de execução automática de testes após implementações para garantir que mudanças não quebrem funcionalidades existentes.
+
+**Quando adicionar:**
+- ✅ Projeto tem testes automatizados
+- ✅ Equipe precisa garantir que mudanças não quebrem testes existentes
+- ✅ Há necessidade de validação automática após implementação
+
+**Como implementar:**
+
+1. **Adicionar seção no `.cursor/rules/architeture.mdc`:**
+   - Regra de identificar testes afetados
+   - Comandos para executar testes
+   - Exceções (quando NÃO executar)
+   - Regra: nunca considerar completo sem testes passando
+
+2. **Adaptar para seu contexto:**
+   - Ajustar comandos de teste conforme seu framework
+   - Definir exceções específicas do seu projeto
+   - Incluir exemplos de comandos de teste
+
+**Exemplo de seção para adicionar:**
+
+```markdown
+### Automatic Test Execution After Implementation
+
+**After completing any implementation or fix in Agent Mode, ALWAYS:**
+
+1. **Identify the affected test spec(s):**
+   - If modifying a Page Object → find the spec that uses it
+   - If modifying a spec → execute that spec directly
+   - If modifying shared code (Locators, Commands) → execute related specs
+   - If modifying config files → execute a representative test to validate
+
+2. **Execute the test automatically:**
+   - Use appropriate test command for your framework
+   - Examples:
+     - JavaScript/Node: `npm test -- [spec-file]`
+     - Python: `pytest [test-file]`
+     - Java: `mvn test -Dtest=[TestClass]`
+   - Wait for completion and verify results
+
+3. **Report results:**
+   - ✅ If tests pass: Confirm implementation successful
+   - ❌ If tests fail: Analyze errors, fix issues, and re-run tests before considering task complete
+
+**Exceptions (when NOT to run tests):**
+- Documentation-only changes (`.md` files)
+- Comments or formatting-only changes
+- Changes to non-test files that don't affect test behavior
+- Changes to ADR files or documentation
+
+**IMPORTANT:** Never consider an implementation complete until the affected tests pass successfully.
+```
+
+**Benefícios:**
+- Detecta bugs imediatamente após implementação
+- Reduz tempo de debugging
+- Garante qualidade do código
+- Previne regressões
+
+**Referências:**
+- Seção Automatic Test Execution no template do Passo 4
+- Boas práticas de Continuous Integration
+
+---
 
 ### Passo 5: Criar Guia de Decisões Rápidas
 
@@ -686,6 +1114,149 @@ Proposed | Accepted | Deprecated | Superseded
 
 ---
 
+## 📚 Best Practices Detalhadas
+
+Esta seção descreve práticas avançadas que podem ser implementadas no projeto para melhorar qualidade, manutenibilidade e consistência do código.
+
+### Locators Best Practices
+
+> **Context**: Baseado em [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md) e [ADR-0015](../docs/adr/0015-prioritize-ids-and-context-in-locators.md)
+
+**Quando aplicar:**
+- ✅ Projetos com testes automatizados (E2E, integração)
+- ✅ Projetos que interagem com interfaces (web, mobile)
+- ✅ Necessidade de manter seletores estáveis e manuteníveis
+
+**Práticas principais:**
+
+1. **SEMPRE inspecionar DOM antes de criar locators**
+   - Abrir navegador e navegar até a tela
+   - Usar DevTools para inspecionar elementos
+   - Copiar IDs e classes diretamente do DOM
+   - Nunca assumir estrutura DOM sem inspeção
+
+2. **PRIORIZAR IDs sobre outros seletores**
+   - IDs são únicos e estáveis
+   - IDs são mais rápidos que classes
+   - Sempre usar IDs quando disponíveis
+
+3. **USAR contexto quando necessário**
+   - Modais: `.modal #elemento`
+   - Painéis: `.painel #elemento`
+   - Seções: `.secao #elemento`
+   - Previne capturar elementos errados
+
+4. **VALIDAR locators antes de usar**
+   - Testar no console do navegador: `document.querySelector('seu-locator')`
+   - Verificar que encontra o elemento correto
+   - Verificar que não encontra elementos incorretos
+
+5. **EVITAR seletores genéricos**
+   - ❌ Não usar: `input[id^="auto"]` (muito genérico)
+   - ❌ Não usar: `input[placeholder*="Preço"]` (frágil, depende de texto)
+   - ✅ Usar: `.modal #auto_produto_id` (ID específico com contexto)
+
+**Checklist de validação:**
+- [ ] Locator usa ID quando disponível?
+- [ ] Locator tem contexto apropriado (modal, painel)?
+- [ ] Locator foi validado no navegador?
+- [ ] Locator não captura elementos incorretos?
+- [ ] Locator não é muito genérico?
+
+**Referências:**
+- [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md): Separate Locators
+- [ADR-0015](../docs/adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context
+
+### Code Simplification Best Practices
+
+**Quando aplicar:**
+- ✅ Qualquer projeto de desenvolvimento
+- ✅ Código com duplicação ou complexidade excessiva
+- ✅ Necessidade de melhorar manutenibilidade
+
+**Práticas principais:**
+
+1. **ELIMINAR duplicação de código**
+   - Consolidar métodos similares em um único
+   - Extrair lógica comum para métodos reutilizáveis
+   - Usar constantes para números mágicos
+   - Evitar validações redundantes
+
+2. **REMOVER código não utilizado**
+   - Remover métodos não utilizados após verificação
+   - Remover imports não utilizados
+   - Limpar código morto regularmente
+   - Código morto é ruído que reduz legibilidade
+
+3. **CENTRALIZAR seletores** (aplica ADR-0003)
+   - Nunca hardcodear seletores no código
+   - Todos os seletores devem estar em arquivos de Locators
+   - Seletores longos/complexos devem ser movidos para locators
+   - Seletores hardcoded são bombas-relógio - centralize-os
+
+4. **EVITAR waits fixos**
+   - Não usar `cy.wait(2000)` ou similar no código
+   - Usar validações condicionais (`.should('be.visible')`)
+   - Aproveitar mecanismo de retry automático
+   - Waits fixos são code smell - use waits condicionais
+
+5. **GERENCIAR complexidade**
+   - Métodos não devem ser excessivamente longos (>50 linhas merece revisão)
+   - Usar constantes para números mágicos
+   - Código deve ser legível e fácil de entender
+   - Métodos devem ter responsabilidade única
+
+**Red Flags:**
+- ❌ Métodos duplicados com lógica similar
+- ❌ Múltiplos waits fixos no código
+- ❌ Seletores hardcoded
+- ❌ Métodos muito longos (>50 linhas)
+- ❌ Imports não utilizados
+- ❌ Números mágicos sem constantes
+
+**Referências:**
+- Lições aprendidas de simplificação de código
+- [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md): Separate Locators
+
+### Custom Commands Documentation
+
+> **Context**: Baseado em [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md)
+
+**Quando aplicar:**
+- ✅ Projetos com comandos/funções customizadas
+- ✅ Necessidade de documentar utilitários reutilizáveis
+- ✅ Múltiplos desenvolvedores usando os mesmos comandos
+
+**Práticas:**
+- ✅ Documentar todos os comandos customizados
+- ✅ Adicionar exemplos de uso
+- ✅ Referenciar ADRs relacionadas
+- ✅ Atualizar referência quando modificar
+
+**Referências:**
+- [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md): Documentation of Custom Commands
+
+### Page Object Hierarchy Guidelines
+
+> **Context**: Baseado em [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md)
+
+**Quando usar hierarquia:**
+- ✅ Módulo tem 3+ variantes com funcionalidade comum significativa
+- ✅ Métodos comuns representam >30% dos métodos totais
+- ✅ Variantes compartilham workflows complexos
+- ✅ Manutenção de código comum é difícil sem hierarquia
+
+**Quando NÃO usar hierarquia:**
+- ❌ Apenas 1-2 variantes existem
+- ❌ Variantes são muito diferentes
+- ❌ Métodos comuns são mínimos (<30% dos métodos totais)
+- ❌ Hierarquia adiciona mais complexidade que valor
+
+**Referências:**
+- [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md): Use Page Object Hierarchy
+
+---
+
 ## 🎯 Adaptação para Diferentes Tipos de Projetos
 
 ### Para Projetos de Testes Automatizados
@@ -694,17 +1265,47 @@ Proposed | Accepted | Deprecated | Superseded
 - **Documentações:** Arquitetura de cada spec/teste
 - **Referências:** Comandos customizados, padrões de teste, guias de locators
 
+**Adaptação de Mode Selection Guide:**
+- **Plan Mode:** Para criar novos módulos de teste, refatorar Page Objects, adicionar múltiplos specs
+- **Agent Mode:** Para adicionar um novo teste em spec existente, corrigir locator, atualizar fixture
+- **Ask Mode:** Para entender padrão de Page Object, consultar ADR sobre locators
+
+**Adaptação de Automatic Test Execution:**
+- Executar spec específico após modificar Page Object
+- Executar suite de testes relacionada após modificar comando customizado
+- Exemplo: `npm test -- --spec "cypress/e2e/modulo/spec.spec.js"`
+
 ### Para Projetos de Desenvolvimento
 
 - **ADRs comuns:** Framework escolhido, Padrões de código, Estrutura de pastas, Gerenciamento de estado
 - **Documentações:** Arquitetura de features/módulos
 - **Referências:** Padrões de código, guias de componentes, boas práticas
 
+**Adaptação de Mode Selection Guide:**
+- **Plan Mode:** Para criar nova feature com múltiplos componentes, refatorar arquitetura, adicionar novo módulo
+- **Agent Mode:** Para adicionar método em componente existente, corrigir bug simples, atualizar estilo
+- **Ask Mode:** Para entender padrão de componente, consultar ADR sobre estrutura
+
+**Adaptação de Automatic Test Execution:**
+- Executar testes unitários do componente modificado
+- Executar testes de integração após modificar serviço compartilhado
+- Exemplo: `npm test -- ComponentName.test.js` ou `pytest tests/test_service.py`
+
 ### Para Projetos de Infraestrutura
 
 - **ADRs comuns:** Tecnologias de deploy, Estrutura de ambientes, Monitoramento
 - **Documentações:** Arquitetura de infraestrutura, processos de deploy
 - **Referências:** Guias de operação, troubleshooting, manutenção
+
+**Adaptação de Mode Selection Guide:**
+- **Plan Mode:** Para criar nova infraestrutura, modificar pipeline de CI/CD, adicionar novo ambiente
+- **Agent Mode:** Para atualizar configuração simples, corrigir script de deploy, ajustar variável de ambiente
+- **Ask Mode:** Para entender processo de deploy, consultar ADR sobre infraestrutura
+
+**Adaptação de Automatic Test Execution:**
+- Validar configuração após modificar arquivo de infraestrutura
+- Executar testes de validação após modificar pipeline
+- Exemplo: `terraform validate` ou `ansible-playbook --check`
 
 ---
 

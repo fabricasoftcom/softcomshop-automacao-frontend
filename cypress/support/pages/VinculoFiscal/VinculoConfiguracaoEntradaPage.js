@@ -1,4 +1,4 @@
-import VinculoConfiguracaoEntradaLocators from '../../locators/VinculoConfiguracaoEntradaLocators';
+import VinculoConfiguracaoEntradaLocators from '../../locators/VinculoFiscal/VinculoConfiguracaoEntradaLocators';
 
 class VinculoConfiguracaoEntradaPage {
     /**

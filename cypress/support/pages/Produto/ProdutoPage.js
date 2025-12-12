@@ -1,5 +1,5 @@
 import listagemprodutopage from "./listagemprodutopage";
-import ProdutoLocators from "../../locators/ProdutoLocators";
+import ProdutoLocators from "../../locators/Produto/ProdutoLocators";
 
 const formatDecimal = (value, precision = 2) =>
   value.toFixed(precision).replace(".", ",");

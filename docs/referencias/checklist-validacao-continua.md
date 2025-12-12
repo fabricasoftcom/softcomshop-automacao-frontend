@@ -83,6 +83,16 @@ cy.get('#nome').type('João');
   - [ ] Locator foi testado no browser console
   - [ ] Locator não captura elementos incorretos
 
+- [ ] **Seletor não retorna múltiplos elementos?**
+  - [ ] Quando seletor genérico retorna múltiplos, usa contexto próximo a elemento único
+  - [ ] Não usa `.first()` genérico sem contexto apropriado
+  - [ ] Exemplo: `cy.contains('h5', 'Título').parent().within(() => { cy.get('a[href="#"]').first().click(); })`
+
+- [ ] **Locators não usam `:has()`?**
+  - [ ] Locators são seletores CSS válidos (Cypress não suporta `:has()` nativamente)
+  - [ ] Quando necessário buscar por contexto, usa `cy.contains().parent().next().within()` no Page Object
+  - [ ] Exemplo: `cy.contains('h5', 'Seção').parent().next().within(() => { cy.get('input').type('valor'); })`
+
 **Exemplo de conformidade:**
 ```javascript
 // ✅ Correto - ID com contexto
@@ -101,6 +111,93 @@ btnSalvar: '#btn-salvar'  // Pode capturar botão errado
 ```
 
 **Referência:** [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md)
+
+---
+
+### Validação de Modais e Elementos Dinâmicos
+
+- [ ] **Modais com `display: none` no container?**
+  - [ ] Valida elementos funcionais (campos, botões) em vez do container do modal
+  - [ ] Não depende de `display: none` para determinar se modal está ativo
+  - [ ] Usa elementos visíveis e funcionais para validação
+
+- [ ] **IDs dinâmicos tratados corretamente?**
+  - [ ] Usa seletores alternativos quando IDs são dinâmicos (placeholder, name, data-*)
+  - [ ] Combina múltiplos seletores para cobertura quando necessário
+  - [ ] Adiciona `:visible` para evitar elementos ocultos
+  - [ ] Valida no browser antes de usar
+
+- [ ] **Validação de título em escopo apropriado?**
+  - [ ] Quando container tem `display: none`, valida texto no `body` ou escopo maior
+  - [ ] Usa `.should('contain.text', texto)` para verificar presença
+  - [ ] Não depende de visibilidade do container
+
+- [ ] **Elementos opcionais tratados corretamente?**
+  - [ ] Verifica existência antes de interagir com elementos opcionais
+  - [ ] Usa `.then()` e `.find()` para verificação condicional
+  - [ ] Não falha teste se elemento opcional não existir
+  - [ ] Métodos são resilientes a ausência de elementos
+
+- [ ] **Validação de fechamento de modal?**
+  - [ ] Valida ausência de elementos funcionais, não do container
+  - [ ] Usa `.should('not.exist')` para elementos que desaparecem
+  - [ ] Não depende de container que pode persistir no DOM
+
+- [ ] **Validação manual no browser realizada?**
+  - [ ] DOM foi inspecionado manualmente antes de criar locators
+  - [ ] IDs e classes foram copiados diretamente do DOM
+  - [ ] Locators foram testados no console do browser
+  - [ ] Estrutura do DOM não foi assumida sem validação
+
+**Exemplo de conformidade:**
+```javascript
+// ✅ Correto - Valida elemento funcional, não container
+verificarModalVisivel() {
+  cy.get(CategoriasLocators.campoDescricao, { timeout: 20000 })
+    .should('be.visible')
+    .and('not.be.disabled');
+}
+
+// ✅ Correto - ID dinâmico, usa placeholder
+campoDescricao: 'input[placeholder*="Ex."]:visible, input[placeholder*="Receita de Vendas"]:visible'
+
+// ✅ Correto - Valida texto no body quando container tem display: none
+verificarTituloModal(tipoCategoria) {
+  cy.get('body', { timeout: 15000 })
+    .should('contain.text', tipoCategoria);
+}
+
+// ✅ Correto - Verifica existência antes de interagir
+marcarNaoExibirDRE() {
+  cy.get('body').then(($body) => {
+    const checkbox = $body.find('input[type="checkbox"]');
+    if (checkbox.length > 0) {
+      cy.wrap(checkbox).check({ force: true });
+    }
+  });
+}
+
+// ✅ Correto - Valida ausência de elemento funcional
+cy.get(CategoriasLocators.campoDescricao, { timeout: 10000 })
+  .should('not.exist');
+```
+
+**Exemplo de não conformidade:**
+```javascript
+// ❌ Incorreto - Valida container que pode ter display: none
+cy.get('#content-plus.modal.in').should('be.visible');
+
+// ❌ Incorreto - ID dinâmico, não funciona
+campoDescricao: '#1765308555654'
+
+// ❌ Incorreto - Falha se elemento não existir
+cy.get('input[type="checkbox"]').check({ force: true });
+
+// ❌ Incorreto - Valida container que pode persistir
+cy.get('#content-plus.modal.in').should('not.exist');
+```
+
+**Referência:** [Lições Aprendidas - Implementação de Categorias](../referencias/aprendizagens-e-licoes.md#-lições-aprendidas-implementação-de-categorias)
 
 ---
 
@@ -337,6 +434,7 @@ cy.wait('@buscarClientes');
   - [ ] Aguardos de loading (`#loading`) quando apropriado
   - [ ] Aguardos de intercepts quando necessário
   - [ ] Não há `cy.wait()` com valores fixos altos desnecessários
+  - [ ] Waits fixos foram substituídos por validações condicionais (ADR-0013)
 
 ### Boas Práticas
 
@@ -406,6 +504,140 @@ cy.wait(2000);
 ```
 
 **Referência:** [Lições Aprendidas - Simplificação](../referencias/aprendizagens-e-licoes.md#-lições-aprendidas-simplificação-de-código-complexo)
+
+---
+
+## 🔍 Validações Específicas de Componentes
+
+### Date Range Picker
+
+- [ ] **Validação correta?**
+  - [ ] Validação verifica resultado (campo preenchido), não desaparecimento de botão
+  - [ ] Não há `cy.wait()` fixos após interação com date picker
+  - [ ] Validação usa `.should('not.have.value', '')` ou similar
+  - [ ] Não tenta validar que botão "Aplicar" desapareceu
+
+**Exemplo de conformidade:**
+```javascript
+// ✅ Correto - Valida resultado
+cy.get(campoPeriodo)
+    .should('be.visible')
+    .should('not.have.value', '');
+
+// ❌ Incorreto - Valida estado intermediário
+cy.get(datePickerAplicar).should('not.exist');
+```
+
+**Referência:** [Lições Aprendidas - Date Picker](../referencias/aprendizagens-e-licoes.md#1-validação-de-date-range-picker)
+
+---
+
+### Autocomplete com Debounce
+
+- [ ] **Validação de debounce correta?**
+  - [ ] Valida que resultados apareceram antes de interagir
+  - [ ] Aguarda debounce com validação condicional (não wait fixo)
+  - [ ] Usa `.should('exist')` e `.should('be.visible')` para resultados
+  - [ ] Não há `cy.wait()` fixos para debounce
+
+**Exemplo de conformidade:**
+```javascript
+// ✅ Correto - Valida que resultados apareceram
+cy.get(campoProduto).type(termo);
+cy.get(campoProdutoResultado, { timeout: 10000 })
+    .should('exist')
+    .should('be.visible');
+
+// ❌ Incorreto - Wait fixo para debounce
+cy.get(campoProduto).type(termo);
+cy.wait(500); // Não é confiável
+```
+
+**Referência:** [Lições Aprendidas - Autocomplete](../referencias/aprendizagens-e-licoes.md#5-validação-de-autocomplete-com-debounce)
+
+---
+
+### Campos Habilitados
+
+- [ ] **Validação de estado antes de interagir?**
+  - [ ] Valida que campo está habilitado antes de preencher
+  - [ ] Usa `.should('not.be.disabled')` quando necessário
+  - [ ] Valida que campo está visível antes de interagir
+  - [ ] Não tenta preencher campo desabilitado
+
+**Exemplo de conformidade:**
+```javascript
+// ✅ Correto - Valida estado antes de interagir
+cy.get(campoDesconto, { timeout: 10000 })
+    .should('be.visible')
+    .should('not.be.disabled')
+    .clear()
+    .type(valor);
+
+// ❌ Incorreto - Não valida estado
+cy.get(campoDesconto).type(valor); // Pode estar desabilitado
+```
+
+**Referência:** [Lições Aprendidas - Campos Habilitados](../referencias/aprendizagens-e-licoes.md#6-validação-de-campos-habilitados-após-seleção)
+
+---
+
+### Métodos Resilientes em Ambiente Compartilhado
+
+- [ ] **Métodos lidam com falhas esperadas?**
+  - [ ] Métodos que podem falhar usam verificações condicionais
+  - [ ] Falhas esperadas são logadas, não quebram o teste
+  - [ ] Validações críticas sempre falham o teste quando necessário
+  - [ ] Logs informativos para debugging
+
+**Exemplo de conformidade:**
+```javascript
+// ✅ Correto - Método resiliente
+desativarPromocao() {
+    cy.get('body').then(($body) => {
+        const link = $body.find(linkDesativar);
+        if (link.length > 0 && link.is(':visible')) {
+            cy.get(linkDesativar).click();
+        } else {
+            cy.log('⚠️ Link não encontrado - ação não aplicável');
+        }
+    });
+}
+
+// ❌ Incorreto - Falha o teste em falha esperada
+desativarPromocao() {
+    cy.get(linkDesativar).click(); // Pode não existir
+}
+```
+
+**Referência:** [Lições Aprendidas - Métodos Resilientes](../referencias/aprendizagens-e-licoes.md#3-tratamento-de-falhas-em-ambiente-compartilhado)
+
+---
+
+## Validação de Anti-Padrões
+
+### Exploração Manual (Autônoma pelo Cursor)
+
+- [ ] **Exploração autônoma pelo Cursor foi realizada antes da implementação**
+  - [ ] Cursor usou ferramentas de browser (`browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`)
+  - [ ] Documento de descobertas foi criado
+  - [ ] Locators foram coletados via `browser_evaluate` e validados no DOM
+
+- [ ] **Testes são assertivos (sem condicionais excessivas)**
+  - [ ] Testes não têm mais de 1-2 condicionais "se existir" por teste
+  - [ ] Condicionais são apenas para elementos realmente opcionais
+  - [ ] Elementos esperados não usam condicionais
+  - [ ] Testes validam comportamento esperado, não opcional
+
+- [ ] **Estrutura foi validada, não assumida**
+  - [ ] Estrutura da tela foi validada antes de implementar
+  - [ ] Não há comentários como "flexível para diferentes estruturas"
+  - [ ] Locators refletem estrutura real do DOM
+  - [ ] Testes validam estrutura específica, não genérica
+
+**IMPORTANTE:** "Exploração manual" refere-se à exploração autônoma do Cursor usando ferramentas de browser, não exploração humana manual.
+
+**Referência completa:** `docs/referencias/checklist-anti-padroes.md`
 
 ---
 
@@ -485,6 +717,6 @@ cy.wait(2000);
 
 ---
 
-**Última atualização:** 2025-01-XX  
+**Última atualização:** 2025-12-09  
 **Mantido por:** Equipe de Automação
 

@@ -1,4 +1,4 @@
-import BalancoLocators from "../../locators/BalancoLocator";
+import BalancoLocators from "../../locators/Balanco/BalancoLocator";
 
 class BalancoPage {
 

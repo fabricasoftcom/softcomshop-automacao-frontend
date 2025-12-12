@@ -1,4 +1,4 @@
-import ConfiguracaoSaidaNFceLocators from '../../locators/ConfiguracaoSaidaNFceLocators';
+import ConfiguracaoSaidaNFceLocators from '../../locators/Fiscal/ConfiguracaoSaidaNFceLocators';
 
 class ConfiguracaoSaidaNFcePage {
     validarModalAberto() {

@@ -1,6 +1,6 @@
 // RelatoriosPage.js
 import MenulateralRelatoriosPage from "../menulateral/MenulateralRelatoriosPage";
-import RelatoriosLocators from "../../locators/RelatoriosLocators";
+import RelatoriosLocators from "../../locators/Relatorios/RelatoriosLocators";
 
 class RelatoriosPage {
 
@@ -11,8 +11,8 @@ class RelatoriosPage {
     // Acessa o menu relatórios e abre o link especificado
     acessarRelatorio(linkLocator) {
         this.acessarMenuRelatorios();
-        cy.get(linkLocator).click();
-        cy.intercept('GET', '/relatorio/*')
+        cy.get(linkLocator).first().should('be.visible').click();
+        cy.url().should('include', '/relatorio/');
     }
 
     // Vendas

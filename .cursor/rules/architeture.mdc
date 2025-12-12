@@ -7,6 +7,7 @@ alwaysApply: true
 - [Architecture Decision Records](#architecture-decision-records)
 - [Mode Selection Guide](#mode-selection-guide)
   - [Automatic Test Execution After Implementation](#automatic-test-execution-after-implementation)
+  - [Planning Process and Template](#planning-process-and-template)
 - [Directory Structure](#directory-structure)
 - [Main Configuration](#main-configuration)
 - [Execution Flows](#execution-flows)
@@ -34,6 +35,22 @@ alwaysApply: true
   - [Page Object Hierarchy Guidelines](#page-object-hierarchy-guidelines)
 - [Custom Commands](#custom-commands)
   - [Custom Commands Status](#custom-commands-status)
+- [Quick Navigation](#quick-navigation)
+
+---
+
+## Quick Navigation
+
+**Quick access to most frequently consulted sections:**
+
+- [Planning Process and Template](#planning-process-and-template) - How to create structured implementation plans
+- [Custom Login Commands](#custom-login-commands) - Which login command to use (Fiscal vs General vs Iterative)
+- [Locators Best Practices](#35-locators-best-practices) - How to create locators correctly (IDs, context, validation)
+- [Code Simplification Best Practices](#36-code-simplification-best-practices) - Code quality best practices (no duplication, no fixed waits)
+- [New Test Creation Checklist](#new-test-creation-checklist) - Mandatory checklist for new tests
+- [Quick Decision Guide](#quick-decision-guide) - Quick answers to common questions
+- [Continuous Validation Checklist](#continuous-validation-checklist) - ADR compliance validation
+- [Page Object Hierarchy Guidelines](#page-object-hierarchy-guidelines) - When to use Page Object hierarchy
 
 ---
 
@@ -136,6 +153,65 @@ Task Received
 - **If just need information → Use Ask Mode**
 
 **Always reference ADR-0016 when suggesting mode selection.**
+
+### Planning Process and Template
+
+> **Context**: See [ADR-0016](../docs/adr/0016-planning-before-implementation.md) for complete decision
+
+**When creating a plan in Plan Mode, ALWAYS follow the standardized template:**
+
+**Template Reference:** `docs/referencias/template-plano-implementacao.md`
+
+**Standard Plan Structure (5 Phases):**
+
+1. **Phase 1: Exploration and Discovery (MANDATORY)**
+   - `explorar-[contexto]-manual`: Use Cursor's browser tools (`browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`) to navigate autonomously, inspect DOM, and collect locators
+   - `documentar-descobertas`: Document all locators, structure, and flow discovered by Cursor's autonomous exploration
+   - **Why mandatory**: Avoids assumptions about DOM structure, reduces rework significantly
+   - **IMPORTANT**: This exploration is done autonomously by Cursor using browser tools, not manually by the developer
+
+2. **Phase 2: Base Structure**
+   - `criar-estrutura-diretorios`: Create necessary directories
+   - `criar-locators-[contexto]`: Create locator files
+   - `criar-page-[contexto]`: Create Page Objects
+
+3. **Phase 3: Implementation**
+   - `criar-spec-[contexto]`: Create test specs
+   - `adicionar-specs-config`: Add to specPattern
+
+4. **Phase 4: Documentation (MANDATORY)**
+   - `criar-documentacao`: Create architecture documentation
+   - `atualizar-testes-md`: Update tests index
+   - `atualizar-readme-cases`: Update cases index
+
+5. **Phase 5: Validation**
+   - `executar-testes`: Execute tests and validate
+   - `limpar-arquivos-temporarios`: Remove temporary files
+   - `validar-checklist-final`: Validate final checklist
+
+**Naming Convention for TODOs:**
+- Format: `[acao]-[objeto]-[contexto]`
+- Examples: `explorar-listagem-manual`, `criar-locators-cadastro`, `criar-page-listagem`
+- Actions: `explorar-*`, `criar-*`, `adicionar-*`, `atualizar-*`, `documentar-*`, `executar-*`, `validar-*`
+
+**Dependencies:**
+- Always map dependencies between tasks
+- Follow logical order: Exploration → Structure → Implementation → Documentation → Validation
+- Phase 1 must complete before Phase 2
+- Phase 2 must complete before Phase 3
+- Phase 3 must complete before Phase 4
+- Phase 4 must complete before Phase 5
+
+**Key Principles:**
+- ✅ Manual exploration is mandatory before any implementation
+- ✅ **Manual exploration means Cursor's autonomous browser exploration** using `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`
+- ✅ Document discoveries before creating locators
+- ✅ Create locators before Page Objects
+- ✅ Create Page Objects before specs
+- ✅ Create specs before documentation
+- ✅ Always validate with test execution
+
+**Complete Template:** `docs/referencias/template-plano-implementacao.md`
 
 ### Automatic Test Execution After Implementation
 

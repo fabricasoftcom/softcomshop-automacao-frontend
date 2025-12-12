@@ -1,4 +1,4 @@
-import BaixarDespesasLocators from "../../locators/BaixarDespesaLocators";
+import BaixarDespesasLocators from "../../locators/Financeiro/BaixarDespesaLocators";
 import ListagemContasAPagarPage from "./ListagemContasAPagarPage";
 
 class BaixarDespesasPage {

@@ -2,8 +2,8 @@
 
 Este diretório contém a documentação arquitetural detalhada de todos os casos de teste do projeto.
 
-**Última atualização:** 2024-12-19  
-**Total de documentações:** 54
+**Última atualização:** 2025-12-12  
+**Total de documentações:** 65
 
 ---
 
@@ -24,7 +24,7 @@ Cada documentação contém:
 
 ## 📂 Documentações por Módulo
 
-### 💰 Financeiro (14 documentações)
+### 💰 Financeiro (18 documentações)
 
 #### Contas a Pagar
 - `architecture-baixar-despesa.md` - Baixa completa, parcial e desfazer baixa
@@ -43,6 +43,12 @@ Cada documentação contém:
 - `architecture-cadastro-conta.md` - Seleção de tipo de conta
 - `architecture-edicao-conta-corrente.md` - Edição e ativação/desativação de contas
 - `architecture-listagem-conta.md` - Listagem de contas
+- `architecture-transferencia-contas.md` - Transferência entre contas
+- `architecture-lancamento-conta.md` - Lançamento de conta contábil
+- `architecture-recibo.md` - Cadastro e listagem de recibos
+
+#### Categorias
+- `architecture-categorias.md` - Listagem e cadastro de categorias financeiras (Receita e Despesa)
 
 #### Balanço
 - `architecture-balanco.md` - Realização de novo balanço
@@ -50,13 +56,17 @@ Cada documentação contém:
 
 ---
 
-### 🛒 Vendas e NFe/NFCe (12 documentações)
+### 🛒 Vendas e NFe/NFCe (13 documentações)
 
 #### Vendas
 - `architecture-cadastro-venda.md` - Cadastro completo de venda
 - `architecture-listagem-vendas.md` - Listagem e filtragem de vendas
 - `architecture-venda-nfe.md` - Venda completa com emissão de NFe
 - `architecture-venda-nfce.md` - Venda completa com emissão de NFCe
+
+#### Consignação
+- `architecture-requisicao-consignacao.md` - Listagem e cadastro de requisições de consignação
+- `architecture-devolucao-consignacao.md` - Listagem e cadastro de devoluções/vendas de consignação
 
 #### NFe
 - `architecture-cadastro-nfe.md` - Cadastro geral de NFe (validações e abas)
@@ -79,6 +89,8 @@ Cada documentação contém:
 - `architecture-atributos.md` - Cadastro e listagem de atributos
 - `architecture-grupos.md` - Cadastro e listagem de grupos
 - `architecture-gestor-promocoes.md` - Gestor de Promoções (listagem e cadastro)
+- `architecture-gestor-precos.md` - Gestor de Preços (cadastro de reajuste)
+- `architecture-gestor-precos-listagem.md` - Gestor de Preços (listagem)
 
 #### Compras
 - `architecture-cadastro-compra.md` - Cadastro de compra com importação de NFe
@@ -95,10 +107,15 @@ Cada documentação contém:
 
 ---
 
-### 📊 Relatórios (2 documentações)
+### 📊 Relatórios (6 documentações)
 
 - `architecture-relatorio-caixa.md` - Relatório de caixa (analítico e sintético)
 - `architecture-relatorios.md` - Validação iterativa de todos os relatórios
+- `architecture-relatorios-vendas.md` - Relatórios de Vendas (Período, Mais Vendidos, Forma Pagamento, Gerente de Vendas, Evolução, Comissão)
+- `architecture-relatorios-fiscal.md` - Relatórios Fiscais (Saída Analítico/Sintético, Entrada Analítico/Sintético, Pis/Cofins, NFSe)
+- `architecture-relatorios-financeiro.md` - Relatórios Financeiros (Contas a Receber, Contas a Pagar, Projeção de Cartões)
+- `architecture-relatorios-produtos.md` - Relatórios de Produtos (Exibir Estoque, Tabela de Preço, Ficha Estoque, Inventário, NCM, Movimentação de Estoque)
+- `architecture-relatorios-clientes.md` - Relatórios de Clientes (Aniversariantes, Listagem dos Clientes, Últimas Compras)
 
 ---
 
@@ -130,6 +147,13 @@ Cada documentação contém:
 - `architecture-movimentacoes.md` - Cadastro de movimentações (entrada/saída)
 
 ---
+
+### ⚙️ Configurações (4 documentações)
+
+- `architecture-empresa-listagem.md` - Listagem de empresas (pesquisa, filtros, exclusão)
+- `architecture-empresa-cadastro.md` - Cadastro completo de empresa
+- `architecture-funcionario-listagem.md` - Listagem de funcionários (pesquisa, filtros, exclusão)
+- `architecture-funcionario-cadastro.md` - Cadastro completo de funcionário
 
 ### 🔐 Autenticação e Setup (2 documentações)
 
@@ -224,6 +248,6 @@ Todas as documentações referenciam as seguintes ADRs quando aplicável:
 
 ---
 
-**Última atualização:** 2024-12-19  
+**Última atualização:** 2025-12-12  
 **Mantido por:** Equipe de Automação
 

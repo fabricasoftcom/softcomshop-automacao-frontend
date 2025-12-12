@@ -1,5 +1,5 @@
 import listagemclientepage from "./listagemclientepage";
-import clienteLocators from "../../locators/ClienteLocators";
+import clienteLocators from "../../locators/Cliente/ClienteLocators";
 import cadastroClienteLocators from "../../locators/Cliente/CadastroClienteLocators";
 
 class ClientePage {

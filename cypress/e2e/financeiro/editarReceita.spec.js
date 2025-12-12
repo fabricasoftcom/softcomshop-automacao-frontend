@@ -1,4 +1,5 @@
 import EditarReceitaPage from "../../support/pages/Financeiro/EditarReceitaPage";
+import EditarReceitaLocators from "../../support/locators/EditarReceitaLocators";
 
 describe('Edição Completa de Receita', { tags: ['@editar-receita', '@financeiro', '@regressivo'] }, () => {
     beforeEach(() => {
@@ -28,6 +29,8 @@ describe('Edição Completa de Receita', { tags: ['@editar-receita', '@financeir
         const descricaoTeste = `Teste Voltar - ${new Date().toLocaleString()}`;
         EditarReceitaPage.preencherDescricao(descricaoTeste);
         EditarReceitaPage.clicarVoltar();
-        cy.get(EditarReceitaPage.modalContent).should('not.exist');
+        // Valida que elemento funcional desapareceu ao fechar (não o container que pode persistir)
+        cy.get(EditarReceitaLocators.descricaoInput, { timeout: 10000 })
+            .should('not.exist');
     });
 });

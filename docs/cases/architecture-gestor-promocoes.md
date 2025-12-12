@@ -6,6 +6,8 @@ Validar o fluxo completo do módulo **Gestor de Promoções**, cobrindo:
 - Visualização e navegação na listagem de promoções
 - Ordenação de dados na tabela
 - Cadastro completo de novas promoções com validações
+- Adição de produtos às promoções
+- Ativação e desativação de promoções
 
 **Funcionalidades cobertas:**
 - Listagem de promoções com tabela de dados
@@ -14,6 +16,10 @@ Validar o fluxo completo do módulo **Gestor de Promoções**, cobrindo:
 - Cadastro de promoção com todos os campos obrigatórios
 - Seleção de dias da semana e horários
 - Validação de sucesso após cadastro
+- Exibição da seção de produtos após salvar
+- Adição de produtos à promoção (com desconto percentual ou em reais)
+- Ativação de promoção após adicionar produtos
+- Desativação de promoção ativa
 
 **Cenários principais:**
 - Exibição correta da listagem
@@ -21,6 +27,7 @@ Validar o fluxo completo do módulo **Gestor de Promoções**, cobrindo:
 - Cadastro completo com dados dinâmicos (Faker)
 - Cadastro com diferentes combinações de dias da semana
 - Navegação entre listagem e formulário
+- Fluxo completo: cadastro → produtos → ativação → desativação
 
 ---
 
@@ -191,6 +198,115 @@ Os locators são importados internamente pelos Page Objects:
 2. **Preenchimento e Validação:**
    - Similar ao teste anterior, mas com todos os dias selecionados
 
+#### `it('Deve exibir seção de produtos após salvar')`
+
+**Fluxo completo:**
+1. **Geração de Dados:**
+   - Gera descrição aleatória
+   - Gera datas futuras (1 dia e 30 dias)
+   - Define um dia da semana (segunda)
+   - Define horários (08:00 - 20:00)
+
+2. **Cadastro:**
+   - Preenche formulário completo
+   - Salva promoção
+   - Valida sucesso
+
+3. **Validação:**
+   - Valida que a seção "Produtos" está visível
+   - Valida que os campos de seleção de produto estão presentes
+   - Valida que a tabela de produtos está visível
+
+#### `it('Deve adicionar produto à promoção')`
+
+**Fluxo completo:**
+1. **Geração de Dados:**
+   - Gera descrição aleatória
+   - Gera datas futuras (1 dia e 30 dias)
+   - Define um dia da semana (segunda)
+   - Define horários (08:00 - 20:00)
+
+2. **Cadastro:**
+   - Preenche formulário completo
+   - Salva promoção
+   - Valida sucesso
+
+3. **Adição de Produto:**
+   - Seleciona tipo "Produto"
+   - Busca produto no autocomplete
+   - Preenche desconto percentual (10,00)
+   - Adiciona produto à promoção
+
+4. **Validação:**
+   - Valida que o link "Ativar Promoção" aparece após adicionar produto
+
+#### `it('Deve cadastrar promoção completa com produtos e ativar')`
+
+**Fluxo completo:**
+1. **Geração de Dados:**
+   - Gera descrição aleatória
+   - Gera datas futuras (1 dia e 60 dias)
+   - Define dias da semana (segunda a sexta)
+   - Define horários (08:00 - 20:00)
+
+2. **Cadastro:**
+   - Preenche formulário completo
+   - Salva promoção
+   - Valida sucesso
+
+3. **Adição de Produto:**
+   - Adiciona produto com desconto em reais (5,00)
+
+4. **Ativação:**
+   - Ativa a promoção
+   - Valida que a promoção foi ativada com sucesso
+
+#### `it('Deve ativar promoção após cadastro completo')`
+
+**Fluxo completo:**
+1. **Geração de Dados:**
+   - Gera descrição aleatória
+   - Gera datas futuras (1 dia e 30 dias)
+   - Define dias da semana (segunda e terça)
+   - Define horários (08:00 - 20:00)
+
+2. **Cadastro:**
+   - Preenche formulário completo
+   - Salva promoção
+   - Valida sucesso
+
+3. **Adição de Produto:**
+   - Adiciona produto com desconto percentual (10,00)
+
+4. **Ativação:**
+   - Ativa promoção
+   - Valida que a promoção foi ativada
+
+#### `it('Deve permitir desativar promoção ativa')`
+
+**Fluxo completo:**
+1. **Geração de Dados:**
+   - Gera descrição aleatória
+   - Gera datas futuras (1 dia e 30 dias)
+   - Define um dia da semana (segunda)
+   - Define horários (08:00 - 20:00)
+
+2. **Cadastro:**
+   - Preenche formulário completo
+   - Salva promoção
+   - Valida sucesso
+
+3. **Adição de Produto:**
+   - Adiciona produto com desconto percentual (10,00)
+
+4. **Ativação:**
+   - Ativa promoção
+   - Valida que a promoção foi ativada
+
+5. **Desativação:**
+   - Desativa promoção
+   - Valida que a promoção está inativa (link "Ativar Promoção" visível)
+
 ---
 
 ## Padrões e boas práticas
@@ -201,6 +317,8 @@ Os locators são importados internamente pelos Page Objects:
 - ✅ **Session Persistence** (ADR-0004): Uso de `cy.loginArmazenandoSessao()` para login persistente
 - ✅ **Faker for Dynamic Data** (ADR-0009): Geração de descrições aleatórias para evitar duplicatas
 - ✅ **Tags for Filtering** (ADR-0010): Tags aplicadas para filtro de execução (`@produtos`, `@promocoes`, `@regressivo`)
+- ✅ **Code Simplification** (ADR-0013): Nenhum wait fixo - todas as esperas são condicionais
+- ✅ **Prioritize IDs** (ADR-0015): Locators priorizam IDs quando disponíveis
 
 ### Boas Práticas
 - Uso de métodos encadeáveis nos Page Objects (retorno de `this`)
@@ -214,8 +332,11 @@ Os locators são importados internamente pelos Page Objects:
 - Formato esperado: `DD/MM/YYYY HH:mm:ss - DD/MM/YYYY HH:mm:ss`
 - Após salvar com sucesso, o sistema redireciona para a tela de edição (`/produto/promocoes/{id}/editar`)
 - O botão "Empresas Participantes" fica desabilitado inicialmente e só é habilitado após salvar
-- A seção "Produtos" aparece após salvar, mas não é testada nesta fase
+- A seção "Produtos" aparece após salvar a promoção
+- O link "Ativar Promoção" só aparece após adicionar pelo menos um produto
+- A ativação pode falhar em ambiente compartilhado devido a conflitos com promoções existentes (comportamento esperado)
 - A tabela usa ID dinâmico, portanto o seletor usa classe `table.table-hover`
+- Não há waits fixos no código - todas as esperas são condicionais (ADR-0013)
 
 ---
 
@@ -227,6 +348,8 @@ Os locators são importados internamente pelos Page Objects:
 - [ADR-0004](../adr/0004-use-cy-session-for-login-persistence.md): Session Persistence
 - [ADR-0009](../adr/0009-use-faker-for-dynamic-test-data.md): Faker for Dynamic Data
 - [ADR-0010](../adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
+- [ADR-0013](../adr/0013-continuous-validation-checklist.md): Continuous Validation Checklist (Code Simplification)
+- [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
 
 ### Documentação Relacionada
 - [Processo de Documentação](../referencias/processo-documentacao.md)

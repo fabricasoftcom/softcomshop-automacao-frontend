@@ -1,4 +1,4 @@
-import NovoCadastroVinculoFiscalLocators from "../../locators/NovoCadastroVinculoFiscalLocators";
+import NovoCadastroVinculoFiscalLocators from "../../locators/VinculoFiscal/NovoCadastroVinculoFiscalLocators";
 import VinculoFiscalListagemPage from "./VinculoFiscalListagemPage";
 
 class NovoCadastroVinculoFiscalPage {

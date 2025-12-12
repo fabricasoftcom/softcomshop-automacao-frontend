@@ -1,4 +1,4 @@
-import RecebimentoLocators from "../../locators/RecebimentoLocators";
+import RecebimentoLocators from "../../locators/Financeiro/RecebimentoLocators";
 import ListagemContasAReceberPage from "./ListagemContasAReceberPage";
 
 class RecebimentoPage {
@@ -17,11 +17,29 @@ class RecebimentoPage {
   }
 
   preencherConta() {
-    // Preenche o campo com "CAIXA" e aguarda o autocomplete
-    cy.get(RecebimentoLocators.contaInput).type('CAIXA');
+    // Aguarda o modal estar completamente carregado
+    cy.get('#loading').should('not.exist');
+    cy.get(RecebimentoLocators.modalContent).should('be.visible');
+    // Tenta encontrar o campo de conta em diferentes estruturas possíveis
+    // Primeiro tenta o locator original, depois alternativas
+    cy.get('body').then(($body) => {
+      const contaInput = $body.find(RecebimentoLocators.contaInput);
+      if (contaInput.length > 0 && contaInput.is(':visible')) {
+        // Usa o locator original se existir e estiver visível
+        cy.get(RecebimentoLocators.contaInput, { timeout: 10000 })
+          .should('be.visible')
+          .type('CAIXA');
+      } else {
+        // Tenta alternativas: input dentro do modal com id conta_id ou placeholder relacionado
+        cy.get('.modal #conta_id input, .modal input[placeholder*="conta" i], .modal input[placeholder*="Conta" i]', { timeout: 10000 })
+          .first()
+          .should('be.visible')
+          .type('CAIXA');
+      }
+    });
 
     // Aguarda que a lista de resultados de autocomplete seja exibida
-    cy.get(RecebimentoLocators.listaAutocompleteConta).should('be.visible');
+    cy.get(RecebimentoLocators.listaAutocompleteConta, { timeout: 10000 }).should('be.visible');
 
     // Seleciona o primeiro resultado na lista de autocomplete
     cy.get(RecebimentoLocators.primeiroResultadoAutocomplete).click();

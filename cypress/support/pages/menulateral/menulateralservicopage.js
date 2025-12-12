@@ -1,5 +1,5 @@
 // MenulateralServicoPage.js
-import MenulateralServicoLocators from "../../locators/MenulateralServicoLocators";
+import MenulateralServicoLocators from "../../locators/Menu/MenulateralServicoLocators";
 
 class MenulateralServicoPage {
 

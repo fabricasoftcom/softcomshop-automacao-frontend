@@ -1,6 +1,6 @@
 // RelatorioCaixaPage.js
 import RelatoriosPage from "./RelatoriosPage";
-import RelatorioCaixaLocators from "../../locators/RelatorioCaixaLocators";
+import RelatorioCaixaLocators from "../../locators/Relatorios/RelatorioCaixaLocators";
 
 class RelatorioCaixaPage {
 

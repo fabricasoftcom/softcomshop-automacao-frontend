@@ -1,4 +1,4 @@
-import ProducaoLocators from "../../locators/ProducaoLocators";
+import ProducaoLocators from "../../locators/Producao/ProducaoLocators";
 
 class ProducaoPage {
     /**

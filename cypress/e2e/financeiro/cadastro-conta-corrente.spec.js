@@ -30,11 +30,9 @@ describe('Cadastro de Conta Corrente', { tags: ['@cadastro-conta-corrente', '@fi
       // Ativa o switch de cobrança bancária
       contaCorrenteCadastroPage.alternarCobrancaBancaria(true);
 
-      // Espera o tempo necessário para garantir que o alerta não apareça
-      cy.wait(5345);
-
       // Verifica que o popup com a mensagem "Não é possível realizar as configurações bancárias" não aparece
-      cy.get('div.swal2-popup').should('not.exist'); // Verifica que o modal swal2 não existe
+      // Usa validação condicional ao invés de wait fixo - se o modal aparecer, a validação falhará
+      cy.get('div.swal2-popup', { timeout: 6000 }).should('not.exist');
 
       contaCorrenteCadastroPage.avancarParaProximoPasso();
       // Preenche todos os campos de integração bancária com dados aleatórios ou específicos

@@ -1,4 +1,4 @@
-import OrcamentoListagemLocators from "../../locators/OrcamentoListagemLocators";
+import OrcamentoListagemLocators from "../../locators/Orcamento/OrcamentoListagemLocators";
 
 class OrcamentoListagemPage {
     visit() {

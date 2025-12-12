@@ -1,5 +1,5 @@
 // MenulateralVendaPage.js
-import MenulateralVendaLocators from "../../locators/MenulateralVendaLocators";
+import MenulateralVendaLocators from "../../locators/Menu/MenulateralVendaLocators";
 
 class MenulateralVendaPage {
 
