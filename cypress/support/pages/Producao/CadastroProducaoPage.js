@@ -13,9 +13,9 @@ class CadastroProducaoPage {
       .click({ force: true })
       .clear();
 
-    if (produto) {
-      cy.get(ProducaoLocators.produtoAutocompleteCadastro).type(produto, { delay: 0 });
-    }
+    // if (produto) {
+    //   cy.get(ProducaoLocators.produtoAutocompleteCadastro).type(produto, { delay: 0 });
+    // }
 
     cy.wait(500);
     cy.get(ProducaoLocators.produtoIconCadastro).first().click({ force: true });

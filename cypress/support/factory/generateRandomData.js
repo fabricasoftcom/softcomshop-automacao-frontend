@@ -89,7 +89,7 @@ const generateRandomDadosOrcamento = () => {
 };
 const generateRandomDadosOrcamentoProduto = () => {
   return {
-    produto: 'Produto',
+    produto: 'a',
     quantidade: Math.floor(Math.random() * 999) + 1, // Quantidade aleatória
     preco: faker.commerce.price() // Preço aleatório
   }
@@ -152,6 +152,21 @@ const generateRandomFuncionario = () => {
     numeroCartaoSupervisor: null,
     observacao: faker.lorem.sentence(),
     desativado: false
+  };
+};
+
+const generateRandomUsuario = () => {
+  const nome = faker.person.fullName();
+  const email = faker.internet.email().toLowerCase();
+  const senha = faker.internet.password({ length: 8, memorable: false });
+
+  return {
+    // Campos obrigatórios
+    nome: nome.substring(0, 100),
+    email: email,
+    senha: senha,
+    redigiteSenha: senha,
+    perfil: 'ADMINISTRADOR' // Perfil padrão para permitir acesso ao sistema
   };
 };
 
@@ -251,6 +266,7 @@ module.exports = {
   generateRandomCompany,
   generateRandomContact,
   gerarChaveAcessoNFe,
-  generateRandomFuncionario
+  generateRandomFuncionario,
+  generateRandomUsuario
 }
 

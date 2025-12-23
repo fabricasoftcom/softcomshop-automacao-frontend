@@ -1,7 +1,7 @@
 # Checklist de Anti-Padrões
 
 **Versão:** 1.0  
-**Data:** 2025-01-XX  
+**Data:** 2025-12-12  
 **Status:** ✅ Ativo
 
 ---
@@ -263,6 +263,6 @@ Antes de considerar uma implementação completa, valide:
 
 ---
 
-**Última atualização:** 2025-01-XX  
+**Última atualização:** 2025-12-12  
 **Mantido por:** Equipe de Automação
 

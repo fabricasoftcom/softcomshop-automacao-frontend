@@ -23,7 +23,7 @@ const ListagemContasAPagarLocators = {
   colunaDescricao: 'td:nth-child(3)',
   colunaFornecedor: 'td:nth-child(4)',
   colunaCategoria: 'td:nth-child(5)',
-  colunaStatus: 'td:nth-child(11)',
+  colunaStatus: 'td:nth-child(12)',
 
   // Ações na tabela
   dropdownAcoes: 'button.dropdown-toggle',

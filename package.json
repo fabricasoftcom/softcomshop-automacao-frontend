@@ -11,11 +11,12 @@
     "test:firefox": "cypress run --browser firefox",
     "test:all": "npm run test:chrome && npm run test:firefox",
     "lint": "eslint . -f table",
+    "lint:fix": "eslint . --fix",
     "lint-html": "eslint . -f html -o eslint-report.html",
     "prepare": "husky"
   },
   "lint-staged": {
-    "**/*.js": "eslint"
+    "**/*.js": "eslint --fix"
   },
   "keywords": [],
   "author": "",

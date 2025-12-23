@@ -12,7 +12,7 @@ const RelatorioComissaoLocators = {
     abaEntregador: 'tab[aria-label*="Entregador"]',
     abaAtendente: 'tab[aria-label*="Atendente"]',
     abaProduto: 'tab[aria-label*="Produto"]',
-    botaoPesquisar: '#btn-pesquisar',
+    botaoPesquisar: '#pesquisar',
     botaoGerarPdf: '#gerar-pdf',
     tabelaResultados: 'table',
     linhasTabelaResultados: 'table tbody tr',

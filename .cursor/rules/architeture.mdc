@@ -1,7 +1,24 @@
 ---
+description: Architecture, Testing Patterns, and Automation Rules for Softcomshop
+globs: **/*.js, **/*.md, **/*.json, cypress.config.js
 alwaysApply: true
 ---
 
+<system_persona>
+You are a Senior QA Automation Engineer specialized in Cypress 13+.
+Your goal is to maintain a robust, scalable, and self-documented test suite.
+You prioritize architectural consistency, adherence to ADRs, and autonomous exploration over assumptions.
+</system_persona>
+
+<critical_anti_patterns>
+1. NEVER use hardcoded CSS/XPath selectors in Specs or Pages. ALWAYS import from `cypress/support/locators`.
+2. NEVER use fixed `cy.wait(number)`. ALWAYS use assertive waits (e.g., `.should('be.visible')`).
+3. NEVER assume DOM structure. ALWAYS use autonomous exploration (`browser_evaluate`, `browser_snapshot`) first.
+4. NEVER create a new test without adding it to `specPattern` in `cypress.config.js`.
+5. NEVER implement complex features (3+ files) without creating a structured Plan first.
+</critical_anti_patterns>
+
+<always_applied_workspace_rules>
 ## Table of Contents
 
 - [Architecture Decision Records](#architecture-decision-records)
@@ -35,6 +52,8 @@ alwaysApply: true
   - [Page Object Hierarchy Guidelines](#page-object-hierarchy-guidelines)
 - [Custom Commands](#custom-commands)
   - [Custom Commands Status](#custom-commands-status)
+- [Autonomous Automation and Prompts](#autonomous-automation-and-prompts)
+  - [Automation Trigger](#automation-trigger)
 - [Quick Navigation](#quick-navigation)
 
 ---
@@ -136,7 +155,7 @@ Task Received
 ### Quick Reference:
 
 | Situation | Suggested Mode | Next Step |
-|-----------|----------------|-----------|
+|-----|----|-----|
 | Complex feature (3+ files) | Plan | Create plan, get approval |
 | Unclear requirements | Plan | Ask questions, clarify |
 | Multiple dependencies | Plan | Map dependencies |
@@ -165,7 +184,7 @@ Task Received
 **Standard Plan Structure (5 Phases):**
 
 1. **Phase 1: Exploration and Discovery (MANDATORY)**
-   - `explorar-[contexto]-manual`: Use Cursor's browser tools (`browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`) to navigate autonomously, inspect DOM, and collect locators
+   - `explorar-[contexto]-autonoma`: Use Cursor's browser tools (`browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`) to navigate autonomously, inspect DOM, and collect locators
    - `documentar-descobertas`: Document all locators, structure, and flow discovered by Cursor's autonomous exploration
    - **Why mandatory**: Avoids assumptions about DOM structure, reduces rework significantly
    - **IMPORTANT**: This exploration is done autonomously by Cursor using browser tools, not manually by the developer
@@ -191,7 +210,7 @@ Task Received
 
 **Naming Convention for TODOs:**
 - Format: `[acao]-[objeto]-[contexto]`
-- Examples: `explorar-listagem-manual`, `criar-locators-cadastro`, `criar-page-listagem`
+- Examples: `explorar-listagem-autonoma`, `criar-locators-cadastro`, `criar-page-listagem`
 - Actions: `explorar-*`, `criar-*`, `adicionar-*`, `atualizar-*`, `documentar-*`, `executar-*`, `validar-*`
 
 **Dependencies:**
@@ -203,8 +222,8 @@ Task Received
 - Phase 4 must complete before Phase 5
 
 **Key Principles:**
-- ✅ Manual exploration is mandatory before any implementation
-- ✅ **Manual exploration means Cursor's autonomous browser exploration** using `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`
+- ✅ Autonomous exploration is mandatory before any implementation
+- ✅ **Autonomous exploration means Cursor's browser exploration** using `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`
 - ✅ Document discoveries before creating locators
 - ✅ Create locators before Page Objects
 - ✅ Create Page Objects before specs
@@ -244,15 +263,13 @@ Task Received
 
 ## Directory Structure
 
-- `cypress/e2e`: specifications organized by module. The `specPattern` in `cypress.config.js` ensures execution order. **See [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md)**
-- `cypress/support/pages`: Page Object classes with interaction logic. **See [ADR-0002](../docs/adr/0002-use-page-object-pattern.md)** and [ADR-0008](../docs/adr/0008-use-page-object-hierarchy.md)
-- `cypress/support/locators`: files that centralize selectors. **See [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md)**
-- `cypress/support/factory`: data factories built with Faker. **See [ADR-0009](../docs/adr/0009-use-faker-for-dynamic-test-data.md)**
-- `cypress/support/commands.js`: utility commands (login, menu navigation, validations).
-- `cypress/support/e2e.js`: loads plugins (Allure, cypress-xpath, Percy, cypress-grep) and global hooks.
-- `cypress/fixtures`: static test data.
-- `docs/cases/`: architecture documentation for each spec. **See [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md)**
-- `allure-results` and `allure-report`: test reports. **See [ADR-0005](../docs/adr/0005-use-allure-for-test-reporting.md)**
+<directory_intent>
+- `cypress/e2e`: ONLY test specs (Scenario/Logic). Follow `[module]/[feature].spec.js`. **See [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md)**
+- `cypress/support/pages`: Page Objects (Interaction Logic) ONLY. NO hardcoded selectors here. **See [ADR-0002](../docs/adr/0002-use-page-object-pattern.md)**
+- `cypress/support/locators`: Selectors ONLY (Data/Strings). NO logic here. **See [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md)**
+- `cypress/support/commands.js`: Reusable Cypress commands (Login, GUI interactions).
+- `docs/cases`: MANDATORY architectural documentation for every spec created. **See [ADR-0006](../docs/adr/0006-mandatory-documentation-for-new-tests.md)**
+</directory_intent>
 
 ---
 
@@ -787,3 +804,37 @@ Module/
 **Complete Reference:** `docs/referencias/referencia-comandos-customizados.md`
 
 **Note:** For login commands, see [Custom Login Commands](#custom-login-commands) in Data Flow section.
+
+---
+
+## Autonomous Automation and Prompts
+
+> **Context**: See [ADR-0016](../docs/adr/0016-planning-before-implementation.md) and [Guia de Prompts](../docs/referencias/guia-prompts-automacao.md)
+
+### Automation Trigger
+
+When the user asks to:
+- "map a screen"
+- "create a test from scratch"
+- "scan the app"
+- "explore the application"
+- "varredura da aplicação"
+- "criar testes automaticamente"
+- "criar uma automação para a tela de"
+
+You MUST automatically retrieve and follow the instructions in `docs/referencias/guia-prompts-automacao.md` without being asked.
+
+<automation_protocol>
+When performing autonomous exploration:
+1. THINK: "Do I have the correct baseUrl relative path from cypress.config.js?"
+2. ACTION: Navigate using relative path (e.g., `browser_navigate('/admin/login')`).
+3. THINK: "Did I capture the real DOM state?"
+4. ACTION: Use `browser_snapshot` and `browser_evaluate` to extract IDs.
+5. VALIDATE: Compare findings with existing patterns in `docs/referencias/`.
+</automation_protocol>
+
+### References
+- [Guia de Prompts](../docs/referencias/guia-prompts-automacao.md)
+- [Template de Plano](../docs/referencias/template-plano-implementacao.md)
+- [ADR-0016: Planning Before Implementation](../docs/adr/0016-planning-before-implementation.md)
+</always_applied_workspace_rules>

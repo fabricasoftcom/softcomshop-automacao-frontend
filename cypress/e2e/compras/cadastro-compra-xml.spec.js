@@ -60,7 +60,7 @@ describe('Cadastro de compra - Importação XML', { tags: ["@cadastro-compra-xml
 
     it('Deve adicionar vínculo na importação', () => {
         CompraPage.prepararTelaImportacao();
-        CompraPage.adicionarVinculo();
+        CompraPage.adicionarVinculoItem();
         CompraPage.preencherCFOP();
         CompraPage.clicarConfirmarNatureza();
         CompraPage.clicarImportarXML();
@@ -71,13 +71,13 @@ describe('Cadastro de compra - Importação XML', { tags: ["@cadastro-compra-xml
 
     it('Deve alterar CFOP do item na importação', () => {
         CompraPage.prepararTelaImportacao();
-        CompraPage.alterarCFOPItem(0, '5102');
+        CompraPage.alterarCFOPItem('1403');
         CompraPage.preencherCFOP();
         CompraPage.clicarConfirmarNatureza();
         CompraPage.informarVinculoFiscal();
         CompraPage.clicarImportarXML();
         CompraPage.aguardarImportacaoCompleta();
-        CompraPage.validarCFOPAlterado(0, '5102');
+        CompraPage.validarCFOPAlterado(0, '1403');
         CompraPage.validarMensagemSucesso();
     })
 

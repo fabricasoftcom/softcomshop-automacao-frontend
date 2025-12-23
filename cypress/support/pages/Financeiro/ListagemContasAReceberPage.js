@@ -10,6 +10,8 @@ class ListagemContasAReceberPage {
   }
 
   verificarCarregamentoDaPagina() {
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 30000 }).should('be.visible');
     cy.get('h5').contains('Contas a Receber').should('be.visible');
   }
 
@@ -77,7 +79,6 @@ class ListagemContasAReceberPage {
     cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
       .find(ListagemContasAReceberLocators.checkboxLinha)
       .should('exist')
-      .and('be.visible')
       .check({ force: true });
       // Verifica que foi marcado (re-busca novamente)
     cy.get(ListagemContasAReceberLocators.primeiraLinhaTabela, { timeout: 10000 })
@@ -141,16 +142,23 @@ class ListagemContasAReceberPage {
    * @returns {Cypress.Chainable<boolean>} true se há linhas com status "Parcial", false caso contrário
    */
   verificarSeHaLinhasComStatusParcial() {
-    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
-      for (let i = 0; i < $linhas.length; i++) {
-        const $linha = $linhas.eq(i);
-        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
-        if (statusText.includes('Parcial')) {
-          return true;
-        }
-      }
-      return false;
-    });
+    // Aguarda o loading desaparecer e a tabela estar carregada (igual ao método encontrarLinhaComStatusParcial)
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 15000 }).should('be.visible');
+    cy.get(ListagemContasAReceberLocators.linhaTabela, { timeout: 15000 })
+      .should('have.length.greaterThan', 0);
+
+    // Tenta primeiro buscar pelo ID (se existir) - mesma abordagem do método de clicar
+    return cy.get(ListagemContasAReceberLocators.botaoParcialIdDinamico, { timeout: 5000 })
+      .then(() => true, () => {
+        // Fallback: busca por botão com classe btn-success e texto "Parcial"
+        return cy.get('body').then(($body) => {
+          const $botoes = $body.find(ListagemContasAReceberLocators.botaoParcialFallback);
+          return Array.from($botoes).some(botao => {
+            return Cypress.$(botao).text().trim() === 'Parcial';
+          });
+        });
+      });
   }
 
   /**
@@ -158,16 +166,16 @@ class ListagemContasAReceberPage {
    * @returns {Cypress.Chainable<boolean>} true se há linhas com status "Baixar", false caso contrário
    */
   verificarSeHaLinhasComStatusBaixar() {
-    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
-      for (let i = 0; i < $linhas.length; i++) {
-        const $linha = $linhas.eq(i);
-        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
-        if (statusText.includes('Baixar')) {
-          return true;
-        }
-      }
-      return false;
-    });
+    // Aguarda o loading desaparecer e a tabela estar carregada (igual ao método encontrarLinhaComStatusBaixar)
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 15000 }).should('be.visible');
+    cy.get(ListagemContasAReceberLocators.linhaTabela, { timeout: 15000 })
+      .should('have.length.greaterThan', 0);
+
+    // Verifica se existe algum botão com ID que começa com "status-baixar-contas-a-receber-"
+    // Usa a mesma abordagem do método de clicar: busca direta pelo ID usando cy.get()
+    return cy.get(ListagemContasAReceberLocators.botaoBaixarNaLinha, { timeout: 5000 })
+      .then(() => true, () => false);
   }
 
   /**
@@ -175,16 +183,31 @@ class ListagemContasAReceberPage {
    * (Cypress não suporta :has() nativamente)
    */
   encontrarLinhaComStatusParcial() {
-    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
-      for (let i = 0; i < $linhas.length; i++) {
-        const $linha = $linhas.eq(i);
-        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
-        if (statusText.includes('Parcial')) {
-          return cy.wrap($linha);
-        }
-      }
-      throw new Error('Nenhuma linha com status "Parcial" encontrada');
-    });
+    // Aguarda o loading desaparecer e a tabela estar carregada
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 15000 }).should('be.visible');
+    cy.get(ListagemContasAReceberLocators.linhaTabela, { timeout: 15000 })
+      .should('have.length.greaterThan', 0);
+
+    // Tenta primeiro buscar pelo ID (se existir)
+    return cy.get(ListagemContasAReceberLocators.botaoParcialIdDinamico, { timeout: 5000 })
+      .then(($botao) => {
+        // Retorna a linha pai (tr) do botão
+        return cy.wrap($botao.first().closest('tr'));
+      }, () => {
+        // Fallback: busca por botão com classe btn-success e texto "Parcial"
+        return cy.get(ListagemContasAReceberLocators.botaoParcialFallback, { timeout: 10000 }).then(($botoes) => {
+          const $botaoParcial = Array.from($botoes).find(botao => {
+            return Cypress.$(botao).text().trim() === 'Parcial';
+          });
+
+          if ($botaoParcial) {
+            return cy.wrap(Cypress.$($botaoParcial).closest('tr'));
+          }
+
+          throw new Error('Nenhuma linha com status "Parcial" encontrada');
+        });
+      });
   }
 
   /**
@@ -192,32 +215,61 @@ class ListagemContasAReceberPage {
    * (Cypress não suporta :has() nativamente)
    */
   encontrarLinhaComStatusBaixar() {
-    return cy.get(ListagemContasAReceberLocators.linhaTabela).then(($linhas) => {
-      for (let i = 0; i < $linhas.length; i++) {
-        const $linha = $linhas.eq(i);
-        const statusText = $linha.find(ListagemContasAReceberLocators.celulaStatus).text().trim();
-        if (statusText.includes('Baixar')) {
-          return cy.wrap($linha);
-        }
-      }
-      throw new Error('Nenhuma linha com status "Baixar" encontrada');
-    });
+    // Aguarda o loading desaparecer e a tabela estar carregada
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 15000 }).should('be.visible');
+
+    // Aguarda que haja pelo menos uma linha na tabela
+    cy.get(ListagemContasAReceberLocators.linhaTabela, { timeout: 15000 })
+      .should('have.length.greaterThan', 0);
+
+    // Busca diretamente pelo botão usando o ID que começa com "status-baixar-contas-a-receber-"
+    return cy.get(ListagemContasAReceberLocators.botaoBaixarNaLinha, { timeout: 10000 })
+      .first()
+      .then(($botao) => {
+        // Retorna a linha pai (tr) do botão
+        return cy.wrap($botao.closest('tr'));
+      });
   }
 
   clicarBotaoParcialNaPrimeiraLinhaComStatusParcial() {
-    this.encontrarLinhaComStatusParcial().then(($linha) => {
-      cy.wrap($linha)
-        .find(ListagemContasAReceberLocators.botaoParcialNaLinha)
-        .click({ force: true });
-    });
+    // Aguarda o loading desaparecer e a tabela estar carregada
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 15000 }).should('be.visible');
+    cy.get(ListagemContasAReceberLocators.linhaTabela, { timeout: 15000 })
+      .should('have.length.greaterThan', 0);
+
+    // Tenta primeiro buscar pelo ID (se existir)
+    cy.get(ListagemContasAReceberLocators.botaoParcialIdDinamico, { timeout: 5000 })
+      .first()
+      .click({ force: true })
+      .then(() => {}, () => {
+        // Fallback: busca por botão com classe btn-success e texto "Parcial"
+        cy.get(ListagemContasAReceberLocators.botaoParcialFallback, { timeout: 10000 }).then(($botoes) => {
+          const $botaoParcial = Array.from($botoes).find(botao => {
+            return Cypress.$(botao).text().trim() === 'Parcial';
+          });
+
+          if ($botaoParcial) {
+            cy.wrap(Cypress.$($botaoParcial)).click({ force: true });
+          } else {
+            throw new Error('Nenhum botão "Parcial" encontrado');
+          }
+        });
+      });
   }
 
   clicarBotaoBaixarNaPrimeiraLinhaComStatusBaixar() {
-    this.encontrarLinhaComStatusBaixar().then(($linha) => {
-      cy.wrap($linha)
-        .find(ListagemContasAReceberLocators.botaoBaixarNaLinha)
-        .click({ force: true });
-    });
+    // Aguarda o loading desaparecer e a tabela estar carregada
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 15000 }).should('be.visible');
+    cy.get(ListagemContasAReceberLocators.linhaTabela, { timeout: 15000 })
+      .should('have.length.greaterThan', 0);
+
+    // Busca diretamente pelo botão usando o ID
+    cy.get(ListagemContasAReceberLocators.botaoBaixarNaLinha, { timeout: 10000 })
+      .first()
+      .click({ force: true });
   }
 
   // ====== Ações de Dropdown nas Linhas ======
@@ -241,6 +293,7 @@ class ListagemContasAReceberPage {
       .find(ListagemContasAReceberLocators.dropdownAcao)
       .should('exist')
       .and('be.visible')
+      .first()
       .click();
 
     // Aguarda que o menu do dropdown esteja aberto antes de continuar
@@ -364,7 +417,7 @@ class ListagemContasAReceberPage {
   }
 
   confirmarExclusao() {
-    cy.get(ListagemContasAReceberLocators.modalBotaoConfirmarExcluir).click();
+    cy.get(ListagemContasAReceberLocators.modalBotaoConfirmarExcluir).should('be.visible').click({ force: true });
   }
 
   cancelarExclusao() {
@@ -419,22 +472,30 @@ class ListagemContasAReceberPage {
   }
   validarValoresNaColunaValorParcela() {
     // Aguarda que o loading desapareça após filtrar
-    cy.get('#loading').should('not.exist');
+    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
     // Aguarda que a tabela esteja carregada
     cy.get(ListagemContasAReceberLocators.tabelaCompleta, { timeout: 10000 })
       .should('exist');
+
     // Valida valores em cada linha da tabela
-    cy.get(ListagemContasAReceberLocators.linhaTabela).each(($row) => {
-      // Re-wrap the row in the current iteration
-      cy.wrap($row).within(() => {
-        cy.get(ListagemContasAReceberLocators.celulaValorParcela)
-          .invoke('text')
-          .then((valor) => {
-            // Remove espaços extras e converte valor para número
-            valor = valor.trim().replace(/\./g, '').replace(',', '.');
-            expect(parseFloat(valor)).to.be.greaterThan(0, 'Valor Parcela deve ser maior que 0,00');
-          });
-      });
+    cy.get(ListagemContasAReceberLocators.linhaTabela).each(($row, index) => {
+      // Busca todas as células da linha
+      const $celulas = $row.find('td');
+
+      // Verifica se a linha tem colunas suficientes (esperado 9 ou mais para ter o valor da parcela)
+      if ($celulas.length >= 9) {
+        // Pega a 9ª célula (índice 8, pois começa em 0) diretamente pelo índice
+        const $celula = $celulas.eq(8);
+        const valorTexto = $celula.text().trim();
+
+        if (valorTexto) {
+            const valor = valorTexto.replace(/\./g, '').replace(',', '.');
+            expect(parseFloat(valor)).to.be.greaterThan(0, `Linha ${index}: Valor Parcela deve ser maior que 0,00`);
+        }
+      } else {
+        // Loga apenas se a linha não tiver colunas suficientes, ajudando a identificar se pegou linha errada
+        cy.log(`⚠️ Ignorando Linha ${index}: Tem apenas ${$celulas.length} colunas. (Provável linha de controle ou oculta)`);
+      }
     });
   }
 

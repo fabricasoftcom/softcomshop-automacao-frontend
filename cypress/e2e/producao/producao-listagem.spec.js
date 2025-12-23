@@ -1,5 +1,5 @@
 import ProducaoPage from '../../support/pages/Producao/ProducaoPage';
-import ProducaoLocators from '../../support/locators/ProducaoLocators';
+import ProducaoLocators from '../../support/locators/Producao/ProducaoLocators';
 
 describe('Listagem de Produção', { tags: ['@producao', '@regressivo'] }, () => {
   beforeEach(() => {
@@ -30,6 +30,7 @@ describe('Listagem de Produção', { tags: ['@producao', '@regressivo'] }, () =>
       // Fecha o formulário clicando no botão toggle
       cy.get(ProducaoLocators.btnPesquisaToggle).should('be.visible').click();
       cy.get(ProducaoLocators.formPesquisa).should('not.be.visible');
+      cy.wait(1000);
       // Abre novamente para confirmar que funciona
       ProducaoPage.abrirFormularioPesquisa();
       cy.get(ProducaoLocators.formPesquisa).should('be.visible');

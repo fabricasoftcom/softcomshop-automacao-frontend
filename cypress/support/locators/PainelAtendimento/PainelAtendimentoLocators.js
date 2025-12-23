@@ -1,7 +1,7 @@
 const PainelAtendimentoLocators = {
     // Botões e Ações
     btnNovoAtendimento: '#add-atendimento',
-    btnPesquisar: '#btn-pesquisar',
+    btnPesquisar: '#pesquisar',
     btnConfigurar: '#btn-configuracoes',
 
     // Painel Kanban

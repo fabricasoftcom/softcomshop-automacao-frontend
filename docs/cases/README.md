@@ -2,8 +2,8 @@
 
 Este diretório contém a documentação arquitetural detalhada de todos os casos de teste do projeto.
 
-**Última atualização:** 2025-12-12  
-**Total de documentações:** 65
+**Última atualização:** 2025-01-27  
+**Total de documentações:** 67
 
 ---
 
@@ -148,12 +148,14 @@ Cada documentação contém:
 
 ---
 
-### ⚙️ Configurações (4 documentações)
+### ⚙️ Configurações (6 documentações)
 
 - `architecture-empresa-listagem.md` - Listagem de empresas (pesquisa, filtros, exclusão)
 - `architecture-empresa-cadastro.md` - Cadastro completo de empresa
 - `architecture-funcionario-listagem.md` - Listagem de funcionários (pesquisa, filtros, exclusão)
 - `architecture-funcionario-cadastro.md` - Cadastro completo de funcionário
+- `architecture-usuario-listagem.md` - Listagem de usuários (pesquisa, filtros, exclusão)
+- `architecture-usuario-cadastro.md` - Cadastro completo de usuário (com perfis)
 
 ### 🔐 Autenticação e Setup (2 documentações)
 
@@ -179,7 +181,7 @@ Cada documentação contém:
 ### Por Prioridade
 - **Prioridade Alta:** 10 documentações (100% concluído)
 - **Prioridade Média:** 17 documentações (94% concluído)
-- **Total:** 52 documentações (92% do total de specs)
+- **Total:** 67 documentações
 
 ### Por Semana de Criação
 - **Semana 1:** 6 documentações (Financeiro - Contas a Pagar/Receber)

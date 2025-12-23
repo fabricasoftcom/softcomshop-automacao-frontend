@@ -100,5 +100,5 @@ Este documento descreve a arquitetura dos testes relacionados aos **Relatórios 
 
 ---
 
-**Última atualização:** 2025-01-XX
+**Última atualização:** 2025-12-12
 

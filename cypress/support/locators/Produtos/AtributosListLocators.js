@@ -3,7 +3,7 @@ const AtributosListLocators = {
   formPesquisa: '.form-pesquisa',
   inputCodigo: '#id',
   inputDescricao: '#nome',
-  btnSubmitPesquisa: '#btn-pesquisar',
+  btnSubmitPesquisa: '#pesquisar',
   tabelaAtributos: 'table.table-hover',
   linhasTabela: 'table.table-hover tbody tr',
   btnNovoCadastro: 'a#btn-novo',

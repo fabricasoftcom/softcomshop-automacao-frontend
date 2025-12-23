@@ -17,9 +17,11 @@ const ListagemContasAReceberLocators = {
   baixarSelecionadosBtn: 'button:contains("Baixar selecionados")', // Botão "Baixar Selecionados"
 
   // Tabela de Listagem
-  tabelaCompleta: '.table tbody', // Tabela completa
-  linhaTabela: '.table tbody tr', // Todas as linhas da tabela (usar com filtro manual)
-  primeiraLinhaTabela: '.table tbody tr:first-child', // Primeira linha da tabela
+  tabelaCompleta: '.ibox-content .table tbody', // Tabela completa
+  tabelaVisivel: '#tabela-contas-a-receber, .table tbody', // Tabela visível (com fallback)
+  linhaTabela: '.ibox-content .table tbody tr', // Todas as linhas da tabela (usar com filtro manual)
+  primeiraLinhaTabela: '.ibox-content .table tbody tr:first-child', // Primeira linha da tabela
+  loading: '#loading', // Indicador de carregamento
 
   // Células da Tabela para Verificação de Conteúdo
   // NOTA: A primeira coluna é o checkbox, então as colunas de dados começam na 2ª
@@ -27,9 +29,9 @@ const ListagemContasAReceberLocators = {
   celulaDescricao: 'td:nth-of-type(3)', // 3ª coluna
   celulaCliente: 'td:nth-of-type(4)', // 4ª coluna
   celulaCategoria: 'td:nth-of-type(5)', // 5ª coluna
-  celulaValorParcela: 'td:nth-of-type(6)', // 6ª coluna
-  celulaValorPago: 'td:nth-of-type(7)', // 7ª coluna
-  celulaValorPendente: 'td:nth-of-type(8)', // 8ª coluna
+  celulaValorParcela: 'td:nth-child(9)', // 9ª coluna (usando nth-child pois funciona com tbody > :nth-child(1) > :nth-child(9))
+  celulaValorPago: 'td:nth-of-type(10)', // 10ª coluna
+  celulaValorPendente: 'td:nth-of-type(11)', // 11ª coluna
   celulaStatus: 'td:nth-of-type(12)', // 12ª coluna (Status) - baseado na navegação autônoma que identificou 13 colunas
   celulaStatusPrimeiraLinha: '.table tbody tr:first-child .btn', // Célula de status na primeira linha
 
@@ -43,12 +45,14 @@ const ListagemContasAReceberLocators = {
   // Status e Ações Específicas de Baixa
   // NOTA: :has() não é suportado pelo Cypress - usar métodos helpers em vez de locators diretos
   botaoParcialNaLinha: 'button.btn-success:contains("Parcial")', // Botão "Parcial" na linha com status "Parcial"
-  botaoBaixarNaLinha: 'button.btn-warning:contains("Baixar")', // Botão "Baixar" na linha com status "Baixar"
+  botaoParcialIdDinamico: 'button[id^="status-parcial-contas-a-receber-"]', // Botão "Parcial" usando ID dinâmico (se existir)
+  botaoBaixarNaLinha: 'button[id^="status-baixar-contas-a-receber-"]', // Botão "Baixar" usando ID dinâmico
+  botaoParcialFallback: 'button.btn-success', // Botão "Parcial" fallback (classe btn-success)
   // NOTA: celulaStatus já está definido acima (linha 33), removida duplicação
 
   // Checkbox de Seleção
   checkboxPrimeiraLinha: '.table tbody tr:first-child .checkbox input', // Checkbox na primeira linha
-  checkboxLinha: 'input[type="checkbox"].receive_check', // Checkbox em uma linha específica
+  checkboxLinha: 'input[type="checkbox"].check_financeiro_parcela', // Checkbox em uma linha específica (corrigido classe)
   checkboxSelecionarTodos: 'input.receive_check_all', // Checkbox para selecionar todas as linhas
 
   // Modais de Erro e Confirmação

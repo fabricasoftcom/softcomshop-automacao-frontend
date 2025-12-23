@@ -15,7 +15,7 @@ const ProducaoLocators = {
     statusSelect: '#status',
     // Botões
     btnPesquisaToggle: '#btn-pesquisa',
-    btnPesquisar: '#btn-pesquisar',
+    btnPesquisar: '#pesquisar',
     btnNovoCadastro: '#btn-novo',
     btnModalPlus: '#btn-modal-plus',
     btnModalClose: '#btn-modal-plus-close',

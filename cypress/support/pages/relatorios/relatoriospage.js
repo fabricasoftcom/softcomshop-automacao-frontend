@@ -15,6 +15,12 @@ class RelatoriosPage {
         cy.url().should('include', '/relatorio/');
     }
 
+    acessarRelatorioComS(linkLocator) {
+        this.acessarMenuRelatorios();
+        cy.get(linkLocator).first().should('be.visible').click();
+        cy.url().should('include', '/relatorios/');
+    }
+
     // Vendas
     acessarRelatorioVendasPeriodo() {
         this.acessarRelatorio(RelatoriosLocators.vendasPeriodo);
@@ -86,7 +92,7 @@ class RelatoriosPage {
         this.acessarRelatorio(RelatoriosLocators.produtosNCM);
     }
     acessarRelatorioProdutosMovimentacaoEstoque() {
-        this.acessarRelatorio(RelatoriosLocators.produtosMovimentacaoEstoque);
+        this.acessarRelatorioComS(RelatoriosLocators.produtosMovimentacaoEstoque);
     }
 
     // Clientes

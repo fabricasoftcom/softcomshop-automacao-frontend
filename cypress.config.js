@@ -28,16 +28,27 @@ module.exports = defineConfig({
         }
       });
 
+      on('before:browser:launch', (browser = {}, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          // Desativa GPU se estiver sentindo lentidão visual no Chrome
+          launchOptions.args.push('--disable-gpu');
+
+          // Força gerenciamento de memória mais agressivo
+          launchOptions.args.push('--js-flags=--max-old-space-size=4096');
+        }
+        return launchOptions;
+      });
+
       return config;
     },
     env: {
       grepFilterSpecs: true
     },
-    defaultCommandTimeout: 50000,
+    defaultCommandTimeout: 150000,
     specPattern: [
       "./cypress/e2e/setup/_beforeConfigPadrao.spec.js",
       // debounce-autocomplete (arquivo removido/não existe)
-      // "./cypress/e2e/debounce-autocomplete/debounce-autocomplete.spec.js",
+      "./cypress/e2e/debounce-autocomplete/debounce-autocomplete.spec.js",
       // login
       "./cypress/e2e/login/login.spec.js",
       // menu lateral
@@ -160,18 +171,22 @@ module.exports = defineConfig({
       "./cypress/e2e/configuracoes/empresa-cadastro.spec.js",
       "./cypress/e2e/configuracoes/funcionario-listagem.spec.js",
       "./cypress/e2e/configuracoes/funcionario-cadastro.spec.js",
+      "./cypress/e2e/configuracoes/usuario-listagem.spec.js",
+      "./cypress/e2e/configuracoes/usuario-cadastro.spec.js",
       // petshop
       // "./cypress/e2e/painel-atendimento/painel-atendimento.spec.js",
       // "./cypress/e2e/**/*.{feature,cy.js}",
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    baseUrl: 'https://stage-release-2.softcomshop.com.br',
-    // baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
+    // baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    // baseUrl: 'https://stage-release-2.softcomshop.com.br',
+    baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
     //  baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
-
     experimentalStudio: true,
+    video: false,
+    numTestsKeptInMemory: 5,
   },
 });

@@ -2,7 +2,7 @@
 const RelatorioMovimentacaoEstoqueLocators = {
     titulo: 'h5:contains("Movimentação de Estoque")',
     filtrosContainer: 'form',
-    empresaSelect: '#empresa',
+    empresaSelect: '#div_empresa > #empresa',
     tipoSelect: '#tipo',
     operacaoSelect: '#operacao',
     dataInput: '#data',

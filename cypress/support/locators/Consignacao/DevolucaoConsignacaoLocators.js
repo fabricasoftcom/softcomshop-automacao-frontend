@@ -17,7 +17,7 @@ const DevolucaoConsignacaoLocators = {
   campoPeriodo: 'input[placeholder*="Período"], input[name*="periodo"]',
   campoClientePesquisa: '#auto_cliente_nome',
   campoVendedorPesquisa: '#auto_funcionario_nome',
-  btnPesquisar: '#btn-pesquisar',
+  btnPesquisar: '#pesquisar',
 
   // Tabela de Devoluções
   tabelaDevolucoes: 'table.table-hover, table',

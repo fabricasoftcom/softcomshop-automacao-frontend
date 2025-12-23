@@ -3,7 +3,7 @@ const GruposListLocators = {
   formPesquisa: '.form-pesquisa',
   inputCodigo: '#id',
   inputGrupo: '#auto_nome',
-  btnSubmitPesquisa: '#btn-pesquisar',
+  btnSubmitPesquisa: '#pesquisar',
   tableGrupos: 'table.table-hover',
   linhasTabela: 'table.table-hover tbody tr',
   btnNovo: '#btn-novo',

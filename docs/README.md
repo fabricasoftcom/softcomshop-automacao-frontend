@@ -23,7 +23,35 @@ Este diretório contém toda a documentação arquitetural, decisões e guias do
 
 ---
 
+## 📚 Estrutura de Documentação
+
+### Documentos Principais
+- **[Arquitetura do Projeto](./architecture.md)** - Visão geral, estrutura e configurações
+- **[Arquitetura dos Casos de Teste](./test-case-architecture.md)** - Padrões detalhados para criação de testes
+- **[Lista de Testes](./testes.md)** - Inventário completo de todos os testes
+
+### Guias e Referências
+- **[Guia de Decisões Rápidas](./referencias/guia-decisoes-rapidas.md)** - Respostas rápidas para dúvidas comuns
+- **[Referência de Comandos](./referencias/referencia-comandos-customizados.md)** - Todos os comandos customizados
+- **[Processo de Documentação](./referencias/processo-documentacao.md)** - Como criar documentações
+
+### Decisões Arquiteturais
+- **[ADRs](./adr/README.md)** - Todas as decisões arquiteturais (16 ADRs)
+- **[Documentações de Casos](./cases/README.md)** - Documentações detalhadas de cada spec
+
+---
+
 ## 🚀 Início Rápido
+
+### Para Criar um Novo Teste
+1. Consulte [Guia de Decisões Rápidas](./referencias/guia-decisoes-rapidas.md) para dúvidas
+2. Leia [Arquitetura dos Casos de Teste](./test-case-architecture.md) para padrões
+3. Siga [Processo de Documentação](./referencias/processo-documentacao.md) ao criar
+
+### Para Entender a Arquitetura
+1. Leia [Arquitetura do Projeto](./architecture.md) para visão geral
+2. Consulte [ADRs](./adr/README.md) para decisões arquiteturais
+3. Veja exemplos em [Documentações de Casos](./cases/README.md)
 
 ### Para Desenvolvedores
 
@@ -111,7 +139,7 @@ Este diretório contém toda a documentação arquitetural, decisões e guias do
 ### Indicadores de Qualidade
 
 - **Cobertura de ADRs:** 16 ADRs documentadas
-- **Documentações:** 54 documentações de casos
+- **Documentações:** 65 documentações de casos
 - **Atualização:** Verificar data da última atualização de cada ADR
 - **Referências:** Número de referências a ADRs no código
 
@@ -133,5 +161,5 @@ Este diretório contém toda a documentação arquitetural, decisões e guias do
 
 ---
 
-**Última atualização:** 2025-01-XX  
+**Última atualização:** 2025-12-12  
 **Mantido por:** Equipe de Automação

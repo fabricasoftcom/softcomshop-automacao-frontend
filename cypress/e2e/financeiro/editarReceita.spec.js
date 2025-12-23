@@ -1,5 +1,5 @@
 import EditarReceitaPage from "../../support/pages/Financeiro/EditarReceitaPage";
-import EditarReceitaLocators from "../../support/locators/EditarReceitaLocators";
+import EditarReceitaLocators from "../../support/locators/Financeiro/EditarReceitaLocators";
 
 describe('Edição Completa de Receita', { tags: ['@editar-receita', '@financeiro', '@regressivo'] }, () => {
     beforeEach(() => {

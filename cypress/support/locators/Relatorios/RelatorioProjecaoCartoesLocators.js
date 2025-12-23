@@ -6,7 +6,7 @@ const RelatorioProjecaoCartoesLocators = {
     bandeiraAutocomplete: '#auto_cartao_credito_id',
     statusSelect: '#status',
     periodoInput: '#data',
-    botaoPesquisar: '#btn-pesquisar',
+    botaoPesquisar: 'button.btn-warning[type="submit"]:contains("Pesquisar")',
     tabelaResumo: 'table',
     linhasTabelaResumo: 'table tbody tr',
     totalizador: 'h3:contains("Total:")',

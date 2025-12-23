@@ -46,7 +46,7 @@ Cypress.Commands.add('loginRestoreSession', () => {
       LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
       LoginPage.clicarLogin();
       // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-     // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
+      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
       cy.contains('Início').should('be.visible')
     });
   })
@@ -213,6 +213,12 @@ Cypress.Commands.add('setupSistemaPadrao', function () {
   cy.get('#modulo-37').then(($checkbox) => {
     if (!$checkbox.is(':checked')) {
       cy.get('#modulo-37').check();
+    }
+  });
+  // editar descrição do produto
+  cy.get('#check_input_descricao_item').then(($checkbox) => {
+    if (!$checkbox.is(':checked')) {
+      cy.get('#check_input_descricao_item').check();
     }
   });
   // notificacao

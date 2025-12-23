@@ -23,7 +23,7 @@ describe('Cadastro de Requisição de Consignação', { tags: ['@consignacao', '
     const observacoes = faker.lorem.sentence();
 
     // Preencher formulário
-    RequisicaoConsignacaoPage.preencherCliente('SOFTCOM');
+    RequisicaoConsignacaoPage.preencherCliente('1');
     RequisicaoConsignacaoPage.preencherObservacoes(observacoes);
 
     // Salvar formulário
@@ -41,7 +41,7 @@ describe('Cadastro de Requisição de Consignação', { tags: ['@consignacao', '
     const preco = faker.number.float({ min: 10, max: 100, precision: 0.01 }).toFixed(2).replace('.', ',');
 
     // Preencher e salvar formulário
-    RequisicaoConsignacaoPage.preencherCliente('SOFTCOM');
+    RequisicaoConsignacaoPage.preencherCliente('1');
     RequisicaoConsignacaoPage.preencherObservacoes(observacoes);
     RequisicaoConsignacaoPage.salvarFormulario();
     RequisicaoConsignacaoPage.validarSucesso();

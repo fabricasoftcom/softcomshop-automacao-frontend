@@ -325,7 +325,7 @@ import LancamentoContaPage from '../../support/pages/Financeiro/LancamentoContaP
 
 ---
 
-**Última atualização:** 2025-01-XX  
+**Última atualização:** 2025-12-12  
 **Versão:** 2.0
 
 

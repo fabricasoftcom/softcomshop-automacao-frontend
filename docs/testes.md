@@ -741,6 +741,33 @@
 - Deve validar autocomplete de cidade
 - Deve editar funcionario existente e validar alteracao
 
+### ?? Arquivo: `configuracoes/usuario-listagem.spec.js`
+
+#### ?? Suite: Listagem de usuários
+- Exibe a listagem e permite abrir o formulario de filtros
+- Aplica filtro por nome e limpa o campo apos a pesquisa
+- Seleciona e limpa todos os checkboxes da tabela
+- Alerta quando tentar excluir sem selecionar registros
+- Abre o modal de exclusao ao selecionar registros e cancela a acao
+- Navega para novo cadastro ao acessar URL direta
+- Abre e fecha o formulario de pesquisa corretamente
+- Aplica filtro por codigo e valida resultado
+
+### ?? Arquivo: `configuracoes/usuario-cadastro.spec.js`
+
+#### ?? Suite: Cadastro de usuário
+- Deve exibir as abas e botoes principais do formulario
+- Deve realizar cadastro completo de usuario com perfil
+- Deve exibir erro ao tentar salvar sem preencher campos obrigatorios
+- Deve permitir navegar entre todas as abas do formulario
+- Deve retornar para listagem ao clicar em Voltar
+- Deve validar autocomplete de perfil
+- Deve editar usuario existente e validar alteracao
+- Deve exibir erro ao tentar salvar com senhas diferentes
+- Deve exibir erro ao tentar salvar com email invalido
+- Deve permitir excluir perfil do usuario
+- Deve permitir editar usuario sem alterar senha
+
 ## ??? vinculo-fiscal
 
 ### ?? Arquivo: `vinculo-fiscal/novocadastrovinculofiscal.spec.js`

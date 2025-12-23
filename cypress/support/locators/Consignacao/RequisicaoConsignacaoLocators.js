@@ -11,7 +11,7 @@ const RequisicaoConsignacaoLocators = {
   campoCliente: '#auto_cliente_nome',
   dropdownCliente: '#auto_icon_cliente_nome',
   campoStatus: '#status',
-  btnSubmitPesquisa: '#btn-pesquisar, #pesquisar', // Botão para submeter pesquisa
+  btnSubmitPesquisa: '#pesquisar', // Botão para submeter pesquisa
 
   // Tabela de Requisições
   tabelaRequisicoes: '.table-requisicao, #table-requisicao, table',

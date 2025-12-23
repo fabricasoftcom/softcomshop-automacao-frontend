@@ -153,5 +153,5 @@ import RelatorioPeriodoLocators from "../../support/locators/Relatorios/Relatori
 
 ---
 
-**Última atualização:** 2025-01-XX
+**Última atualização:** 2025-12-12
 

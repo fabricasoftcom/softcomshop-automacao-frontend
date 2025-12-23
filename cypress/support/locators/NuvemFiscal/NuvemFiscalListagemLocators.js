@@ -3,7 +3,7 @@ const NuvemFiscalListagemLocators = {
     // Filtros
     campoTipoManifestacao: '#tipo_manifestacao',
     campoStatusImportacao: '#status_importacao, #importada, select[id*="import"], select[id*="status"]',
-    botaoPesquisar: '#btn-pesquisar',
+    botaoPesquisar: '#pesquisar',
 
     // Tabela
     tabelaListagem: '.ibox-content table',

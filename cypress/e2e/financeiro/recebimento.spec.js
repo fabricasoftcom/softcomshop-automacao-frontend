@@ -9,11 +9,11 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
     RecebimentoPage.visit();
   });
 
-    it('Deve verificar os dados principais do modal', () => {
+    it('Deve verificar os dados principais do modal', function() {
       // Verifica se há linhas com status "Baixar" antes de executar o teste
       ListagemContasAReceberPage.verificarSeHaLinhasComStatusBaixar().then((temLinhas) => {
         if (!temLinhas) {
-          cy.log('⚠️ Não há linhas com status "Baixar" - teste será pulado');
+          cy.log('Não há linhas com status "Baixar" - teste será pulado');
           this.skip();
         }
       });
@@ -22,11 +22,11 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
       cy.get('#loading').should('not.exist');
       RecebimentoPage.verificarDadosPrincipais();
     });
-    it('Deve preencher todas as informações de pagamento, clicar em voltar e verificar que o status permanece "Baixar"', () => {
+    it('Deve preencher todas as informações de pagamento, clicar em voltar e verificar que o status permanece "Baixar"', function() {
       // Verifica se há linhas com status "Baixar" antes de executar o teste
       ListagemContasAReceberPage.verificarSeHaLinhasComStatusBaixar().then((temLinhas) => {
         if (!temLinhas) {
-          cy.log('⚠️ Não há linhas com status "Baixar" - teste será pulado');
+          cy.log('Não há linhas com status "Baixar" - teste será pulado');
           this.skip();
         }
       });
@@ -67,11 +67,11 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
         RecebimentoPage.verificarStatusRegistroBaixar();
       });
     });
-  it('Deve preencher as informações de pagamento e salvar', () => {
+  it('Deve preencher as informações de pagamento e salvar', function() {
     // Verifica se há linhas com status "Baixar" antes de executar o teste
     ListagemContasAReceberPage.verificarSeHaLinhasComStatusBaixar().then((temLinhas) => {
       if (!temLinhas) {
-        cy.log('⚠️ Não há linhas com status "Baixar" - teste será pulado');
+        cy.log('Não há linhas com status "Baixar" - teste será pulado');
         this.skip();
       }
     });
@@ -94,11 +94,11 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
        RecebimentoPage.verificarToastSucesso();
       });
     });
-  it('Deve preencher as informações de pagamento com baixa parcial de 20% e salvar', () => {
+  it('Deve preencher as informações de pagamento com baixa parcial de 20% e salvar', function() {
     // Verifica se há linhas com status "Baixar" antes de executar o teste
     ListagemContasAReceberPage.verificarSeHaLinhasComStatusBaixar().then((temLinhas) => {
       if (!temLinhas) {
-        cy.log('⚠️ Não há linhas com status "Baixar" - teste será pulado');
+        cy.log('Não há linhas com status "Baixar" - teste será pulado');
         this.skip();
       }
     });
@@ -124,11 +124,11 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
       RecebimentoPage.verificarToastSucesso();
     });
   });
-  it('Deve localizar e clicar no botão "PARCIAL" da primeira linha com status PARCIAL', () => {
+  it('Deve localizar e clicar no botão "PARCIAL" da primeira linha com status PARCIAL', function() {
     // Verifica se há linhas com status "Parcial" antes de executar o teste
     ListagemContasAReceberPage.verificarSeHaLinhasComStatusParcial().then((temLinhas) => {
       if (!temLinhas) {
-        cy.log('⚠️ Não há linhas com status "Parcial" - teste será pulado');
+        cy.log('Não há linhas com status "Parcial" - teste será pulado');
         this.skip();
       }
     });
@@ -137,11 +137,11 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
     RecebimentoPage.clicarPrimeiraLinhaComStatusParcial();
   });
 
-    it('Deve expandir os detalhes de pagamento e verificar tabela vazia', () => {
+    it('Deve expandir os detalhes de pagamento e verificar tabela vazia', function() {
       // Verifica se há linhas com status "Baixar" antes de executar o teste
       ListagemContasAReceberPage.verificarSeHaLinhasComStatusBaixar().then((temLinhas) => {
         if (!temLinhas) {
-          cy.log('⚠️ Não há linhas com status "Baixar" - teste será pulado');
+          cy.log('Não há linhas com status "Baixar" - teste será pulado');
           this.skip();
         }
       });
@@ -150,11 +150,11 @@ describe('Testes do Modal de Recebimento', { tags: ['@recebimento', '@financeiro
       RecebimentoPage.expandirDetalhesPagamento();
       RecebimentoPage.verificarTabelaDetalhesPagamentoVazia();
     });
-  it('Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status "Baixar"', () => {
+  it('Deve desfazer a baixa de uma parcela, fechar o modal e verificar o status "Baixar"', function() {
     // Verifica se há linhas com status "Parcial" antes de executar o teste
     ListagemContasAReceberPage.verificarSeHaLinhasComStatusParcial().then((temLinhas) => {
       if (!temLinhas) {
-        cy.log('⚠️ Não há linhas com status "Parcial" - teste será pulado');
+        cy.log('Não há linhas com status "Parcial" - teste será pulado');
         this.skip();
       }
     });

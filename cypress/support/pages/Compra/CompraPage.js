@@ -75,12 +75,16 @@ class CompraPage extends CompraBasePage {
         return xmlPage.adicionarGrupo(grupoId);
     }
 
+    adicionarVinculoItem() {
+        return xmlPage.adicionarVinculoItem();
+    }
+
     adicionarVinculo(vinculoId = null) {
         return xmlPage.adicionarVinculo(vinculoId);
     }
 
-    alterarCFOPItem(itemIndex = 0, novoCFOP = '1102') {
-        return xmlPage.alterarCFOPItem(itemIndex, novoCFOP);
+    alterarCFOPItem(novoCFOP = '1403') {
+        return xmlPage.alterarCFOPItem(novoCFOP);
     }
 
     lancarCategoria(categoriaId = null) {

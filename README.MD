@@ -226,9 +226,18 @@ Se quiser rodar múltiplas tags, use `--env grepTags="all"` para combinar múlti
   ```
 
 ---
-### Login global com o método loginArmazenandoSessao()
+### Comandos de Login
 
-Todos os cenários criados devem utilizar o metodo acima (loginArmazenandoSessao()) para criação/verificação da sessão do usuário.
+O projeto utiliza diferentes comandos de login dependendo do tipo de funcionalidade:
+
+- **Funcionalidades Fiscais** (NFe, NFCe, SPED, Sintegra): Use `cy.login()`
+- **Funcionalidades Gerais** (Vendas, Compras, Financeiro, etc.): Use `cy.loginArmazenandoSessao()`
+- **Testes Iterativos** (loops): Use `cy.loginRestoreSession()`
+
+Para detalhes completos, consulte:
+- [Guia de Decisões Rápidas](docs/referencias/guia-decisoes-rapidas.md) - Seção "Qual comando de login usar?"
+- [Referência de Comandos Customizados](docs/referencias/referencia-comandos-customizados.md) - Seção "Comandos de Autenticação"
+- [ADR-0004](docs/adr/0004-use-cy-session-for-login-persistence.md) - Session Persistence
 
 ## 📚 Documentação Oficial
 Para mais detalhes, consulte a documentação oficial das ferramentas utilizadas:

@@ -12,7 +12,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
     // Verifica se há contas bancárias ativas disponíveis
     ListagemContasPage.verificarSeHaContasBancariasAtivas().then((temContas) => {
       if (!temContas) {
-        cy.log('⚠️ Não há contas bancárias ativas disponíveis - teste será pulado');
+        cy.log('Não há contas bancárias ativas disponíveis - teste será pulado');
         this.skip();
       }
     });
@@ -28,7 +28,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
     // Verifica se há contas bancárias ativas disponíveis
     ListagemContasPage.verificarSeHaContasBancariasAtivas().then((temContas) => {
       if (!temContas) {
-        cy.log('⚠️ Não há contas bancárias ativas disponíveis - teste será pulado');
+        cy.log('Não há contas bancárias ativas disponíveis - teste será pulado');
         this.skip();
       }
     });
@@ -56,7 +56,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
     // Verifica se há contas bancárias ativas disponíveis
     ListagemContasPage.verificarSeHaContasBancariasAtivas().then((temContas) => {
       if (!temContas) {
-        cy.log('⚠️ Não há contas bancárias ativas disponíveis - teste será pulado');
+        cy.log('Não há contas bancárias ativas disponíveis - teste será pulado');
         this.skip();
       }
     });
@@ -84,7 +84,7 @@ describe('Testes de Edição de Conta Corrente', { tags: ['@edicao-conta-corrent
     // Verifica se há contas bancárias inativas disponíveis
     ListagemContasPage.verificarSeHaContasBancariasInativas().then((temContas) => {
       if (!temContas) {
-        cy.log('⚠️ Não há contas bancárias inativas disponíveis - teste será pulado');
+        cy.log('Não há contas bancárias inativas disponíveis - teste será pulado');
         this.skip();
       }
     });

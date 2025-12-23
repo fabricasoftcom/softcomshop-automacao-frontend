@@ -123,7 +123,7 @@ Each ADR follows this structure:
 
 ### ADR-0016: Planning Before Implementation
 **Status**: Accepted  
-**Date**: 2025-01-XX  
+**Date**: 2025-12-12  
 **Summary**: Decision to always use planning before implementation for complex features, clarifying requirements upfront and creating structured plans to ensure faster and more accurate implementations.
 
 [View ADR-0016](./0016-planning-before-implementation.md)

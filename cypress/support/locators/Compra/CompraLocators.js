@@ -25,6 +25,11 @@ const CompraLocators = {
     btnLancarGrupo: '#btn-lancar-grupo',
     // Relacionar produto (na linha do item)
     btnRelacionarProduto: 'input[value="Relacionar Produto"].relacionar, button.relacionar',
+    // Relacionar produto (na linha do item) - campo autocomplete
+    campoRelacionarProduto: 'input[name*="produto"], input[id*="produto"]',
+    iconRelacionarProduto: '[id*="icon_produto"]',
+    listaRelacionarProduto: '.typeahead-list li a',
+    btnSalvarProduto: '.td-produto-form > .btn-primary',
     // Adicionar grupo (na linha do item)
     btnAdicionarGrupoItem: 'input[value="Adicionar Grupo"].grupo, button.grupo',
     // Adicionar vínculo para todos os itens
@@ -34,6 +39,11 @@ const CompraLocators = {
     btnLancarVinculoTodos: '#btn-lancar',
     // Adicionar vínculo (na linha do item)
     btnAdicionarVinculoItem: 'input[value="Adicionar Vinculo"].vincular, button.vincular',
+    // Adicionar vínculo (na linha do item) - campo autocomplete
+    campoAdicionarVinculoItem: 'input[name*="vinculo_fiscal"], input[id*="vinculo_fiscal"]',
+    iconAdicionarVinculoItem: '[id*="icon_vinculo_fiscal"]',
+    listaAdicionarVinculoItem: '.typeahead-list li a',
+    btnSalvarVinculoItem: '.td-vinculo-form > .btn-primary',
     // Alterar CFOP do item (duplo click no span)
     spanCFOPItem: '.cfop-item',
     campoCFOPItem: 'input[name="cfop_item[]"].cfop_item',

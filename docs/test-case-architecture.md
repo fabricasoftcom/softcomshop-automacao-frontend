@@ -1,5 +1,7 @@
 # Arquitetura dos casos de teste
 
+> **Para visão geral da arquitetura do projeto, consulte [Arquitetura do Projeto](./architecture.md)**
+
 ## Architecture Decision Records (ADRs)
 
 Este projeto utiliza **Architecture Decision Records (ADRs)** para documentar decisões arquiteturais importantes. Para contexto completo e justificativas, consulte [docs/adr/README.md](./adr/README.md).
@@ -15,6 +17,11 @@ Este projeto utiliza **Architecture Decision Records (ADRs)** para documentar de
 - [ADR-0009](./adr/0009-use-faker-for-dynamic-test-data.md): Faker for Dynamic Data
 - [ADR-0010](./adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
 - [ADR-0011](./adr/0011-use-conditional-intercepts.md): Conditional Intercepts
+- [ADR-0012](./adr/0012-documentation-of-custom-commands.md): Documentation of Custom Commands
+- [ADR-0013](./adr/0013-continuous-validation-checklist.md): Continuous Validation Checklist
+- [ADR-0014](./adr/0014-standardized-architectural-documentation-process.md): Standardized Architectural Documentation Process
+- [ADR-0015](./adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
+- [ADR-0016](./adr/0016-planning-before-implementation.md): Planning Before Implementation
 
 ---
 

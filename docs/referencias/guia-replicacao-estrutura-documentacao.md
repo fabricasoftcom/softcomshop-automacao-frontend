@@ -1,14 +1,22 @@
 # 📚 Guia de Replicação: Estrutura de Documentação, Regras e ADRs
 
 **Versão:** 2.0  
-**Data:** 2025-01-XX  
+**Data:** 2025-12-12  
 **Status:** ✅ Guia de Referência
 
 ---
 
 ## 📝 Changelog
 
-### Versão 2.0 (2025-01-XX)
+### Versão 2.1 (2025-12-12)
+
+**Melhorias e Adições:**
+
+- ✅ **Suporte a Automação Autônoma:** Adicionado passo para criar Guia de Prompts para automação com Cursor
+- ✅ **Template de Regras Atualizado:** Adicionada seção de Autonomous Automation and Prompts no template de regras do Cursor
+- ✅ **Gatilhos Automáticos:** Documentado como configurar gatilhos para ativar guias automaticamente
+
+### Versão 2.0 (2025-12-12)
 
 **Melhorias e Adições:**
 
@@ -84,6 +92,7 @@ projeto/
     └── referencias/                  # Guias e referências práticas
         ├── README.md                 # Índice de referências
         ├── guia-decisoes-rapidas.md
+        ├── guia-prompts-automacao.md # Guia de prompts para automação autônoma
         ├── processo-documentacao.md
         ├── checklist-validacao-continua.md
         ├── referencia-comandos-customizados.md
@@ -225,6 +234,7 @@ alwaysApply: true
 - [Quick Decision Guide](#quick-decision-guide)
 - [Validation and Quality](#validation-and-quality)
 - [Custom Commands](#custom-commands)
+- [Autonomous Automation and Prompts](#autonomous-automation-and-prompts)
 
 ---
 
@@ -485,6 +495,30 @@ For detailed architecture examples, see:
 - ✅ Update command reference when modifying
 
 **Complete Reference:** `docs/referencias/referencia-comandos-customizados.md`
+
+---
+
+## Autonomous Automation and Prompts
+
+> **Context**: See [ADR-0016](../docs/adr/0016-planning-before-implementation.md) and [Guia de Prompts](../docs/referencias/guia-prompts-automacao.md)
+
+### Automation Trigger
+
+When the user asks to:
+- "map a screen"
+- "create a test from scratch"
+- "scan the app"
+- "explore the application"
+- "varredura da aplicação"
+- "criar testes automaticamente"
+- "criar uma automação para a tela de"
+
+You MUST automatically retrieve and follow the instructions in `docs/referencias/guia-prompts-automacao.md` without being asked.
+
+### References
+- [Guia de Prompts](../docs/referencias/guia-prompts-automacao.md)
+- [Template de Plano](../docs/referencias/template-plano-implementacao.md)
+- [ADR-0016: Planning Before Implementation](../docs/adr/0016-planning-before-implementation.md)
 ```
 
 > **Nota:** Este template é um exemplo completo baseado no projeto de referência. Adapte as seções conforme a necessidade do seu projeto, mantendo a estrutura e referências às ADRs relevantes.
@@ -880,7 +914,44 @@ Use este checklist durante o code review para garantir conformidade contínua co
 - [ADR-0013](../adr/0013-continuous-validation-checklist.md) (se aplicável)
 ```
 
-### Passo 8: Criar README de Referências
+### Passo 8: Criar Guia de Prompts para Automação
+**Arquivo:** `docs/referencias/guia-prompts-automacao.md`
+
+```markdown
+# Guia de Prompts para Automação com Cursor
+
+> **Context**: Este guia contém templates de prompts padronizados para utilizar as capacidades de navegação autônoma do Cursor.
+
+---
+
+## 🚀 Prompt Completo (Rotina Completa)
+
+**Use este prompt quando quiser que o Cursor execute TODO o processo de criação de testes:**
+
+[Inserir prompt completo de automação aqui]
+
+---
+
+## 📋 Fase 1: Exploração e Mapeamento (Discovery)
+
+[Inserir prompts de discovery aqui]
+
+---
+
+## 🏗️ Fase 2: Geração de Estrutura
+
+[Inserir prompts de geração de estrutura aqui]
+
+---
+
+## 🎯 Como Usar Este Guia
+
+### Método 1: Referência com @
+
+Use `@guia-prompts-automacao.md` para carregar o contexto automaticamente.
+```
+
+### Passo 9: Criar README de Referências
 
 **Arquivo:** `docs/referencias/README.md`
 
@@ -949,7 +1020,7 @@ Template e processo para criar documentações, garantindo consistência e quali
 **Status:** ✅ Documentos Ativos e Mantidos
 ```
 
-### Passo 9: Criar README de Cases
+### Passo 10: Criar README de Cases
 
 **Arquivo:** `docs/cases/README.md`
 
@@ -1018,7 +1089,7 @@ Todas as documentações referenciam as seguintes ADRs quando aplicável:
 **Mantido por:** [Equipe]
 ```
 
-### Passo 10: Criar README Principal
+### Passo 11: Criar README Principal
 
 **Arquivo:** `docs/README.md`
 
@@ -1321,6 +1392,7 @@ Use este checklist ao replicar a estrutura:
 
 ### Documentação Inicial
 - [ ] Criar Guia de Decisões Rápidas
+- [ ] Criar Guia de Prompts para Automação
 - [ ] Criar Processo de Documentação
 - [ ] Criar Checklist de Validação
 - [ ] Criar README de Referências
@@ -1457,7 +1529,7 @@ Use este checklist ao replicar a estrutura:
 
 ---
 
-**Última atualização:** 2024-12-20  
+**Última atualização:** 2025-12-12  
 **Versão:** 1.0  
 **Mantido por:** Equipe de Documentação
 

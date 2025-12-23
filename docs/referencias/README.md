@@ -32,6 +32,35 @@ Este é o documento principal para consulta rápida quando você tem dúvidas so
 
 ---
 
+### 🤖 `guia-prompts-automacao.md`
+
+**Guia de prompts padronizados para automação autônoma com Cursor.**
+
+Este guia contém templates de prompts prontos para uso que permitem ao Cursor explorar telas, mapear locators e criar testes automaticamente seguindo as ADRs do projeto.
+
+**Conteúdo:**
+- Prompt completo para rotina completa de criação de testes
+- Prompts específicos por fase (Exploração, Geração de Estrutura, Validação)
+- Prompts para mapeamento de cenários de teste
+- Prompts para casos específicos (Listagem, Cadastro, Formulários Complexos)
+- Prompts de otimização e validação
+- Seção "Como Usar" com 3 métodos diferentes
+- Armadilhas comuns e como evitá-las
+
+**Quando usar:**
+- Ao criar testes do zero e querer que o Cursor faça tudo automaticamente
+- Ao explorar uma nova tela e mapear locators
+- Ao mapear cenários de teste para cobertura total
+- Ao otimizar código de testes existente
+- Para padronizar a criação de testes com o Cursor
+
+**Referenciado em:**
+- `.cursor/rules/architeture.mdc` (regras do Cursor - gatilho automático)
+- `template-plano-implementacao.md` (Fase 1: Exploração)
+- ADR-0016 (Planning Before Implementation)
+
+---
+
 ### 📖 `referencia-comandos-customizados.md`
 
 **Referência completa de todos os comandos Cypress customizados do projeto.**
@@ -273,12 +302,18 @@ Este guia fornece instruções passo a passo para criar a mesma estrutura de doc
 
 ### Criando um Novo Teste
 
-1. **Planeje:** `template-plano-implementacao.md`
-   - Crie plano estruturado (se 3+ arquivos)
-   - Siga fases: Exploração → Estrutura → Implementação → Documentação → Validação
-   - Use nomenclatura padronizada
+1. **Automatize:** `guia-prompts-automacao.md` (Opcional, mas recomendado)
+   - Use o prompt completo para criar testes automaticamente
+   - Ou use prompts específicos por fase (Exploração, Locators, Page Object, Spec)
+   - O Cursor seguirá automaticamente o protocolo quando você usar os prompts
 
-2. **Consulte:** `guia-decisoes-rapidas.md`
+2. **Planeje:** `template-plano-implementacao.md`
+   - Crie plano estruturado (se 3+ arquivos)
+   - Siga fases: Exploração → Mapeamento de Cenários → Estrutura → Implementação → Documentação → Validação
+   - Use nomenclatura padronizada
+   - Use o guia de prompts na Fase 1 (Exploração)
+
+3. **Consulte:** `guia-decisoes-rapidas.md`
    - Qual comando de login usar?
    - Preciso criar Page Object?
    - Quais tags usar?
@@ -327,6 +362,7 @@ Este guia fornece instruções passo a passo para criar a mesma estrutura de doc
 docs/referencias/
 ├── README.md                              # Este arquivo (índice)
 ├── guia-decisoes-rapidas.md              # ⭐ Guia principal de referência
+├── guia-prompts-automacao.md             # 🤖 Guia de prompts para automação
 ├── referencia-comandos-customizados.md   # Referência de comandos
 ├── checklist-validacao-continua.md       # Checklist de validação
 ├── checklist-anti-padroes.md              # 🚨 Checklist de anti-padrões
@@ -381,5 +417,5 @@ docs/referencias/
 
 ---
 
-**Última atualização:** 2025-01-XX  
+**Última atualização:** 2025-12-12  
 **Status:** ✅ Documentos Ativos e Mantidos

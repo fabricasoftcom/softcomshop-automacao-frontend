@@ -186,7 +186,7 @@ Este documento captura os principais aprendizados, insights e lições aprendida
 
 ## 🎓 Lições Aprendidas: Módulo Gestor de Promoções
 
-**Data:** 2025-01-XX  
+**Data:** 2025-12-12  
 **Contexto:** Implementação e validação do módulo Gestor de Promoções
 
 ### 1. Validação de Date Range Picker
@@ -838,7 +838,7 @@ Durante a implementação dos testes de cadastro de compra manual, encontramos m
 
 ## 🎓 Lições Aprendidas: Simplificação de Código Complexo
 
-**Data:** 2025-01-XX  
+**Data:** 2025-12-12  
 **Contexto:** Simplificação do módulo Nuvem Fiscal - Remoção de complexidade desnecessária e consolidação de código duplicado
 
 ### Contexto
@@ -1746,7 +1746,7 @@ Use este checklist ao criar novos planos:
 
 A implementação do módulo de Funcionários (listagem + cadastro) foi realizada seguindo rigorosamente o template padronizado de plano de implementação (`template-plano-implementacao.md`), resultando em uma implementação completa e bem-sucedida que serve como **exemplo prático** de como aplicar o template corretamente.
 
-**Data da Implementação:** 2025-01-XX  
+**Data da Implementação:** 2025-12-12  
 **Status:** ✅ Completo e Funcional  
 **Taxa de Sucesso:** 88.9% (16/18 testes passando)  
 **Conformidade com ADRs:** 100%

@@ -259,7 +259,7 @@ class CompraXmlPage extends CompraBasePage {
             .should('be.visible')
             .click();
 
-        cy.wait(1500);
+        cy.wait(5500);
 
         // Seleciona o primeiro grupo da lista ou um específico
         cy.get('body').then(($body) => {
@@ -274,7 +274,7 @@ class CompraXmlPage extends CompraBasePage {
                         .first()
                         .click();
                 }
-                cy.wait(1000);
+                cy.wait(5000);
 
                 // Clica no botão "Lançar Grupo"
                 cy.get(CompraLocators.btnLancarGrupo, { timeout: 10000 })
@@ -294,17 +294,28 @@ class CompraXmlPage extends CompraBasePage {
         cy.get(CompraLocators.tabelaItensImportacao, { timeout: 10000 })
             .should('have.length.at.least', itemIndex + 1)
             .eq(itemIndex)
+            .scrollIntoView()
             .within(() => {
                 cy.get(CompraLocators.btnRelacionarProduto, { timeout: 10000 })
                     .should('be.visible')
                     .click();
+
+                // Clica no ícone do autocomplete de produto
+                cy.get(CompraLocators.iconRelacionarProduto, { timeout: 10000 })
+                    .scrollIntoView()
+                    .click({ force: true });
+
+                // Seleciona o primeiro produto da lista
+                cy.get(CompraLocators.listaRelacionarProduto, { timeout: 10000 })
+                    .should('be.visible')
+                    .first()
+                    .click();
+
+                // Clica no botão "Salvar"
+                cy.get(CompraLocators.btnSalvarProduto, { timeout: 10000 })
+                    .should('be.visible')
+                    .click();
             });
-
-        cy.wait(2000);
-
-        // Aguarda o modal aparecer e interage com ele
-        // O modal será tratado pela lógica JavaScript da página
-        // Por enquanto, apenas aguardamos o modal aparecer e depois fechar
 
         return this;
     }
@@ -326,6 +337,40 @@ class CompraXmlPage extends CompraBasePage {
 
         // Aguarda o modal aparecer e interage com ele
         // O modal será tratado pela lógica JavaScript da página
+
+        return this;
+    }
+
+    adicionarVinculoItem() {
+        cy.get(CompraLocators.formImportacao, { timeout: 20000 }).should('be.visible');
+
+        // Itera sobre todas as linhas - re-busca a cada iteração para garantir todos os itens
+        cy.get(CompraLocators.tabelaItensImportacao, { timeout: 10000 })
+            .should('have.length.at.least', 1)
+            .each(($linha, index) => {
+                // Re-busca a linha pelo índice para garantir que está no DOM atual
+                cy.get(CompraLocators.tabelaItensImportacao)
+                    .eq(index)
+                    .scrollIntoView()
+                    .within(() => {
+                        cy.get(CompraLocators.btnAdicionarVinculoItem, { timeout: 10000 })
+                            .should('be.visible')
+                            .click();
+
+                        cy.get(CompraLocators.iconAdicionarVinculoItem, { timeout: 10000 })
+                            .scrollIntoView()
+                            .click({ force: true });
+
+                        cy.get(CompraLocators.listaAdicionarVinculoItem, { timeout: 10000 })
+                            .should('be.visible')
+                            .first()
+                            .click();
+
+                        cy.get(CompraLocators.btnSalvarVinculoItem, { timeout: 10000 })
+                            .should('be.visible')
+                            .click();
+                    });
+            });
 
         return this;
     }
@@ -366,34 +411,38 @@ class CompraXmlPage extends CompraBasePage {
         return this;
     }
 
-    alterarCFOPItem(itemIndex = 0, novoCFOP = '1102') {
+    alterarCFOPItem(novoCFOP = '1403') {
         cy.get(CompraLocators.formImportacao, { timeout: 20000 }).should('be.visible');
 
-        // Encontra a linha do item e dá duplo click no span do CFOP para editá-lo
+        // Itera sobre todas as linhas - aplica CFOP em todos os itens
         cy.get(CompraLocators.tabelaItensImportacao, { timeout: 10000 })
-            .should('have.length.at.least', itemIndex + 1)
-            .eq(itemIndex)
-            .within(() => {
-                // Dá duplo click no span do CFOP para abrir o campo de edição
-                cy.get(CompraLocators.spanCFOPItem, { timeout: 10000 })
-                    .should('be.visible')
-                    .dblclick();
+            .should('have.length.at.least', 1)
+            .each(($linha, index) => {
+                // Re-busca a linha pelo índice para garantir que está no DOM atual
+                cy.get(CompraLocators.tabelaItensImportacao)
+                    .eq(index)
+                    .scrollIntoView()
+                    .within(() => {
+                        // Dá duplo click no span do CFOP para abrir o campo de edição
+                        cy.get(CompraLocators.spanCFOPItem, { timeout: 10000 })
+                            .should('be.visible')
+                            .dblclick();
 
-                cy.wait(500);
+                        // Aguarda o campo ficar editável (pode estar oculto mas ainda ser interagível)
+                        // Usa first() para garantir que pega apenas o campo do item atual
+                        cy.get(CompraLocators.campoCFOPItem, { timeout: 10000 })
+                            .first()
+                            .should('exist')
+                            .clear({ force: true })
+                            .type(novoCFOP, { force: true });
 
-                // Preenche o novo CFOP
-                cy.get(CompraLocators.campoCFOPItem, { timeout: 10000 })
-                    .should('be.visible')
-                    .clear()
-                    .type(novoCFOP);
-
-                cy.wait(1000);
-
-                // Remove o foco para validar (focusout)
-                cy.get(CompraLocators.campoCFOPItem).blur();
+                        // Remove o foco para validar (focusout)
+                        cy.get(CompraLocators.campoCFOPItem)
+                            .first()
+                            .blur({ force: true });
+                    });
             });
 
-        cy.wait(1500);
         return this;
     }
 
@@ -405,30 +454,23 @@ class CompraXmlPage extends CompraBasePage {
             .should('be.visible')
             .click();
 
-        cy.wait(1500);
-
         // Seleciona a primeira categoria da lista ou uma específica
-        cy.get('body').then(($body) => {
-            const lista = $body.find(CompraLocators.listaCategoriaTodos);
-            if (lista.length > 0) {
-                if (categoriaId) {
-                    cy.get(CompraLocators.listaCategoriaTodos, { timeout: 10000 })
-                        .contains(categoriaId)
-                        .click();
-                } else {
-                    cy.get(CompraLocators.listaCategoriaTodos, { timeout: 10000 })
-                        .first()
-                        .click();
-                }
-                cy.wait(1000);
+        if (categoriaId) {
+            cy.get(CompraLocators.listaCategoriaTodos, { timeout: 10000 })
+                .should('be.visible')
+                .contains(categoriaId)
+                .click();
+        } else {
+            cy.get(CompraLocators.listaCategoriaTodos, { timeout: 10000 })
+                .should('be.visible')
+                .first()
+                .click();
+        }
 
-                // Clica no botão "Lançar Categoria"
-                cy.get(CompraLocators.btnLancarCategoria, { timeout: 10000 })
-                    .should('be.visible')
-                    .click();
-                cy.wait(1000);
-            }
-        });
+        // Clica no botão "Lançar Categoria"
+        cy.get(CompraLocators.btnLancarCategoria, { timeout: 10000 })
+            .should('be.visible')
+            .click();
 
         return this;
     }

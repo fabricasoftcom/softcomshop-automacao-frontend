@@ -16,7 +16,7 @@ const ListagemNfeLocators = {
   campoNumeroFinal: '#numero_nfe_ate',
   selectSerie: '#serie',
   selectStatus: '#status_nota',
-  botaoPesquisarAvancado: '#btn-pesquisar',
+  botaoPesquisarAvancado: '#pesquisar',
   tabelaListagem: '.ibox-content table',
   checkboxSelecionarTodos: '.check_all',
   checkboxPrimeiraLinha: '.ibox-content table tbody tr:first-child input[type="checkbox"]',

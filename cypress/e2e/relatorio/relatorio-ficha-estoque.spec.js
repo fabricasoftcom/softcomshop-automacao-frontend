@@ -25,7 +25,7 @@ describe('Relatorio de Ficha Estoque', { tags: ['@relatorios', '@produtos', '@fi
     const hoje = new Date();
     const dataInicio = formatDate(hoje);
     const dataFim = formatDate(hoje);
-
+    RelatorioFichaEstoquePage.selecionarPrimeiroProduto();
     RelatorioFichaEstoquePage.preencherPeriodo(dataInicio, dataFim);
     cy.get(RelatorioFichaEstoqueLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
 

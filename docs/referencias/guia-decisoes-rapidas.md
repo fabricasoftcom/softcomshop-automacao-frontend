@@ -952,12 +952,54 @@ abrirFormularioPesquisa() {
 
 ---
 
+## 🤖 Como pedir para o Cursor criar testes automaticamente?
+
+### ❓ Dúvida: "Como usar o Cursor para criar testes automaticamente?"
+
+### ✅ Decisão Rápida:
+
+**Para criar testes do zero automaticamente:**
+- ✅ **Use:** O prompt completo do `guia-prompts-automacao.md`
+- **Copie e cole:** O prompt completo substituindo `[INSERIR TELA AQUI]` pelo nome da tela
+- **O Cursor fará:** Exploração → Mapeamento de Cenários → Criação de Locators → Page Objects → Specs
+
+**Para explorar apenas uma tela:**
+- ✅ **Use:** O prompt mestre de Discovery do `guia-prompts-automacao.md`
+- **Referencie:** `@guia-prompts-automacao.md` seguido do nome da tela
+
+**Para uma fase específica:**
+- ✅ **Use:** Prompts específicos por fase (Locators, Page Object, Spec)
+- **Vantagem:** Controle total sobre o que o Cursor faz
+
+### 📋 Padrão:
+
+```markdown
+# Exemplo 1: Prompt Completo (Rotina Completa)
+Gostaria de criar uma automação para a tela de Cadastro de Produtos seguindo a ADR-0016.
+[resto do prompt...]
+
+# Exemplo 2: Referência com @
+Siga o protocolo de Discovery do @guia-prompts-automacao.md para a tela de Cadastro de Produtos
+
+# Exemplo 3: Prompt Específico
+Com base na exploração realizada, crie o arquivo de Locators...
+```
+
+### 📚 Referência Completa:
+- `docs/referencias/guia-prompts-automacao.md` - Guia completo com todos os prompts
+- `.cursor/rules/architeture.mdc` - Gatilho automático configurado
+
+**Nota:** O Cursor automaticamente consulta o guia quando você usa frases como "criar uma automação para a tela de", "map a screen", "scan the app".
+
+---
+
 ## 🔗 Referências Rápidas
 
 ### Documentos Essenciais
 
 | Documento | Quando Consultar |
 |-----------|------------------|
+| `docs/referencias/guia-prompts-automacao.md` | Criar testes automaticamente com Cursor |
 | `docs/referencias/referencia-comandos-customizados.md` | Dúvidas sobre comandos customizados |
 | `docs/referencias/checklist-validacao-continua.md` | Validação de código |
 | `docs/referencias/processo-documentacao.md` | Criando documentação |
@@ -1040,6 +1082,7 @@ abrirFormularioPesquisa() {
 2. **Consulte exemplos:** `docs/cases/architecture-*.md`
 3. **Consulte checklist:** `docs/referencias/checklist-validacao-continua.md`
 4. **Consulte referências:** `docs/referencias/referencia-comandos-customizados.md`
+5. **Crie testes automaticamente:** `docs/referencias/guia-prompts-automacao.md`
 
 ---
 

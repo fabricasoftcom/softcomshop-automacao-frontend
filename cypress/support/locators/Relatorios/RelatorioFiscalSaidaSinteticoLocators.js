@@ -7,7 +7,7 @@ const RelatorioFiscalSaidaSinteticoLocators = {
     tipoDocumentoSelect: '#tipo',
     statusSelect: '#status',
     serieInput: 'input[type="number"]',
-    botaoPesquisar: '#btn-pesquisar',
+    botaoPesquisar: '#pesquisar',
     botaoGerarPdf: '#gerar-pdf',
     tabelaResultados: 'table',
     linhasTabelaResultados: 'table tbody tr',

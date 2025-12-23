@@ -23,7 +23,7 @@ class ProdutosListPage {
 
   selecionarGrupo(grupo) {
     if (grupo) {
-      cy.get(ProdutosListLocators.selectGrupo).select(grupo);
+      cy.get(ProdutosListLocators.selectGrupo).first().select(grupo);
     }
   }
 

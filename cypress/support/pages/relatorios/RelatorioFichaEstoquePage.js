@@ -27,9 +27,30 @@ class RelatorioFichaEstoquePage {
             .clear({ force: true })
             .type(periodo, { force: true });
     }
+    selecionarPrimeiroProduto() {
+        cy.get(RelatorioFichaEstoqueLocators.produtoAutocomplete, { timeout: 10000 })
+            .should('be.visible')
+            .click({ force: true })
+            .clear();
+
+        cy.wait(500);
+        cy.get(RelatorioFichaEstoqueLocators.produtoIcon, { timeout: 10000 })
+            .first()
+            .click({ force: true });
+
+        cy.get(RelatorioFichaEstoqueLocators.produtoResultado, { timeout: 10000 })
+            .filter(':visible')
+            .first()
+            .should('be.visible')
+            .click({ force: true });
+
+        cy.get(RelatorioFichaEstoqueLocators.produtoIdHidden, { timeout: 10000 })
+            .invoke('val')
+            .should('match', /\S+/);
+    }
 
     pesquisar() {
-        cy.intercept('GET', '**/relatorio/ficha-estoque**').as('relatorioFichaEstoque');
+        cy.intercept('POST', '**/relatorio/ficha-estoque**').as('relatorioFichaEstoque');
         cy.get(RelatorioFichaEstoqueLocators.botaoPesquisar).click({ force: true });
         cy.wait('@relatorioFichaEstoque').then((interception) => {
             const status = Number(interception?.response?.statusCode);

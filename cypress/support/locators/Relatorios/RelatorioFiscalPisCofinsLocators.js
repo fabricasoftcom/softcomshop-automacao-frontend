@@ -6,7 +6,7 @@ const RelatorioFiscalPisCofinsLocators = {
     periodoInput: '#data',
     tipoDocumentoSelect: '#tipo',
     statusSelect: '#status',
-    botaoPesquisar: '#btn-pesquisar',
+    botaoPesquisar: '#pesquisar',
     botaoGerarPdf: '#gerar-pdf',
     tabelaResultados: 'table',
     linhasTabelaResultados: 'table tbody tr',

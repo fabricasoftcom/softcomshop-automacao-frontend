@@ -7,7 +7,7 @@ const VinculoFiscalListagemLocators = {
     // **Campos de Pesquisa**
     campoCodigo: '#id', // Campo de entrada para código do vínculo fiscal
     campoDescricao: '#nome_vinculo', // Campo de entrada para descrição do vínculo fiscal
-    btnPesquisar: '#btn-pesquisar', // Botão para confirmar a pesquisa
+    btnPesquisar: '#pesquisar', // Botão para confirmar a pesquisa
 
     // **Tabela de Vínculos Fiscais**
     tabelaVinculos: '#674ee97528179', // ID da tabela principal que lista os vínculos fiscais

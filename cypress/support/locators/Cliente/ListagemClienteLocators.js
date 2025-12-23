@@ -5,7 +5,7 @@ const ListagemClienteLocators = {
   inputCpfCnpj: '#cpf_cnpj',
   inputNome: '#nome',
   inputRazaoSocial: '#razao_social',
-  btnPesquisar: '#btn-pesquisar',
+  btnPesquisar: '#pesquisar',
   tabelaClientes: '.ibox-content table.table-hover',
   linhasTabela: '.ibox-content table.table-hover tbody tr',
   btnNovo: '.ibox-title #btn-novo',

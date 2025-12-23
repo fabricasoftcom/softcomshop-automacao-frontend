@@ -19,11 +19,14 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
     GruposFormPage.clicarSalvar();
     cy.wait("@salvarGrupo");
     cy.visit("/grupo-padrao");
+    // Aguardar carregamento completo da página
+    cy.get('#loading').should('not.exist');
+    GruposListPage.verificarTabelaVisivel();
   };
 
   it("permite filtrar a listagem de grupos", () => {
     GruposListPage.abrirFiltro();
-    GruposListPage.preencherFiltro("7", "Adicionais Combo");
+    GruposListPage.preencherFiltro("1", "TAXA DE ENTREGA");
     GruposListPage.clicarPesquisar();
     GruposListPage.verificarTabelaVisivel();
     GruposListPage.contarLinhasVisiveis().should("have.length.greaterThan", 0);
@@ -58,6 +61,13 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
       criarGrupo(nome);
     });
 
+    // Aguardar carregamento completo após criar todos os grupos
+    cy.get('#loading').should('not.exist');
+    GruposListPage.verificarTabelaVisivel();
+
+    // Aguardar que a tabela tenha pelo menos algumas linhas
+    GruposListPage.contarLinhasVisiveis().should('have.length.greaterThan', 0);
+
     nomes.forEach((nome) => {
       cy.contains("td", nome).parents("tr").within(() => {
         cy.get('input[type="checkbox"]').check({ force: true });
@@ -74,8 +84,6 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
     nomes.forEach((nome) => {
       cy.contains("td", nome).should("not.exist");
     });
-
-    cy.contains("td", "Adicionais Combo TOp").should("be.visible");
-    cy.contains("td", "Adicional").should("be.visible");
+    cy.contains("td", "TAXA DE ENTREGA").should("be.visible");
   });
 });

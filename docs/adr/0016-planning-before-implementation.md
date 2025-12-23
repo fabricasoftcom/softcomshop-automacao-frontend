@@ -351,7 +351,7 @@ Based on evaluation:
 
 ## References
 
-- Experience from XML retry implementation (2025-01-XX)
+- Experience from XML retry implementation (2025-12-12)
 - Plan mode → Agent mode workflow in Cursor
 - "Measure twice, cut once" principle
 

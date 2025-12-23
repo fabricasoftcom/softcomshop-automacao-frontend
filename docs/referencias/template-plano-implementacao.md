@@ -50,6 +50,7 @@ Use este template quando:
   - [ADR-0007](../adr/0007-separate-specs-by-functionality-and-type.md): Separate Specs
   - [ADR-0009](../adr/0009-use-faker-for-dynamic-test-data.md): Faker for Dynamic Data
   - [ADR-0010](../adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
+  - [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
   - [ADR-0016](../adr/0016-planning-before-implementation.md): Planning Before Implementation
 ```
 
@@ -63,12 +64,20 @@ Use este template quando:
 - Valida fluxo completo antes de implementar
 - Reduz retrabalho significativamente
 
-**IMPORTANTE:** A exploração manual deve ser realizada pelo Cursor usando as ferramentas de browser autônomas (`browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`), não pelo desenvolvedor manualmente.
+**IMPORTANTE:** A exploração deve ser realizada pelo Cursor usando as ferramentas de browser autônomas (`browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`), não pelo desenvolvedor manualmente.
+
+**Dica:** Utilize o "Prompt Mestre de Discovery" disponível em `docs/referencias/guia-prompts-automacao.md` para garantir que o agente capture os locators seguindo a ADR-0015.
 
 ```markdown
 ## Fase 1: Exploração e Descoberta
 
-### explorar-listagem-manual
+### explorar-pre-requisitos-autonoma
+**Objetivo**: Validar ambiente e configurações antes da exploração profunda
+- [ ] Ler `cypress.config.js` para obter `baseUrl`
+- [ ] Validar acessibilidade da `baseUrl` via `browser_navigate`
+- [ ] Verificar credenciais de teste em `cypress/fixtures/users.json`
+
+### explorar-listagem-autonoma
 **Objetivo**: Usar ferramentas de browser do Cursor para navegar até a listagem, inspecionar DOM e coletar todos os locators
 - [ ] **IMPORTANTE**: Ler `baseUrl` do `cypress.config.js` e usar URLs relativas (ex: `/consignacao/requisicao`) ao invés de URLs absolutas
 - [ ] Usar `browser_navigate` com URL relativa ao `baseUrl` configurado para fazer login e navegar até a listagem via menu ou URL direta
@@ -79,7 +88,7 @@ Use este template quando:
 - [ ] Coletar locators de ações (Editar, Excluir linha) usando `browser_evaluate`
 - [ ] Validar estrutura completa da página usando `browser_snapshot` e `browser_evaluate`
 
-### explorar-cadastro-manual
+### explorar-cadastro-autonoma
 **Objetivo**: Usar ferramentas de browser do Cursor para acessar formulário de cadastro, preencher e salvar
 - [ ] **IMPORTANTE**: Ler `baseUrl` do `cypress.config.js` e usar URLs relativas (ex: `/consignacao/requisicao/novo`) ao invés de URLs absolutas
 - [ ] Usar `browser_click` para clicar em "Novo Cadastro" ou usar `browser_navigate` com URL relativa ao `baseUrl` para URL direta
@@ -91,7 +100,7 @@ Use este template quando:
 - [ ] Usar `browser_evaluate` para coletar locators de botões (Salvar, Voltar)
 - [ ] Usar `browser_snapshot` para identificar toasts/mensagens de sucesso
 
-### explorar-funcionalidades-especificas-manual
+### explorar-funcionalidades-especificas-autonoma
 **Objetivo**: Usar ferramentas de browser do Cursor para explorar funcionalidades específicas do módulo
 - [ ] **IMPORTANTE**: Ler `baseUrl` do `cypress.config.js` e usar URLs relativas ao invés de URLs absolutas
 - [ ] [Funcionalidade 1]: Usar `browser_click`, `browser_type`, `browser_evaluate` para testar e coletar locators
@@ -107,6 +116,35 @@ Use este template quando:
 - [ ] Documentar diferenças com implementação de referência
 - [ ] Documentar comportamentos especiais (campos condicionais, validações) identificados
 - [ ] Documentar mensagens de sucesso/erro capturadas via `browser_snapshot`
+
+### mapear-cenarios-cobertura
+**Objetivo**: Mapear todos os cenários de teste necessários para cobertura total da funcionalidade
+- [ ] Identificar cenários de sucesso (happy path)
+- [ ] Identificar cenários de validação (campos obrigatórios, formatos inválidos)
+- [ ] Identificar cenários de erro (erros de API, validações de negócio)
+- [ ] Identificar cenários de borda (edge cases)
+- [ ] Identificar fluxos alternativos (caminhos diferentes no mesmo fluxo)
+- [ ] Identificar cenários de integração (interação entre componentes)
+- [ ] Documentar cada cenário com: descrição, pré-condições, passos, resultado esperado
+- [ ] Priorizar cenários por criticidade (críticos primeiro)
+- [ ] Validar que todos os cenários mapeados são testáveis com Cypress
+- [ ] Criar documento temporário com matriz de cenários (ex: `docs/temp-cenarios-[modulo].md`)
+
+**Exemplo de estrutura de cenário:**
+```markdown
+## Cenário 1: Cadastro com sucesso
+- **Descrição**: Cadastrar novo registro com todos os campos válidos
+- **Pré-condições**: Usuário logado, permissões adequadas
+- **Passos**: 
+  1. Acessar tela de cadastro
+  2. Preencher todos os campos obrigatórios
+  3. Clicar em Salvar
+- **Resultado Esperado**: Toast de sucesso, registro salvo, redirecionamento
+- **Criticidade**: Alta
+- **Prioridade**: 1
+```
+
+**Dica:** Utilize o "Prompt para Mapear Cenários" disponível em `docs/referencias/guia-prompts-automacao.md` para garantir mapeamento completo.
 
 ### validar-exploracao-executada
 **Objetivo**: Validar que a exploração autônoma foi executada antes de prosseguir para Fase 2
@@ -126,6 +164,12 @@ Use este template quando:
 - [ ] Criar `cypress/support/locators/[Modulo]/`
 - [ ] Criar `cypress/support/pages/[Modulo]/`
 - [ ] Validar estrutura criada
+
+### validar-qualidade-locators
+**Objetivo**: Garantir conformidade com ADR-0015
+- [ ] Verificar se IDs estáveis foram priorizados
+- [ ] Validar que não há seletores muito genéricos ou frágeis
+- [ ] Confirmar que seletores funcionam no console do browser (via `browser_evaluate`)
 
 ### criar-locators-listagem
 **Objetivo**: Criar arquivo de locators da listagem
@@ -419,6 +463,14 @@ cy.contains('h5', 'Produtos').parent().next().within(() => {
 
 ---
 
+### 7. Confiar em IA para Lógica Complexa sem Validação Humana
+
+**Problema:** Aceitar sugestões de lógica de negócio complexa geradas pela IA sem validação manual rigorosa.
+
+**Solução:** Sempre revisar manualmente a lógica de testes críticos, especialmente em fluxos financeiros e fiscais. A IA é uma ferramenta de apoio, não o decisor final.
+
+---
+
 ## 📝 Padrões de Nomenclatura
 
 ### TODOs
@@ -426,7 +478,7 @@ cy.contains('h5', 'Produtos').parent().next().within(() => {
 **Formato**: `[acao]-[objeto]-[contexto]`
 
 **Ações comuns:**
-- `explorar-*`: Exploração autônoma pelo Cursor usando ferramentas de browser
+- `explorar-*-autonoma`: Exploração autônoma pelo Cursor usando ferramentas de browser
 - `criar-*`: Criação de arquivos/estrutura
 - `adicionar-*`: Adição a arquivos existentes
 - `atualizar-*`: Atualização de arquivos existentes
@@ -435,7 +487,7 @@ cy.contains('h5', 'Produtos').parent().next().within(() => {
 - `validar-*`: Validação
 
 **Exemplos:**
-- ✅ `explorar-listagem-manual`
+- ✅ `explorar-listagem-autonoma`
 - ✅ `criar-locators-cadastro`
 - ✅ `criar-page-listagem`
 - ✅ `adicionar-specs-config`
@@ -469,12 +521,14 @@ cy.contains('h5', 'Produtos').parent().next().within(() => {
 
 ```
 Fase 1 (Exploração) - OBRIGATÓRIA ANTES DE QUALQUER IMPLEMENTAÇÃO
-    ├─ explorar-*-manual (deve ser executado primeiro)
+    ├─ explorar-pre-requisitos-autonoma
+    ├─ explorar-*-autonoma (deve ser executado primeiro)
     ├─ documentar-descobertas (deve ser executado após exploração)
     └─ validar-exploracao-executada (deve validar antes de prosseguir)
     ↓
 Fase 2 (Estrutura Base) - SÓ INICIAR APÓS FASE 1 COMPLETA
     ├─ criar-estrutura-diretorios
+    ├─ validar-qualidade-locators (check de segurança)
     ├─ criar-locators-* (depende de: validar-exploracao-executada e documentar-descobertas)
     └─ criar-page-* (depende de: criar-locators-*)
     ↓
@@ -504,6 +558,7 @@ Antes de considerar o plano completo, valide:
 - [ ] Fases bem definidas
 
 ### Exploração
+- [ ] Pré-requisitos de ambiente verificados
 - [ ] Exploração autônoma pelo Cursor incluída (OBRIGATÓRIA) - usando ferramentas de browser
 - [ ] Instrução sobre uso do baseUrl do cypress.config.js incluída em todos os TODOs de exploração
 - [ ] Validação de exploração executada incluída (validar-exploracao-executada)
@@ -513,6 +568,7 @@ Antes de considerar o plano completo, valide:
 
 ### Implementação
 - [ ] Estrutura de diretórios definida
+- [ ] Qualidade dos locators validada (IDs estáveis)
 - [ ] Locators antes de Page Objects
 - [ ] Page Objects antes de Specs
 - [ ] Specs antes de documentação
@@ -550,12 +606,14 @@ Implementar testes automatizados para o módulo Gestor de Preços, cobrindo:
 - **ADRs relevantes**: [listar ADRs]
 
 ## Fase 1: Exploração e Descoberta
-- [ ] explorar-listagem-manual
-- [ ] explorar-cadastro-manual
+- [ ] explorar-pre-requisitos-autonoma
+- [ ] explorar-listagem-autonoma
+- [ ] explorar-cadastro-autonoma
 - [ ] documentar-descobertas
 
 ## Fase 2: Estrutura Base
 - [ ] criar-estrutura-diretorios
+- [ ] validar-qualidade-locators
 - [ ] criar-locators-listagem
 - [ ] criar-locators-cadastro
 - [ ] criar-page-listagem
@@ -600,6 +658,7 @@ Este case study completo demonstra:
 
 - [ADR-0016: Planning Before Implementation](../adr/0016-planning-before-implementation.md)
 - [ADR-0006: Mandatory Documentation](../adr/0006-mandatory-documentation-for-new-tests.md)
+- [ADR-0015: Prioritize IDs and Context in Locators](../adr/0015-prioritize-ids-and-context-in-locators.md)
 - [Processo de Documentação](./processo-documentacao.md)
 - [Guia de Decisões Rápidas](./guia-decisoes-rapidas.md)
 - [Exemplo Real: Módulo Funcionários](./exemplo-implementacao-funcionarios.md)
@@ -621,6 +680,5 @@ Este case study completo demonstra:
 
 ---
 
-**Última atualização**: 2025-01-XX  
-**Versão**: 1.0
-
+**Última atualização**: 2025-12-12  
+**Versão**: 1.1
