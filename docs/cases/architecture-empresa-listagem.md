@@ -231,11 +231,15 @@ import EmpresaListagemLocators from '../../support/locators/Empresa/EmpresaLista
 
 ## Referências
 
+### ADRs relacionadas
 - [ADR-0002](../adr/0002-use-page-object-pattern.md): Page Object Pattern
 - [ADR-0003](../adr/0003-separate-locators-from-page-objects.md): Separate Locators
 - [ADR-0004](../adr/0004-use-cy-session-for-login-persistence.md): Session Persistence
 - [ADR-0010](../adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
 - [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
+
+### Documentação relacionada
+- `docs/cases/architecture-empresa-cadastro.md` - Cadastro de empresa (listagem permite acesso ao cadastro)
 
 ---
 

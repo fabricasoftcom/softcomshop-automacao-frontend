@@ -40,6 +40,10 @@ class MenulateralFiscalPage {
         this.expandirClicarMenuFiscal(MenulateralFiscalLocators.sped, MenulateralFiscalLocators.spedIpiAjuste);
     }
 
+    acessarSpedPlanoContas() {
+        this.expandirClicarMenuFiscal(MenulateralFiscalLocators.sped, MenulateralFiscalLocators.spedPlanoContas);
+    }
+
     acessarSintegraGerarArquivo() {
     cy.get(MenulateralFiscalLocators.menuFiscal).click({ force: true });
     cy.get(MenulateralFiscalLocators.sintegra).click({ force: true });

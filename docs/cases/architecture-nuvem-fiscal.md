@@ -130,5 +130,7 @@ Os locators são importados dentro dos Page Objects:
 - [ADR-0011](../adr/0011-use-conditional-intercepts.md): Conditional Intercepts
 
 ### Documentação Relacionada
+- `docs/cases/architecture-cadastro-compra-manual.md` - Cadastro de compra manual (compras podem ser cadastradas manualmente ou importadas da Nuvem Fiscal)
+- `docs/cases/architecture-cadastro-compra.md` - Cadastro de compra via XML (cadastro de compra pode usar importação de NFe da Nuvem Fiscal)
 - [Processo de Documentação](../referencias/processo-documentacao.md): Template e processo para documentação arquitetural
 

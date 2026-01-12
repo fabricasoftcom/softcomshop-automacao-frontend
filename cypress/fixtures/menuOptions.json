@@ -72,7 +72,7 @@
     "childMenu": {
       "id": "grupo"
     },
-    "route": "/grupo"
+    "route": "/grupo-padrao"
   },
   {
     "mainMenu": {
@@ -157,6 +157,24 @@
       "id": "balanço"
     },
     "route": "/balanco"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "gestão_de_estoque"
+    },
+    "route": "/gestao-estoque"
+  },
+  {
+    "mainMenu": {
+      "text": "Compras e Estoque"
+    },
+    "subMenu": {
+      "id": "dashboard_estoque"
+    },
+    "route": "/gestao-estoque/dashboard"
   },
   {
     "mainMenu": {
@@ -328,6 +346,15 @@
   },
   {
     "mainMenu": {
+      "text": "Vendas e NF-e"
+    },
+    "subMenu": {
+      "id": "pdv"
+    },
+    "route": "/"
+  },
+  {
+    "mainMenu": {
       "text": "Serviços e NFS-e"
     },
     "subMenu": {
@@ -352,6 +379,15 @@
       "id": "vinculos_fiscais_de_serviço"
     },
     "route": "/vinculos-fiscais-servico"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "id": "cadastro_de_modelos"
+    },
+    "route": "/contratos/cadastro-modelos"
   },
   {
     "mainMenu": {
@@ -475,9 +511,36 @@
       "text": "Financeiro"
     },
     "subMenu": {
-      "id": "recibo"
+      "id": "conciliador_cartões"
     },
-    "route": "/financeiro/recibo"
+    "route": "/"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "painel_pix"
+    },
+    "route": "/softcompay/painel"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "estorno_pix"
+    },
+    "route": "/softcompay/estorno"
+  },
+  {
+    "mainMenu": {
+      "text": "Financeiro"
+    },
+    "subMenu": {
+      "id": "meu_lucro"
+    },
+    "route": "/financeiro/meu-lucro/visao-geral"
   },
   {
     "mainMenu": {
@@ -673,5 +736,50 @@
       "id": "cartões"
     },
     "route": "/cartao"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "justificativas"
+    },
+    "route": "/configuracao/tipo-justificativa"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "módulos"
+    },
+    "route": "/configuracao/menu"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "scheme"
+    },
+    "route": "/configuracao/scheme"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "sincronização"
+    },
+    "route": "/configuracao/sincronizacao"
+  },
+  {
+    "mainMenu": {
+      "text": "Configurações"
+    },
+    "subMenu": {
+      "id": "configurações_de_etiquetas"
+    },
+    "route": "/configuracao/etiqueta"
   }
 ]

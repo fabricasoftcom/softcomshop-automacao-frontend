@@ -1,5 +1,6 @@
 import EditarDespesaLocators from "../../locators/Financeiro/EditarDespesaLocators";
 import ListagemContasAPagarPage from "./ListagemContasAPagarPage";
+import { faker } from '@faker-js/faker';
 
 class EditarDespesaPage {
     // Acessa a página e abre o modal de edição de despesa
@@ -104,7 +105,7 @@ class EditarDespesaPage {
         cy.get(EditarDespesaLocators.valorInput).invoke('val').then((valorAtual) => {
             let novoValor;
             do {
-                novoValor = (Math.floor(Math.random() * 9000) + 1000).toFixed(2).replace('.', ',');
+                novoValor = faker.number.float({ min: 1000, max: 10000, precision: 0.01 }).toFixed(2).replace('.', ',');
             } while (novoValor === valorAtual);
             cy.get(EditarDespesaLocators.valorInput)
               .clear({ force: true })

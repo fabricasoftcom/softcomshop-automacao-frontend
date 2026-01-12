@@ -27,7 +27,46 @@
 - Os comandos aproveitam o `MenulateralVendaPage` para navegar pela árvore “Vendas e NF-e”, mantendo coesão com demais specs desse menu (clientes, orçamento, NF-e/NFC-e).
 - Resultados seguem fluindo para Allure (`allure-results`) e podem receber snapshots Percy futuros, pois o teste interage apenas com componentes visíveis.
 
+## Padrões e boas práticas
+
+### Page Object Pattern (ADR-0002)
+- `ListagemVendasPage` encapsula todas as interações com a listagem de vendas.
+
+### Separação de Locators (ADR-0003)
+- `ListagemVendasLocators` centraliza seletores da listagem.
+- `ClienteLocators` reutilizado para modais de confirmação.
+
+### Login Persistente (ADR-0004)
+- Uso de `cy.loginArmazenandoSessao()` no `beforeEach` para otimizar tempo de execução.
+
+### Tags para Filtragem de Testes (ADR-0010)
+- Tags `@vendas`, `@listagem-vendas` e `@regressivo` aplicadas para execução seletiva.
+
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `ListagemVendasPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `ListagemVendasLocators` e `ClienteLocators` separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-venda.md` - Cadastro de venda (listagem permite acesso ao cadastro)
+- `docs/cases/architecture-venda-nfe.md` - Venda com emissão de NFe (listagem permite acesso a vendas para emissão de NFe)
+- `docs/cases/architecture-venda-nfce.md` - Venda com emissão de NFCe (listagem permite acesso a vendas para emissão de NFCe)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Venda/ListagemVendasPage.js` - Page Object
+- `cypress/support/locators/Venda/ListagemVendasLocators.js` - Locators
+
+### Arquivos relacionados
+- `cypress/e2e/vendas/listagem-vendas.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestões para evolução
 1. Adicionar cenários cobrindo o autocomplete de cliente (`#auto_cliente_id`) e de origem da venda (`#auto_origem_venda`) com `cy.intercept` mockando as rotas `/vendas/autocomplete/cliente` e `/softcomtecnologia/autocomplete`.
-2. Validar o bloqueio do período maior que 60 dias simulando a seleção de datas no `daterangepicker` e garantindo o toast “Selecione uma data que esteja dentro do período de 60 dias”.
+2. Validar o bloqueio do período maior que 60 dias simulando a seleção de datas no `daterangepicker` e garantindo o toast "Selecione uma data que esteja dentro do período de 60 dias".
 3. Exercitar o filtro rápido por coluna (ícones `fa-filter`) garantindo que o script de front aplica o `row.toggle(false)` apenas para linhas que não correspondem ao texto digitado.

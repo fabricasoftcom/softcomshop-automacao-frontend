@@ -24,6 +24,45 @@
 - Assercoes de URL substituem intercepts de rede, mantendo o teste leve e alinhado ao padrao descrito em `docs/test-case-architecture.md`.
 - Evidencias e tags sao capturadas pelo Allure, compartilhando estrutura de report com as demais suites.
 
+## Padrões e boas práticas
+
+### Page Object Pattern (ADR-0002)
+- `ListagemNfePage` encapsula todas as interações com a listagem de NFe.
+
+### Separação de Locators (ADR-0003)
+- `ListagemNfeLocators` centraliza todos os seletores da listagem.
+
+### Login Persistente (ADR-0004)
+- Uso de `cy.login()` no `beforeEach` para funcionalidades fiscais.
+
+### Tags para Filtragem de Testes (ADR-0010)
+- Tags `@nfe`, `@vendas` e `@regressivo` aplicadas para execução seletiva.
+
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `ListagemNfePage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `ListagemNfeLocators` separado
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.login()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-nfe.md` - Cadastro de NFe (listagem permite acesso ao cadastro)
+- `docs/cases/architecture-cancelamento-nfe.md` - Cancelamento de NFe (listagem permite cancelar NFes)
+- `docs/cases/architecture-carta-correcao-nfe.md` - Carta de Correção NFe (listagem permite emitir carta de correção)
+- `docs/cases/architecture-cadastro-nfe-dropdown-acoes.md` - Dropdown de Ações NFe (listagem permite acessar ações via dropdown)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Venda/ListagemNfePage.js` - Page Object
+- `cypress/support/locators/Venda/ListagemNfeLocators.js` - Locators
+
+### Arquivos relacionados
+- `cypress/e2e/venda-nfcenfe/listagem-nfe.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestoes de evolucao
 1. Adicionar cobertura para o filtro por destinatario (autocomplete) incluindo intercept de `**/nfe/autocomplete/destinatario**`.
 2. Verificar o comportamento do periodo padrão (`#periodo`/daterangepicker) e constraint de datas ao abrir a tela.

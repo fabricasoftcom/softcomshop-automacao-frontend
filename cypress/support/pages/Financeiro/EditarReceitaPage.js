@@ -1,6 +1,7 @@
 // EditarReceitaPage.js
 import EditarReceitaLocators from "../../locators/Financeiro/EditarReceitaLocators";
 import ListagemContasAReceberPage from "./ListagemContasAReceberPage";
+import { faker } from '@faker-js/faker';
 
 class EditarReceitaPage {
 
@@ -70,7 +71,7 @@ class EditarReceitaPage {
             cy.get(EditarReceitaLocators.valorInput).invoke('val').then((valorAtual) => {
                 let novoValor;
                 do {
-                    novoValor = (Math.floor(Math.random() * 791) + 10).toFixed(2).replace('.', ',');
+                    novoValor = faker.number.float({ min: 10, max: 801, precision: 0.01 }).toFixed(2).replace('.', ',');
                 } while (novoValor === valorAtual);
                 cy.get(EditarReceitaLocators.valorInput).clear({ force: true }).type(novoValor, { force: true });
             });

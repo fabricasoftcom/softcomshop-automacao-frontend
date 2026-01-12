@@ -67,6 +67,10 @@ class MenulateralFinanceiroPage {
         this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.estornoPix);
     }
 
+    acessarMeuLucro() {
+        this.acessarMenuFinanceiro(MenulateralFinanceiroLocators.meuLucro);
+    }
+
     // Métodos para cadastro de novas entidades
 
     acessarCadastroNovaConta() {

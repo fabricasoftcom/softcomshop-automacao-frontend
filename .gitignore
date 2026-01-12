@@ -13,6 +13,7 @@ allure-results/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+logs/
 
 # Environment variables (se estiver utilizando arquivos .env)
 .env

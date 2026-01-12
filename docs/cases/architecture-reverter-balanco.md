@@ -137,7 +137,7 @@ import { ReverterBalancoLocator } from "../../locators/ReverterBalancoLocator";
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-balanco.md` - Documentação do teste de criação de balanço
+- `docs/cases/architecture-balanco.md` - Criação e finalização de balanço (balanços criados podem ser revertidos)
 - `docs/adr/` - Architecture Decision Records
 
 ---

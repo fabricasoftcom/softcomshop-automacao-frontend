@@ -43,6 +43,7 @@ Este projeto utiliza **Architecture Decision Records (ADRs)** para documentar de
 - `cypress.config.js` define `baseUrl` (`https://stage-release.softcomshop.com.br`), `viewport` 1366x768 e `defaultCommandTimeout` estendido para 50s, garantindo estabilidade em ambientes lentos.
 - Em `setupNodeEvents` sao registrados os plugins `allure-cypress` e `@cypress/grep` e retornado o config atualizado, permitindo filtro de especificacoes via `grep`.
 - `testIsolation: false` preserva estados entre testes quando necessario, e `experimentalStudio: true` facilita criacao rapida de testes.
+- **Configuracoes multi-segmento**: O projeto suporta configuracoes especificas por segmento (petshop, e-commerce, etc.) atraves de arquivos `cypress.config.[segmento].js` que herdam do padrao e isolam testes por segmento. **Ver [Guia de Configuracoes Multi-Segmento](../referencias/guia-configuracoes-multi-segmento.md)** para detalhes completos.
 
 ## Fluxos de execucao
 - Scripts npm (`package.json`) padronizam comandos:
@@ -51,6 +52,7 @@ Este projeto utiliza **Architecture Decision Records (ADRs)** para documentar de
   - `npm run test:all`: encadeia os dois navegadores.
   - `npm run test:allure`: gera e abre o relatorio Allure apos os testes.
   - `npm run lint` e `npm run lint-html`: validam o padrao ESLint em todo o codigo.
+- **Execução Paralela**: O projeto possui um script otimizado `executar-paralelo.ps1` que roda os testes em **14 threads simultâneas**, reduzindo drasticamente o tempo de execução. **Ver [Guia de Execução Paralela](./referencias/guia-execucao-paralela.md)** para detalhes.
 - O README principal descreve o setup completo (instalacao do Node, `npm install`, `npx cypress run/open`).
 
 ## Fluxo de dados

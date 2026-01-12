@@ -203,3 +203,6 @@ import UsuarioListagemLocators from '../../support/locators/Usuario/UsuarioLista
 - [ADR-0010](../adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
 - [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
 
+### Documentação relacionada
+- `docs/cases/architecture-usuario-cadastro.md` - Cadastro de usuário (listagem permite acesso ao cadastro)
+

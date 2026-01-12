@@ -199,8 +199,9 @@ import EditarReceitaLocators from "../../locators/EditarReceitaLocators";
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-nova-receita.md` - Documentação de cadastro de receita
-- `docs/cases/architecture-listagem-contas-a-receber.md` - Documentação de listagem
+- `docs/cases/architecture-nova-receita.md` - Cadastro de nova receita (receitas criadas podem ser editadas)
+- `docs/cases/architecture-listagem-contas-a-receber.md` - Listagem de contas a receber (acessa edição a partir desta listagem)
+- `docs/cases/architecture-recebimento.md` - Modal de recebimento (receitas editadas podem ser recebidas)
 - `docs/adr/` - Architecture Decision Records
 
 ---
@@ -228,7 +229,7 @@ const descricaoTeste = `Receita Teste - ${new Date().toLocaleString()}`;
 ```javascript
 let novoValor;
 do {
-    novoValor = (Math.floor(Math.random() * 791) + 10).toFixed(2).replace('.', ',');
+    novoValor = faker.number.float({ min: 10, max: 801, precision: 0.01 }).toFixed(2).replace('.', ',');
 } while (novoValor === valorAtual);
 ```
 

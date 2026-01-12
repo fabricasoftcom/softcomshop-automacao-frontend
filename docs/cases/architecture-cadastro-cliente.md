@@ -25,6 +25,68 @@
 - Tags `{ tags: ['@cadastro-cliente', '@regressivo'] }` permitem filtros com `@cypress/grep`.
 - `docs/testes.md` lista os cenários cobrindo layout, switches, PF/PJ e fluxos adicionais, mantendo o inventário sincronizado.
 
+## Padrões e boas práticas
+
+### Uso de Faker para Dados Dinâmicos
+- Uso de `generateRandomCustomer()` que utiliza Faker para gerar dados únicos
+- Suporte para clientes Pessoa Física (PF) e Pessoa Jurídica (PJ)
+- Dados realistas (nomes, endereços, CPF/CNPJ válidos)
+- Uso de `generateRandomContact()` para contatos
+
+### Validação de Estado
+- Verificação de estado de switches antes de alterar (Bloqueado/Desativado)
+- Validação de layout básico antes de interações
+- Verificação de abas e botões principais
+
+### Navegação e Redirecionamento
+- Validação de redirecionamento após cadastro
+- Uso de intercept para controlar redirecionamento
+- Aguardo de redirecionamento com timeout apropriado
+
+### Tratamento de Modais e Alertas
+- Tratamento de SweetAlert com confirmação ("Sim, continuar")
+- Interação com modais aninhados (Endereço, Contato)
+- Validação de tabelas vazias antes de adicionar registros
+
+### Autocomplete e Seleção
+- Seleção automática de Bairro e Cidade no autocomplete
+- Tratamento de campos de autocomplete com filtro por texto
+- Seleção de opções em dropdowns
+
+### Validação de Tabelas
+- Verificação de tabelas vazias (mensagem de "sem resultados")
+- Validação de tabelas populadas após inserção
+- Validação de registros listados
+
+### Tags aplicadas
+- `@cadastro-cliente` - Identifica funcionalidade específica
+- `@regressivo` - Tipo de teste
+
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `ClientePage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `CadastroClienteLocators` e `ClienteLocators` separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0009:** Use Faker for Dynamic Test Data - Faker usado via `generateRandomCustomer()` e `generateRandomContact()`
+- **ADR-0010:** Use Tags for Test Filtering - Tags `@cadastro-cliente` e `@regressivo` aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-listagem-clientes.md` - Listagem de clientes (clientes cadastrados podem ser listados)
+- `docs/testes.md` - Lista de cenários de teste
+- `cypress/support/pages/Cliente/ClientePage.js` - Page Object
+- `cypress/support/locators/Cliente/CadastroClienteLocators.js` - Locators de cadastro
+- `cypress/support/locators/Cliente/ClienteLocators.js` - Locators genéricos
+- `cypress/support/factory/generateRandomData.js` - Factories de dados dinâmicos
+
+### Arquivos relacionados
+- `cypress/e2e/cadastro-clientes/cadastro-cliente.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Próximos passos sugeridos
 1. Cobrir preenchimento das abas adicionais (Financeiras, Contato/Notificações) com validações negativas e edição de registros quando houver requisitos específicos.
 2. Exercitar a busca automática por CEP e autocomplete de cidade/bairro utilizando `cy.intercept` para controlar as respostas.

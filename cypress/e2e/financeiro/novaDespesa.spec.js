@@ -1,5 +1,6 @@
 import novaDespesaPage from "../../support/pages/Financeiro/NovaDespesaPage";
 import ListagemContasAPagarPage from "../../support/pages/Financeiro/ListagemContasAPagarPage";
+import { faker } from '@faker-js/faker';
 
 describe('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@regressivo'] }, () => {
     const formasPagamento = require('../../fixtures/formasPagamento.json').formasPagamento;
@@ -29,7 +30,7 @@ describe('Cadastro de Nova Despesa', { tags: ['@nova-despesa', '@financeiro', '@
         novaDespesaPage.selecionarFormaPagamento(formaPagamento);
 
         const dataAtual = new Date().toLocaleDateString('pt-BR');
-        const valorAleatorio = (Math.random() * 500 + 1).toFixed(2).replace('.', ',');
+        const valorAleatorio = faker.number.float({ min: 1, max: 500, precision: 0.01 }).toFixed(2).replace('.', ',');
 
         novaDespesaPage.selecionarDataCompetencia(dataAtual);
         novaDespesaPage.selecionarDataVencimento(dataAtual);

@@ -31,6 +31,21 @@ class ListagemContasAPagarPage {
     cy.get(ListagemContasAPagarLocators.checkboxTodos).check();
   }
 
+  validarCheckboxTodosSelecionado() {
+    cy.get(ListagemContasAPagarLocators.checkboxTodos).should('be.checked');
+    return this;
+  }
+
+  validarModalTituloEditarDespesa() {
+    cy.get(ListagemContasAPagarLocators.modalTitulo).should('contain.text', 'Editar Despesa');
+    return this;
+  }
+
+  validarModalTituloRecebimento() {
+    cy.get(ListagemContasAPagarLocators.modalTitulo).should('contain.text', 'Recebimento');
+    return this;
+  }
+
   selecionarPrimeiraLinhaComStatusBaixar() {
     cy.get(ListagemContasAPagarLocators.linhaTabela)
       .filter(':contains("Baixar")')

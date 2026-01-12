@@ -27,6 +27,8 @@ Por favor, inicie a Fase 1 (Exploração):
 
 ## 📋 Fase 1: Exploração e Mapeamento (Discovery)
 
+> **💡 Dica:** Para uma exploração mais estruturada e completa, consulte o [Template de Exploração Autônoma](./template-exploracao-autonoma.md) que fornece um checklist detalhado passo a passo.
+
 ### Prompt Mestre de Discovery
 
 **Use este prompt quando quiser apenas explorar uma tela:**
@@ -43,6 +45,8 @@ Por favor, inicie a Fase 1 (Exploração):
 ```
 
 **Quando usar:** Quando você quer apenas mapear a tela sem criar código ainda.
+
+**Para exploração completa:** Use o [Template de Exploração Autônoma](./template-exploracao-autonoma.md) que fornece checklist detalhado com validações.
 
 ### Prompt para Listagem
 
@@ -375,6 +379,7 @@ cy.contains('h5', 'Produtos').parent().next().within(() => {
 - [ADR-0003: Separate Locators](../adr/0003-separate-locators-from-page-objects.md)
 - [ADR-0009: Faker for Dynamic Data](../adr/0009-use-faker-for-dynamic-test-data.md)
 - [Template de Plano de Implementação](./template-plano-implementacao.md)
+- [Template de Exploração Autônoma](./template-exploracao-autonoma.md) - Checklist detalhado para exploração
 - [Guia de Decisões Rápidas](./guia-decisoes-rapidas.md)
 
 ---

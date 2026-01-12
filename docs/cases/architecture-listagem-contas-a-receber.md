@@ -340,8 +340,9 @@ import ListagemContasAReceberLocators from "../../locators/ListagemContasARecebe
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-nova-receita.md` - Documentação de cadastro de receita
-- `docs/cases/architecture-recebimento.md` - Documentação de recebimento
+- `docs/cases/architecture-nova-receita.md` - Cadastro de nova receita (abre modal a partir desta listagem)
+- `docs/cases/architecture-recebimento.md` - Modal de recebimento (abre a partir desta listagem)
+- `docs/cases/architecture-editar-receita.md` - Edição de receitas (acessa edição a partir desta listagem)
 - `docs/adr/` - Architecture Decision Records
 
 ---

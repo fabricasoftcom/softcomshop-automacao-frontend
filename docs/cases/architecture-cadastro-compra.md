@@ -195,6 +195,27 @@
 - **CFOP padrão**: `1102` (configurável via parâmetro)
 - **Vínculo fiscal**: primeiro resultado do autocomplete
 
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `CompraPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `CompraLocators` separado
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-nuvem-fiscal.md` - Nuvem Fiscal (cadastro de compra pode usar importação de NFe da Nuvem Fiscal)
+- `docs/cases/architecture-cadastro-compra-manual.md` - Cadastro de compra manual (alternativa ao cadastro via XML)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Compra/CompraPage.js` - Page Object
+- `cypress/support/locators/CompraLocators.js` - Locators
+
+### Arquivos relacionados
+- `cypress/e2e/compras/cadastro-compra-xml.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestões futuras
 1. Parametrizar CFOP e vínculo fiscal via factory para diversificar dados de teste.
 2. Validar se a NFe importada aparece corretamente na listagem antes de excluir.

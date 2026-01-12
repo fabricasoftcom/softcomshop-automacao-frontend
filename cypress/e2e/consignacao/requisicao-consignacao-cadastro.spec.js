@@ -37,7 +37,7 @@ describe('Cadastro de Requisição de Consignação', { tags: ['@consignacao', '
 
   it('Deve adicionar um produto à requisição após salvar', () => {
     const observacoes = faker.lorem.sentence();
-    const quantidade = faker.number.int({ min: 1, max: 10 }).toString();
+    const quantidade = faker.number.int({ min:1334, max: 15903 }).toString();
     const preco = faker.number.float({ min: 10, max: 100, precision: 0.01 }).toFixed(2).replace('.', ',');
 
     // Preencher e salvar formulário

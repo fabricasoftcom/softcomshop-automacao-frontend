@@ -162,6 +162,7 @@ import RequisicaoConsignacaoLocators from "../../locators/Consignacao/Requisicao
 - [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
 
 ### Documentação Relacionada
+- [Devolução/Venda de Consignação](./architecture-devolucao-consignacao.md) - Devoluções/vendas de consignação referenciam requisições
 - [Orçamento - Cadastro](./architecture-orcamento-cadastro.md)
 - [Orçamento - Listagem](./architecture-orcamento-listagem.md)
 - [Vendas - Listagem](./architecture-listagem-vendas.md)

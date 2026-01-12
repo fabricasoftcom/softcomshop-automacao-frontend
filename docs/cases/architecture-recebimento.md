@@ -295,8 +295,9 @@ import RecebimentoLocators from "../../locators/RecebimentoLocators";
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-nova-receita.md` - Documentação de cadastro de receita
-- `docs/cases/architecture-listagem-contas-a-receber.md` - Documentação de listagem
+- `docs/cases/architecture-nova-receita.md` - Cadastro de nova receita (receitas criadas podem ser recebidas)
+- `docs/cases/architecture-listagem-contas-a-receber.md` - Listagem de contas a receber (abre modal de recebimento)
+- `docs/cases/architecture-editar-receita.md` - Edição de receitas (receitas editadas podem ser recebidas)
 - `docs/adr/` - Architecture Decision Records
 
 ---

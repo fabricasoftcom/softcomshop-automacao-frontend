@@ -266,6 +266,33 @@ npm run e2e -- --grep "@nfe-geral"
 3. Preenche formulario diretamente (sem pesquisa)
 4. Continua com o fluxo padrao
 
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - Page Objects utilizados
+- **ADR-0003:** Separate Locators from Page Objects - Locators separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.login()` usado
+- **ADR-0008:** Use Page Object Hierarchy - Hierarquia de Page Objects para tipos específicos
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+- **ADR-0011:** Use Conditional Intercepts - Intercepts condicionais utilizados
+
+### Documentação relacionada
+- `docs/cases/architecture-listagem-nfe.md` - Listagem de NFe (NFes cadastradas podem ser listadas)
+- `docs/cases/architecture-cadastro-nfe-normal.md` - Cadastro de NFe Normal (tipo específico de NFe)
+- `docs/cases/architecture-cadastro-nfe-ajuste.md` - Cadastro de NFe Ajuste (tipo específico de NFe)
+- `docs/cases/architecture-cadastro-nfe-complementar.md` - Cadastro de NFe Complementar (tipo específico de NFe)
+- `docs/cases/architecture-cadastro-nfe-devolucao.md` - Cadastro de NFe Devolução (tipo específico de NFe)
+- `docs/cases/architecture-cancelamento-nfe.md` - Cancelamento de NFe (NFes podem ser canceladas)
+- `docs/cases/architecture-carta-correcao-nfe.md` - Carta de Correção NFe (NFes podem receber carta de correção)
+- `docs/cases/architecture-cadastro-nfe-dropdown-acoes.md` - Dropdown de Ações NFe (NFes têm dropdown de ações)
+- `docs/testes.md` - Inventário de testes
+
+### Arquivos relacionados
+- `cypress/e2e/venda-nfcenfe/cadastro-nfe.spec.js` - Spec de teste geral
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestoes futuras
 1. Reativar os testes da tela inicial e tabs para aumentar cobertura.
 2. Adicionar cenarios negativos (CFOP invalido, destinatario inexistente, falhas de emissao).

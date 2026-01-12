@@ -24,8 +24,46 @@
 - As tags `{ tags: ['@listagem-clientes', '@regressivo'] }` permitem filtrar execuções com `@cypress/grep`.
 - O inventário em `docs/testes.md` lista o spec sob o módulo `cadastro-clientes`, atendendo ao processo descrito em `docs/architecture.md`.
 
+## Padrões e boas práticas
+
+### Page Object Pattern (ADR-0002)
+- `ListagemClientePage` encapsula todas as interações com a listagem de clientes.
+
+### Separação de Locators (ADR-0003)
+- `ListagemClienteLocators` centraliza seletores da listagem.
+- `ClienteLocators` mantém seletores de modais globais.
+
+### Login Persistente (ADR-0004)
+- Uso de `cy.loginArmazenandoSessao()` no `beforeEach` para otimizar tempo de execução.
+
+### Tags para Filtragem de Testes (ADR-0010)
+- Tags `@listagem-clientes` e `@regressivo` aplicadas para execução seletiva.
+
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `ListagemClientePage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `ListagemClienteLocators` e `ClienteLocators` separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags `@listagem-clientes` e `@regressivo` aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-cliente.md` - Cadastro de cliente (listagem permite acesso ao cadastro)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Cliente/listagemclientepage.js` - Page Object
+- `cypress/support/locators/Cliente/ListagemClienteLocators.js` - Locators de listagem
+- `cypress/support/locators/Cliente/ClienteLocators.js` - Locators genéricos
+
+### Arquivos relacionados
+- `cypress/e2e/cadastro-clientes/listagem-clientes.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Próximos passos sugeridos
 1. Cobrir filtros adicionais (Código, CPF/CNPJ, Razão Social) e verificar se o resultado corresponde ao valor digitado.
-2. Adicionar teste para paginação (clicar em “Próxima” e validar o número da página ativa).
+2. Adicionar teste para paginação (clicar em "Próxima" e validar o número da página ativa).
 3. Integrar validação de bulk-select (marcar todos e confirmar que todas as linhas foram selecionadas e desmarcadas após o toggle).
 

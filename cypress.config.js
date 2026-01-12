@@ -53,6 +53,8 @@ module.exports = defineConfig({
       "./cypress/e2e/login/login.spec.js",
       // menu lateral
       "./cypress/e2e/menulateral/menuLateralTeste.spec.js",
+      // ta em ordem
+      "./cypress/e2e/ta-em-ordem.spec.js",
       // relatorio
       "./cypress/e2e/relatorio/relatorios.spec.js",
       "./cypress/e2e/relatorio/relatorio-caixa.spec.js",
@@ -93,9 +95,14 @@ module.exports = defineConfig({
       "./cypress/e2e/compras/listagem-movimentacoes.spec.js",
       "./cypress/e2e/compras/cadastro-movimentacoes.spec.js",
       "./cypress/e2e/compras/importacao-compra-nuvem-fiscal.spec.js",
+      "./cypress/e2e/compras/ordem-fornecimento.spec.js",
       // producao
       "./cypress/e2e/producao/producao-listagem.spec.js",
       "./cypress/e2e/producao/cadastro-producao.spec.js",
+      // servicos
+      "./cypress/e2e/servicos/servico.spec.js",
+      "./cypress/e2e/servicos/vinculo-fiscal-servico.spec.js",
+      "./cypress/e2e/contratos/cadastro-modelos.spec.js", // Contratos agrupado próximo de serviços
       // produto
       "./cypress/e2e/cadastro-produto/cadastro-produto.spec.js",
       "./cypress/e2e/produtos/atributos.spec.js",
@@ -105,6 +112,11 @@ module.exports = defineConfig({
       "./cypress/e2e/produtos/gestor-promocoes.spec.js",
       "./cypress/e2e/produtos/gestor-precos-listagem.spec.js",
       "./cypress/e2e/produtos/gestor-precos.spec.js",
+      "./cypress/e2e/produto/pesquisa-preco.spec.js",
+      "./cypress/e2e/produtos/atualizar-dados-fiscais.spec.js",
+      // estoque
+      "./cypress/e2e/estoque/gestao-estoque.spec.js",
+      "./cypress/e2e/estoque/dashboard-estoque.spec.js",
       // vinculo fiscal
       "./cypress/e2e/vinculo-fiscal/novocadastrovinculofiscal.spec.js",
       "./cypress/e2e/vinculo-fiscal/vinculo-fiscal-listagem.spec.js",
@@ -135,6 +147,10 @@ module.exports = defineConfig({
       "./cypress/e2e/financeiro/transferencia-contas.spec.js",
       "./cypress/e2e/financeiro/lancamento-conta.spec.js",
       "./cypress/e2e/financeiro/recibo.spec.js",
+      "./cypress/e2e/financeiro/meu-lucro.spec.js",
+      "./cypress/e2e/financeiro/fluxo-caixa.spec.js",
+      "./cypress/e2e/financeiro/dre.spec.js",
+      "./cypress/e2e/financeiro/extrato.spec.js",
       // categorias
       "./cypress/e2e/financeiro/listagem-categorias.spec.js",
       "./cypress/e2e/financeiro/cadastro-categoria.spec.js",
@@ -162,8 +178,23 @@ module.exports = defineConfig({
       "./cypress/e2e/consignacao/requisicao-consignacao-cadastro.spec.js",
       "./cypress/e2e/consignacao/devolucao-consignacao-listagem.spec.js",
       "./cypress/e2e/consignacao/devolucao-consignacao-cadastro.spec.js",
+      "./cypress/e2e/consignacao/consignacao-extrato.spec.js",
       // sped
       "./cypress/e2e/sped/gerarArquivo.spec.js",
+      "./cypress/e2e/sped/plano-contas-sped.spec.js",
+      "./cypress/e2e/sped/sped-configuracoes.spec.js",
+      "./cypress/e2e/sped/valores-declaratorios.spec.js",
+      "./cypress/e2e/sped/sped-inventario.spec.js",
+      "./cypress/e2e/sped/sped-icms-ajuste.spec.js",
+      "./cypress/e2e/sped/sped-ipi-ajuste.spec.js",
+      // nfce
+      "./cypress/e2e/nfce/nfce-inutilizar.spec.js",
+      "./cypress/e2e/nfce/nfce-download-xml.spec.js",
+      "./cypress/e2e/nfce/nfce-configuracoes.spec.js",
+      // nfe
+      "./cypress/e2e/nfe/nfe-inutilizar.spec.js",
+      "./cypress/e2e/nfe/nfe-download-xml.spec.js",
+      "./cypress/e2e/nfe/nfe-configuracoes.spec.js",
       // sintegra
       "./cypress/e2e/sintegra/gerarArquivo.spec.js",
       // configuracoes
@@ -173,15 +204,23 @@ module.exports = defineConfig({
       "./cypress/e2e/configuracoes/funcionario-cadastro.spec.js",
       "./cypress/e2e/configuracoes/usuario-listagem.spec.js",
       "./cypress/e2e/configuracoes/usuario-cadastro.spec.js",
-      // petshop
-      // "./cypress/e2e/painel-atendimento/painel-atendimento.spec.js",
+      "./cypress/e2e/configuracoes/justificativa-listagem.spec.js",
+      "./cypress/e2e/configuracoes/justificativa-cadastro.spec.js",
+      "./cypress/e2e/configuracoes/forma-pagamento-listagem.spec.js",
+      "./cypress/e2e/configuracoes/forma-pagamento-cadastro.spec.js",
+      "./cypress/e2e/configuracoes/cartao-listagem.spec.js",
+      "./cypress/e2e/configuracoes/cartao-cadastro.spec.js",
+      "./cypress/e2e/configuracoes/sincronizacao.spec.js",
+      "./cypress/e2e/configuracoes/perfil-acesso.spec.js",
+      "./cypress/e2e/configuracoes/perfil-acesso-cadastro.spec.js",
+      "./cypress/e2e/configuracoes/cadastro-contador.spec.js",
       // "./cypress/e2e/**/*.{feature,cy.js}",
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    // baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    baseUrl: 'https://stage-hotfix.softcomshop.com.br',
     // baseUrl: 'https://stage-release-2.softcomshop.com.br',
-    baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
+    // baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
     //  baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,

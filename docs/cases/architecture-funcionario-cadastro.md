@@ -240,3 +240,28 @@ import { generateRandomFuncionario } from '../../support/factory/generateRandomD
 4. **Abas:** Apenas 2 abas (Dados Cadastrais e Usuário) - mais simples que Empresa
 5. **Função padrão:** Factory gera com função 'VENDEDOR' por padrão
 
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `FuncionarioCadastroPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `FuncionarioCadastroLocators` e `FuncionarioLocators` separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0009:** Use Faker for Dynamic Test Data - Faker usado via `generateRandomEmployee()`
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+- **ADR-0015:** Prioritize IDs and Context in Locators - Locators priorizam IDs
+
+### Documentação relacionada
+- `docs/cases/architecture-funcionario-listagem.md` - Listagem de funcionários (funcionários cadastrados podem ser listados)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Funcionario/FuncionarioCadastroPage.js` - Page Object
+- `cypress/support/locators/Funcionario/FuncionarioCadastroLocators.js` - Locators de cadastro
+- `cypress/support/locators/Funcionario/FuncionarioLocators.js` - Locators genéricos
+- `cypress/support/factory/generateRandomData.js` - Factory de dados dinâmicos
+
+### Arquivos relacionados
+- `cypress/e2e/configuracoes/funcionario-cadastro.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---

@@ -235,8 +235,9 @@ O spec contém vários testes comentados que podem ser ativados no futuro:
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-nova-despesa.md` - Documentação de cadastro de despesa
-- `docs/cases/architecture-baixar-despesa.md` - Documentação de baixa de despesa
+- `docs/cases/architecture-nova-despesa.md` - Cadastro de nova despesa (abre modal a partir desta listagem)
+- `docs/cases/architecture-baixar-despesa.md` - Baixa de despesas (abre modal a partir desta listagem)
+- `docs/cases/architecture-editar-despesa.md` - Edição de despesas (acessa edição a partir desta listagem)
 - `docs/adr/` - Architecture Decision Records
 
 ---

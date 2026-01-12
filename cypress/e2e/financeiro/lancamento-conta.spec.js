@@ -1,4 +1,5 @@
 import LancamentoContaPage from '../../support/pages/Financeiro/LancamentoContaPage';
+import { faker } from '@faker-js/faker';
 
 describe('Testes de Lançamento Conta', { tags: ['@lancamento-conta', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe('Testes de Lançamento Conta', { tags: ['@lancamento-conta', '@financei
     LancamentoContaPage.preencherData(dataAtual);
 
     // Preenche valor
-    const valorAleatorio = (Math.random() * 999 + 1).toFixed(2).replace('.', ',');
+    const valorAleatorio = faker.number.float({ min: 1, max: 999, precision: 0.01 }).toFixed(2).replace('.', ',');
     LancamentoContaPage.preencherValor(valorAleatorio);
 
     // Salva o lançamento
@@ -77,7 +78,7 @@ describe('Testes de Lançamento Conta', { tags: ['@lancamento-conta', '@financei
     LancamentoContaPage.preencherData(dataAtual);
 
     // Preenche valor
-    const valorAleatorio = (Math.random() * 999 + 1).toFixed(2).replace('.', ',');
+    const valorAleatorio = faker.number.float({ min: 1, max: 999, precision: 0.01 }).toFixed(2).replace('.', ',');
     LancamentoContaPage.preencherValor(valorAleatorio);
 
     // Salva o lançamento
@@ -114,7 +115,7 @@ describe('Testes de Lançamento Conta', { tags: ['@lancamento-conta', '@financei
     LancamentoContaPage.preencherData(dataAtual);
 
     // Preenche valor
-    const valorAleatorio = (Math.random() * 999 + 1).toFixed(2).replace('.', ',');
+    const valorAleatorio = faker.number.float({ min: 1, max: 999, precision: 0.01 }).toFixed(2).replace('.', ',');
     LancamentoContaPage.preencherValor(valorAleatorio);
 
     // Salva o lançamento

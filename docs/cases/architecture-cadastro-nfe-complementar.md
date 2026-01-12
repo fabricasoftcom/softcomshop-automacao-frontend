@@ -140,12 +140,13 @@ import CadastroNfeLocators from "../../locators/Venda/CadastroNfeLocators";
 - [ADR-0011](../adr/0011-use-conditional-intercepts.md): Conditional Intercepts
 
 ### Documentação Relacionada
-- `architecture-cadastro-nfe.md` - Documentação geral de cadastro de NFe
-- `architecture-cadastro-nfe-normal.md` - Documentação de NFe Normal
-- `architecture-cadastro-nfe-ajuste.md` - Documentação de NFe Ajuste
-- `architecture-cadastro-nfe-devolucao.md` - Documentação de NFe Devolução
-- `architecture-cancelamento-nfe.md` - Documentação de cancelamento de NFe
-- `architecture-carta-correcao-nfe.md` - Documentação de carta de correção de NFe
+- `docs/cases/architecture-cadastro-nfe.md` - Cadastro de NFe (Geral) (tipo específico de NFe)
+- `docs/cases/architecture-listagem-nfe.md` - Listagem de NFe (NFes Complementar podem ser listadas)
+- `docs/cases/architecture-cadastro-nfe-normal.md` - Cadastro de NFe Normal (outro tipo específico)
+- `docs/cases/architecture-cadastro-nfe-ajuste.md` - Cadastro de NFe Ajuste (outro tipo específico)
+- `docs/cases/architecture-cadastro-nfe-devolucao.md` - Cadastro de NFe Devolução (outro tipo específico)
+- `docs/cases/architecture-cancelamento-nfe.md` - Cancelamento de NFe (NFes Complementar podem ser canceladas)
+- `docs/cases/architecture-carta-correcao-nfe.md` - Carta de Correção NFe (NFes Complementar podem receber carta de correção)
 
 ---
 

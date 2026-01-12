@@ -177,8 +177,9 @@ import EditarDespesaLocators from "../../locators/EditarDespesaLocators";
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-nova-despesa.md` - Documentação de cadastro de despesa
-- `docs/cases/architecture-listagem-contas-a-pagar.md` - Documentação de listagem
+- `docs/cases/architecture-nova-despesa.md` - Cadastro de nova despesa (despesas criadas podem ser editadas)
+- `docs/cases/architecture-listagem-contas-a-pagar.md` - Listagem de contas a pagar (acessa edição a partir desta listagem)
+- `docs/cases/architecture-baixar-despesa.md` - Baixa de despesas (despesas editadas podem ser baixadas)
 - `docs/adr/` - Architecture Decision Records
 
 ---
@@ -202,9 +203,10 @@ const descricaoTeste = `Despesa Editada - ${new Date().toLocaleString()}`;
 
 ### Valor Aleatório
 ```javascript
+import { faker } from '@faker-js/faker';
 let novoValor;
 do {
-    novoValor = (Math.floor(Math.random() * 9000) + 1000).toFixed(2).replace('.', ',');
+    novoValor = faker.number.float({ min: 1000, max: 10000, precision: 0.01 }).toFixed(2).replace('.', ',');
 } while (novoValor === valorAtual);
 ```
 

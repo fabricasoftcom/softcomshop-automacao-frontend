@@ -6,7 +6,7 @@ describe('Cadastro de Devolução/Venda de Consignação', { tags: ['@consignaca
   const clienteNome = '1'; // Cliente existente para teste
   const observacoes = faker.lorem.sentence();
   const produtoNome = 'PRODUTO'; // Nome parcial para autocomplete
-  const quantidadeDevolucao = faker.number.int({ min: 1, max: 10 });
+  const quantidadeDevolucao = faker.number.int({ min: 1, max: 11 });
   const quantidadeVenda = faker.number.int({ min: 1, max: 10 });
 
   beforeEach(() => {

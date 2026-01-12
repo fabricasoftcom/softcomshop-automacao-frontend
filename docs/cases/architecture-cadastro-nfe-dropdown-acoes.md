@@ -182,9 +182,12 @@ import CadastroNfeLocators from "../../locators/Venda/CadastroNfeLocators";
 - [ADR-0010](../adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
 
 ### Documentação Relacionada
-- `architecture-cadastro-nfe.md` - Documentação geral de cadastro de NFe
-- `architecture-cadastro-nfe-normal.md` - Documentação de NFe Normal
-- `architecture-listagem-nfe.md` - Documentação de listagem de NFe
+- `docs/cases/architecture-cadastro-nfe.md` - Cadastro de NFe (Geral) (NFes têm dropdown de ações)
+- `docs/cases/architecture-cadastro-nfe-normal.md` - Cadastro de NFe Normal (NFes Normal têm dropdown de ações)
+- `docs/cases/architecture-listagem-nfe.md` - Listagem de NFe (listagem permite acessar ações via dropdown)
+- `docs/cases/architecture-cancelamento-nfe.md` - Cancelamento de NFe (dropdown permite cancelar NFes)
+- `docs/cases/architecture-carta-correcao-nfe.md` - Carta de Correção NFe (dropdown permite emitir carta de correção)
+- `docs/testes.md` - Inventário de testes
 
 ---
 

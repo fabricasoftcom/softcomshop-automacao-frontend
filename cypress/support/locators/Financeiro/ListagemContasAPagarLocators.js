@@ -66,7 +66,10 @@ const ListagemContasAPagarLocators = {
 
   // Notificações Toastify
   notificacaoSucesso: '.Toastify__toast--success',
-  notificacaoErro: '.Toastify__toast--error'
+  notificacaoErro: '.Toastify__toast--error',
+
+  // Modal genérico
+  modalTitulo: '.modal-title'
 };
 
 export default ListagemContasAPagarLocators;

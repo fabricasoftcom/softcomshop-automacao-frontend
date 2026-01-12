@@ -1916,6 +1916,465 @@ Esta implementação demonstra com sucesso a aplicação prática do template pa
 
 ---
 
-**Última atualização:** 2025-12-12  
+## 🎓 Lições Aprendidas: Manipulação de Valores Brasileiros
+
+**Data:** 2025-01-30  
+**Contexto:** Padronização de manipulação de valores monetários no formato brasileiro (R$ 1.234,56)
+
+### Contexto
+
+Durante a implementação de testes no módulo Financeiro, identificamos a necessidade de padronizar a manipulação de valores monetários no formato brasileiro. Valores são exibidos como "R$ 1.234,56" na interface, mas precisam ser convertidos para números (1234.56) para cálculos e validações.
+
+### Padrões Identificados
+
+#### 1. Conversão de Texto para Número
+
+**Problema:**
+- Valores exibidos como "R$ 1.234,56" precisam ser convertidos para `1234.56`
+- Múltiplas implementações diferentes causam inconsistências
+- Falta de padronização dificulta manutenção
+
+**Solução Padrão:**
+```javascript
+// ✅ PADRÃO: Remover "R$", pontos (separadores de milhar) e substituir vírgula por ponto
+obterValorFinal() {
+  return cy.get(RecebimentoLocators.valorFinalInput)
+    .invoke('val')
+    .then((valor) => {
+      // Remove "R$", espaços, pontos (milhar) e substitui vírgula por ponto
+      const valorFormatado = valor
+        .replace('R$', '')
+        .replace(/\./g, '')      // Remove pontos (separadores de milhar)
+        .replace(',', '.')        // Substitui vírgula por ponto
+        .trim();
+      return parseFloat(valorFormatado);
+    });
+}
+```
+
+**Exemplos de Uso:**
+```javascript
+// Exemplo 1: Capturar valor pago da linha
+capturarValorPagoDaLinha() {
+  return cy.get(BaixarDespesasLocators.linhaTabela)
+    .first()
+    .find(BaixarDespesasLocators.valorPagoNaLinha)
+    .invoke('text')
+    .then((valor) => valor.replace('R$', '').trim());
+}
+
+// Exemplo 2: Verificar valor pendente após desfazer baixa
+verificarValorPendenteAposDesfazerBaixa(valorEsperado) {
+  cy.get(BaixarDespesasLocators.valorPendenteInput)
+    .invoke('val')
+    .then((valorAtual) => {
+      const valorFormatado = valorAtual
+        .replace('R$', '')
+        .replace(',', '.')
+        .trim();
+      cy.wrap(parseFloat(valorFormatado), { timeout: 10000 })
+        .should('not.equal', parseFloat(valorEsperado));
+    });
+}
+
+// Exemplo 3: Validar valores em coluna de tabela
+validarValoresNaColunaValorParcela() {
+  cy.get('table.table tbody tr').each(($row) => {
+    cy.wrap($row)
+      .get('td:nth-child(8)')
+      .invoke('text')
+      .then((valor) => {
+        // Remove espaços, pontos (milhar) e substitui vírgula por ponto
+        valor = valor.trim().replace(/\./g, '').replace(',', '.');
+        expect(parseFloat(valor)).to.be.greaterThan(0);
+      });
+  });
+}
+```
+
+**Lição:**
+> "Padronize a conversão de valores brasileiros: remova 'R$', pontos (milhar) e substitua vírgula por ponto antes de usar `parseFloat()`."
+
+#### 2. Formatação de Valores para Input
+
+**Problema:**
+- Campos de input esperam valores no formato brasileiro ("100,00")
+- Valores numéricos precisam ser formatados antes de digitar
+
+**Solução Padrão:**
+```javascript
+// ✅ PADRÃO: Usar formato brasileiro (vírgula como separador decimal)
+preencherValor(valor = '100,00') {
+  cy.get(NovaReceitaLocators.valorInput)
+    .clear()
+    .type(valor);  // Formato: "100,00" ou "1.234,56"
+}
+
+// Para valores gerados dinamicamente:
+preencherValorAleatorio() {
+  cy.get(EditarReceitaLocators.valorInput).invoke('val').then((valorAtual) => {
+    let novoValor;
+    do {
+      // Gera valor e formata para brasileiro
+      novoValor = (Math.floor(Math.random() * 791) + 10)
+        .toFixed(2)
+        .replace('.', ',');  // Substitui ponto por vírgula
+    } while (novoValor === valorAtual);
+    cy.get(EditarReceitaLocators.valorInput)
+      .clear({ force: true })
+      .type(novoValor, { force: true });
+  });
+}
+```
+
+**Lição:**
+> "Para preencher campos de valor, use formato brasileiro (vírgula como separador decimal). Use `.toFixed(2).replace('.', ',')` para converter números."
+
+#### 3. Cálculo de Baixa Parcial
+
+**Problema:**
+- Cálculo de baixa parcial requer manipulação de valores
+- Valores precisam ser convertidos, calculados e formatados
+
+**Solução Padrão:**
+```javascript
+// ✅ PADRÃO: Converter, calcular e formatar
+calcularBaixaParcial(valorTotal, percentual) {
+  return cy.get(RecebimentoLocators.valorTotalInput)
+    .invoke('val')
+    .then((valorTexto) => {
+      // Converte para número
+      const valor = parseFloat(
+        valorTexto.replace('R$', '').replace(/\./g, '').replace(',', '.')
+      );
+      // Calcula valor parcial
+      const valorParcial = valor * (percentual / 100);
+      // Formata para brasileiro
+      return valorParcial.toFixed(2).replace('.', ',');
+    });
+}
+```
+
+**Lição:**
+> "Para cálculos: converta para número, calcule, depois formate de volta para brasileiro se necessário."
+
+### Boas Práticas Estabelecidas
+
+1. **Sempre normalizar antes de converter:**
+   - Remover "R$" e espaços
+   - Remover pontos (separadores de milhar)
+   - Substituir vírgula por ponto
+   - Usar `parseFloat()` para conversão
+
+2. **Formatação para input:**
+   - Usar vírgula como separador decimal
+   - Usar `.toFixed(2).replace('.', ',')` para formatar números
+
+3. **Validação de valores:**
+   - Converter antes de comparar
+   - Usar `parseFloat()` para comparações numéricas
+   - Considerar precisão decimal em comparações
+
+4. **Centralizar lógica de conversão:**
+   - Criar métodos reutilizáveis em Page Objects
+   - Evitar duplicação de lógica de conversão
+
+### Exemplos de Métodos Reutilizáveis
+
+```javascript
+// Método genérico para converter valor brasileiro para número
+converterValorBrasileiroParaNumero(valorTexto) {
+  return parseFloat(
+    valorTexto
+      .replace('R$', '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .trim()
+  );
+}
+
+// Método genérico para formatar número para brasileiro
+formatarNumeroParaBrasileiro(valor) {
+  return valor.toFixed(2).replace('.', ',');
+}
+
+// Método para obter valor de campo e converter
+obterValorNumerico(locator) {
+  return cy.get(locator)
+    .invoke('val')
+    .then((valor) => this.converterValorBrasileiroParaNumero(valor));
+}
+```
+
+### Impacto
+
+- ✅ **Padronização:** Lógica de conversão padronizada
+- ✅ **Manutenibilidade:** Código mais fácil de manter
+- ✅ **Consistência:** Mesma abordagem em todos os testes
+- ✅ **Reutilização:** Métodos genéricos podem ser criados
+
+### Recomendações Futuras
+
+1. **Criar utilitário centralizado:**
+   - Função `converterValorBrasileiroParaNumero()` em arquivo de utils
+   - Função `formatarNumeroParaBrasileiro()` em arquivo de utils
+   - Reutilizar em todos os Page Objects
+
+2. **Documentar em ADR (se necessário):**
+   - Se padrão se tornar muito comum, considerar ADR específica
+   - Por enquanto, documentação em `aprendizagens-e-licoes.md` é suficiente
+
+3. **Validar em code review:**
+   - Verificar se conversões seguem padrão estabelecido
+   - Evitar implementações ad-hoc de conversão
+
+---
+
+## 🎓 Lições Aprendidas: Validação de Estado Antes e Depois de Operações
+
+**Data:** 2025-01-30  
+**Contexto:** Padronização de validação de estado antes e depois de operações para garantir comportamento esperado
+
+### Contexto
+
+Durante a implementação de testes, identificamos a necessidade de validar o estado de elementos antes e depois de operações para garantir que as ações tiveram o efeito esperado. Isso é especialmente importante para switches, campos habilitados/desabilitados e valores que mudam após operações.
+
+### Padrões Identificados
+
+#### 1. Validação de Estado de Switches
+
+**Problema:**
+- Switches podem ter estado inicial desconhecido
+- Necessário validar estado antes e depois de alternar
+- Garantir que a ação teve efeito esperado
+
+**Solução Padrão:**
+```javascript
+// ✅ PADRÃO: Validar estado antes e depois de alternar
+alternarSwitchesEstado() {
+  this.toggleSwitch(
+    cadastroClienteLocators.switchBloqueadoToggle,
+    cadastroClienteLocators.switchBloqueadoCheckbox
+  );
+  this.toggleSwitch(
+    cadastroClienteLocators.switchDesativadoToggle,
+    cadastroClienteLocators.switchDesativadoCheckbox
+  );
+}
+
+toggleSwitch(toggleSelector, checkboxSelector) {
+  // Alterna para ligado e valida
+  cy.get(toggleSelector).click({ force: true });
+  cy.get(checkboxSelector).should('be.checked');
+  
+  // Alterna para desligado e valida
+  cy.get(toggleSelector).click({ force: true });
+  cy.get(checkboxSelector).should('not.be.checked');
+}
+```
+
+**Lição:**
+> "Para switches, sempre valide o estado após alternar. Teste ambos os estados (ligado e desligado) para garantir comportamento correto."
+
+#### 2. Validação de Campos Habilitados/Desabilitados
+
+**Problema:**
+- Campos podem estar desabilitados antes de preencher dependências
+- Necessário validar estado antes de interagir
+- Evitar erros de interação com campos desabilitados
+
+**Solução Padrão:**
+```javascript
+// ✅ PADRÃO: Validar que campo está habilitado antes de preencher
+preencherCampoSeHabilitado(locator, valor) {
+  cy.get(locator, { timeout: 10000 })
+    .should('be.visible')
+    .should('not.be.disabled')  // Valida estado antes
+    .clear()
+    .type(valor);
+}
+
+// Exemplo: Verificar campos desabilitados inicialmente
+verificarCamposPagoEPendente() {
+  // Valida que campos estão desabilitados antes de preencher forma de pagamento
+  cy.get(BaixarDespesasLocators.valorPagoinput1).should('be.disabled');
+  cy.get(BaixarDespesasLocators.valorPendenteInput).should('be.disabled');
+}
+```
+
+**Lição:**
+> "Sempre valide o estado (habilitado/desabilitado) de campos antes de interagir. Use `.should('not.be.disabled')` antes de preencher."
+
+#### 3. Validação de Valores Antes e Depois de Operações
+
+**Problema:**
+- Valores podem mudar após operações (ex: baixa parcial)
+- Necessário capturar valor antes e validar mudança depois
+- Garantir que operação teve efeito esperado
+
+**Solução Padrão:**
+```javascript
+// ✅ PADRÃO: Capturar valor antes, executar operação, validar mudança depois
+verificarValorPendenteAposDesfazerBaixa(valorEsperado) {
+  cy.get(BaixarDespesasLocators.valorPendenteInput)
+    .should('be.visible')
+    .invoke('val')
+    .then((valorAtual) => {
+      const valorFormatado = valorAtual
+        .replace('R$', '')
+        .replace(',', '.')
+        .trim();
+      
+      // Valida que valor mudou após desfazer baixa
+      cy.wrap(parseFloat(valorFormatado), { timeout: 10000 })
+        .should('not.equal', parseFloat(valorEsperado));
+    });
+}
+
+// Exemplo: Capturar valor antes de operação
+capturarValorAntesDeDesfazerBaixa() {
+  return cy.get(BaixarDespesasLocators.valorPendenteInput)
+    .invoke('val')
+    .then((valor) => {
+      return valor.replace('R$', '').replace(',', '.').trim();
+    });
+}
+```
+
+**Lição:**
+> "Para validar mudanças de valores, capture o valor antes da operação e valide a mudança depois. Use `.invoke('val').then()` para capturar valores."
+
+#### 4. Validação de Estado em Edição
+
+**Problema:**
+- Em edição, necessário garantir que valor novo é diferente do atual
+- Evitar salvar com mesmo valor
+- Validar estado antes de alterar
+
+**Solução Padrão:**
+```javascript
+// ✅ PADRÃO: Verificar valor atual antes de alterar
+preencherValorAleatorio() {
+  cy.get(EditarReceitaLocators.valorInput)
+    .invoke('val')
+    .then((valorAtual) => {
+      let novoValor;
+      do {
+        // Gera novo valor até ser diferente do atual
+        novoValor = (Math.floor(Math.random() * 791) + 10)
+          .toFixed(2)
+          .replace('.', ',');
+      } while (novoValor === valorAtual);
+      
+      // Preenche novo valor
+      cy.get(EditarReceitaLocators.valorInput)
+        .clear({ force: true })
+        .type(novoValor, { force: true });
+    });
+}
+
+// Exemplo: Selecionar valor diferente do atual
+selecionarValorDiferenteAtual(locator) {
+  cy.get(locator)
+    .invoke('val')  // Captura valor atual
+    .then((valorAtual) => {
+      cy.get(locator).click();
+      cy.get(`${locator} + .typeahead-result a`).each(($opcao) => {
+        const textoOpcao = $opcao.text().trim();
+        if (textoOpcao !== valorAtual) {
+          // Seleciona apenas se for diferente do atual
+          cy.wrap($opcao).click();
+          return false; // Para o loop
+        }
+      });
+    });
+}
+```
+
+**Lição:**
+> "Em edição, sempre capture o valor atual antes de alterar. Garanta que o novo valor é diferente do atual para validar a mudança."
+
+### Boas Práticas Estabelecidas
+
+1. **Sempre validar estado antes de interagir:**
+   - Verificar se campo está habilitado antes de preencher
+   - Verificar estado de switches antes de alternar
+   - Capturar valores antes de operações que os alteram
+
+2. **Validar estado depois de operações:**
+   - Verificar que switch mudou de estado
+   - Validar que valores mudaram após operações
+   - Confirmar que campos foram habilitados/desabilitados
+
+3. **Usar `.invoke('val').then()` para capturar valores:**
+   - Capturar valores de inputs antes de operações
+   - Comparar valores antes e depois
+   - Validar mudanças esperadas
+
+4. **Testar ambos os estados quando aplicável:**
+   - Para switches: testar ligado e desligado
+   - Para toggles: testar ambos os estados
+   - Garantir comportamento bidirecional
+
+### Exemplos de Métodos Reutilizáveis
+
+```javascript
+// Método genérico para validar estado antes e depois
+validarEstadoAntesEDepois(locator, acao, validacaoAntes, validacaoDepois) {
+  // Validação antes
+  cy.get(locator).then(($el) => {
+    validacaoAntes($el);
+  });
+  
+  // Executa ação
+  acao();
+  
+  // Validação depois
+  cy.get(locator).then(($el) => {
+    validacaoDepois($el);
+  });
+}
+
+// Método para capturar e comparar valores
+capturarECompararValor(locator, operacao, validacao) {
+  return cy.get(locator)
+    .invoke('val')
+    .then((valorAntes) => {
+      operacao();
+      cy.get(locator)
+        .invoke('val')
+        .then((valorDepois) => {
+          validacao(valorAntes, valorDepois);
+        });
+    });
+}
+```
+
+### Impacto
+
+- ✅ **Confiabilidade:** Testes mais confiáveis ao validar estado
+- ✅ **Robustez:** Evita erros de interação com elementos em estado incorreto
+- ✅ **Clareza:** Fica explícito o comportamento esperado
+- ✅ **Manutenibilidade:** Padrão claro facilita manutenção
+
+### Recomendações Futuras
+
+1. **Criar métodos genéricos de validação:**
+   - Métodos reutilizáveis para validação de estado
+   - Centralizar lógica de validação antes/depois
+   - Facilitar reuso em múltiplos Page Objects
+
+2. **Documentar padrões em ADR (se necessário):**
+   - Se padrão se tornar muito comum, considerar ADR específica
+   - Por enquanto, documentação em `aprendizagens-e-licoes.md` é suficiente
+
+3. **Validar em code review:**
+   - Verificar se validações de estado estão presentes
+   - Evitar interações sem validação prévia
+   - Garantir validação após operações críticas
+
+---
+
+**Última atualização:** 2025-01-30  
 **Status:** ✅ Documento completo - Pronto para uso como referência futura
 

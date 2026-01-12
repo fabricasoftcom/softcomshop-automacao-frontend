@@ -167,9 +167,10 @@ import contaCadastroLocator from '../../locators/ContaCadastroLocator';
 - **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
 
 ### Documentação relacionada
+- `docs/cases/architecture-listagem-conta.md` - Listagem de contas (listagem permite acesso ao cadastro)
+- `docs/cases/architecture-cadastro-conta-corrente.md` - Cadastro de conta corrente (seleção de tipo "Conta Corrente" navega para cadastro específico)
+- `docs/cases/architecture-edicao-conta-corrente.md` - Edição de conta corrente (contas cadastradas podem ser editadas)
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-cadastro-conta-corrente.md` - Documentação de cadastro de conta corrente
-- `docs/cases/architecture-listagem-conta.md` - Documentação de listagem de contas
 - `docs/adr/` - Architecture Decision Records
 
 ---

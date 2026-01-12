@@ -173,6 +173,26 @@ const gerarFornecedorAleatorio = () => {
 ## Referências
 
 ### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `FornecedorPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `FornecedorLocators` separado
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0009:** Use Faker for Dynamic Test Data - Faker usado via `gerarFornecedorAleatorio()`
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-compra-manual.md` - Cadastro de compra manual (compras manuais requerem fornecedor)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Fornecedor/FornecedorPage.js` - Page Object
+- `cypress/support/locators/FornecedorLocators.js` - Locators
+- `cypress/support/factory/generateRandomData.js` - Factory de dados dinâmicos
+
+### Arquivos relacionados
+- `cypress/e2e/compras/cadastro-fornecedor.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
+### ADRs relacionadas
 - **ADR-0002:** Use Page Object Pattern - Page Objects utilizados
 - **ADR-0003:** Separate Locators from Page Objects - Locators separados
 - **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado

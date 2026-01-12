@@ -1,5 +1,6 @@
 import ReciboPage from '../../support/pages/Financeiro/ReciboPage';
 import ReciboLocators from '../../support/locators/Financeiro/ReciboLocators';
+import { faker } from '@faker-js/faker';
 
 describe('Testes de Recibo', { tags: ['@recibo', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {
@@ -40,7 +41,7 @@ describe('Testes de Recibo', { tags: ['@recibo', '@financeiro', '@regressivo'] }
     ReciboPage.preencherReferenteA(servico);
 
     // Preenche Valor
-    const valorAleatorio = (Math.random() * 999 + 1).toFixed(2).replace('.', ',');
+    const valorAleatorio = faker.number.float({ min: 1, max: 999, precision: 0.01 }).toFixed(2).replace('.', ',');
     ReciboPage.preencherValor(valorAleatorio);
 
     // Preenche Data

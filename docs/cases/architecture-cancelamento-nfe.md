@@ -177,6 +177,31 @@ Os locators de cancelamento foram adicionados em `CadastroNfeLocators.cancelamen
    - Confirma o cancelamento
    - Valida o modal de sucesso
 
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - Page Objects utilizados
+- **ADR-0003:** Separate Locators from Page Objects - Locators separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.login()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+- **ADR-0011:** Use Conditional Intercepts - Intercepts condicionais utilizados
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-nfe.md` - Cadastro de NFe (Geral) (NFes cadastradas podem ser canceladas)
+- `docs/cases/architecture-cadastro-nfe-normal.md` - Cadastro de NFe Normal (NFes Normal podem ser canceladas)
+- `docs/cases/architecture-listagem-nfe.md` - Listagem de NFe (listagem permite cancelar NFes)
+- `docs/cases/architecture-cadastro-nfe-ajuste.md` - Cadastro de NFe Ajuste (NFes Ajuste podem ser canceladas)
+- `docs/cases/architecture-cadastro-nfe-complementar.md` - Cadastro de NFe Complementar (NFes Complementar podem ser canceladas)
+- `docs/cases/architecture-cadastro-nfe-devolucao.md` - Cadastro de NFe Devolução (NFes Devolução podem ser canceladas)
+- `docs/cases/architecture-carta-correcao-nfe.md` - Carta de Correção NFe (NFes podem receber carta de correção antes ou depois do cancelamento)
+- `docs/testes.md` - Inventário de testes
+
+### Arquivos relacionados
+- `cypress/e2e/venda-nfcenfe/cancelamento-nfe-*.spec.js` - Specs de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestões futuras
 1. Adicionar validação de status da NFe após cancelamento (verificar se aparece como cancelada na listagem).
 2. Adicionar testes de cancelamento com diferentes motivos.

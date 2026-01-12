@@ -196,3 +196,27 @@ import FuncionarioListagemLocators from '../../support/locators/Funcionario/Func
 3. **Modal de exclusão:** Usa SweetAlert padrão do sistema
 4. **Paginação:** Pode não aparecer se houver poucos registros
 
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `FuncionarioListagemPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `FuncionarioListagemLocators` e `FuncionarioLocators` separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0007:** Separate Specs by Functionality and Type - Spec separado para listagem
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+- **ADR-0015:** Prioritize IDs and Context in Locators - Locators priorizam IDs
+
+### Documentação relacionada
+- `docs/cases/architecture-funcionario-cadastro.md` - Cadastro de funcionário (listagem permite acesso ao cadastro)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Funcionario/FuncionarioListagemPage.js` - Page Object
+- `cypress/support/locators/Funcionario/FuncionarioListagemLocators.js` - Locators de listagem
+- `cypress/support/locators/Funcionario/FuncionarioLocators.js` - Locators genéricos
+
+### Arquivos relacionados
+- `cypress/e2e/configuracoes/funcionario-listagem.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---

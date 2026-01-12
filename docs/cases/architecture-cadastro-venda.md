@@ -42,6 +42,49 @@
 - O fluxo respeita a camada de navegação existente (`menulateralvendapage`) e compartilha locators de listagem para acionar o botão “Novo Cadastro”.
 - Não há dependência de fixtures físicas; os mocks são definidos inline dentro do spec, favorecendo isolamento e evitando manutenção adicional.
 
+## Padrões e boas práticas
+
+### Page Object Pattern (ADR-0002)
+- `CadastroVendaPage` encapsula todas as interações com o cadastro de vendas.
+
+### Separação de Locators (ADR-0003)
+- `CadastroVendaLocators` centraliza seletores do cadastro.
+- `ListagemVendasLocators` reutilizado para botão "Novo Cadastro".
+
+### Login Persistente (ADR-0004)
+- Uso de `cy.loginArmazenandoSessao()` no `beforeEach` para otimizar tempo de execução.
+
+### Tags para Filtragem de Testes (ADR-0010)
+- Tags `@vendas`, `@cadastro-venda` e `@regressivo` aplicadas para execução seletiva.
+
+### Uso de Intercepts
+- Mocks inline para autocompletes garantem isolamento e previsibilidade.
+
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `CadastroVendaPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `CadastroVendaLocators` e `ListagemVendasLocators` separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-listagem-vendas.md` - Listagem de vendas (vendas cadastradas podem ser listadas)
+- `docs/cases/architecture-venda-nfe.md` - Venda com emissão de NFe (vendas cadastradas podem gerar NFe)
+- `docs/cases/architecture-venda-nfce.md` - Venda com emissão de NFCe (vendas cadastradas podem gerar NFCe)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Venda/CadastroVendaPage.js` - Page Object
+- `cypress/support/locators/Venda/CadastroVendaLocators.js` - Locators de cadastro
+- `cypress/support/locators/Venda/ListagemVendasLocators.js` - Locators de listagem
+
+### Arquivos relacionados
+- `cypress/e2e/vendas/cadastro-venda.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestões para evolução
 1. Simular a submissão completa de uma venda interceptando `POST /vendas/salvar` e `POST /vendas-itens/salvar`, garantindo que botões como **Salvar**, **Gerar Pagamento** e **Gerar Nota** mudem de estado após o novo ID ser gerado.
 2. Cobrir a inclusão de itens com descontos/ acréscimos e validar o recalculo do totalizador usando respostas mockadas de `updateTotalizador`.

@@ -14,6 +14,7 @@ const MenulateralFinanceiroLocators = {
     extrato: '#extrato',
     painelPix: '#painel_pix',
     estornoPix: '#estorno_pix',
+    meuLucro: '#meu_lucro',
     btnNovoCadastro: 'button.btn-warning.btn-sm', // Botão de novo cadastro em "Contas a Pagar"
     novaCategoriaReceita: 'button.btn-warning:contains("Nova Categoria de Receita")',
     novaCategoriaDespesa: 'button.btn-warning:contains("Nova Categoria de Despesa")',

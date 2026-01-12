@@ -269,8 +269,9 @@ import BaixarDespesasLocators from "../../locators/BaixarDespesaLocators";
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-nova-despesa.md` - Documentação de cadastro de despesa
-- `docs/cases/architecture-listagem-contas-a-pagar.md` - Documentação de listagem
+- `docs/cases/architecture-nova-despesa.md` - Cadastro de nova despesa (despesas criadas podem ser baixadas)
+- `docs/cases/architecture-listagem-contas-a-pagar.md` - Listagem de contas a pagar (abre modal de baixa)
+- `docs/cases/architecture-editar-despesa.md` - Edição de despesas (despesas editadas podem ser baixadas)
 - `docs/adr/` - Architecture Decision Records
 
 ---

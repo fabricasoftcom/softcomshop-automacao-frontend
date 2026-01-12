@@ -179,9 +179,11 @@ Antes de considerar uma documentação completa, verifique:
 ### 2. Criação
 1. Crie o arquivo `docs/cases/architecture-[nome].md`
 2. Use o template acima como base
-3. Preencha cada seção cuidadosamente
-4. Adicione exemplos de código quando útil
-5. Referencie ADRs relacionadas
+3. **Consulte o [Mapa de Relacionamentos](./mapeamento-relacionamentos.md) para identificar documentações relacionadas**
+4. Preencha cada seção cuidadosamente
+5. Adicione exemplos de código quando útil
+6. Referencie ADRs relacionadas
+7. **Adicione referências bidirecionais em todas as documentações relacionadas identificadas no mapa**
 
 ### 3. Revisão
 1. Use o checklist de validação
@@ -234,7 +236,14 @@ Antes de considerar uma documentação completa, verifique:
 
 ---
 
-## 🔗 Referências a ADRs
+## 🔗 Referências a ADRs e Documentações Relacionadas
+
+### Consultar Mapa de Relacionamentos
+
+Antes de criar a seção "Referências", consulte o [Mapa de Relacionamentos](./mapeamento-relacionamentos.md) para:
+- Identificar documentações relacionadas ao novo teste
+- Adicionar referências bidirecionais corretas
+- Manter consistência nas referências cruzadas
 
 ### Como Referenciar
 

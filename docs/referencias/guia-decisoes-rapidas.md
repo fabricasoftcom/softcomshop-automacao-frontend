@@ -76,6 +76,59 @@ Este guia fornece respostas rápidas e direcionamento para as dúvidas mais comu
 
 ---
 
+## 🔗 Preciso consultar o mapa de relacionamentos?
+
+### ❓ Dúvida: "Preciso consultar o mapa de relacionamentos ao criar nova documentação?"
+
+### ✅ Decisão Rápida:
+
+**SIM, sempre!** Consultar o mapa é **OBRIGATÓRIO** ao criar nova documentação.
+
+### 📋 Passo a Passo:
+
+1. **Identificar módulo:**
+   - Qual módulo pertence o novo teste? (ex: Vendas, Financeiro, Produtos)
+
+2. **Consultar mapa:**
+   - Abrir `docs/referencias/mapeamento-relacionamentos.md`
+   - Localizar seção do módulo correspondente
+   - Verificar relacionamentos existentes
+
+3. **Identificar relacionamentos:**
+   - Documentações relacionadas já mapeadas
+   - Tipos de relacionamento (cadastro ↔ listagem, cadastro → ação, etc.)
+
+4. **Adicionar referências bidirecionais:**
+   - Em `architecture-[novo].md`: adicionar referência para cada documentação relacionada
+   - Em cada documentação relacionada: adicionar referência para `architecture-[novo].md`
+
+5. **Atualizar mapa (se necessário):**
+   - Se novo relacionamento foi identificado (não estava no mapa):
+     - Adicionar relacionamento na seção apropriada
+     - Atualizar diagrama se necessário
+
+### 📋 Exemplo:
+
+**Cenário:** Criar `architecture-nova-conta.md`
+
+1. **Consultar mapa:**
+   - Seção "Financeiro > Contas" já existe
+   - Identifica: Listagem Conta, Edição Conta Corrente, Transferência Contas
+
+2. **Adicionar referências:**
+   - Em `architecture-nova-conta.md`: referências para listagem e edição
+   - Em `architecture-listagem-conta.md`: referência para nova conta
+   - Em `architecture-edicao-conta-corrente.md`: referência para nova conta
+
+3. **Atualizar mapa:**
+   - Adicionar "Nova Conta" no diagrama de relacionamento
+
+### 📚 Referência Completa:
+- `docs/referencias/mapeamento-relacionamentos.md` - Mapa completo de relacionamentos
+- `docs/referencias/processo-documentacao.md` - Processo de documentação (passo 3 e 7)
+
+---
+
 ## 🏗️ Preciso criar Page Object?
 
 ### ❓ Dúvida: "Preciso criar um Page Object para esta página?"
@@ -952,6 +1005,36 @@ abrirFormularioPesquisa() {
 
 ---
 
+## 🚀 Como executar testes mais rápido?
+
+### ❓ Dúvida: "Meus testes estão demorando muito. Como acelerar?"
+
+### ✅ Decisão Rápida:
+
+**Use o Script de Execução Paralela (14 Threads):**
+
+```powershell
+./executar-paralelo.ps1
+```
+
+**Por que usar:**
+- ✅ Reduz tempo de horas para minutos
+- ✅ Usa 14 threads simultâneas
+- ✅ Divide carga inteligente por módulos
+- ✅ Gera relatório único unificado
+
+**Como usar:**
+1. Abra PowerShell na raiz do projeto
+2. Execute `./executar-paralelo.ps1`
+3. Aguarde janelas fecharem
+4. Veja relatório Allure abrir automaticamente
+
+### 📚 Referência Completa:
+- `docs/referencias/guia-execucao-paralela.md` - Guia detalhado
+- `README.md` - Seção de execução
+
+---
+
 ## 🤖 Como pedir para o Cursor criar testes automaticamente?
 
 ### ❓ Dúvida: "Como usar o Cursor para criar testes automaticamente?"
@@ -1076,13 +1159,49 @@ Com base na exploração realizada, crie o arquivo de Locators...
 
 ---
 
+## 💻 Preciso de um padrão de código?
+
+### ❓ Dúvida: "Preciso de um padrão de código para manipular valores monetários, validar estado, autocomplete, etc.?"
+
+### ✅ Decisão Rápida:
+
+**Consulte a Biblioteca de Padrões de Código!**
+
+A biblioteca contém snippets pesquisáveis e reutilizáveis para padrões comuns:
+- Manipulação de valores monetários brasileiros
+- Validação de estado antes e depois de operações
+- Autocomplete com debounce
+- Date Range Picker
+- Métodos resilientes em ambiente compartilhado
+- Substituição de waits fixos
+
+**Como usar:**
+1. Abra `docs/referencias/biblioteca-padroes-codigo.md`
+2. Use `Ctrl+F` (ou `Cmd+F`) para buscar por padrão específico
+3. Copie e adapte o exemplo de código fornecido
+4. Consulte a referência completa para mais detalhes
+
+**Exemplos de busca:**
+- "valor monetário" ou "monetário"
+- "switch" ou "toggle"
+- "autocomplete" ou "debounce"
+- "date picker" ou "date range"
+- "campo habilitado" ou "disabled"
+
+### 📚 Referência Completa:
+- `docs/referencias/biblioteca-padroes-codigo.md` - Biblioteca completa de padrões
+- `docs/referencias/aprendizagens-e-licoes.md` - Contexto completo e lições aprendidas
+
+---
+
 ## 📞 Quando Precisar de Mais Ajuda
 
 1. **Consulte ADRs:** `docs/adr/README.md`
 2. **Consulte exemplos:** `docs/cases/architecture-*.md`
 3. **Consulte checklist:** `docs/referencias/checklist-validacao-continua.md`
 4. **Consulte referências:** `docs/referencias/referencia-comandos-customizados.md`
-5. **Crie testes automaticamente:** `docs/referencias/guia-prompts-automacao.md`
+5. **Consulte padrões de código:** `docs/referencias/biblioteca-padroes-codigo.md`
+6. **Crie testes automaticamente:** `docs/referencias/guia-prompts-automacao.md`
 
 ---
 

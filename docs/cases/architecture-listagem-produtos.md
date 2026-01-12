@@ -25,6 +25,42 @@
 - Os comandos reutilizam a camada de menu (`MenulateralProdutoPage`) e os locators centralizados, reduzindo acoplamento e facilitando atualização se o layout mudar.
 - O caso gera evidências no Allure através das hooks padrão e pode ser complementado com snapshots do Percy, já que o spec apenas interage com componentes visíveis.
 
+## Padrões e boas práticas
+
+### Page Object Pattern (ADR-0002)
+- `ProdutosListPage` encapsula todas as interações com a listagem de produtos.
+
+### Separação de Locators (ADR-0003)
+- `ProdutosListLocators` centraliza todos os seletores da listagem.
+
+### Login Persistente (ADR-0004)
+- Uso de `cy.loginArmazenandoSessao()` no `beforeEach` para otimizar tempo de execução.
+
+### Tags para Filtragem de Testes (ADR-0010)
+- Tags `@produtos` e `@regressivo` aplicadas para execução seletiva.
+
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `ProdutosListPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `ProdutosListLocators` separado
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags `@produtos` e `@regressivo` aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-produto.md` - Cadastro de produto (listagem permite acesso ao cadastro)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Produtos/ProdutosListPage.js` - Page Object
+- `cypress/support/locators/Produtos/ProdutosListLocators.js` - Locators
+
+### Arquivos relacionados
+- `cypress/e2e/produtos/listagem-produtos.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestões para evolução
 1. Adicionar um caso que valide o autocomplete `auto_produto_id` (buscar e selecionar produto) para cobrir o comportamento do dropdown de filtros.
 2. Introduzir monitoramento de toast ou mensagem de erro ao alternar switches com valores inválidos para garantir que o backend aceite o toggle nas consultas.

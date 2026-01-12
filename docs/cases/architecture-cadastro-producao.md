@@ -83,3 +83,24 @@
 - **Localização de produções finalizadas**: `abrirPrimeiraProducaoFinalizada()` usa `.filter(':contains("Finalizado")')` para localizar produções finalizadas na listagem, similar ao padrão usado em `ReverterBalancoPage`.
 - **Documentação de tags**: suite anotada com `{ tags: ['@producao', '@regressivo'] }` para filtros via `@cypress/grep`.
 
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `CadastroProducaoPage` e `ProducaoPage` utilizados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags `@producao` e `@regressivo` aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-producao-listagem.md` - Listagem de produção (produções cadastradas podem ser listadas)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Producao/CadastroProducaoPage.js` - Page Object de cadastro
+- `cypress/support/pages/Producao/ProducaoPage.js` - Page Object de listagem
+- `cypress/support/locators/ProducaoLocators.js` - Locators
+
+### Arquivos relacionados
+- `cypress/e2e/producao/cadastro-producao.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---

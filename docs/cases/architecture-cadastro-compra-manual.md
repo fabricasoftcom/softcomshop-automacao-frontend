@@ -168,6 +168,30 @@ Durante a implementação deste teste, encontramos múltiplos problemas com loca
 - [ADR-0003](../adr/0003-separate-locators-from-page-objects.md): Separate Locators from Page Objects
 - `docs/referencias/aprendizagens-e-licoes.md`: Seção "Lições Aprendidas: Problemas com Locators"
 
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `CompraPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `CadastroCompraLocators` separado
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-fornecedor.md` - Cadastro de fornecedor (compras manuais requerem fornecedor)
+- `docs/cases/architecture-nuvem-fiscal.md` - Nuvem Fiscal (compras podem ser cadastradas manualmente ou importadas)
+- `docs/cases/architecture-cadastro-compra.md` - Cadastro de compra via XML (alternativa ao cadastro manual)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Compra/CompraPage.js` - Page Object
+- `cypress/support/locators/Compra/CadastroCompraLocators.js` - Locators
+
+### Arquivos relacionados
+- `cypress/e2e/compras/cadastro-compra-manual.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 ## Sugestões futuras
 1. Adicionar validação de mensagem de sucesso após salvar compra.
 2. Adicionar cenários negativos (fornecedor obrigatório não preenchido, produto inválido).

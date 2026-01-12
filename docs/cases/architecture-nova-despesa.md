@@ -183,12 +183,15 @@ formasPagamento.forEach((formaPagamento) => {
 - **ADR-0002:** Use Page Object Pattern - Page Objects utilizados
 - **ADR-0003:** Separate Locators from Page Objects - Locators separados
 - **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
-- **ADR-0009:** Use Faker for Dynamic Test Data - Valor aleatório gerado (poderia usar Faker)
+- **ADR-0009:** Use Faker for Dynamic Test Data - Faker usado para geração de valores monetários
 - **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-nova-receita.md` - Documentação similar de receitas
+- `docs/cases/architecture-listagem-contas-a-pagar.md` - Listagem de contas a pagar (abre modal de nova despesa)
+- `docs/cases/architecture-baixar-despesa.md` - Baixa de despesas (despesas criadas podem ser baixadas)
+- `docs/cases/architecture-editar-despesa.md` - Edição de despesas (despesas criadas podem ser editadas)
+- `docs/cases/architecture-nova-receita.md` - Documentação similar de receitas (padrão de formulário financeiro)
 - `docs/adr/` - Architecture Decision Records
 
 ---
@@ -196,7 +199,7 @@ formasPagamento.forEach((formaPagamento) => {
 ## Observações
 
 - O teste é parametrizado e cria múltiplos testes (um para cada forma de pagamento)
-- Valor aleatório gerado usando `Math.random()` (poderia ser migrado para Faker)
+- Valor aleatório gerado usando Faker (`faker.number.float()`) - Migrado conforme ADR-0009
 - Descrição inclui timestamp para garantir unicidade
 - Número de documento é fixo ("98765")
 - Validação de retorno para listagem após salvamento
@@ -214,10 +217,10 @@ formasPagamento.forEach((formaPagamento) => {
 
 ## Melhorias Sugeridas
 
-1. **Migrar para Faker (ADR-0009):**
-   - Substituir `Math.random()` por Faker para geração de valores
-   - Usar Faker para geração de descrições mais realistas
-   - Gerar número de documento dinamicamente
+1. ~~**Migrar para Faker (ADR-0009):**~~ ✅ **CONCLUÍDO**
+   - ✅ Substituído `Math.random()` por Faker para geração de valores monetários
+   - ⏳ Usar Faker para geração de descrições mais realistas (opcional)
+   - ⏳ Gerar número de documento dinamicamente (opcional)
 
 2. **Adicionar mais validações:**
    - Validar toast de sucesso

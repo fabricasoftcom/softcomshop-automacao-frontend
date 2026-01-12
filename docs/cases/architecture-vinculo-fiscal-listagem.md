@@ -166,8 +166,8 @@ import VinculoFiscalListagemPage from "../../support/pages/VinculoFiscal/Vinculo
 - **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
 
 ### Documentação relacionada
+- `docs/cases/architecture-novocadastrovinculofiscal.md` - Cadastro de vínculo fiscal (listagem permite acesso ao cadastro)
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-novocadastrovinculofiscal.md` - Documentação de cadastro
 - `docs/adr/` - Architecture Decision Records
 
 ---

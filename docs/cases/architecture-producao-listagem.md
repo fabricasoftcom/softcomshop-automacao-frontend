@@ -30,3 +30,24 @@
 - **Validações flexíveis**: teste de "sem resultados" não força mensagem específica, apenas garante que a tabela está visível.
 - **Documentação de tags**: suite anotada com `{ tags: ['@producao', '@regressivo'] }` para filtros via `@cypress/grep`.
 
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `ProducaoPage` utilizado
+- **ADR-0003:** Separate Locators from Page Objects - `ProducaoLocators` separado
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.login()` usado
+- **ADR-0010:** Use Tags for Test Filtering - Tags `@producao` e `@regressivo` aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-producao.md` - Cadastro de produção (listagem permite acesso ao cadastro)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Producao/ProducaoPage.js` - Page Object
+- `cypress/support/locators/ProducaoLocators.js` - Locators
+
+### Arquivos relacionados
+- `cypress/e2e/producao/producao-listagem.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---

@@ -113,6 +113,7 @@ cypress/
 
 ## Referências
 
+### ADRs relacionadas
 - [ADR-0002](../adr/0002-use-page-object-pattern.md): Page Object Pattern
 - [ADR-0003](../adr/0003-separate-locators-from-page-objects.md): Separate Locators
 - [ADR-0004](../adr/0004-use-cy-session-for-login-persistence.md): Session Persistence
@@ -121,4 +122,7 @@ cypress/
 - [ADR-0009](../adr/0009-use-faker-for-dynamic-test-data.md): Faker for Dynamic Data
 - [ADR-0010](../adr/0010-use-tags-for-test-filtering.md): Tags for Test Filtering
 - [ADR-0015](../adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
+
+### Documentação relacionada
+- [Requisição de Consignação](./architecture-requisicao-consignacao.md) - Requisições de consignação podem gerar devoluções/vendas
 

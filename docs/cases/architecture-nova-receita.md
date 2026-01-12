@@ -166,7 +166,7 @@ formasPagamento.forEach((formaPagamento) => {
 - `dataVencimentoInput` - Campo de data de vencimento
 - `valorInput` - Campo de valor
 - `clienteAutocomplete` - Autocomplete de cliente
-- `tipoDocumentoSelect` - Select de tipo de documento
+- `tipoDocumentoAutocomplete` - Autocomplete de tipo de documento
 - `salvarButton` - Botão salvar
 
 ---
@@ -177,11 +177,14 @@ formasPagamento.forEach((formaPagamento) => {
 - **ADR-0002:** Use Page Object Pattern - Page Objects utilizados
 - **ADR-0003:** Separate Locators from Page Objects - Locators separados
 - **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
-- **ADR-0009:** Use Faker for Dynamic Test Data - Valor aleatório gerado (poderia usar Faker)
+- **ADR-0009:** Use Faker for Dynamic Test Data - Faker usado para geração de valores monetários
 - **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
 
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
+- `docs/cases/architecture-listagem-contas-a-receber.md` - Listagem de contas a receber (abre modal de nova receita)
+- `docs/cases/architecture-recebimento.md` - Modal de recebimento (receitas criadas podem ser recebidas)
+- `docs/cases/architecture-editar-receita.md` - Edição de receitas (receitas criadas podem ser editadas)
 - `docs/adr/` - Architecture Decision Records
 
 ---
@@ -189,7 +192,7 @@ formasPagamento.forEach((formaPagamento) => {
 ## Observações
 
 - O teste é parametrizado e cria múltiplos testes (um para cada forma de pagamento)
-- Valor aleatório gerado usando `Math.random()` (poderia ser migrado para Faker)
+- Valor aleatório gerado usando Faker (`faker.number.float()`) - Migrado conforme ADR-0009
 - Descrição inclui timestamp para garantir unicidade
 - Validação de sucesso está comentada no código
 - Teste comentado para validação de erro com "Duplicata" e "Consumidor"
@@ -198,9 +201,9 @@ formasPagamento.forEach((formaPagamento) => {
 
 ## Melhorias Sugeridas
 
-1. **Migrar para Faker (ADR-0009):**
-   - Substituir `Math.random()` por Faker para geração de valores
-   - Usar Faker para geração de descrições mais realistas
+1. ~~**Migrar para Faker (ADR-0009):**~~ ✅ **CONCLUÍDO**
+   - ✅ Substituído `Math.random()` por Faker para geração de valores monetários
+   - ⏳ Usar Faker para geração de descrições mais realistas (opcional)
 
 2. **Reativar validação de sucesso:**
    - Descomentar validação de toast de sucesso

@@ -1,5 +1,6 @@
 import NovaReceitaPage from "../../support/pages/Financeiro/NovaReceitaPage";
 import ListagemContasAReceberPage from "../../support/pages/Financeiro/ListagemContasAReceberPage";
+import { faker } from '@faker-js/faker';
 
 describe('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@regressivo'] }, () => {
     const formasPagamento = require('../../fixtures/formasPagamento.json').formasPagamento;
@@ -29,7 +30,7 @@ describe('Cadastro de Nova Receita', { tags: ['@nova-receita', '@financeiro', '@
         const dataAtual = new Date().toLocaleDateString('pt-BR');
         NovaReceitaPage.selecionarDataCompetencia(dataAtual);
         NovaReceitaPage.selecionarDataVencimento(dataAtual);
-        const valorAleatorio = (Math.random() * 229 + 1).toFixed(2).replace('.', ',');
+        const valorAleatorio = faker.number.float({ min: 1, max: 229, precision: 0.01 }).toFixed(2).replace('.', ',');
         NovaReceitaPage.preencherValor(valorAleatorio);
         NovaReceitaPage.selecionarCliente('{downarrow}{enter}');
         NovaReceitaPage.selecionarTipoDocumento('Padrão');

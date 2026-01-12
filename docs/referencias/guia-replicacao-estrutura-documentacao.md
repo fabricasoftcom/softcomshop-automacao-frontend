@@ -1,12 +1,25 @@
 # 📚 Guia de Replicação: Estrutura de Documentação, Regras e ADRs
 
-**Versão:** 2.0  
-**Data:** 2025-12-12  
+**Versão:** 2.2  
+**Data:** 2025-01-30  
 **Status:** ✅ Guia de Referência
 
 ---
 
 ## 📝 Changelog
+
+### Versão 2.2 (2025-01-30)
+
+**Melhorias e Adições:**
+
+- ✅ **Biblioteca de Padrões de Código:** Adicionado passo para criar biblioteca pesquisável de padrões de código reutilizáveis
+- ✅ **Mapeamento de Relacionamentos:** Adicionado passo para criar sistema de referências cruzadas inteligentes entre documentações
+- ✅ **Template de Exploração Autônoma:** Adicionado passo para criar template interativo de exploração autônoma com checklist executável
+- ✅ **Checklist de Anti-padrões:** Adicionado passo para criar checklist específico para prevenir problemas comuns
+- ✅ **Guia de Execução Paralela:** Adicionado passo opcional para projetos com execução paralela de testes
+- ✅ **Exemplo de Implementação:** Adicionado passo opcional para criar case study de implementação bem-sucedida
+- ✅ **Seção de Referências Expandida:** Atualizada seção de referências com todos os novos documentos
+- ✅ **Quick Navigation Atualizado:** Adicionadas referências aos novos recursos no template de regras do Cursor
 
 ### Versão 2.1 (2025-12-12)
 
@@ -95,7 +108,14 @@ projeto/
         ├── guia-prompts-automacao.md # Guia de prompts para automação autônoma
         ├── processo-documentacao.md
         ├── checklist-validacao-continua.md
+        ├── checklist-anti-padroes.md # Checklist de anti-padrões
         ├── referencia-comandos-customizados.md
+        ├── biblioteca-padroes-codigo.md # Biblioteca de padrões de código
+        ├── mapeamento-relacionamentos.md # Mapeamento de relacionamentos
+        ├── template-exploracao-autonoma.md # Template de exploração autônoma
+        ├── template-plano-implementacao.md # Template de plano de implementação
+        ├── exemplo-implementacao-[nome].md # Exemplo de implementação (opcional)
+        ├── guia-execucao-paralela.md # Guia de execução paralela (opcional)
         ├── analise-[tema].md
         ├── aprendizagens-e-licoes.md
         └── guia-replicacao-estrutura-documentacao.md (este arquivo)
@@ -951,14 +971,472 @@ Use este checklist durante o code review para garantir conformidade contínua co
 Use `@guia-prompts-automacao.md` para carregar o contexto automaticamente.
 ```
 
-### Passo 9: Criar README de Referências
+---
+
+### Passo 9: Criar Biblioteca de Padrões de Código (Recomendado)
+
+**Arquivo:** `docs/referencias/biblioteca-padroes-codigo.md`
+
+**Objetivo:** Criar biblioteca pesquisável de padrões de código reutilizáveis extraídos de lições aprendidas.
+
+**Quando criar:**
+- ✅ Projeto tem padrões de código recorrentes identificados
+- ✅ Há necessidade de facilitar descoberta rápida de padrões durante implementação
+- ✅ Padrões são complexos o suficiente para merecer documentação
+
+**Estrutura sugerida:**
+
+```markdown
+# Biblioteca de Padrões de Código
+
+**Versão:** 1.0  
+**Data:** [Data]  
+**Status:** ✅ Ativo
+
+---
+
+## 🔍 Como Usar
+
+Use `Ctrl+F` (ou `Cmd+F` no Mac) para buscar por padrão específico. Exemplos de buscas:
+- "valor monetário" ou "monetário"
+- "switch" ou "toggle"
+- "autocomplete" ou "debounce"
+- "date picker" ou "date range"
+
+**Estrutura:**
+- Cada padrão contém: problema, solução, exemplo de código e referência completa
+- Exemplos são copiáveis e prontos para adaptação
+- Links apontam para documentação completa
+
+---
+
+## 💰 Padrão 1: [Nome do Padrão]
+
+### Problema
+
+[Descreva o problema que este padrão resolve]
+
+### Solução Padrão
+
+```javascript
+// ✅ PADRÃO: [Descrição]
+[código exemplo]
+```
+
+### Exemplo de Uso
+
+```javascript
+// Exemplo prático de uso
+```
+
+### 📚 Referência Completa
+
+- [Link para documentação completa ou ADR relacionada]
+```
+
+**Como preencher:**
+1. Identifique padrões recorrentes no código
+2. Extraia exemplos reais de implementação
+3. Documente problema, solução e exemplo
+4. Adicione links para documentação completa
+5. Organize por categorias (ex: Manipulação de Dados, Validações, Interações)
+
+**Referências:**
+- `aprendizagens-e-licoes.md` (fonte de padrões)
+- `guia-decisoes-rapidas.md` (referência cruzada)
+
+---
+
+### Passo 10: Criar Mapeamento de Relacionamentos (Recomendado)
+
+**Arquivo:** `docs/referencias/mapeamento-relacionamentos.md`
+
+**Objetivo:** Criar sistema de referências cruzadas inteligentes que mapeia todos os relacionamentos entre documentações arquiteturais.
+
+**Quando criar:**
+- ✅ Projeto tem múltiplas documentações arquiteturais relacionadas
+- ✅ Há necessidade de manter referências bidirecionais sincronizadas
+- ✅ Documentações têm relacionamentos complexos (ex: fluxos end-to-end)
+
+**Estrutura sugerida:**
+
+```markdown
+# Mapeamento de Relacionamentos entre Documentações
+
+**Versão:** 1.0  
+**Data:** [Data]  
+**Status:** ✅ Ativo
+
+---
+
+## 📊 Como Usar Este Mapa
+
+Este documento mapeia **TODOS** os relacionamentos entre documentações arquiteturais. Use-o para:
+
+- **Descobrir documentações relacionadas** ao criar nova documentação
+- **Manter referências bidirecionais sincronizadas** entre documentações
+- **Identificar fluxos end-to-end** que conectam múltiplas funcionalidades
+- **Garantir consistência** nas referências cruzadas
+
+---
+
+## 🔄 Relacionamentos por Módulo
+
+### [Módulo 1]
+
+```
+Funcionalidade A
+    ├─→ Funcionalidade B (relacionamento)
+    └─→ Funcionalidade C (relacionamento)
+
+Funcionalidade B
+    ├─→ Funcionalidade A (relacionamento reverso)
+    └─→ Funcionalidade D (relacionamento)
+```
+
+---
+
+## ✅ Checklist para Uso ao Criar Nova Documentação
+
+1. [ ] Consultar este mapa para identificar documentações relacionadas
+2. [ ] Adicionar referências bidirecionais em todas as documentações relacionadas
+3. [ ] Atualizar este mapa com novos relacionamentos identificados
+4. [ ] Validar que todas as referências estão corretas
+```
+
+**Como preencher:**
+1. Liste todos os módulos do projeto
+2. Para cada módulo, identifique funcionalidades relacionadas
+3. Documente relacionamentos usando diagramas de árvore
+4. Crie checklist para uso ao criar nova documentação
+5. Mantenha atualizado conforme novas documentações são criadas
+
+**Referências:**
+- `processo-documentacao.md` (passo 2: Criação)
+- ADR-0014 (Standardized Architectural Documentation Process)
+
+---
+
+### Passo 11: Criar Template de Exploração Autônoma (Recomendado)
+
+**Arquivo:** `docs/referencias/template-exploracao-autonoma.md`
+
+**Objetivo:** Criar template interativo de exploração autônoma com checklist executável por ferramentas de IA.
+
+**Quando criar:**
+- ✅ Projeto usa ferramentas de IA assistente (Cursor, GitHub Copilot, etc.)
+- ✅ Há necessidade de padronizar processo de exploração de telas
+- ✅ Exploração autônoma é parte do processo de desenvolvimento
+
+**Estrutura sugerida:**
+
+```markdown
+# Template de Exploração Autônoma
+
+**Versão:** 1.0  
+**Data:** [Data]  
+**Status:** ✅ Ativo
+
+---
+
+## 🎯 Objetivo da Exploração
+
+**Módulo:** [Preencher com nome do módulo]  
+**Funcionalidade:** [Preencher com nome da funcionalidade]  
+**URL Relativa:** `/[caminho]` (ex: `/financeiro/contas-a-receber`)
+
+---
+
+## ✅ Checklist de Exploração (Seguir Ordem)
+
+### Pré-requisitos
+
+- [ ] **Ler `baseUrl` de `[config-file]`**
+  - **Por quê:** Garante que URLs relativas serão usadas corretamente
+  - **Como:** Ler arquivo de configuração e extrair valor de `baseUrl`
+  - **Validação:** Confirmar que `baseUrl` foi lido e armazenado
+
+- [ ] **Validar acessibilidade da aplicação**
+  - **Por quê:** Garante que aplicação está acessível antes de explorar
+  - **Como:** Usar `browser_navigate` com URL relativa
+  - **Validação:** Confirmar que página carregou
+
+### Exploração de Listagem (se aplicável)
+
+- [ ] **Navegar até listagem usando `browser_navigate` com URL relativa**
+  - **Por quê:** Evita usar URLs absolutas hardcoded
+  - **Como:** Usar `browser_navigate` com URL relativa ao `baseUrl`
+  - **Validação:** Confirmar que página de listagem carregou
+
+- [ ] **Capturar snapshot inicial com `browser_snapshot`**
+  - **Por quê:** Documenta estado inicial da página
+  - **Como:** Usar `browser_snapshot` após navegação
+  - **Validação:** Confirmar que snapshot foi capturado
+
+[Adicionar mais checklists conforme necessário]
+```
+
+**Como preencher:**
+1. Identifique etapas de exploração necessárias para seu projeto
+2. Crie checklists detalhados para cada etapa
+3. Inclua "Por quê", "Como" e "Validação" para cada item
+4. Organize por tipo de funcionalidade (Listagem, Cadastro, etc.)
+5. Adicione checklist de armadilhas comuns
+
+**Referências:**
+- `guia-prompts-automacao.md` (Fase 1: Exploração)
+- ADR-0016 (Planning Before Implementation)
+
+---
+
+### Passo 12: Criar Checklist de Anti-padrões (Recomendado)
+
+**Arquivo:** `docs/referencias/checklist-anti-padroes.md`
+
+**Objetivo:** Criar checklist específico para prevenir problemas comuns identificados em implementações anteriores.
+
+**Quando criar:**
+- ✅ Projeto identificou anti-padrões recorrentes
+- ✅ Há necessidade de prevenir problemas comuns durante code review
+- ✅ Problemas específicos foram identificados em implementações anteriores
+
+**Estrutura sugerida:**
+
+```markdown
+# Checklist de Anti-Padrões
+
+**Versão:** 1.0  
+**Data:** [Data]  
+**Status:** ✅ Ativo
+
+---
+
+## 📋 Objetivo
+
+Este checklist previne problemas comuns identificados em implementações anteriores. Use este checklist durante o desenvolvimento e code review para garantir que anti-padrões não sejam introduzidos no código.
+
+**Quando usar:**
+- Durante o desenvolvimento de novos testes/features
+- Durante code review de Pull Requests
+- Para auto-validação antes de submeter código
+- Em revisões periódicas do código
+
+---
+
+## 🚨 Anti-Padrões Críticos
+
+### ❌ Anti-Padrão 1: [Nome do Anti-padrão]
+
+**Problema identificado:** [Descrição do problema]
+
+**Validação:**
+- [ ] [Critério de validação 1]
+- [ ] [Critério de validação 2]
+
+**Exemplos:**
+
+```javascript
+// ❌ ANTI-PADRÃO - [Descrição]
+[código incorreto]
+
+// ✅ CORRETO - [Descrição]
+[código correto]
+```
+
+[Repetir para cada anti-padrão identificado]
+
+---
+
+## ✅ Checklist de Validação Final
+
+Antes de considerar completo, valide:
+
+- [ ] Nenhum anti-padrão foi introduzido
+- [ ] Todos os critérios de validação foram atendidos
+- [ ] Exemplos de código correto foram seguidos
+- [ ] Referências a ADRs foram consultadas
+```
+
+**Como preencher:**
+1. Identifique anti-padrões recorrentes no projeto
+2. Documente problema, validação e exemplos para cada um
+3. Adicione exemplos de código correto e incorreto
+4. Crie checklist de validação final
+5. Referencie ADRs relacionadas
+
+**Referências:**
+- `checklist-validacao-continua.md` (complementa este checklist)
+- Lições aprendidas do projeto
+
+---
+
+### Passo 13: Criar Guia de Execução Paralela (Opcional)
+
+**Arquivo:** `docs/referencias/guia-execucao-paralela.md`
+
+**Objetivo:** Documentar processo de execução paralela de testes (se aplicável ao projeto).
+
+**Quando criar:**
+- ✅ Projeto tem suíte de testes grande que se beneficia de execução paralela
+- ✅ Há scripts ou ferramentas para execução paralela
+- ✅ Execução paralela é parte do processo de desenvolvimento
+
+**Estrutura sugerida:**
+
+```markdown
+# Guia de Execução Paralela de Testes
+
+> **Resumo**: Instruções para utilizar [ferramenta/script] de execução paralela, reduzindo drasticamente o tempo total de execução da suíte de testes.
+
+## 1. Visão Geral
+
+[Descreva a ferramenta/script e seus benefícios]
+
+### Benefícios
+- **Velocidade**: [Descrição]
+- **Isolamento**: [Descrição]
+- **Relatório Unificado**: [Descrição]
+
+---
+
+## 2. Como Utilizar
+
+### Pré-requisitos
+[Instruções de pré-requisitos]
+
+### Comandos de Execução
+
+#### 🚀 Execução Completa (Padrão)
+[Comando e descrição]
+
+#### 🔍 Execução Filtrada
+[Comando e descrição]
+
+---
+
+## 3. Arquitetura dos Grupos
+
+[Descreva como os testes são agrupados]
+
+---
+
+## 4. Troubleshooting
+
+[Problemas comuns e soluções]
+```
+
+**Como preencher:**
+1. Documente ferramenta/script usado para execução paralela
+2. Descreva benefícios e arquitetura
+3. Adicione comandos de execução com exemplos
+4. Documente troubleshooting comum
+5. Adicione referências a documentação relacionada
+
+**Nota:** Este passo é opcional e só deve ser criado se o projeto usa execução paralela.
+
+---
+
+### Passo 14: Criar Exemplo de Implementação (Opcional mas Recomendado)
+
+**Arquivo:** `docs/referencias/exemplo-implementacao-[nome].md`
+
+**Objetivo:** Criar case study completo de implementação bem-sucedida que demonstra aplicação prática do template padronizado.
+
+**Quando criar:**
+- ✅ Há implementação bem-sucedida que pode servir de referência
+- ✅ Implementação seguiu todos os padrões e ADRs
+- ✅ Há valor educacional em documentar o processo completo
+
+**Estrutura sugerida:**
+
+```markdown
+# Exemplo de Implementação: [Nome da Funcionalidade]
+
+**Versão:** 1.0  
+**Data:** [Data]  
+**Status:** ✅ Exemplo Completo e Funcional
+
+---
+
+## 📊 Resumo Executivo
+
+**Módulo:** [Nome do módulo]  
+**Funcionalidade:** [Nome da funcionalidade]  
+**Tempo de Implementação:** [Tempo]  
+**Arquivos Criados:** [Número]  
+**Conformidade com ADRs:** [Porcentagem]%
+
+---
+
+## 🚀 Processo Seguido
+
+### Fase 1: Exploração e Descoberta
+[Descrição do que foi feito]
+
+### Fase 2: Estrutura Base
+[Descrição do que foi feito]
+
+### Fase 3: Implementação
+[Descrição do que foi feito]
+
+### Fase 4: Documentação
+[Descrição do que foi feito]
+
+### Fase 5: Validação
+[Descrição do que foi feito]
+
+---
+
+## 📚 Lições Aprendidas
+
+### O que funcionou bem
+- [Lição 1]
+- [Lição 2]
+
+### Problemas encontrados e soluções
+- [Problema 1]: [Solução]
+- [Problema 2]: [Solução]
+
+---
+
+## 📁 Estrutura de Arquivos Criados
+
+```
+[caminho]/[arquivo] - [Descrição]
+```
+
+---
+
+## 🔗 Referências
+
+- [Template de Plano de Implementação](../referencias/template-plano-implementacao.md)
+- [ADR-0016](../adr/0016-planning-before-implementation.md): Planning Before Implementation
+```
+
+**Como preencher:**
+1. Escolha implementação bem-sucedida e completa
+2. Documente processo completo seguido (todas as fases)
+3. Capture lições aprendidas e problemas encontrados
+4. Liste estrutura de arquivos criados
+5. Adicione métricas e estatísticas
+6. Referencie templates e ADRs usados
+
+**Referências:**
+- `template-plano-implementacao.md` (template usado)
+- ADR-0016 (Planning Before Implementation)
+
+---
+
+### Passo 15: Criar README de Referências
 
 **Arquivo:** `docs/referencias/README.md`
+
+**Atualização necessária:** O README deve incluir descrições de todos os novos documentos criados nos passos anteriores.
 
 ```markdown
 # 📚 Referências e Guias do Projeto
 
-Esta pasta contém todos os documentos de referência rápida, guias práticos e ferramentas de apoio para desenvolvimento.
+Esta pasta contém todos os documentos de referência rápida, guias práticos e ferramentas de apoio para desenvolvimento e manutenção.
 
 ---
 
@@ -978,6 +1456,68 @@ Este é o documento principal para consulta rápida quando você tem dúvidas so
 
 ---
 
+### 🤖 `guia-prompts-automacao.md`
+
+**Guia de prompts padronizados para automação autônoma com Cursor.**
+
+Este guia contém templates de prompts prontos para uso que permitem ao Cursor explorar telas, mapear locators e criar testes automaticamente seguindo as ADRs do projeto.
+
+**Quando usar:**
+- Ao criar testes do zero e querer que o Cursor faça tudo automaticamente
+- Ao explorar uma nova tela e mapear locators
+- Para padronizar a criação de testes com o Cursor
+
+---
+
+### 💻 `biblioteca-padroes-codigo.md`
+
+**Biblioteca pesquisável de padrões de código reutilizáveis.**
+
+Snippets prontos para copiar e adaptar para padrões comuns identificados nas lições aprendidas, facilitando descoberta rápida durante implementação.
+
+**Conteúdo:**
+- Manipulação de valores monetários
+- Validação de estado antes e depois de operações
+- Autocomplete com debounce
+- Date Range Picker
+- Métodos resilientes em ambiente compartilhado
+
+**Quando usar:**
+- Ao precisar de padrão de código específico
+- Para descobrir como implementar padrões comuns
+- Para copiar e adaptar snippets prontos
+
+**Referenciado em:**
+- `guia-decisoes-rapidas.md` (seção "Preciso de um padrão de código?")
+- `aprendizagens-e-licoes.md` (fonte de padrões)
+
+---
+
+### 🔗 `mapeamento-relacionamentos.md`
+
+**Sistema de referências cruzadas inteligentes com mapa de relacionamentos.**
+
+Mapa centralizado que documenta todos os relacionamentos entre documentações arquiteturais, facilitando descoberta de documentações relacionadas e manutenção de referências bidirecionais.
+
+**Conteúdo:**
+- Relacionamentos por módulo
+- Diagramas de relacionamento
+- Checklist para uso ao criar nova documentação
+- Busca rápida por tipo de relacionamento
+
+**Quando usar:**
+- Ao criar nova documentação arquitetural
+- Para identificar documentações relacionadas
+- Para manter referências bidirecionais sincronizadas
+- Para entender fluxos end-to-end
+
+**Referenciado em:**
+- `processo-documentacao.md` (passo 2: Criação)
+- ADR-0006 (Mandatory Documentation)
+- ADR-0014 (Standardized Architectural Documentation Process)
+
+---
+
 ## ✅ Ferramentas de Validação e Processo
 
 ### 📋 `checklist-validacao-continua.md`
@@ -993,16 +1533,141 @@ Use este checklist durante o code review para garantir conformidade contínua co
 
 ---
 
+### 🚨 `checklist-anti-padroes.md`
+
+**Checklist específico para prevenir problemas comuns identificados em implementações anteriores.**
+
+Este checklist previne anti-padrões críticos como testes com muitas condicionais, locators não validados, falta de exploração manual, estrutura assumida e testes não assertivos.
+
+**Quando usar:**
+- Durante o desenvolvimento de novos testes
+- Durante code review de Pull Requests
+- Para auto-validação antes de submeter código
+- Em revisões periódicas do código
+
+**Referenciado em:**
+- `checklist-validacao-continua.md`
+- `.cursor/rules/architeture.mdc`
+
+---
+
 ### 📝 `processo-documentacao.md`
 
 **Processo padronizado para criar documentações arquiteturais.**
 
-Template e processo para criar documentações, garantindo consistência e qualidade.
+Template e processo obrigatório para criar documentações de novos testes, garantindo consistência e qualidade.
 
 **Quando usar:**
-- Ao criar documentação (OBRIGATÓRIO para novos casos)
+- Ao criar documentação de um novo teste (OBRIGATÓRIO)
 - Para atualizar documentação existente
 - Para entender o padrão de documentação do projeto
+
+---
+
+### 📋 `template-plano-implementacao.md`
+
+**Template padronizado para criar planos de implementação.**
+
+Template completo e estruturado baseado nos padrões identificados, garantindo coerência e acertividade em futuras implementações.
+
+**Conteúdo:**
+- Estrutura completa de fases (Exploração, Estrutura, Implementação, Documentação, Validação)
+- Padrões de nomenclatura de TODOs
+- Dependências entre tarefas
+- Checklist de qualidade do plano
+
+**Quando usar:**
+- Ao criar plano para nova funcionalidade (3+ arquivos)
+- Ao implementar novo módulo de testes
+- Ao criar fluxo completo (listagem + cadastro)
+
+**Referenciado em:**
+- ADR-0016 (Planning Before Implementation)
+- `.cursor/rules/architeture.mdc`
+
+---
+
+### 🔍 `template-exploracao-autonoma.md`
+
+**Template interativo de exploração autônoma com checklist executável.**
+
+Template estruturado que fornece um checklist passo a passo detalhado para exploração autônoma de telas, garantindo que todas as etapas sejam seguidas corretamente.
+
+**Conteúdo:**
+- Checklist detalhado de pré-requisitos
+- Checklist para exploração de listagens
+- Checklist para exploração de cadastros
+- Checklist para funcionalidades específicas
+- Checklist para documentação de descobertas
+- Checklist de validação final
+
+**Quando usar:**
+- Durante exploração autônoma de novas telas
+- Para garantir que todas as etapas de exploração sejam seguidas
+- Para documentar descobertas de forma padronizada
+- Para validar que exploração foi completa antes de prosseguir
+
+**Referenciado em:**
+- `guia-prompts-automacao.md` (Fase 1: Exploração)
+- ADR-0016 (Planning Before Implementation)
+
+---
+
+### 📖 `exemplo-implementacao-[nome].md` (Opcional)
+
+**Case study completo da implementação bem-sucedida de [funcionalidade].**
+
+Documento detalhado que demonstra a aplicação prática do template padronizado de plano de implementação, servindo como referência e exemplo para futuras implementações.
+
+**Conteúdo:**
+- Resumo executivo e métricas
+- Processo completo seguido (5 fases)
+- Lições aprendidas específicas
+- Problemas encontrados e soluções
+- Conformidade com ADRs
+- Estrutura de arquivos criados
+
+**Quando usar:**
+- Como referência ao criar novo plano de implementação
+- Para entender como aplicar o template corretamente
+- Para ver exemplo prático de implementação completa
+- Para onboarding de novos desenvolvedores
+
+**Referenciado em:**
+- Template de Plano de Implementação
+- ADR-0016 (Planning Before Implementation)
+
+---
+
+### 🔄 `guia-execucao-paralela.md` (Opcional)
+
+**Guia de execução paralela de testes.**
+
+Instruções para utilizar [ferramenta/script] de execução paralela, reduzindo drasticamente o tempo total de execução da suíte de testes.
+
+**Quando usar:**
+- Para executar suíte completa de testes em paralelo
+- Para reduzir tempo de execução de testes
+- Para executar testes filtrados em paralelo
+
+**Nota:** Apenas se o projeto usa execução paralela de testes.
+
+---
+
+### 📖 `referencia-comandos-customizados.md`
+
+**Referência completa de todos os comandos customizados do projeto.**
+
+Documentação detalhada de cada comando customizado, incluindo quando usar, parâmetros, exemplos e ADRs relacionadas.
+
+**Quando usar:**
+- Para entender qual comando usar em cada situação
+- Para aprender sobre comandos disponíveis
+- Para documentar novos comandos customizados
+
+**Referenciado em:**
+- ADR-0012 (Documentation of Custom Commands)
+- `.cursor/rules/architeture.mdc`
 
 ---
 
@@ -1013,6 +1678,7 @@ Template e processo para criar documentações, garantindo consistência e quali
 - **ADRs:** `docs/adr/README.md` - Todas as decisões arquiteturais
 - **Regras do Cursor:** `.cursor/rules/architeture.mdc` - Regras ativas do projeto
 - **Documentações:** `docs/cases/README.md` - Índice de documentações
+- **Lista de Testes:** `docs/testes.md` - Lista completa de testes (se aplicável)
 
 ---
 
@@ -1020,7 +1686,7 @@ Template e processo para criar documentações, garantindo consistência e quali
 **Status:** ✅ Documentos Ativos e Mantidos
 ```
 
-### Passo 10: Criar README de Cases
+### Passo 16: Criar README de Cases
 
 **Arquivo:** `docs/cases/README.md`
 
@@ -1089,7 +1755,7 @@ Todas as documentações referenciam as seguintes ADRs quando aplicável:
 **Mantido por:** [Equipe]
 ```
 
-### Passo 11: Criar README Principal
+### Passo 17: Criar README Principal
 
 **Arquivo:** `docs/README.md`
 
@@ -1289,6 +1955,82 @@ Esta seção descreve práticas avançadas que podem ser implementadas no projet
 - Lições aprendidas de simplificação de código
 - [ADR-0003](../docs/adr/0003-separate-locators-from-page-objects.md): Separate Locators
 
+### Code Pattern Library
+
+> **Context**: Reusable code patterns extracted from lessons learned
+
+**Quando aplicar:**
+- ✅ Projetos com padrões de código recorrentes
+- ✅ Necessidade de facilitar descoberta rápida de padrões
+- ✅ Padrões são complexos o suficiente para merecer documentação
+
+**Práticas:**
+- ✅ Criar biblioteca pesquisável com `Ctrl+F`
+- ✅ Incluir problema, solução e exemplo para cada padrão
+- ✅ Manter exemplos copiáveis e prontos para adaptação
+- ✅ Referenciar documentação completa
+
+**Referências:**
+- `docs/referencias/biblioteca-padroes-codigo.md`
+- `docs/referencias/aprendizagens-e-licoes.md` (fonte de padrões)
+
+### Relationship Mapping
+
+> **Context**: Supports ADR-0014 (Standardized Architectural Documentation Process) and ADR-0006 (Mandatory Documentation)
+
+**Quando aplicar:**
+- ✅ Projeto tem múltiplas documentações arquiteturais relacionadas
+- ✅ Há necessidade de manter referências bidirecionais sincronizadas
+- ✅ Documentações têm relacionamentos complexos
+
+**Práticas:**
+- ✅ Mapear relacionamentos por módulo
+- ✅ Usar diagramas de árvore para visualização
+- ✅ Criar checklist para uso ao criar nova documentação
+- ✅ Manter atualizado conforme novas documentações são criadas
+
+**Referências:**
+- `docs/referencias/mapeamento-relacionamentos.md`
+- `docs/referencias/processo-documentacao.md` (passo 2: Criação)
+
+### Autonomous Exploration Template
+
+> **Context**: Implements ADR-0016 (Planning Before Implementation) - Phase 1: Exploration
+
+**Quando aplicar:**
+- ✅ Projeto usa ferramentas de IA assistente
+- ✅ Há necessidade de padronizar processo de exploração
+- ✅ Exploração autônoma é parte do processo
+
+**Práticas:**
+- ✅ Criar checklist detalhado para cada etapa
+- ✅ Incluir "Por quê", "Como" e "Validação" para cada item
+- ✅ Organizar por tipo de funcionalidade
+- ✅ Adicionar checklist de armadilhas comuns
+
+**Referências:**
+- `docs/referencias/template-exploracao-autonoma.md`
+- `docs/referencias/guia-prompts-automacao.md` (Fase 1: Exploração)
+
+### Anti-Patterns Checklist
+
+> **Context**: Prevents common problems identified in previous implementations
+
+**Quando aplicar:**
+- ✅ Projeto identificou anti-padrões recorrentes
+- ✅ Há necessidade de prevenir problemas comuns
+- ✅ Problemas específicos foram identificados
+
+**Práticas:**
+- ✅ Documentar problema, validação e exemplos para cada anti-padrão
+- ✅ Adicionar exemplos de código correto e incorreto
+- ✅ Criar checklist de validação final
+- ✅ Referenciar ADRs relacionadas
+
+**Referências:**
+- `docs/referencias/checklist-anti-padroes.md`
+- `docs/referencias/checklist-validacao-continua.md` (complementa)
+
 ### Custom Commands Documentation
 
 > **Context**: Baseado em [ADR-0012](../docs/adr/0012-documentation-of-custom-commands.md)
@@ -1395,9 +2137,20 @@ Use este checklist ao replicar a estrutura:
 - [ ] Criar Guia de Prompts para Automação
 - [ ] Criar Processo de Documentação
 - [ ] Criar Checklist de Validação
+- [ ] Criar Checklist de Anti-padrões (Recomendado)
 - [ ] Criar README de Referências
 - [ ] Criar README de Cases
 - [ ] Criar README Principal
+
+### Documentação Avançada (Recomendado)
+- [ ] Criar Biblioteca de Padrões de Código
+- [ ] Criar Mapeamento de Relacionamentos
+- [ ] Criar Template de Exploração Autônoma
+- [ ] Criar Template de Plano de Implementação
+- [ ] Criar Exemplo de Implementação (Opcional mas Recomendado)
+
+### Documentação Opcional
+- [ ] Criar Guia de Execução Paralela (se aplicável)
 
 ### Primeiras Decisões
 - [ ] Documentar 2-3 decisões arquiteturais importantes como ADRs
@@ -1529,7 +2282,7 @@ Use este checklist ao replicar a estrutura:
 
 ---
 
-**Última atualização:** 2025-12-12  
-**Versão:** 1.0  
+**Última atualização:** 2025-01-30  
+**Versão:** 2.2  
 **Mantido por:** Equipe de Documentação
 

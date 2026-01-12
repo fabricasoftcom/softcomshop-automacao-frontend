@@ -61,6 +61,35 @@ Este guia contém templates de prompts prontos para uso que permitem ao Cursor e
 
 ---
 
+### 🔧 `guia-configuracoes-multi-segmento.md`
+
+**Guia completo para criar e usar configurações específicas por segmento no Cypress.**
+
+Este guia documenta o padrão para isolar testes de diferentes segmentos (petshop, e-commerce, etc.) com URLs e configurações diferentes, permitindo execução isolada de testes por segmento.
+
+**Conteúdo:**
+- Template completo de configuração multi-segmento
+- Explicação detalhada de cada propriedade
+- Exemplo real baseado no petshop
+- Scripts npm recomendados
+- Como executar em modo interativo e headless
+- Boas práticas (o que fazer e não fazer)
+- Troubleshooting de problemas comuns
+- Processo passo a passo para criar novo segmento
+- Checklist de validação
+
+**Quando usar:**
+- Ao criar configuração para novo segmento
+- Ao precisar isolar testes de um segmento específico
+- Ao ter dúvidas sobre configurações multi-segmento
+- Para entender como funciona a configuração do petshop
+
+**Referenciado em:**
+- `README.MD` (seção de execução de testes)
+- `docs/architecture.md` (seção de configurações)
+
+---
+
 ### 📖 `referencia-comandos-customizados.md`
 
 **Referência completa de todos os comandos Cypress customizados do projeto.**
@@ -190,6 +219,89 @@ Template completo e estruturado baseado nos padrões identificados nas implement
 
 ---
 
+### 🔍 `template-exploracao-autonoma.md`
+
+**Template interativo de exploração autônoma com checklist executável pelo Cursor.**
+
+Template estruturado que fornece um checklist passo a passo detalhado para exploração autônoma de telas, garantindo que todas as etapas sejam seguidas corretamente.
+
+**Conteúdo:**
+- Checklist detalhado de pré-requisitos
+- Checklist para exploração de listagens
+- Checklist para exploração de cadastros
+- Checklist para funcionalidades específicas
+- Checklist para documentação de descobertas
+- Checklist de validação final
+- Template de documento de descobertas
+- Checklist de armadilhas comuns
+
+**Quando usar:**
+- Durante exploração autônoma de novas telas
+- Para garantir que todas as etapas de exploração sejam seguidas
+- Para documentar descobertas de forma padronizada
+- Para validar que exploração foi completa antes de prosseguir
+
+**Referenciado em:**
+- `guia-prompts-automacao.md` (Fase 1: Exploração)
+- ADR-0016 (Planning Before Implementation)
+- `.cursor/rules/architeture.mdc`
+
+---
+
+### 💻 `biblioteca-padroes-codigo.md`
+
+**Biblioteca pesquisável de padrões de código reutilizáveis.**
+
+Snippets prontos para copiar e adaptar para padrões comuns identificados nas lições aprendidas, facilitando descoberta rápida durante implementação.
+
+**Conteúdo:**
+- Manipulação de valores monetários brasileiros
+- Validação de estado antes e depois de operações
+- Autocomplete com debounce
+- Date Range Picker
+- Métodos resilientes em ambiente compartilhado
+- Substituição de waits fixos
+- Links para documentação completa
+
+**Quando usar:**
+- Ao precisar de padrão de código específico
+- Para descobrir como implementar padrões comuns
+- Para copiar e adaptar snippets prontos
+- Para entender padrões estabelecidos no projeto
+
+**Referenciado em:**
+- `guia-decisoes-rapidas.md` (seção "Preciso de um padrão de código?")
+- `aprendizagens-e-licoes.md` (fonte de padrões)
+- `.cursor/rules/architeture.mdc`
+
+---
+
+### 🔗 `mapeamento-relacionamentos.md`
+
+**Sistema de referências cruzadas inteligentes com mapa de relacionamentos.**
+
+Mapa centralizado que documenta todos os relacionamentos entre documentações arquiteturais, facilitando descoberta de documentações relacionadas e manutenção de referências bidirecionais.
+
+**Conteúdo:**
+- Relacionamentos por módulo (Financeiro, Produtos, etc.)
+- Diagramas de relacionamento
+- Checklist para uso ao criar nova documentação
+- Busca rápida por tipo de relacionamento
+- Exemplo de uso prático
+
+**Quando usar:**
+- Ao criar nova documentação arquitetural
+- Para identificar documentações relacionadas
+- Para manter referências bidirecionais sincronizadas
+- Para entender fluxos end-to-end
+
+**Referenciado em:**
+- `processo-documentacao.md` (passo 2: Criação)
+- ADR-0006 (Mandatory Documentation)
+- ADR-0014 (Standardized Architectural Documentation Process)
+
+---
+
 ## 📊 Análises e Aprendizados
 
 ### 🔍 `analise-page-objects-hierarquicos.md`
@@ -306,21 +418,26 @@ Este guia fornece instruções passo a passo para criar a mesma estrutura de doc
    - Use o prompt completo para criar testes automaticamente
    - Ou use prompts específicos por fase (Exploração, Locators, Page Object, Spec)
    - O Cursor seguirá automaticamente o protocolo quando você usar os prompts
+   - **Para exploração completa:** Use `template-exploracao-autonoma.md` que fornece checklist detalhado
 
 2. **Planeje:** `template-plano-implementacao.md`
    - Crie plano estruturado (se 3+ arquivos)
    - Siga fases: Exploração → Mapeamento de Cenários → Estrutura → Implementação → Documentação → Validação
    - Use nomenclatura padronizada
    - Use o guia de prompts na Fase 1 (Exploração)
+   - **Use o template de exploração autônoma** para garantir exploração completa
 
 3. **Consulte:** `guia-decisoes-rapidas.md`
    - Qual comando de login usar?
    - Preciso criar Page Object?
    - Quais tags usar?
+   - Preciso de um padrão de código? → `biblioteca-padroes-codigo.md`
 
-3. **Siga:** `processo-documentacao.md`
+4. **Siga:** `processo-documentacao.md`
    - Crie a documentação obrigatória
    - Use o template padronizado
+   - **Consulte `mapeamento-relacionamentos.md`** para identificar documentações relacionadas
+   - **Adicione referências bidirecionais** em todas as documentações relacionadas
 
 4. **Valide:** `checklist-validacao-continua.md` e `checklist-anti-padroes.md`
    - Antes de submeter o PR
@@ -363,11 +480,15 @@ docs/referencias/
 ├── README.md                              # Este arquivo (índice)
 ├── guia-decisoes-rapidas.md              # ⭐ Guia principal de referência
 ├── guia-prompts-automacao.md             # 🤖 Guia de prompts para automação
+├── guia-configuracoes-multi-segmento.md  # 🔧 Guia de configurações multi-segmento
 ├── referencia-comandos-customizados.md   # Referência de comandos
 ├── checklist-validacao-continua.md       # Checklist de validação
 ├── checklist-anti-padroes.md              # 🚨 Checklist de anti-padrões
 ├── processo-documentacao.md               # Processo de documentação
 ├── template-plano-implementacao.md        # 📋 Template de plano
+├── template-exploracao-autonoma.md        # 🔍 Template de exploração autônoma
+├── biblioteca-padroes-codigo.md           # 💻 Biblioteca de padrões de código
+├── mapeamento-relacionamentos.md          # 🔗 Mapa de relacionamentos
 ├── exemplo-implementacao-funcionarios.md # 📖 Exemplo real de implementação
 ├── analise-page-objects-hierarquicos.md # Análise de hierarquia
 ├── aprendizagens-e-licoes.md             # Aprendizados históricos

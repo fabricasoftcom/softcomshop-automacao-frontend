@@ -292,9 +292,10 @@ Math.floor(Math.random() * (max - min + 1)) + min;
 - **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
 
 ### Documentação relacionada
+- `docs/cases/architecture-cadastro-conta.md` - Cadastro de conta (seleção de tipo "Conta Corrente" navega para cadastro específico)
+- `docs/cases/architecture-listagem-conta.md` - Listagem de contas (contas cadastradas podem ser listadas)
+- `docs/cases/architecture-edicao-conta-corrente.md` - Edição de conta corrente (contas cadastradas podem ser editadas)
 - `docs/testes.md` - Inventário de testes
-- `docs/cases/architecture-cadastro-conta.md` - Documentação de seleção de tipo de conta
-- `docs/cases/architecture-listagem-conta.md` - Documentação de listagem de contas
 - `docs/adr/` - Architecture Decision Records
 
 ---

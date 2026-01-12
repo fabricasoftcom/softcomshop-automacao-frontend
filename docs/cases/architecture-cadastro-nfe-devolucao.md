@@ -202,3 +202,31 @@ Devolucao/
 npm run e2e -- --grep "@nfe-devolucao"
 ```
 
+---
+
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - Page Objects utilizados
+- **ADR-0003:** Separate Locators from Page Objects - Locators separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.login()` usado
+- **ADR-0008:** Use Page Object Hierarchy - Hierarquia de Page Objects utilizada
+- **ADR-0010:** Use Tags for Test Filtering - Tags aplicadas
+- **ADR-0011:** Use Conditional Intercepts - Intercepts condicionais utilizados
+
+### Documentação relacionada
+- `docs/cases/architecture-cadastro-nfe.md` - Cadastro de NFe (Geral) (tipo específico de NFe)
+- `docs/cases/architecture-listagem-nfe.md` - Listagem de NFe (NFes Devolução podem ser listadas)
+- `docs/cases/architecture-cadastro-nfe-normal.md` - Cadastro de NFe Normal (outro tipo específico)
+- `docs/cases/architecture-cadastro-nfe-ajuste.md` - Cadastro de NFe Ajuste (outro tipo específico)
+- `docs/cases/architecture-cadastro-nfe-complementar.md` - Cadastro de NFe Complementar (outro tipo específico)
+- `docs/cases/architecture-cancelamento-nfe.md` - Cancelamento de NFe (NFes Devolução podem ser canceladas)
+- `docs/cases/architecture-carta-correcao-nfe.md` - Carta de Correção NFe (NFes Devolução podem receber carta de correção)
+- `docs/testes.md` - Inventário de testes
+
+### Arquivos relacionados
+- `cypress/e2e/venda-nfcenfe/cadastro-nfe-devolucao.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+

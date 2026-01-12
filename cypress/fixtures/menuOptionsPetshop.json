@@ -1,0 +1,86 @@
+[
+  {
+    "mainMenu": {
+      "text": "Painel de Atendimento"
+    },
+    "route": "/petshop/painel-de-atendimento",
+    "exclusivo": true,
+    "descricao": "Menu principal exclusivo do Petshop para gerenciamento de atendimentos e agendamentos"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "text": "CADASTROS"
+    },
+    "childMenu": {
+      "id": "vacinas",
+      "text": "Vacinas"
+    },
+    "route": "/vacinas",
+    "exclusivo": true,
+    "descricao": "Cadastro de vacinas para animais"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "text": "CADASTROS"
+    },
+    "childMenu": {
+      "id": "modelos_de_prescrições",
+      "text": "Modelos de Prescrições"
+    },
+    "route": "/prescricao",
+    "exclusivo": true,
+    "descricao": "Cadastro de modelos de prescrições veterinárias"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "text": "CADASTROS"
+    },
+    "childMenu": {
+      "id": "tipos_de_atendimento",
+      "text": "Tipos de Atendimento"
+    },
+    "route": "/tipo-atendimento",
+    "exclusivo": true,
+    "descricao": "Cadastro de tipos de atendimento (consulta, cirurgia, banho e tosa, etc)"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "text": "CADASTROS"
+    },
+    "childMenu": {
+      "id": "cadastro_de_atestados_e_termos",
+      "text": "Cadastro de Atestados e Termos"
+    },
+    "route": "/atestados-termos",
+    "exclusivo": true,
+    "descricao": "Cadastro de modelos de atestados e termos veterinários"
+  },
+  {
+    "mainMenu": {
+      "text": "Serviços e NFS-e"
+    },
+    "subMenu": {
+      "text": "LANÇAMENTOS"
+    },
+    "childMenu": {
+      "id": "gestão_de_ordem_de_serviço",
+      "text": "Gestão de Ordem de Serviço"
+    },
+    "route": "/ordem-servico/painel",
+    "exclusivo": true,
+    "descricao": "Painel de gestão de ordens de serviço veterinárias"
+  }
+]
+

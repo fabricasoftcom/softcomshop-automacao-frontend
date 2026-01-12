@@ -407,4 +407,29 @@ Função que gera dados aleatórios de produto usando Faker:
 
 ---
 
+## Referências
+
+### ADRs relacionadas
+- **ADR-0002:** Use Page Object Pattern - `ProdutoPage`, `ProdutosListPage` e `VinculoFiscalPage` utilizados
+- **ADR-0003:** Separate Locators from Page Objects - `ProdutoLocators` e `ProdutosListLocators` separados
+- **ADR-0004:** Use cy.session for Login Persistence - `cy.loginArmazenandoSessao()` usado
+- **ADR-0009:** Use Faker for Dynamic Test Data - Faker usado via `generateRandomProduct()`
+- **ADR-0010:** Use Tags for Test Filtering - Tags `@cadastro-produto` e `@regressivo` aplicadas
+
+### Documentação relacionada
+- `docs/cases/architecture-listagem-produtos.md` - Listagem de produtos (produtos cadastrados podem ser listados)
+- `docs/testes.md` - Inventário de testes
+- `cypress/support/pages/Produto/ProdutoPage.js` - Page Object de cadastro
+- `cypress/support/pages/Produtos/ProdutosListPage.js` - Page Object de listagem
+- `cypress/support/pages/VinculoFiscal/VinculoFiscalPage.js` - Page Object de vínculo fiscal
+- `cypress/support/locators/ProdutoLocators.js` - Locators de cadastro
+- `cypress/support/locators/Produtos/ProdutosListLocators.js` - Locators de listagem
+- `cypress/support/factory/generateRandomData.js` - Factory de dados dinâmicos
+
+### Arquivos relacionados
+- `cypress/e2e/cadastro-produto/cadastro-produto.spec.js` - Spec de teste
+- `cypress.config.js` - Configuração (specPattern)
+
+---
+
 **Última atualização:** 2024-12-19

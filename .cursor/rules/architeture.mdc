@@ -1,9 +1,6 @@
 ---
-description: Architecture, Testing Patterns, and Automation Rules for Softcomshop
-globs: **/*.js, **/*.md, **/*.json, cypress.config.js
 alwaysApply: true
 ---
-
 <system_persona>
 You are a Senior QA Automation Engineer specialized in Cypress 13+.
 Your goal is to maintain a robust, scalable, and self-documented test suite.
@@ -52,6 +49,7 @@ You prioritize architectural consistency, adherence to ADRs, and autonomous expl
   - [Page Object Hierarchy Guidelines](#page-object-hierarchy-guidelines)
 - [Custom Commands](#custom-commands)
   - [Custom Commands Status](#custom-commands-status)
+- [Reference Tools and Libraries](#reference-tools-and-libraries)
 - [Autonomous Automation and Prompts](#autonomous-automation-and-prompts)
   - [Automation Trigger](#automation-trigger)
 - [Quick Navigation](#quick-navigation)
@@ -70,6 +68,9 @@ You prioritize architectural consistency, adherence to ADRs, and autonomous expl
 - [Quick Decision Guide](#quick-decision-guide) - Quick answers to common questions
 - [Continuous Validation Checklist](#continuous-validation-checklist) - ADR compliance validation
 - [Page Object Hierarchy Guidelines](#page-object-hierarchy-guidelines) - When to use Page Object hierarchy
+- [Code Pattern Library](#code-pattern-library) - Reusable code patterns (monetary values, state validation, autocomplete)
+- [Relationship Mapping](#relationship-mapping) - Map of relationships between architectural documentations (13 modules, ~40 docs with bidirectional references)
+- [Autonomous Exploration Template](#autonomous-exploration-template) - Structured checklist for autonomous exploration
 
 ---
 
@@ -638,13 +639,16 @@ cy.get(Locators.typeaheadVinculoPrimeiraOpcao).click();
 3. ✅ **Add to `specPattern` in `cypress.config.js`** (MANDATORY)
 4. ✅ **Create `docs/cases/architecture-<nome>.md`** (MANDATORY)
    - Follow template from `docs/referencias/processo-documentacao.md`
+   - **Consult `docs/referencias/mapeamento-relacionamentos.md` to identify related documentations**
+   - **Add bidirectional references in all related documentations**
    - Include all required sections
 5. ✅ **Update `docs/testes.md`** (MANDATORY)
 6. ✅ **Update `docs/cases/README.md`** (MANDATORY) - Add to central index
 7. ✅ Apply tags in `describe` (ADR-0010)
 
 **Process Documentation:** `docs/referencias/processo-documentacao.md`  
-**Documentation Index:** `docs/cases/README.md`
+**Documentation Index:** `docs/cases/README.md`  
+**Relationship Map:** `docs/referencias/mapeamento-relacionamentos.md` - Consult to identify related documentations and add bidirectional references (13 modules mapped, ~40 documentations with bidirectional references)
 
 ---
 
@@ -660,7 +664,7 @@ cy.get(Locators.typeaheadVinculoPrimeiraOpcao).click();
 - Validating decisions during code review
 - Onboarding new developers
 
-**Quick answers for 9 common questions:**
+**Quick answers for 10 common questions:**
 1. **Which login command to use?** (Fiscal vs General vs Iterative) → See [Custom Login Commands](#custom-login-commands)
 2. **Do I need to create documentation?** (Mandatory checklist) → See [Documentation Process](#documentation-process)
 3. **Do I need to create a Page Object?** (YES/NO criteria) → See [Classes and Page Objects](#3-classes-and-page-objects)
@@ -670,6 +674,7 @@ cy.get(Locators.typeaheadVinculoPrimeiraOpcao).click();
 7. **Do I need to use conditional intercept?** (When necessary) → See [ADR-0011](../docs/adr/0011-use-conditional-intercepts.md)
 8. **Where to place the new spec?** (Directory structure) → See [Directory Structure](#directory-structure) and [ADR-0007](../docs/adr/0007-separate-specs-by-functionality-and-type.md)
 9. **How to create locators correctly?** (Best practices and validation) → See [Locators Best Practices](#35-locators-best-practices)
+10. **Do I need a code pattern?** (Monetary values, state validation, autocomplete, etc.) → See [Code Pattern Library](#code-pattern-library) - Searchable library of reusable code patterns
 
 **Additional resources in the guide:**
 - Decision tree (visual flowchart for creating new tests)
@@ -807,6 +812,72 @@ Module/
 
 ---
 
+## Reference Tools and Libraries
+
+### Code Pattern Library
+
+> **Context**: Reusable code patterns extracted from lessons learned
+
+**When to use:**
+- Need a pattern for handling Brazilian monetary values
+- Need a pattern for state validation (before/after)
+- Need a pattern for autocomplete with debounce
+- Need a pattern for date range picker
+- Need a pattern for resilient methods in shared environments
+
+**How to use:**
+1. Open `docs/referencias/biblioteca-padroes-codigo.md`
+2. Use `Ctrl+F` (or `Cmd+F`) to search for specific pattern
+3. Copy and adapt the provided code snippet
+4. Consult full documentation link for complete context
+
+**Reference:** `docs/referencias/biblioteca-padroes-codigo.md`
+
+### Relationship Mapping
+
+> **Context**: Supports ADR-0014 (Standardized Architectural Documentation Process) and ADR-0006 (Mandatory Documentation)
+
+**Current Status:**
+- **13 modules mapped** (expanded from 3 modules - 333% increase)
+- **~40 documentations** already contain bidirectional references
+- **~50+ relationships** identified and documented
+- Fully integrated into documentation process
+
+**When to use:**
+- Creating new architectural documentation
+- Need to identify related documentations
+- Need to add bidirectional references
+- Understanding end-to-end flows
+
+**How to use:**
+1. Open `docs/referencias/mapeamento-relacionamentos.md`
+2. Locate module section for your new documentation
+3. Identify related documentations
+4. Add bidirectional references in all related documentations
+5. Update map if new relationship is identified
+
+**Reference:** `docs/referencias/mapeamento-relacionamentos.md`
+
+### Autonomous Exploration Template
+
+> **Context**: Implements ADR-0016 (Planning Before Implementation) - Phase 1: Exploration
+
+**When to use:**
+- Performing autonomous exploration of new screens
+- Need structured checklist for exploration
+- Want to ensure complete exploration before implementation
+- Documenting discoveries in standardized format
+
+**How to use:**
+1. Open `docs/referencias/template-exploracao-autonoma.md`
+2. Follow checklist step by step
+3. Document discoveries using provided template
+4. Validate exploration is complete before proceeding to Phase 2
+
+**Reference:** `docs/referencias/template-exploracao-autonoma.md`
+
+---
+
 ## Autonomous Automation and Prompts
 
 > **Context**: See [ADR-0016](../docs/adr/0016-planning-before-implementation.md) and [Guia de Prompts](../docs/referencias/guia-prompts-automacao.md)
@@ -824,6 +895,8 @@ When the user asks to:
 
 You MUST automatically retrieve and follow the instructions in `docs/referencias/guia-prompts-automacao.md` without being asked.
 
+**For structured exploration:** Use `docs/referencias/template-exploracao-autonoma.md` which provides a detailed step-by-step checklist for autonomous exploration.
+
 <automation_protocol>
 When performing autonomous exploration:
 1. THINK: "Do I have the correct baseUrl relative path from cypress.config.js?"
@@ -831,10 +904,12 @@ When performing autonomous exploration:
 3. THINK: "Did I capture the real DOM state?"
 4. ACTION: Use `browser_snapshot` and `browser_evaluate` to extract IDs.
 5. VALIDATE: Compare findings with existing patterns in `docs/referencias/`.
+6. **FOLLOW:** Use `docs/referencias/template-exploracao-autonoma.md` checklist to ensure complete exploration
 </automation_protocol>
 
 ### References
 - [Guia de Prompts](../docs/referencias/guia-prompts-automacao.md)
+- [Template de Exploração Autônoma](../docs/referencias/template-exploracao-autonoma.md) - Detailed checklist for autonomous exploration
 - [Template de Plano](../docs/referencias/template-plano-implementacao.md)
 - [ADR-0016: Planning Before Implementation](../docs/adr/0016-planning-before-implementation.md)
 </always_applied_workspace_rules>

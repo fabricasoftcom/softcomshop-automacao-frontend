@@ -239,6 +239,41 @@ Para detalhes completos, consulte:
 - [Referência de Comandos Customizados](docs/referencias/referencia-comandos-customizados.md) - Seção "Comandos de Autenticação"
 - [ADR-0004](docs/adr/0004-use-cy-session-for-login-persistence.md) - Session Persistence
 
+---
+
+## 🐾 Execução de Testes por Segmento
+
+O projeto suporta execução isolada de testes por segmento (petshop, e-commerce, etc.) através de configurações específicas.
+
+### Executando Testes do Petshop
+
+**Modo Interativo (Cypress UI):**
+```bash
+npm run cypress:open:petshop
+```
+
+**Modo Headless (CI/CD):**
+```bash
+# Execução básica
+npm run test:petshop
+
+# Execução com Allure
+npm run test:petshop:allure
+```
+
+**Comando direto:**
+```bash
+npx cypress open --config-file cypress.config.petshop.js
+npx cypress run --config-file cypress.config.petshop.js
+```
+
+### Criando Nova Configuração de Segmento
+
+Para criar uma nova configuração de segmento, consulte:
+- [Guia de Configurações Multi-Segmento](docs/referencias/guia-configuracoes-multi-segmento.md) - Documentação completa com template e exemplos
+
+---
+
 ## 📚 Documentação Oficial
 Para mais detalhes, consulte a documentação oficial das ferramentas utilizadas:
 - [ESLint](https://eslint.org/docs/latest/user-guide/) 🛠️

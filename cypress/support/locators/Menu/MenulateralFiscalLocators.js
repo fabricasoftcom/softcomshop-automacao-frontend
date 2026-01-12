@@ -9,6 +9,7 @@ const MenulateralFiscalLocators = {
     spedInventarioBase: '#inventário_base',
     spedIcmsAjuste: '#icms_ajuste_apuração',
     spedIpiAjuste: '#ipi_ajuste_apuração',
+    spedPlanoContas: '#plano_de_contas',
     sintegra: '#sintegra',
     sintegraGerarArquivo: '#gerar_arquivo',
     sintegraGerarArquivoXPath: "(//span[contains(.,'Gerar Arquivo')])[2]",

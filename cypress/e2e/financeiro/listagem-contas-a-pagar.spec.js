@@ -38,7 +38,7 @@ describe('Testes de Listagem de Contas a Pagar', { tags: ['@listagem-contas-a-pa
   // Selecionar todas as linhas da tabela
   it('Deve selecionar todas as linhas da tabela', () => {
     listagemContasAPagarPage.selecionarTodasLinhas();
-    cy.get('#check-all-contas-a-pagar').should('be.checked');
+    listagemContasAPagarPage.validarCheckboxTodosSelecionado();
   });
 
   // Validar opções do dropdown em linhas com status "Baixar"
@@ -51,13 +51,13 @@ describe('Testes de Listagem de Contas a Pagar', { tags: ['@listagem-contas-a-pa
   it('Deve abrir o dropdown e selecionar a opção "Editar"', () => {
     listagemContasAPagarPage.abrirDropdownPrimeiraLinhaComStatusBaixar();
     listagemContasAPagarPage.selecionarOpcaoDropdown('Editar');
-    cy.get('.modal-title').should('contain.text', 'Editar Despesa');
+    listagemContasAPagarPage.validarModalTituloEditarDespesa();
   });
 
   it('Deve abrir o dropdown e selecionar a opção "Detalhes do título"', () => {
     listagemContasAPagarPage.abrirDropdownPrimeiraLinhaComStatusBaixar();
     listagemContasAPagarPage.selecionarOpcaoDropdown('Detalhes do título');
-    cy.get('.modal-title').should('contain.text', 'Recebimento');
+    listagemContasAPagarPage.validarModalTituloRecebimento();
   });
 
   it('Deve abrir o dropdown e selecionar a opção "Cancelar"', () => {
