@@ -157,6 +157,31 @@ class CartaoListagemPage {
       cy.get(CartaoListagemLocators.checkboxLinha).should('be.checked');
     });
   }
+
+  /**
+   * Seleciona apenas as linhas cujo nome começa com o prefixo informado.
+   * Escopo em .ibox-content; nome na coluna 3 (colunaDescricao).
+   * @param {string} prefixo - Ex.: 'CARTAO'
+   */
+  selecionarLinhasQueComecamCom(prefixo) {
+    const p = String(prefixo || '').toUpperCase();
+    cy.get(CartaoListagemLocators.linhasTabelaListagem).each(($row) => {
+      const nome = $row.find(CartaoListagemLocators.colunaDescricao).text().trim();
+      if (nome.toUpperCase().startsWith(p)) {
+        cy.wrap($row).within(() => {
+          cy.get(CartaoListagemLocators.checkboxLinha).check();
+        });
+      }
+    });
+  }
+
+  /**
+   * Confirma a exclusão no modal SweetAlert (Excluir selecionados).
+   */
+  confirmarExclusaoModal() {
+    cy.get(CartaoListagemLocators.modalConfirmacaoExclusao, { timeout: 10000 }).should('be.visible');
+    cy.get(CartaoListagemLocators.btnConfirmarExclusao).click();
+  }
 }
 
 export default new CartaoListagemPage();

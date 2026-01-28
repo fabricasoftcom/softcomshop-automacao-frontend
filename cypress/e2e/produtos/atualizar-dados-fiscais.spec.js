@@ -22,6 +22,7 @@ describe('Atualizar Dados Fiscais', { tags: ['@produtos', '@fiscal', '@regressiv
     // 2. Clicar em editar na primeira linha
     AtualizarDadosFiscaisPage.clicarEditarLinha(0);
 
+    cy.wait(500)
     // 3. Alterar alíquota ICMS (usando force: true porque o campo pode estar em área com scroll)
     AtualizarDadosFiscaisPage.editarCamposLinhaVinculos({
       aliquotaIcms: novaAliquotaIcms

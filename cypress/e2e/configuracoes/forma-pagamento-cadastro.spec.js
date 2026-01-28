@@ -79,7 +79,7 @@ describe('Cadastro de forma de pagamento', { tags: ['@configuracoes', '@forma-pa
     FormaPagamentoCadastroPage.preencherFormulario({
       descricao,
       tipo: 'BOLETO',
-      codigo:'02 - Boleto Bancário',
+      codigo:'99 - Outros',
     });
     FormaPagamentoCadastroPage.salvar();
     FormaPagamentoListagemPage.validarFormaPagamentoExiste(descricao);

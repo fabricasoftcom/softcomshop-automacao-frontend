@@ -127,6 +127,28 @@ class CadastroNfeNormalVendaPage extends CadastroNfeNormalBasePage {
 
     if (!confirmarEmissao) {
       this.confirmarAtualizacaoCfopItensSeNecessario({ aguardarVisibilidade: true });
+
+      // Aguarda redirecionamento para a tela de edição
+      cy.url({ timeout: 30000 }).should('match', /\/nfe2\/\d+\/(editar|novo)/);
+
+      // Aguarda o loading desaparecer se existir
+      cy.get('body').then(($body) => {
+        if ($body.find('#loading').length > 0) {
+          cy.get('#loading', { timeout: 20000 }).should('not.exist');
+        }
+      });
+
+      // Aguarda o skeleton desaparecer se existir
+      cy.get('body').then(($body) => {
+        if ($body.find(CadastroNfeLocators.skeletonForm).length > 0) {
+          cy.get(CadastroNfeLocators.skeletonForm, { timeout: 20000 })
+            .should('not.be.visible');
+        }
+      });
+
+      // Valida que o formulário foi carregado após a seleção
+      this.aguardarFormularioPrincipalCarregado(30000);
+      cy.get(CadastroNfeLocators.formulario).should('exist');
     }
   }
 

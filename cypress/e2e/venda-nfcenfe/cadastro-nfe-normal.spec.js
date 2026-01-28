@@ -33,7 +33,7 @@ describe('Cadastro NFe Normal', { tags: ['@nfe', '@vendas', '@regressivo', '@nfe
   it('abre formulario de NFe normal venda apos pesquisar e selecionar', () => {
     CadastroNfeNormalPage.avancarParaCadastroNormalVenda();
     CadastroNfeNormalPage.pesquisarVenda();
-    CadastroNfeNormalPage.selecionarVendaClienteDiferenteConsumidor();
+    CadastroNfeNormalPage.selecionarVendaClienteDiferenteConsumidor(false);
     CadastroNfeNormalPage.validarFormularioNormalVenda();
   });
 

@@ -8,6 +8,7 @@ node_modules/
 
 # Allure
 allure-results/
+allure-report/
 
 # Log files
 npm-debug.log*

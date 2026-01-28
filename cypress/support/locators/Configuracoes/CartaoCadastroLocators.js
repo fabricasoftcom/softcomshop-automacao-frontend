@@ -38,6 +38,10 @@ const CartaoCadastroLocators = {
   // Validações
   campoObrigatorio: '.has-error, .field-error',
   mensagemErro: '.help-block, .error-message',
+
+  // Exclusão
+  modalConfirmacaoExclusao: '.sweet-alert',
+  btnConfirmarExclusao: '.sweet-alert .confirm',
 };
 
 export default CartaoCadastroLocators;

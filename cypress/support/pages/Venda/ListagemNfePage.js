@@ -159,15 +159,68 @@ class ListagemNfePage {
     });
   }
 
-  abrirEdicaoPrimeiraLinha() {
-    cy.get(ListagemNfeLocators.botaoEditarPrimeiraLinha)
+  _aguardarPaginaPronta() {
+    // 1. Aguarda o loading desaparecer (se existir) - abordagem defensiva
+    cy.get('body').then(($body) => {
+      if ($body.find('#loading').length > 0) {
+        cy.get('#loading', { timeout: 15000 }).should('not.exist');
+      }
+    });
+
+    // 2. Aguarda o content-layout estar presente no DOM
+    cy.get('#content-layout', { timeout: 20000 }).should('exist');
+
+    // 3. Valida que a tabela está visível e tem conteúdo (indicador mais confiável)
+    // Se a tabela está visível, significa que o content-layout também está visível
+    // mesmo que a animação CSS não tenha executado completamente
+    cy.get(ListagemNfeLocators.tabelaListagem, { timeout: 20000 })
+      .should('exist')
       .should('be.visible')
+      .within(() => {
+        cy.get('tbody tr', { timeout: 10000 })
+          .should('have.length.greaterThan', 0)
+          .first()
+          .should('be.visible');
+      });
+  }
+
+  abrirEdicaoPrimeiraLinha() {
+    // Aguarda a página estar completamente pronta
+    this._aguardarPaginaPronta();
+
+    // Aguarda o botão estar realmente interagível
+    cy.get(ListagemNfeLocators.botaoEditarPrimeiraLinha, { timeout: 15000 })
+      .should('exist')
+      .should('be.visible')
+      .should(($btn) => {
+        // Valida que o botão não está desabilitado
+        expect($btn).to.not.have.attr('disabled');
+        // Valida que o botão tem dimensões válidas (não está coberto)
+        const rect = $btn[0].getBoundingClientRect();
+        expect(rect.width, 'Botão deve ter largura > 0').to.be.greaterThan(0);
+        expect(rect.height, 'Botão deve ter altura > 0').to.be.greaterThan(0);
+      })
       .first()
-      .click();
+      .click({ force: true });
   }
 
   clicarNovoCadastro() {
-    cy.get(ListagemNfeLocators.botaoNovoCadastro).should('be.visible').click();
+    // Aguarda a página estar completamente pronta antes de clicar
+    this._aguardarPaginaPronta();
+
+    // Aguarda o botão estar realmente interagível
+    cy.get(ListagemNfeLocators.botaoNovoCadastro, { timeout: 15000 })
+      .should('exist')
+      .should('be.visible')
+      .should(($btn) => {
+        // Valida que o botão não está desabilitado
+        expect($btn).to.not.have.attr('disabled');
+        // Valida que o botão tem dimensões válidas (não está coberto)
+        const rect = $btn[0].getBoundingClientRect();
+        expect(rect.width, 'Botão deve ter largura > 0').to.be.greaterThan(0);
+        expect(rect.height, 'Botão deve ter altura > 0').to.be.greaterThan(0);
+      })
+      .click({ force: true });
   }
 
   abrirImpressaoPrimeiraLinha() {

@@ -42,10 +42,12 @@ class CartaoCadastroPage {
    * Preenche o campo Alias
    * @param {string} alias - Alias do cartão
    */
-  preencherAlias(alias) {
+  preencherAlias() {
     cy.get(CartaoCadastroLocators.modal).within(() => {
       // Busca o segundo input text visível (após o nome)
-      cy.get('input[type="text"]').eq(1).should('be.visible').clear().type(alias);
+      // cy.get('input[type="text"]').eq(1).should('be.visible').clear().type(alias);
+      cy.get('#auto_icon_alias_cartao').click();
+      cy.get('.typeahead-list > li > a').first().click();
     });
   }
 
@@ -56,7 +58,7 @@ class CartaoCadastroPage {
   preencherTaxaAdministrativa(taxa) {
     cy.get(CartaoCadastroLocators.modal).within(() => {
       // Busca input que aceita números (taxa)
-      cy.get('input[type="text"]').eq(2).should('be.visible').clear().type(taxa.toString());
+      cy.get('#taxa_admin').should('be.visible').clear().type(taxa.toString());
     });
   }
 
@@ -144,8 +146,9 @@ class CartaoCadastroPage {
     if (dados.nome) {
       this.preencherNomeCartao(dados.nome);
     }
-    if (dados.alias) {
+    if (dados.alias = 'rede') {
       this.preencherAlias(dados.alias);
+
     }
     if (dados.taxaAdministrativa !== undefined) {
       this.preencherTaxaAdministrativa(dados.taxaAdministrativa);

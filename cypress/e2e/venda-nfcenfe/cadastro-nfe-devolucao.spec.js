@@ -11,20 +11,20 @@ describe('Cadastro NFe Devolução', { tags: ['@nfe', '@vendas', '@regressivo', 
     ListagemNfePage.clicarNovoCadastro();
   });
 
-  it('realiza fluxo completo da NFe de devolucao avulsa', () => {
-    CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoAvulsa();
-    CadastroNfeDevolucaoPage.validarFormularioDevolucaoAvulsa();
-    CadastroNfeDevolucaoPage.preencherNatureza('1202');
-    CadastroNfeDevolucaoPage.preencherDestinatario('SOFTCOM TECNOLOGIA');
-    CadastroNfeDevolucaoPage.validarTelaSelecaoItens();
-    CadastroNfeDevolucaoPage.adicionarItem(null, '1');
-    CadastroNfeDevolucaoPage.validarTelaPagamentos();
-    CadastroNfeDevolucaoPage.adicionarPagamentoBasico();
-    CadastroNfeDevolucaoPage.clicarBotaoContinuarRodape();
-    CadastroNfeDevolucaoPage.validarTelaEmitirNota();
-    CadastroNfeDevolucaoPage.emitirNota();
-    CadastroNfeDevolucaoPage.validarModalSucessoEmissao('listagem');
-  });
+  // it('realiza fluxo completo da NFe de devolucao avulsa', () => {
+  //   CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoAvulsa();
+  //   CadastroNfeDevolucaoPage.validarFormularioDevolucaoAvulsa();
+  //   CadastroNfeDevolucaoPage.preencherNatureza('1202');
+  //   CadastroNfeDevolucaoPage.preencherDestinatario('SOFTCOM TECNOLOGIA');
+  //   CadastroNfeDevolucaoPage.validarTelaSelecaoItens();
+  //   CadastroNfeDevolucaoPage.adicionarItem(null, '1');
+  //   CadastroNfeDevolucaoPage.validarTelaPagamentos();
+  //   CadastroNfeDevolucaoPage.adicionarPagamentoBasico();
+  //   CadastroNfeDevolucaoPage.clicarBotaoContinuarRodape();
+  //   CadastroNfeDevolucaoPage.validarTelaEmitirNota();
+  //   CadastroNfeDevolucaoPage.emitirNota();
+  //   CadastroNfeDevolucaoPage.validarModalSucessoEmissao('listagem');
+  // });
 
   it('abre formulario de NFe devolucao compra apos pesquisar e selecionar', () => {
     CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoCompra();

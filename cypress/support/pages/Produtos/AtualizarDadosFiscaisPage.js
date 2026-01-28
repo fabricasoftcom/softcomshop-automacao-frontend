@@ -141,7 +141,8 @@ class AtualizarDadosFiscaisPage {
     // Clica no botão salvar da linha editada
     cy.get(AtualizarDadosFiscaisLocators.tabela.linhas)
       .eq(indiceLinha)
-      .find(AtualizarDadosFiscaisLocators.tabela.linkSalvarLinha)
+      .get(AtualizarDadosFiscaisLocators.tabela.linkSalvarLinha)
+      .first()
       .click({ force: true });
 
     // Aguarda o carregamento finalizar (validação condicional, não wait fixo)
