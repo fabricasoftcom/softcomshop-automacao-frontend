@@ -1,132 +1,127 @@
 [
     {
         "relatorioName": "Período",
-        "relatorioElement": "//a[contains(@href,'relatorio/periodo')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/periodo')]",
         "relatorioURL": "/relatorio/periodo"
     },
     {
         "relatorioName": "Mais Vendidos",
-        "relatorioElement": "//a[contains(.,'Mais Vendidos')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/mais-vendidos')]",
         "relatorioURL": "/relatorio/mais-vendido"
     },
     {
         "relatorioName": "Forma Pagamento",
-        "relatorioElement": "//a[contains(.,'Forma Pagamento')]",
-        "relatorioURL": "/relatorio/forma-pagamento"
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, 'relatorio-v2/forma-pagamento')]",
+        "relatorioURL": "/relatorio-v2/forma-pagamento"
     },
     {
         "relatorioName": "Gerente de Vendas",
-        "relatorioElement": "//a[contains(.,'Gerente de Vendas')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/gerente-vendas')]",
         "relatorioURL": "/relatorio/gerente-vendas"
     },
     {
         "relatorioName": "Evolução",
-        "relatorioElement": "//a[contains(.,'Evolução')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/evolucao')]",
         "relatorioURL": "/relatorio/evolucao"
     },
     {
         "relatorioName": "Comissão",
-        "relatorioElement": "//a[contains(.,'Comissão')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/comissao')]",
         "relatorioURL": "/relatorio/comissao"
     },
     {
         "relatorioName": "Fiscal Saída Analítico",
-        "relatorioElement": "//a[contains(.,'Fiscal Saída Analítico')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/relatorio-fiscal')]",
         "relatorioURL": "/relatorio/relatorio-fiscal"
     },
     {
         "relatorioName": "Fiscal Saída Sintético",
-        "relatorioElement": "//a[contains(.,'Fiscal Saída Sintético')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/relatorio-fiscal-sintetico')]",
         "relatorioURL": "/relatorio/relatorio-fiscal-sintetico"
     },
     {
         "relatorioName": "Fiscal Entrada Analítico",
-        "relatorioElement": "//a[contains(.,'Fiscal Entrada Analítico')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/relatorio-fiscal-entrada')]",
         "relatorioURL": "/relatorio/relatorio-fiscal-entrada"
     },
     {
         "relatorioName": "Fiscal Entrada Sintético",
-        "relatorioElement": "//a[contains(.,'Fiscal Entrada Sintético')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/relatorio-fiscal-entrada-sintetico')]",
         "relatorioURL": "/relatorio/relatorio-fiscal-entrada-sintetico"
     },
     {
         "relatorioName": "Relatório Fiscal Pis/Cofins",
-        "relatorioElement": "//a[contains(.,'Relatório Fiscal Pis/Cofins')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/relatorio-fiscal-pis-cofins')]",
         "relatorioURL": "/relatorio/relatorio-fiscal-pis-cofins"
     },
     {
         "relatorioName": "NFSe",
-        "relatorioElement": "//td//a[contains(., 'NFSe')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/relatorio-nfse')]",
         "relatorioURL": "/relatorio/relatorio-nfse"
     },
     {
         "relatorioName": "Caixa",
-        "relatorioElement": "//a[contains(.,'Caixa')]",
-        "relatorioURL": "/relatorio/vendas-caixa"
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, 'relatorio-v2/vendas-caixa')]",
+        "relatorioURL": "/relatorio-v2/vendas-caixa"
     },
     {
         "relatorioName": "Contas a Receber",
-        "relatorioElement": "(//a[contains(.,'Contas a Receber')])[2]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/contas-a-receber')]",
         "relatorioURL": "/relatorio/contas-a-receber"
     },
     {
         "relatorioName": "Contas a Pagar",
-        "relatorioElement": "(//a[contains(.,'Contas a Pagar')])[2]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/contas-a-pagar')]",
         "relatorioURL": "/relatorio/contas-a-pagar"
     },
     {
         "relatorioName": "Projeção de Cartões",
-        "relatorioElement": "//a[contains(.,'Projeção de Cartões')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/projecao-de-cartoes')]",
         "relatorioURL": "/relatorio/projecao-de-cartoes"
     },
     {
         "relatorioName": "Exibir Estoque",
-        "relatorioElement": "//a[contains(.,'Exibir Estoque')]",
-        "relatorioURL": "/relatorio/exibir-estoque"
-    },
-    {
-        "relatorioName": "Exibir Estoque",
-        "relatorioElement": "//a[contains(.,'Exibir Estoque')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/exibir-estoque')]",
         "relatorioURL": "/relatorio/exibir-estoque"
     },
     {
         "relatorioName": "Tabela de Preço",
-        "relatorioElement": "//a[contains(.,'Tabela de Preço')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/tabela-preco')]",
         "relatorioURL": "/relatorio/tabela-preco"
     },
     {
         "relatorioName": "Ficha Estoque",
-        "relatorioElement": "//a[contains(.,'Ficha Estoque')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/ficha-estoque')]",
         "relatorioURL": "/relatorio/ficha-estoque"
     },
     {
         "relatorioName": "Inventário",
-        "relatorioElement": "(//a[contains(.,'Inventário')])[2]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/inventario')]",
         "relatorioURL": "/relatorio/inventario"
     },
     {
         "relatorioName": "NCM",
-        "relatorioElement": "//a[contains(.,'NCM')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/ncm')]",
         "relatorioURL": "/relatorio/ncm"
     },
     {
         "relatorioName": "Movimentação de Estoque",
-        "relatorioElement": "//a[contains(.,'Movimentação de Estoque')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorios/movimentacao-estoque')]",
         "relatorioURL": "/relatorios/movimentacao-estoque"
     },
     {
         "relatorioName": "Aniversariantes",
-        "relatorioElement": "//a[contains(.,'Aniversariantes')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/aniversariante')]",
         "relatorioURL": "/relatorio/aniversariante"
     },
     {
         "relatorioName": "Listagem dos Clientes",
-        "relatorioElement": "//a[contains(.,'Listagem dos Clientes')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, '/relatorio/dados-clientes')]",
         "relatorioURL": "/relatorio/dados-clientes"
     },
     {
         "relatorioName": "Últimas Compras",
-        "relatorioElement": "//a[contains(.,'Últimas Compras')]",
+        "relatorioElement": "//div[contains(@class, 'catalogo-nicho-items-visible')]//div[contains(@class, 'catalogo-relatorio-item')][contains(@data-href, 'cliente/relatorio/ultimas-compras')]",
         "relatorioURL": "/cliente/relatorio/ultimas-compras"
     }
 ]

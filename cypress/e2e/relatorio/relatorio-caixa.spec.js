@@ -26,14 +26,15 @@ describe('Relatorio de Caixa', { tags: ['@relatorios', '@caixa', '@regressivo'] 
     const dataInicio = formatDateTime(hoje, '00:00:00');
     const dataFim = formatDateTime(hoje, '23:59:59');
 
-    RelatorioCaixaPage.selecionarTipo('analitico');
+    // Atualizado após reformulação: campo tipo foi removido
     RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
     cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
 
     Cypress._.range(1, 7).forEach((turnoNumero) => {
       RelatorioCaixaPage.preencherTurno(String(turnoNumero));
       RelatorioCaixaPage.pesquisar();
-      cy.url().should('contain', '/relatorio/vendas-caixa');
+      // Atualizado após reformulação: URL mudou para /relatorio-v2/vendas-caixa
+      cy.url().should('contain', '/relatorio-v2/vendas-caixa');
       cy.verificarErro500Visual();
     });
   });
@@ -46,14 +47,13 @@ describe('Relatorio de Caixa', { tags: ['@relatorios', '@caixa', '@regressivo'] 
     const dataInicio = formatDateTime(ontem, '00:00:00');
     const dataFim = formatDateTime(hoje, '23:59:59');
 
-    RelatorioCaixaPage.selecionarTipo('sintetico');
-    cy.get(RelatorioCaixaLocators.tipoSelect).should('have.value', 'sintetico');
-
+    // Atualizado após reformulação: campo tipo foi removido
     RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
     cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
 
     RelatorioCaixaPage.pesquisar();
-    cy.url().should('contain', '/relatorio/vendas-caixa');
+    // Atualizado após reformulação: URL mudou para /relatorio-v2/vendas-caixa
+    cy.url().should('contain', '/relatorio-v2/vendas-caixa');
     cy.verificarErro500Visual();
   });
 
@@ -62,7 +62,7 @@ describe('Relatorio de Caixa', { tags: ['@relatorios', '@caixa', '@regressivo'] 
     const dataInicio = formatDateTime(hoje, '00:00:00');
     const dataFim = formatDateTime(hoje, '23:59:59');
 
-    RelatorioCaixaPage.selecionarTipo('sintetico');
+    // Atualizado após reformulação: campo tipo foi removido
     RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
     cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
     cy.get(RelatorioCaixaLocators.turnoInput).clear({ force: true }).should('have.value', '');
@@ -83,9 +83,7 @@ describe('Relatorio de Caixa', { tags: ['@relatorios', '@caixa', '@regressivo'] 
     const dataInicio = formatDateTime(hoje, '00:00:00');
     const dataFim = formatDateTime(hoje, '23:59:59');
 
-    RelatorioCaixaPage.selecionarTipo('analitico');
-    cy.get(RelatorioCaixaLocators.tipoSelect).should('have.value', 'analitico');
-
+    // Atualizado após reformulação: campo tipo foi removido
     RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
     cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
     cy.get(RelatorioCaixaLocators.turnoInput).clear({ force: true }).should('have.value', '');
@@ -97,6 +95,32 @@ describe('Relatorio de Caixa', { tags: ['@relatorios', '@caixa', '@regressivo'] 
       .and('contain.text', 'Cliente');
     cy.get(RelatorioCaixaLocators.linhasTabelaResultados).its('length').should('be.greaterThan', 0);
     cy.get(RelatorioCaixaLocators.tabelaResultados).contains(/Pagamento/i);
+    cy.verificarErro500Visual();
+  });
+
+  it('Deve exibir estrutura da tabela com colunas após pesquisa', () => {
+    const hoje = new Date();
+    const dataInicio = formatDateTime(hoje, '00:00:00');
+    const dataFim = formatDateTime(hoje, '23:59:59');
+
+    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
+    RelatorioCaixaPage.pesquisar();
+
+    // Valida estrutura da tabela (cabeçalho com colunas)
+    RelatorioCaixaPage.validarEstruturaTabela();
+    cy.verificarErro500Visual();
+  });
+
+  it('Deve exibir botões de exportação PDF e Imprimir 80mm após pesquisa', () => {
+    const hoje = new Date();
+    const dataInicio = formatDateTime(hoje, '00:00:00');
+    const dataFim = formatDateTime(hoje, '23:59:59');
+
+    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
+    RelatorioCaixaPage.pesquisar();
+
+    // Valida que botões de exportação estão visíveis e clicáveis
+    RelatorioCaixaPage.validarBotoesExportacao();
     cy.verificarErro500Visual();
   });
 });
