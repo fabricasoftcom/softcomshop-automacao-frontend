@@ -276,6 +276,34 @@ Snippets prontos para copiar e adaptar para padrões comuns identificados nas li
 
 ---
 
+### 🤖 `ecossistema-ai-toolkit-melhoria-continua.md`
+
+**Documento completo do ecossistema de melhoria contínua com AI Toolkit e Cursor.**
+
+Explica como as partes se integram (regras, ADRs, AI Toolkit, relatórios, Cursor Agent), o fluxo já realizado de implementação e como utilizar na prática: quando usar cada script (ai:rules, ai:scenarios, ai:flaky), exemplos de input e resultado de cada um, e o fluxo completo em 12 passos (da execução da IA até a validação do que o Cursor implementou).
+
+**Conteúdo:**
+- Visão geral do ecossistema e diagramas (fluxo de uso, integração)
+- Componentes (regras, AI Toolkit, Cursor Agent, relatórios Cursor-ready)
+- Fluxo já realizado (5 fases de implementação)
+- Quando usar cada script e como utilizar (resumo)
+- Exemplos reais dos três usos da IA (ai:rules, ai:scenarios, ai:flaky)
+- Fluxo completo: uso da IA e uso no Cursor-ready (12 passos detalhados)
+- Referências cruzadas (ADR-0017, ai-toolkit/README, architeture.mdc)
+
+**Quando usar:**
+- Para entender todo o ecossistema de melhoria contínua
+- Antes de rodar ai:rules, ai:scenarios ou ai:flaky
+- Para seguir o passo a passo completo (IA → revisão → Cursor Agent → validação)
+
+**Referenciado em:**
+- ADR-0017 (Use AI SDK for Continuous Improvement)
+- `.cursor/rules/architeture.mdc` (seção AI Toolkit)
+- `ai-toolkit/README.md`
+- `mapeamento-relacionamentos.md`
+
+---
+
 ### 🔗 `mapeamento-relacionamentos.md`
 
 **Sistema de referências cruzadas inteligentes com mapa de relacionamentos.**
@@ -471,6 +499,17 @@ Este guia fornece instruções passo a passo para criar a mesma estrutura de doc
 2. **Consulte:** `aprendizagens-e-licoes.md`
    - Para entender contexto e lições aprendidas
 
+### Ecossistema de Melhoria Contínua (AI Toolkit + Cursor)
+
+1. **Entenda:** `ecossistema-ai-toolkit-melhoria-continua.md`
+   - Visão geral, quando usar cada script, exemplos e fluxo completo em 12 passos
+
+2. **Execute:** Scripts `npm run ai:rules`, `ai:scenarios` ou `ai:flaky`
+   - Relatórios em `ai-reports/`; revise e marque [APROVADO]/[REJEITADO]
+
+3. **Implemente:** Copie a seção Cursor-ready para o Cursor em modo Agent
+   - Instrução: "Implemente as ações aprovadas abaixo."
+
 ---
 
 ## 📂 Estrutura de Arquivos
@@ -488,6 +527,7 @@ docs/referencias/
 ├── template-plano-implementacao.md        # 📋 Template de plano
 ├── template-exploracao-autonoma.md        # 🔍 Template de exploração autônoma
 ├── biblioteca-padroes-codigo.md           # 💻 Biblioteca de padrões de código
+├── ecossistema-ai-toolkit-melhoria-continua.md # 🤖 Ecossistema AI Toolkit + Cursor
 ├── mapeamento-relacionamentos.md          # 🔗 Mapa de relacionamentos
 ├── exemplo-implementacao-funcionarios.md # 📖 Exemplo real de implementação
 ├── analise-page-objects-hierarquicos.md # Análise de hierarquia

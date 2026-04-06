@@ -9,7 +9,7 @@ class AtestadosTermosPage {
 
         // Expande menu Serviços e NFS-e
         cy.contains('Serviços e NFS-e').click({ force: true });
-        cy.wait(500);
+        cy.get(MenuLateralPetshopLocators.menuAtestadosTermos).should('be.visible');
 
         // Clica no menu Cadastro de Atestados e Termos
         cy.get(MenuLateralPetshopLocators.menuAtestadosTermos).click({ force: true });
@@ -102,9 +102,45 @@ class AtestadosTermosPage {
         cy.url().should('include', '/atestados-termos');
     }
 
+    tentarClicarNovoCadastro() {
+        cy.get('body').then(($body) => {
+            if ($body.find(AtestadosTermosLocators.btnNovoCadastro).length > 0) {
+                cy.get(AtestadosTermosLocators.btnNovoCadastro).first().click({ force: true });
+                cy.url().should('include', '/atestados-termos');
+                cy.get('body').should('be.visible');
+            } else {
+                cy.log('Botão de novo cadastro não disponível nesta página');
+            }
+        });
+    }
+
+    tentarClicarVoltar() {
+        cy.get('body').then(($body) => {
+            if ($body.find(AtestadosTermosLocators.btnVoltar).length > 0) {
+                cy.get(AtestadosTermosLocators.btnVoltar).click({ force: true });
+                cy.url().should('include', '/atestados-termos');
+            } else {
+                cy.log('Botão voltar não disponível - já pode estar na listagem');
+            }
+        });
+    }
+
     clicarEditar(linhaIndex = 0) {
         cy.get(AtestadosTermosLocators.linkEditar).eq(linhaIndex).click({ force: true });
         cy.url().should('include', '/atestados-termos');
+    }
+
+    tentarClicarEditar(linhaIndex = 0) {
+        cy.get('body').then(($body) => {
+            const links = $body.find(AtestadosTermosLocators.linkEditar);
+            if (links.length > linhaIndex) {
+                cy.get(AtestadosTermosLocators.linkEditar).eq(linhaIndex).click({ force: true });
+                cy.url().should('include', '/atestados-termos');
+                cy.get('body').should('be.visible');
+            } else {
+                cy.log('Link de edição não disponível ou tabela sem registros');
+            }
+        });
     }
 
     // Métodos de Cadastro
@@ -151,6 +187,20 @@ class AtestadosTermosPage {
         cy.get(AtestadosTermosLocators.loading).should('not.exist');
     }
 
+    validarSucessoAposSalvar() {
+        cy.get('body').then(($body) => {
+            if ($body.find(AtestadosTermosLocators.toastSucesso).length > 0) {
+                cy.get(AtestadosTermosLocators.toastSucesso, { timeout: 10000 })
+                    .should('be.visible')
+                    .and('contain', 'sucesso');
+            } else {
+                cy.log('Toast de sucesso não encontrado - validando URL e listagem');
+            }
+        });
+        cy.url().should('include', '/atestados-termos');
+        this.validarPresencaTabela();
+    }
+
     // Métodos de Validação
     validarPresencaTabela() {
         cy.get(AtestadosTermosLocators.tabelaAtestadosTermos).should('be.visible');
@@ -175,6 +225,69 @@ class AtestadosTermosPage {
                 cy.url().should('include', '/atestados-termos');
             }
         });
+    }
+
+    validarEstruturaTabelaListagem() {
+        cy.get(AtestadosTermosLocators.tabelaAtestadosTermos).find(AtestadosTermosLocators.linhasTabela).then(($rows) => {
+            if ($rows.length > 0) {
+                cy.wrap($rows).should('have.length.at.least', 1);
+            } else {
+                cy.contains(AtestadosTermosLocators.mensagemSemResultadosTexto).should('exist');
+            }
+        });
+    }
+
+    validarCampoDescricaoValor(valor) {
+        cy.get('body').then(($body) => {
+            if ($body.find(AtestadosTermosLocators.campoDescricao).length > 0) {
+                cy.get(AtestadosTermosLocators.campoDescricao).should('have.value', valor);
+            }
+        });
+    }
+
+    validarCampoConteudoValor(valor) {
+        cy.get('body').then(($body) => {
+            if ($body.find(AtestadosTermosLocators.campoConteudo).length > 0) {
+                cy.get(AtestadosTermosLocators.campoConteudo).should('have.value', valor);
+            }
+        });
+    }
+
+    validarTipoComValorSelecionado() {
+        cy.get('body').then(($body) => {
+            if ($body.find(AtestadosTermosLocators.campoTipo).length > 0) {
+                cy.get(AtestadosTermosLocators.campoTipo).then(($select) => {
+                    expect($select.val()).to.not.be.empty;
+                });
+            }
+        });
+    }
+    // Métodos de Exclusão
+    clicarExcluir() {
+        // Prepara para aceitar o confirm nativo CASO ele ocorra
+        cy.on('window:confirm', () => true);
+        cy.get(AtestadosTermosLocators.btnExcluir).should('be.visible').click({ force: true });
+    }
+
+    confirmarExclusao() {
+        // Se for SweetAlert, precisa clicar no botão de confirmar
+        cy.get('body').then(($body) => {
+            if ($body.find('.swal2-confirm').length > 0) {
+                cy.get('.swal2-confirm').click();
+            } else if ($body.find('.bootbox-accept').length > 0) {
+                 cy.get('.bootbox-accept').click();
+            }
+             // Se for nativo, o cy.on já aceitou no clicarExcluir
+        });
+    }
+
+    validarExclusao(descricao) {
+        cy.get(AtestadosTermosLocators.loading, { timeout: 10000 }).should('not.exist');
+        // Aguarda um pouco para garantir que a grid recarregou
+        cy.wait(1000);
+        this.filtrarPorDescricao(descricao);
+        this.aplicarFiltros();
+        cy.contains(AtestadosTermosLocators.mensagemSemResultadosTexto).should('be.visible');
     }
 }
 

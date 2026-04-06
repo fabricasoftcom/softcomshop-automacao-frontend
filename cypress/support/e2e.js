@@ -23,7 +23,20 @@ import '@shelex/cypress-allure-plugin';
 const registerCypressGrep = require('@cypress/grep')
 registerCypressGrep()
 
+let currentUrl = '';
+
+Cypress.on('url:changed', (url) => {
+  currentUrl = url || '';
+});
+
 Cypress.on('uncaught:exception', (err) => {
+  // Workaround temporário: ignora erro conhecido ao acessar /auth/logout.
+  if (err.message.includes('Invalid or unexpected token') &&
+    currentUrl.includes('/auth/logout')) {
+    console.log(`Exceção conhecida no logout ignorada: ${err.message}`);
+    return false;
+  }
+
   // Captura exceções não tratadas que possam ocorrer durante a execução de testes.
   if (err.message.includes('Erro esperado específico')) {
     cy.log(`Exceção ignorada: ${err.message}`);

@@ -340,6 +340,7 @@ Perfil Acesso Cadastro ↔ Perfil Acesso Listagem
 - `architecture-usuario-cadastro.md` ↔ `architecture-usuario-listagem.md`
 - `architecture-justificativa-cadastro.md` ↔ `architecture-justificativa-listagem.md`
 - `architecture-perfil-acesso-cadastro.md` ↔ `architecture-perfil-acesso.md`
+- `architecture-cadastro-mensagem.md` - Cadastro de Mensagens (Venda Mais); relacionamento com listagem de mensagens quando documentação existir
 
 **Tipos de relacionamento:**
 - **Cadastro ↔ Listagem (padrão):** Todas as entidades de configuração seguem este padrão - cadastros podem ser listados; listagens permitem acesso ao cadastro
@@ -604,4 +605,6 @@ Este mapa deve ser atualizado sempre que:
 - [Processo de Documentação](./processo-documentacao.md) - Processo completo de criação de documentações
 - [ADR-0006: Mandatory Documentation](../adr/0006-mandatory-documentation-for-new-tests.md) - Documentação obrigatória
 - [ADR-0014: Standardized Architectural Documentation Process](../adr/0014-standardized-architectural-documentation-process.md) - Processo padronizado
+- [ADR-0017: Use AI SDK for Continuous Improvement](../adr/0017-use-ai-sdk-for-continuous-improvement.md) - AI Toolkit para análise de regras, geração de cenários e detecção de flaky
+- [Ecossistema AI Toolkit e Melhoria Contínua](./ecossistema-ai-toolkit-melhoria-continua.md) - Fluxo completo, exemplos dos três usos da IA e passo a passo com Cursor-ready
 

@@ -71,6 +71,7 @@ You prioritize architectural consistency, adherence to ADRs, and autonomous expl
 - [Code Pattern Library](#code-pattern-library) - Reusable code patterns (monetary values, state validation, autocomplete)
 - [Relationship Mapping](#relationship-mapping) - Map of relationships between architectural documentations (13 modules, ~40 docs with bidirectional references)
 - [Autonomous Exploration Template](#autonomous-exploration-template) - Structured checklist for autonomous exploration
+- [AI Toolkit](#ai-toolkit-melhoria-continua) - Scripts de IA para análise de regras, cenários e flaky
 
 ---
 
@@ -94,6 +95,7 @@ This project uses **Architecture Decision Records (ADRs)** to document architect
 - [ADR-0014](../docs/adr/0014-standardized-architectural-documentation-process.md): Standardized Architectural Documentation Process
 - [ADR-0015](../docs/adr/0015-prioritize-ids-and-context-in-locators.md): Prioritize IDs and Context in Locators
 - [ADR-0016](../docs/adr/0016-planning-before-implementation.md): Planning Before Implementation
+- [ADR-0017](../docs/adr/0017-use-ai-sdk-for-continuous-improvement.md): AI SDK for Continuous Improvement
 
 ---
 
@@ -875,6 +877,24 @@ Module/
 4. Validate exploration is complete before proceeding to Phase 2
 
 **Reference:** `docs/referencias/template-exploracao-autonoma.md`
+
+### AI Toolkit (Melhoria Contínua)
+
+> **Context**: See [ADR-0017](../docs/adr/0017-use-ai-sdk-for-continuous-improvement.md)
+
+Scripts Node.js (AI SDK + OpenAI) que rodam fora do Cypress e geram relatórios com análise e **ações Cursor-ready** (para o Cursor Agent executar após validação humana).
+
+**Scripts disponíveis:**
+- **`npm run ai:rules`** – Analisa architeture.mdc, ADRs e guias; gera redundâncias, gaps, conflitos e melhorias + ações para aplicar.
+- **`npm run ai:scenarios`** – Recebe arquivo de regras de negócio (`ai-toolkit/inputs/regras-<nome>.md`) e opcionalmente um spec de referência (`--ref`); gera cenários de teste e ações para criar spec, Page Object, locators e documentação. A primeira ação é sempre explorar a tela (ADR-0015).
+- **`npm run ai:flaky`** – Analisa allure-results e código dos specs; identifica candidatos a flaky e anti-padrões; gera correções Cursor-ready.
+
+**Pré-requisito:** `OPENAI_API_KEY` em `.env` (copiar de `.env.example`).
+
+**Fluxo:** 1) Rodar script → 2) Abrir `ai-reports/*.md` e revisar; marcar ações como [APROVADO] ou [REJEITADO] → 3) Copiar a seção "Ações Cursor-ready" e colar no Cursor Agent com: "Implemente as ações aprovadas abaixo."
+
+**Referência:** `ai-toolkit/README.md`  
+**Documento completo do ecossistema (fluxo, exemplos, 12 passos):** [docs/referencias/ecossistema-ai-toolkit-melhoria-continua.md](../docs/referencias/ecossistema-ai-toolkit-melhoria-continua.md)
 
 ---
 

@@ -16,7 +16,10 @@
     "lint": "eslint . -f table",
     "lint:fix": "eslint . --fix",
     "lint-html": "eslint . -f html -o eslint-report.html",
-    "prepare": "husky"
+    "prepare": "husky",
+    "ai:rules": "node ai-toolkit/analyze-rules.mjs",
+    "ai:scenarios": "node ai-toolkit/generate-scenarios.mjs",
+    "ai:flaky": "node ai-toolkit/detect-flaky.mjs"
   },
   "lint-staged": {
     "**/*.js": "eslint --fix"
@@ -26,12 +29,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.28",
     "@faker-js/faker": "^9.0.2",
+    "ai": "^6.0.86",
     "allure-commandline": "^2.32.0",
     "cpf-cnpj-validator": "^1.0.3",
     "cypress": "^13.14.2",
+    "dotenv": "^17.3.1",
     "faker": "^5.5.3",
-    "mocha": "^10.7.3"
+    "glob": "^13.0.3",
+    "mocha": "^10.7.3",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@cypress/grep": "^4.1.0",

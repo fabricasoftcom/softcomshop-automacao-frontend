@@ -13,8 +13,10 @@ const AtestadosTermosLocators = {
 
     // Tabela
     tabelaAtestadosTermos: 'table',
+    linhasTabela: 'tbody tr',
     linkEditar: 'a[href*="/editar"], a[href*="/atestados-termos"]',
     mensagemSemResultados: ':contains("Nenhum resultado")',
+    mensagemSemResultadosTexto: 'Nenhum resultado',
 
     // Cadastro
     tituloCadastro: 'h5:contains("Cadastro"), h5:contains("Atestado"), h5:contains("Termo")',
@@ -29,6 +31,12 @@ const AtestadosTermosLocators = {
     btnSalvar: '#btn-salvar, #adicionar, button:contains("Salvar")',
     btnVoltar: 'a[href*="/atestados-termos"]:contains("Voltar")',
     btnNovoCadastroHeader: 'a[href*="/atestados-termos/novo"]:contains("Novo Cadastro")',
+
+    // Feedback pós-salvar (toast/alert - ajustar seletor conforme aplicação)
+    toastSucesso: '.Toastify__toast--success, .alert-success, .toast-success',
+
+    // Botão Excluir
+    btnExcluir: '#btn-excluir, button:contains("Excluir"), a:contains("Excluir"), .btn-danger',
 
     // Elementos gerais
     loading: '#loading-indicator',

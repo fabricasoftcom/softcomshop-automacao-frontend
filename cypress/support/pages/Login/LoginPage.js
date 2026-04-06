@@ -3,6 +3,9 @@ import LoginLocators from "../../locators/Login/LoginLocators";
 class LoginPage {
     visit() {
       cy.visit('/auth/logout');
+      cy.url().should('include', '/auth/login');
+      cy.get('body').should('be.visible');
+      // cy.visit('/');
     }
 
     preencherCredenciais(username, password) {

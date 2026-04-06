@@ -62,8 +62,24 @@
 - ✅ Deve filtrar atestados e termos por status
 - ✅ Deve acessar a página de cadastro de atestado/termo
 - ✅ Deve preencher formulário de cadastro de atestado/termo
+- ✅ Deve criar novo atestado/termo com sucesso
 - ✅ Deve voltar da página de cadastro para listagem
 - ✅ Deve validar estrutura da tabela de listagem
+- ✅ Deve acessar a página de edição de atestado/termo
+- ✅ Deve alterar atestado/termo existente e salvar
+- ✅ Deve voltar da página de edição para listagem
+
+---
+
+## ⚙️ Configuração (Venda Mais)
+
+### 📄 Arquivo: `configuracao/cadastro-mensagem.spec.js`
+
+#### 🧪 Suite: Cadastro de Mensagens
+- ✅ Deve exibir os elementos principais do formulário de cadastro
+- ✅ Deve realizar cadastro de mensagem com assunto, título e mensagem
+- ✅ Deve exibir erro ao tentar salvar sem preencher campos obrigatórios
+- ✅ Deve retornar para listagem ao clicar em Voltar
 
 ---
 

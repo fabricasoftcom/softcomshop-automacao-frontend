@@ -2,8 +2,8 @@
 
 Este diretório contém a documentação arquitetural detalhada de todos os casos de teste do projeto.
 
-**Última atualização:** 2026-01-08  
-**Total de documentações:** 85
+**Última atualização:** 2026-02-12  
+**Total de documentações:** 86
 
 ---
 
@@ -39,6 +39,10 @@ Cada documentação contém:
 - `architecture-gestao-ordem-servico-petshop.md` - Gestão de Ordens de Serviço
 - `architecture-modelos-prescricoes-petshop.md` - Cadastro de Modelos de Prescrições
 - `architecture-atestados-termos-petshop.md` - Cadastro de Atestados e Termos
+
+### ⚙️ Configuração / Venda Mais (1 documentação)
+
+- `architecture-cadastro-mensagem.md` - Cadastro de Mensagens (Venda Mais)
 
 ---
 

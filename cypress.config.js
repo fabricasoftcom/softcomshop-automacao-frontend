@@ -197,6 +197,8 @@ module.exports = defineConfig({
       "./cypress/e2e/nfe/nfe-configuracoes.spec.js",
       // sintegra
       "./cypress/e2e/sintegra/gerarArquivo.spec.js",
+      // configuracao (venda mais - mensagem)
+      "./cypress/e2e/configuracao/cadastro-mensagem.spec.js",
       // configuracoes
       "./cypress/e2e/configuracoes/empresa-listagem.spec.js",
       "./cypress/e2e/configuracoes/empresa-cadastro.spec.js",
@@ -218,10 +220,10 @@ module.exports = defineConfig({
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    // baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    baseUrl: 'https://stage-hotfix.softcomshop.com.br',
     // baseUrl: 'https://stage-release-2.softcomshop.com.br',
     // baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
-     baseUrl: 'https://squad-cloud.softcomshop.com.br',
+    //  baseUrl: 'https://squad-cloud.softcomshop.com.br',
     viewportWidth: 1366,
     viewportHeight: 768,
     experimentalStudio: true,

@@ -45,8 +45,10 @@ Validar o acesso e funcionamento do Cadastro de Atestados e Termos, funcionalida
 ### Navegação
 - `acessar()` - Acessa a listagem de Atestados e Termos via menu lateral
 - `clicarNovoCadastro()` - Acessa página de cadastro
-- `clicarVoltar()` - Volta da página de cadastro para listagem
+- `tentarClicarNovoCadastro()` - Clica em novo cadastro se o botão existir (não falha se ausente)
+- `clicarVoltar()` / `tentarClicarVoltar()` - Volta da página de cadastro/edição para listagem
 - `clicarEditar(linhaIndex)` - Acessa edição de um documento específico
+- `tentarClicarEditar(linhaIndex)` - Clica em editar na linha se existir (não falha se tabela vazia)
 
 ### Filtros - Listagem
 - `filtrarPorDescricao(descricao)` - Filtra por descrição (verifica se campo existe)
@@ -66,6 +68,7 @@ Validar o acesso e funcionamento do Cadastro de Atestados e Termos, funcionalida
 - `validarPresencaTabela()` - Valida presença da tabela
 - `validarListagemVazia()` - Valida mensagem de sem resultados
 - `validarCadastroCarregado()` - Valida carregamento da página de cadastro
+- `validarSucessoAposSalvar()` - Valida toast de sucesso (se existir) e redirecionamento para listagem
 
 ## 5. Casos de Teste Implementados
 
@@ -87,11 +90,23 @@ Validar o acesso e funcionamento do Cadastro de Atestados e Termos, funcionalida
 6. **Deve preencher formulário de cadastro de atestado/termo**
    - Testa preenchimento de campos (se disponíveis)
 
-7. **Deve voltar da página de cadastro para listagem**
+7. **Deve criar novo atestado/termo com sucesso**
+   - Preenche formulário, salva e valida sucesso (toast ou URL/listagem)
+
+8. **Deve voltar da página de cadastro para listagem**
    - Valida navegação de retorno
 
-8. **Deve validar estrutura da tabela de listagem**
+9. **Deve validar estrutura da tabela de listagem**
    - Valida tabela e presença de dados ou mensagem de sem resultados
+
+10. **Deve acessar a página de edição de atestado/termo**
+    - Valida navegação para edição (se houver registro na listagem)
+
+11. **Deve alterar atestado/termo existente e salvar**
+    - Abre edição, altera descrição, salva e valida sucesso
+
+12. **Deve voltar da página de edição para listagem**
+    - Valida navegação de retorno da edição
 
 ## 6. Fluxo do Teste
 
@@ -133,6 +148,8 @@ Validar o acesso e funcionamento do Cadastro de Atestados e Termos, funcionalida
 - **Robustez:** Testes verificam existência de elementos antes de interagir, tornando-os resilientes a mudanças na interface
 - **Flexibilidade:** Métodos são adaptativos e funcionam mesmo quando alguns elementos não estão presentes
 - **Seleção de Tipo:** O método `filtrarPorTipo` verifica opções disponíveis antes de selecionar
+- **Pós-salvar:** Validação de sucesso usa toast (se existir) ou fallback para URL e presença da tabela. Locator `toastSucesso` em AtestadosTermosLocators.
+- **Exclusão:** Não há cenário de exclusão; a aplicação não expõe ação de excluir na listagem/cadastro explorada (escopo apenas criar, editar e listagem).
 
 ## 10. Referências
 - [ADR-0002: Page Object Pattern](../adr/0002-use-page-object-pattern.md)

@@ -128,6 +128,13 @@ Each ADR follows this structure:
 
 [View ADR-0016](./0016-planning-before-implementation.md)
 
+### ADR-0017: Use AI SDK for Continuous Improvement
+**Status**: Accepted  
+**Date**: 2025-02  
+**Summary**: Decision to use an AI Toolkit (AI SDK + OpenAI) to analyze rules, generate test scenarios from business rules, and detect flaky tests, with Cursor-ready output for human validation and Agent execution.
+
+[View ADR-0017](./0017-use-ai-sdk-for-continuous-improvement.md)
+
 ---
 
 ## How to Create a New ADR
