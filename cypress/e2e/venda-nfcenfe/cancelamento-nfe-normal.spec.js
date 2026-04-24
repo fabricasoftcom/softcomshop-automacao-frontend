@@ -26,9 +26,8 @@ describe('Cancelamento NFe Normal', { tags: ['@nfe', '@vendas', '@regressivo', '
     CadastroNfeNormalPage.validarModalSucessoEmissao('listagem');
 
     // Cancelar NFe
-    cy.wait(2000); // Aguarda a listagem carregar
     ListagemNfePage.abrirEdicaoPrimeiraLinha();
-    cy.wait(2000); // Aguarda a edição carregar
+    CadastroNfeNormalPage.aguardarTelaEdicaoNfeCarregada();
     CadastroNfeNormalPage.cancelarNFe('Teste automatizado - Cancelamento NFe Normal Avulsa');
   });
 });

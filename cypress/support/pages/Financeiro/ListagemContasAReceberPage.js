@@ -10,7 +10,7 @@ class ListagemContasAReceberPage {
   }
 
   verificarCarregamentoDaPagina() {
-    cy.get(ListagemContasAReceberLocators.loading).should('not.exist');
+    cy.get(ListagemContasAReceberLocators.loading, { timeout: 5000 }).should('not.exist');
     cy.get(ListagemContasAReceberLocators.tabelaVisivel, { timeout: 30000 }).should('be.visible');
     cy.get('h5').contains('Contas a Receber').should('be.visible');
   }

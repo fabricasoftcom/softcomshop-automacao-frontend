@@ -178,9 +178,9 @@ async function main() {
     ...conflitosToAcoes(analise.conflitos),
     ...melhoriasToAcoes(analise.melhorias),
   ];
-  const parte2 = formatAcoesCursorReady(acoes);
-
   const reportPath = `${PATHS.reports}/rules-analysis.md`;
+  const parte2 = formatAcoesCursorReady(acoes, '', reportPath);
+
   writeReport(reportPath, parte1 + '\n\n' + parte2);
   console.log('Relatório salvo em', reportPath);
 }

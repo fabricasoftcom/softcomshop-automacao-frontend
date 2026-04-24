@@ -1,5 +1,20 @@
 import PerfilAcessoPage from '../../support/pages/Configuracoes/PerfilAcessoPage';
 
+function gerarNomePerfilUnico() {
+  const agora = new Date();
+  const data = agora.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+  const hora = agora.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+  return `perfil teste ${data}:${hora}`;
+}
+
 describe('Cadastro de Perfil de Acesso', { tags: ['@configuracoes', '@perfil-acesso', '@cadastro', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
@@ -14,17 +29,7 @@ describe('Cadastro de Perfil de Acesso', { tags: ['@configuracoes', '@perfil-ace
 
   it('deve realizar cadastro completo de perfil com todos os campos', () => {
     PerfilAcessoPage.acessarTelaListagem();
-    const agora = new Date();
-    const data = agora.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-    const hora = agora.toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    const nomePerfil = `perfil teste ${data}:${hora}`;
+    const nomePerfil = gerarNomePerfilUnico();
 
     PerfilAcessoPage.cadastrarPerfil(nomePerfil, 'CLIENTE');
 
@@ -35,17 +40,7 @@ describe('Cadastro de Perfil de Acesso', { tags: ['@configuracoes', '@perfil-ace
 
   it('deve realizar cadastro de perfil apenas com campos obrigatórios', () => {
     PerfilAcessoPage.acessarTelaListagem();
-    const agora = new Date();
-    const data = agora.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-    const hora = agora.toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    const nomePerfil = `perfil teste ${data}:${hora}`;
+    const nomePerfil = gerarNomePerfilUnico();
 
     PerfilAcessoPage.abrirModalCadastro();
     PerfilAcessoPage.preencherNomePerfil(nomePerfil);
@@ -91,4 +86,3 @@ describe('Cadastro de Perfil de Acesso', { tags: ['@configuracoes', '@perfil-ace
     PerfilAcessoPage.validarCampoProfileValor('CONTADOR');
   });
 });
-

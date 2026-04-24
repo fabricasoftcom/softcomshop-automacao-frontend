@@ -285,7 +285,7 @@ class CompraManualPage extends CompraBasePage {
 
     selecionarProdutoNoModal(indice = 0) {
         // Aguarda a lista de sugestões aparecer após digitar usando ID específico
-        cy.get(CadastroCompraLocators.modalListaProdutoSugestoes, { timeout: 10000 })
+        cy.get(CadastroCompraLocators.modalListaProdutoSugestoes, { timeout: 100000 })
             .should('have.length.at.least', 1)
             .then(($items) => {
                 const targetIndex = indice < $items.length ? indice : 0;
@@ -345,8 +345,8 @@ class CompraManualPage extends CompraBasePage {
         const {
             termoProduto = 'P',
             indiceProduto = 0,
-            // preco = '10,00',
-            // quantidade = '5',
+            preco = '10,00',
+            quantidade = '50',
             natureza = '1102'
         } = dadosItem;
 
@@ -360,8 +360,8 @@ class CompraManualPage extends CompraBasePage {
         cy.get(CadastroCompraLocators.modalCampoPreco, { timeout: 15000 })
             .should('be.visible');
         //  Caso #85357
-        //  this.preencherPrecoNoModal(preco);
-        //  this.preencherQuantidadeNoModal(quantidade);
+         this.preencherPrecoNoModal(preco);
+         this.preencherQuantidadeNoModal(quantidade);
         this.preencherNaturezaNoModal(natureza);
 
         // Clica em Adicionar

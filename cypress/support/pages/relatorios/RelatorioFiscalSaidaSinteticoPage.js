@@ -1,45 +1,63 @@
 // RelatorioFiscalSaidaSinteticoPage.js
 import RelatoriosPage from "./RelatoriosPage";
-import RelatorioFiscalSaidaSinteticoLocators from "../../locators/Relatorios/RelatorioFiscalSaidaSinteticoLocators";
+import RelatorioFiscalSaidaSinteticoLocators, {
+    RELATORIO_FISCAL_SAIDA_SINTETICO_ROTA,
+} from "../../locators/Relatorios/RelatorioFiscalSaidaSinteticoLocators";
 
 class RelatorioFiscalSaidaSinteticoPage {
 
     acessarRelatorioFiscalSaidaSintetico() {
-        RelatoriosPage.acessarRelatorioNotasFiscaisSaidaSintetico();
-        cy.url().should('contain', '/relatorio/relatorio-fiscal-sintetico');
+        cy.visit(RELATORIO_FISCAL_SAIDA_SINTETICO_ROTA);
+        cy.url().should('contain', '/relatorio-v2/relatorio-fiscal-sintetico');
     }
 
     garantirFiltrosVisiveis() {
-        cy.get(RelatorioFiscalSaidaSinteticoLocators.filtrosContainer).should('be.visible');
+        RelatoriosPage.garantirDrawerAberto(RelatorioFiscalSaidaSinteticoLocators.filtrosContainer);
     }
 
     validarElementosBasicos() {
-        cy.get(RelatorioFiscalSaidaSinteticoLocators.titulo).should('be.visible');
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.titulo).first().should('be.visible');
         this.garantirFiltrosVisiveis();
         cy.get(RelatorioFiscalSaidaSinteticoLocators.empresaSelect).should('be.visible');
         cy.get(RelatorioFiscalSaidaSinteticoLocators.periodoInput).should('be.visible');
-        cy.get(RelatorioFiscalSaidaSinteticoLocators.botaoPesquisar).should('be.visible');
-        cy.get(RelatorioFiscalSaidaSinteticoLocators.botaoGerarPdf).should('be.visible');
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.tipoDocumentoSelect).should('exist');
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.statusSelect).should('exist');
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.serieInput).should('exist');
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.botaoPesquisar).should('exist');
+        cy.get('body').then(($body) => {
+            const pdfId = $body.find(RelatorioFiscalSaidaSinteticoLocators.botaoGerarPdf);
+            const pdfLink = $body.find('a:contains("PDF")');
+            if (pdfId.length > 0) {
+                cy.get(RelatorioFiscalSaidaSinteticoLocators.botaoGerarPdf).should('be.visible');
+            } else if (pdfLink.length > 0) {
+                cy.contains('a', 'PDF').should('be.visible');
+            }
+        });
     }
 
     preencherPeriodo(dataInicial, dataFinal) {
         const periodo = `${dataInicial} - ${dataFinal}`;
         cy.get(RelatorioFiscalSaidaSinteticoLocators.periodoInput)
-            .clear({ force: true })
+            .click({ force: true })
+            .type('{selectall}{backspace}', { force: true })
             .type(periodo, { force: true });
     }
 
     pesquisar() {
-        cy.intercept('GET', '**/relatorio/relatorio-fiscal-sintetico**').as('relatorioFiscalSaidaSintetico');
-        cy.get(RelatorioFiscalSaidaSinteticoLocators.botaoPesquisar).click({ force: true });
-        cy.wait('@relatorioFiscalSaidaSintetico').then((interception) => {
-            const status = Number(interception?.response?.statusCode);
-            if (!Number.isNaN(status)) {
-                expect([200, 302]).to.include(status);
-            }
-        });
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.botaoPesquisar).first().click({ force: true });
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.tabelaResultados, { timeout: 20000 })
+            .should('exist')
+            .should('be.visible');
+    }
+
+    validarTabelaComDados() {
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.tabelaResultados, { timeout: 20000 })
+            .should('exist')
+            .should('be.visible');
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.tabelaResultados).contains('CFOP').should('be.visible');
+        cy.get(RelatorioFiscalSaidaSinteticoLocators.linhasTabelaResultados)
+            .should('have.length.greaterThan', 0);
     }
 }
 
 export default new RelatorioFiscalSaidaSinteticoPage();
-

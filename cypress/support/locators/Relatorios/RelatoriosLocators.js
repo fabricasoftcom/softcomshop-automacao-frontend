@@ -1,50 +1,69 @@
 // RelatoriosLocators.js
 // Atualizado após reformulação de layout (2026-01-27)
 // Estrutura mudou de links <a> para cards .catalogo-relatorio-item
+const cardHref = (hrefPart) =>
+    `.catalogo-relatorio-item[data-href*="${hrefPart}"], .catalogo-relatorio-item[data-href-url*="${hrefPart}"]`;
+
 const RelatoriosLocators = {
     // Página de relatórios gerais
     paginaRelatoriosGerais: '/softcomtecnologia/relatorios-gerais',
     campoBusca: 'input[placeholder*="Buscar relatório"]',
     containerCatalogo: '.catalogo-relatorios',
+    // Alguns nichos exibem itens dentro de um container colapsado/oculto
+    // Ex.: class="catalogo-nicho-items-hidden"
+    containerNichoItemsHidden: '.catalogo-nicho-items-hidden',
 
     // Locator genérico para cards de relatórios
     cardRelatorio: '.catalogo-relatorio-item',
+    // Cards dentro do container oculto (quando expandido)
+    cardRelatorioNichoItemsHidden: '.catalogo-nicho-items-hidden .catalogo-relatorio-item',
     nomeRelatorio: '.catalogo-relatorio-name',
 
     // Vendas
-    vendasPeriodo: '.catalogo-relatorio-item[data-href*="/relatorio/periodo"]',
-    vendasMaisVendidos: '.catalogo-relatorio-item[data-href*="/relatorio/mais-vendidos"]',
-    vendasFormaPagamento: '.catalogo-relatorio-item[data-href*="relatorio-v2/forma-pagamento"]', // URL mudou
-    vendasGerenteVendas: '.catalogo-relatorio-item[data-href*="/relatorio/gerente-vendas"]',
-    vendasEvolucao: '.catalogo-relatorio-item[data-href*="/relatorio/evolucao"]',
-    vendasComissao: '.catalogo-relatorio-item[data-href*="/relatorio/comissao"]',
+    vendasPeriodo: cardHref('/relatorio/periodo'),
+    vendasMaisVendidos: cardHref('/relatorio/mais-vendidos'),
+    vendasFormaPagamento: cardHref('/relatorio-v2/forma-pagamento'), // URL mudou
+    vendasGerenteVendas: cardHref('/relatorio/gerente-vendas'),
+    vendasEvolucao: cardHref('/relatorio/evolucao'),
+    vendasComissao: cardHref('/relatorio/comissao'),
 
     // Notas fiscais
-    notasFiscaisSaidaAnalitico: '.catalogo-relatorio-item[data-href*="/relatorio/relatorio-fiscal"]',
-    notasFiscaisSaidaSintetico: '.catalogo-relatorio-item[data-href*="/relatorio/relatorio-fiscal-sintetico"]',
-    notasFiscaisEntradaSintetico: '.catalogo-relatorio-item[data-href*="/relatorio/relatorio-fiscal-entrada-sintetico"]',
-    notasFiscaisEntradaAnalitico: '.catalogo-relatorio-item[data-href*="/relatorio/relatorio-fiscal-entrada"]',
-    notasFiscaisPisCofins: '.catalogo-relatorio-item[data-href*="/relatorio/relatorio-fiscal-pis-cofins"]',
-    notasFiscaisNFSe: '.catalogo-relatorio-item[data-href*="/relatorio/relatorio-nfse"]',
+    // Observação: após reformulação, vários relatórios fiscais passaram a expor rotas /relatorio-v2/*
+    /** Spec E2E usa visit direto `/relatorio-v2/fiscal-saida-analitico` no Page Object (evita hub/modal). */
+    notasFiscaisSaidaAnalitico: cardHref('/relatorio-v2/relatorio-fiscal'),
+    /** Spec E2E usa visit direto `/relatorio-v2/relatorio-fiscal-sintetico` no Page Object. */
+    notasFiscaisSaidaSintetico: cardHref('/relatorio-v2/relatorio-fiscal-sintetico'),
+    /** Nicho "Notas Fiscais" pode estar colapsado; spec usa visit direto. */
+    notasFiscaisEntradaSintetico: cardHref('/relatorio-v2/fiscal-entrada-sintetico'),
+    /** Nicho "Notas Fiscais" pode estar colapsado; spec de entrada analítico usa visit direto. */
+    notasFiscaisEntradaAnalitico: cardHref('/relatorio-v2/fiscal-entrada-analitico'),
+    /** Nicho "Notas Fiscais" pode estar colapsado; spec usa visit direto. */
+    /** data-href no catálogo costuma ser .../relatorio-fiscal-pis-cofins (visit direto pode estourar timeout). */
+    notasFiscaisPisCofins: cardHref('/relatorio/relatorio-fiscal-pis-cofins'),
+    notasFiscaisNFSe: cardHref('/relatorio-v2/relatorio-nfse'),
 
     // Financeiro
-    financeiroCaixa: '.catalogo-relatorio-item[data-href*="relatorio-v2/vendas-caixa"]', // URL mudou
-    financeiroContasReceber: '.catalogo-relatorio-item[data-href*="/relatorio/contas-a-receber"]',
-    financeiroContasPagar: '.catalogo-relatorio-item[data-href*="/relatorio/contas-a-pagar"]',
-    financeiroProjecaoCartoes: '.catalogo-relatorio-item[data-href*="/relatorio/projecao-de-cartoes"]',
+    financeiroCaixa: cardHref('/relatorio-v2/vendas-caixa'), // URL mudou
+    financeiroContasReceber: cardHref('/relatorio/contas-a-receber'),
+    financeiroContasPagar: cardHref('/relatorio/contas-a-pagar'),
+    financeiroProjecaoCartoes: cardHref('/relatorio/projecao-de-cartoes'),
 
-    // Produtos
-    produtosExibirEstoque: '.catalogo-relatorio-item[data-href*="/relatorio/exibir-estoque"]',
-    produtosTabelaPreco: '.catalogo-relatorio-item[data-href*="/relatorio/tabela-preco"]',
-    produtosFichaEstoque: '.catalogo-relatorio-item[data-href*="/relatorio/ficha-estoque"]',
-    produtosInventario: '.catalogo-relatorio-item[data-href*="/relatorio/inventario"]',
-    produtosNCM: '.catalogo-relatorio-item[data-href*="/relatorio/ncm"]',
-    produtosMovimentacaoEstoque: '.catalogo-relatorio-item[data-href*="/relatorios/movimentacao-estoque"]',
+    // Produtos — Exibir Estoque v2 (rota em /produto/relatorio/)
+    produtosExibirEstoque: cardHref('/produto/relatorio/exibir-estoque-v2'),
+    produtosTabelaPreco: cardHref('/relatorio/tabela-preco'),
+    produtosFichaEstoque: cardHref('/relatorio/ficha-estoque'),
+    produtosInventario: cardHref('/relatorio/inventario'),
+    produtosNCM: cardHref('/relatorio/ncm'),
+    produtosMovimentacaoEstoque: cardHref('/relatorios/movimentacao-estoque'),
 
     // Clientes
-    clientesAniversariantes: '.catalogo-relatorio-item[data-href*="/relatorio/aniversariante"]',
-    clientesDadosClientes: '.catalogo-relatorio-item[data-href*="/relatorio/dados-clientes"]',
-    clientesUltimasCompras: '.catalogo-relatorio-item[data-href*="cliente/relatorio/ultimas-compras"]',
+    clientesAniversariantes: cardHref('/relatorio-v2/aniversariante'),
+    clientesDadosClientes: cardHref('/relatorio/dados-clientes'),
+    clientesUltimasCompras: cardHref('/cliente/relatorio/ultimas-compras'),
+    // Diversos (a adicionar)
+    diversosAuditoria: cardHref('/relatorio-v2/auditoria'),
+    diversosRadarEmpresas: cardHref('/relatorio-v2/radar-empresas'),
+    diversosEntregadores: cardHref('/relatorio-v2/entregadores'),
 };
 
 export default RelatoriosLocators;

@@ -1,30 +1,20 @@
 // RelatorioExibirEstoquePage.js
 import RelatoriosPage from "./RelatoriosPage";
-import RelatorioExibirEstoqueLocators from "../../locators/Relatorios/RelatorioExibirEstoqueLocators";
+import RelatorioExibirEstoqueLocators, {
+    RELATORIO_EXIBIR_ESTOQUE_ROTA_V2,
+} from "../../locators/Relatorios/RelatorioExibirEstoqueLocators";
 
 class RelatorioExibirEstoquePage {
 
     acessarRelatorioExibirEstoque() {
-        RelatoriosPage.acessarRelatorioProdutosExibirEstoque();
-        cy.url().should('contain', '/relatorio/exibir-estoque');
+        cy.visit(RELATORIO_EXIBIR_ESTOQUE_ROTA_V2);
+        cy.url().should('contain', RELATORIO_EXIBIR_ESTOQUE_ROTA_V2);
+        cy.get('body').should('be.visible');
     }
 
     garantirFiltrosVisiveis() {
-        // Verifica se relatório usa drawer ou formulário direto
-        cy.get('body').then(($body) => {
-            const drawerBody = $body.find('#filter-drawer-body');
-            const btnFiltros = $body.find('button.relatorio-btn:contains("Filtros")');
-
-            // Se tem drawer e botão Filtros, usa método compartilhado
-            if (drawerBody.length > 0 && btnFiltros.length > 0) {
-                RelatoriosPage.garantirDrawerAberto(RelatorioExibirEstoqueLocators.filtrosContainer);
-            } else {
-                // Se não tem drawer, valida formulário diretamente
-                cy.get(RelatorioExibirEstoqueLocators.filtrosContainer, { timeout: 10000 })
-                    .should('exist')
-                    .should('be.visible');
-            }
-        });
+        // Relatório v2: drawer de filtros (igual FormaPagamento / Caixa)
+        RelatoriosPage.garantirDrawerAberto(RelatorioExibirEstoqueLocators.filtrosContainer);
     }
 
     validarElementosBasicos() {
@@ -41,7 +31,8 @@ class RelatorioExibirEstoquePage {
         this.garantirFiltrosVisiveis();
         // Valida elementos dentro do drawer de filtros (ou formulário direto)
         cy.get(RelatorioExibirEstoqueLocators.empresaSelect).should('be.visible');
-        cy.get(RelatorioExibirEstoqueLocators.botaoPesquisar).should('be.visible');
+        // Botão Pesquisar pode ficar display:none no drawer até layout/scroll (mesmo padrão que Forma Pagamento)
+        cy.get(RelatorioExibirEstoqueLocators.botaoPesquisar).should('exist');
         // Botões de exportação podem estar na barra superior (fora do drawer)
         // Valida que existem (podem não estar visíveis antes da pesquisa)
         cy.get('body').then(($body) => {
@@ -54,7 +45,9 @@ class RelatorioExibirEstoquePage {
     }
 
     pesquisar() {
-        cy.intercept('GET', '**/relatorio/exibir-estoque**').as('relatorioExibirEstoque');
+        cy.intercept({ method: /GET|POST/, url: `**${RELATORIO_EXIBIR_ESTOQUE_ROTA_V2}**` }).as(
+            'relatorioExibirEstoque',
+        );
         cy.get(RelatorioExibirEstoqueLocators.botaoPesquisar).click({ force: true });
         cy.wait('@relatorioExibirEstoque').then((interception) => {
             const status = Number(interception?.response?.statusCode);

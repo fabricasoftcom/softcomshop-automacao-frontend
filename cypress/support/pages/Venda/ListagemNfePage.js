@@ -167,12 +167,10 @@ class ListagemNfePage {
       }
     });
 
-    // 2. Aguarda o content-layout estar presente no DOM
-    cy.get('#content-layout', { timeout: 20000 }).should('exist');
+    // 2. Aguarda o content-layout no DOM e visível (evita falha quando animated/fadeIn mantém opacity:0 no pai)
+    cy.get('#content-layout', { timeout: 20000 }).should('exist').should('be.visible');
 
-    // 3. Valida que a tabela está visível e tem conteúdo (indicador mais confiável)
-    // Se a tabela está visível, significa que o content-layout também está visível
-    // mesmo que a animação CSS não tenha executado completamente
+    // 3. Valida que a tabela está visível e tem conteúdo
     cy.get(ListagemNfeLocators.tabelaListagem, { timeout: 20000 })
       .should('exist')
       .should('be.visible')

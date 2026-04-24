@@ -44,7 +44,7 @@ module.exports = defineConfig({
     env: {
       grepFilterSpecs: true
     },
-    defaultCommandTimeout: 150000,
+    defaultCommandTimeout: 15000,
     specPattern: [
       "./cypress/e2e/setup/_beforeConfigPadrao.spec.js",
       // debounce-autocomplete (arquivo removido/não existe)
@@ -96,6 +96,13 @@ module.exports = defineConfig({
       "./cypress/e2e/compras/cadastro-movimentacoes.spec.js",
       "./cypress/e2e/compras/importacao-compra-nuvem-fiscal.spec.js",
       "./cypress/e2e/compras/ordem-fornecimento.spec.js",
+      // incidentes (regressão por bugs corrigidos — ver ai-reports/incidents-analysis.md)
+      "./cypress/e2e/incidentes/ComprasEestoqueNuvemFiscal.spec.js",
+      "./cypress/e2e/incidentes/ComprasImportarNFe.spec.js",
+      "./cypress/e2e/incidentes/ImportacaoNfCompra.spec.js",
+      "./cypress/e2e/incidentes/FinanceiroRecebimentoModal.spec.js",
+      "./cypress/e2e/incidentes/RelatoriosCaixa.spec.js",
+      "./cypress/e2e/incidentes/85857-NFeFCPSTDuplicidade.spec.js",
       // producao
       "./cypress/e2e/producao/producao-listagem.spec.js",
       "./cypress/e2e/producao/cadastro-producao.spec.js",
@@ -159,6 +166,7 @@ module.exports = defineConfig({
       "./cypress/e2e/vendas/listagem-vendas.spec.js",
       "./cypress/e2e/venda-nfcenfe/venda-nfce.spec.js",
       "./cypress/e2e/venda-nfcenfe/venda-nfe.spec.js",
+      "./cypress/e2e/venda-nfcenfe/venda-nfse.spec.js",
       "./cypress/e2e/venda-nfcenfe/cadastro-nfe.spec.js",
       "./cypress/e2e/venda-nfcenfe/cadastro-nfe-normal.spec.js",
       "./cypress/e2e/venda-nfcenfe/cadastro-nfe-devolucao.spec.js",
@@ -220,7 +228,7 @@ module.exports = defineConfig({
       // "**/*.spec.js"
     ],
     testIsolation: false,
-    baseUrl: 'https://stage-hotfix.softcomshop.com.br',
+    baseUrl: 'https://stage-hotfix-2.softcomshop.com.br',
     // baseUrl: 'https://stage-release-2.softcomshop.com.br',
     // baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',
     //  baseUrl: 'https://squad-cloud.softcomshop.com.br',

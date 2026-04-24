@@ -36,6 +36,8 @@ flowchart LR
     AIrules[ai:rules]
     AIscenarios[ai:scenarios]
     AIflaky[ai:flaky]
+    AIfailures[ai:failures]
+    AIincidents[ai:incidents]
   end
 
   subgraph relatorios [Relatórios]
@@ -60,10 +62,15 @@ flowchart LR
   Specs --> AIscenarios
   Allure --> AIflaky
   Specs --> AIflaky
+  Allure --> AIfailures
+  Specs --> AIfailures
+  Inputs --> AIincidents
 
   AIrules --> Reports
   AIscenarios --> Reports
   AIflaky --> Reports
+  AIfailures --> Reports
+  AIincidents --> Reports
 
   Reports --> Dev
   Dev --> Agent
@@ -72,9 +79,9 @@ flowchart LR
 
 O pipeline em três etapas:
 
-1. **Gerar** – Você roda um dos scripts (`npm run ai:rules`, `ai:scenarios` ou `ai:flaky`). O script lê os artefatos do projeto, chama a OpenAI e grava um relatório em `ai-reports/`.
+1. **Gerar** – Você roda um dos scripts (`npm run ai:rules`, `ai:scenarios`, `ai:flaky`, `ai:failures` ou `ai:incidents`). O script lê os artefatos do projeto, chama a OpenAI e grava um relatório em `ai-reports/`.
 2. **Validar** – Você abre o relatório, lê a análise e a seção "Ações Cursor-ready". Marca como `[APROVADO]` ou `[REJEITADO]` as ações que deseja (ou não) que o Cursor execute.
-3. **Executar** – Você copia a seção Cursor-ready e cola no chat do Cursor em modo Agent, com a instrução "Implemente as ações aprovadas abaixo." O Cursor edita/cria os arquivos conforme as ações aprovadas.
+3. **Planejar e Executar** – Você copia a seção Cursor-ready e cola no chat do Cursor em **modo Plan**, com a instrução gerada no relatório (que inclui a referência `@` ao arquivo). O Cursor gera um plano de ação. Após revisar, você muda para o **modo Agent** e pede para executar. O Cursor edita/cria os arquivos conforme as ações aprovadas.
 
 ---
 
@@ -90,12 +97,14 @@ São a **fonte de verdade**: o AI Toolkit lê esses arquivos para montar o conte
 
 ### AI Toolkit
 
-- **Onde fica:** pasta `ai-toolkit/` na raiz do projeto (config.mjs, utils.mjs, cursor-ready.mjs, prompts/, analyze-rules.mjs, generate-scenarios.mjs, detect-flaky.mjs).
+- **Onde fica:** pasta `ai-toolkit/` na raiz do projeto (config.mjs, utils.mjs, cursor-ready.mjs, prompts/, analyze-rules.mjs, generate-scenarios.mjs, detect-flaky.mjs, analyze-failures.mjs, analyze-incidents.mjs).
 - **O que faz cada script:**
   - **ai:rules** – Analisa architeture.mdc, ADRs e guias; gera redundâncias, gaps, conflitos e melhorias; produz ações Cursor-ready para consolidar ou criar regras.
   - **ai:scenarios** – Recebe um arquivo de regras de negócio em `ai-toolkit/inputs/`; gera cenários de teste e ações Cursor-ready (explorar tela, criar spec, Page Object, locators, documentação).
   - **ai:flaky** – Lê `allure-results/` e código dos specs; identifica candidatos a flaky, gargalos e anti-padrões; gera correções com código atual e sugerido.
-- **Relatórios:** gerados em `ai-reports/` (rules-analysis.md, scenarios-&lt;nome&gt;.md, flaky-analysis.md).
+  - **ai:failures** – Lê `allure-results/` e código dos specs que falharam; classifica se o erro é um "Bug na Aplicação" ou um "Erro no Teste"; gera ações Cursor-ready apenas para os erros no teste.
+  - **ai:incidents** – Lê arquivos JSON de incidentes (bugs corrigidos) em `ai-toolkit/inputs/incidents/`; gera cenários de teste de regressão e ações Cursor-ready para automatizá-los.
+- **Relatórios:** gerados em `ai-reports/` (rules-analysis.md, scenarios-&lt;nome&gt;.md, flaky-analysis.md, failures-analysis.md, incidents-analysis.md).
 - **Pré-requisito:** arquivo `.env` na raiz com `OPENAI_API_KEY` (copiar de `.env.example`).
 
 Detalhes de uso, estrutura de pastas e troubleshooting: [ai-toolkit/README.md](../../ai-toolkit/README.md).
@@ -103,7 +112,7 @@ Detalhes de uso, estrutura de pastas e troubleshooting: [ai-toolkit/README.md](.
 ### Cursor Agent
 
 - **Papel:** Executor das ações aprovadas. Ele lê a seção "Ações Cursor-ready" colada no chat, ignora ações `[REJEITADO]` e aplica as `[APROVADO]` (editar/criar arquivos conforme "O que fazer" e "Código sugerido" quando houver).
-- **Como usar:** Copiar a seção Cursor-ready do relatório, colar no chat do Cursor em modo Agent e enviar com a instrução: "Implemente as ações aprovadas abaixo."
+- **Como usar:** Copiar a seção Cursor-ready do relatório, colar no chat do Cursor em **modo Plan** (para gerar um checklist seguro) e enviar com a instrução gerada no relatório, que será parecida com: *"Implemente as ações aprovadas abaixo. Antes de codificar, leia a análise completa e o contexto no arquivo @[nome-do-relatorio].md..."*. Depois, mudar para **modo Agent** para executar.
 
 ### Relatórios Cursor-ready
 
@@ -198,9 +207,11 @@ O ecossistema foi montado em cinco fases já executadas. Cada fase entregou algo
 | **2 – Analisador de regras** | analyze-rules.mjs e rules-prompt.mjs; leitura de architeture.mdc, ADRs e guias; geração de rules-analysis.md com análise e ações Cursor-ready | Script `npm run ai:rules` utilizável |
 | **3 – Gerador de cenários** | generate-scenarios.mjs e scenarios-prompt.mjs; entrada em ai-toolkit/inputs/; geração de cenários e ações (incl. explorar tela) | Script `npm run ai:scenarios` utilizável |
 | **4 – Detector de flaky** | detect-flaky.mjs e flaky-prompt.mjs; leitura de allure-results e specs; pré-análise local + LLM; geração de flaky-analysis.md | Script `npm run ai:flaky` utilizável |
-| **5 – Documentação e integração** | ADR-0017, seção no architeture.mdc, ai-toolkit/README.md, mapeamento-relacionamentos.md | Ecossistema documentado e referenciado no projeto |
+| **5 – Analisador de falhas** | analyze-failures.mjs e failures-prompt.mjs; leitura de allure-results e specs que falharam; classificação de bugs vs erros de teste | Script `npm run ai:failures` utilizável |
+| **6 – Analisador de incidentes** | analyze-incidents.mjs e incidents-prompt.mjs; leitura de JSONs de incidentes; geração de cenários de regressão | Script `npm run ai:incidents` utilizável |
+| **7 – Documentação e integração** | ADR-0017, seção no architeture.mdc, ai-toolkit/README.md, mapeamento-relacionamentos.md | Ecossistema documentado e referenciado no projeto |
 
-Ordem das dependências: Fase 1 é pré-requisito de 2, 3 e 4; as fases 2, 3 e 4 são independentes entre si; a Fase 5 documenta e integra tudo.
+Ordem das dependências: Fase 1 é pré-requisito de 2, 3, 4, 5 e 6; as fases 2, 3, 4, 5 e 6 são independentes entre si; a Fase 7 documenta e integra tudo.
 
 ---
 
@@ -209,6 +220,8 @@ Ordem das dependências: Fase 1 é pré-requisito de 2, 3 e 4; as fases 2, 3 e 4
 - **ai:rules** – Use em análise periódica das regras (ex.: a cada sprint) ou quando suspeitar de redundância, gap ou conflito entre regras/documentação. Não exige input seu além de rodar o comando; o script lê os arquivos do projeto.
 - **ai:scenarios** – Use antes de implementar testes para uma **nova funcionalidade**. Você precisa ter (ou criar) um arquivo de regras de negócio em `ai-toolkit/inputs/regras-<nome>.md`. O script gera cenários e as ações para criar spec, Page Object, locators e documentação.
 - **ai:flaky** – Use **após rodar a suíte de testes** (para existir `allure-results/`). O script identifica candidatos a flaky, gargalos e anti-padrões (ex.: cy.wait) e sugere correções com código atual e sugerido.
+- **ai:failures** – Use **após rodar os testes que falharam** (para existir `allure-results/`). O script classifica se o erro é um "Bug na Aplicação" ou um "Erro no Teste".
+- **ai:incidents** – Use **quando quiser gerar testes de regressão** a partir de bugs corrigidos. Você precisa ter arquivos JSON de incidentes na pasta `ai-toolkit/inputs/incidents/`.
 
 ---
 
@@ -216,11 +229,15 @@ Ordem das dependências: Fase 1 é pré-requisito de 2, 3 e 4; as fases 2, 3 e 4
 
 - **Pré-requisito:** `.env` na raiz com `OPENAI_API_KEY` (veja `.env.example`).
 
-- **Analisar regras:** `npm run ai:rules` → abrir `ai-reports/rules-analysis.md` → revisar análise e marcar ações [APROVADO]/[REJEITADO] → copiar seção Cursor-ready → colar no Cursor Agent com "Implemente as ações aprovadas abaixo."
+- **Analisar regras:** `npm run ai:rules` → abrir `ai-reports/rules-analysis.md` → revisar análise e marcar ações [APROVADO]/[REJEITADO] → copiar seção Cursor-ready → colar no Cursor (Modo Plan) usando a instrução gerada com a referência ao arquivo.
 
-- **Gerar cenários:** Criar `ai-toolkit/inputs/regras-<nome>.md` com as regras de negócio → `npm run ai:scenarios -- --input ai-toolkit/inputs/regras-<nome>.md` [opcional: `--ref cypress/e2e/.../spec.spec.js`] → abrir `ai-reports/scenarios-<nome>.md` → revisar cenários e ações (a ação "Explorar tela" deve ser executada primeiro) → copiar Cursor-ready para o Agent.
+- **Gerar cenários:** Criar `ai-toolkit/inputs/regras-<nome>.md` com as regras de negócio → `npm run ai:scenarios -- --input ai-toolkit/inputs/regras-<nome>.md` [opcional: `--ref cypress/e2e/.../spec.spec.js`] → abrir `ai-reports/scenarios-<nome>.md` → revisar cenários e ações (a ação "Explorar tela" deve ser executada primeiro) → copiar Cursor-ready para o Cursor (Modo Plan).
 
-- **Detectar flaky:** Rodar os testes (gerar `allure-results/`) → `npm run ai:flaky` → abrir `ai-reports/flaky-analysis.md` → revisar e aprovar correções → copiar Cursor-ready para o Agent.
+- **Detectar flaky:** Rodar os testes (gerar `allure-results/`) → `npm run ai:flaky` → abrir `ai-reports/flaky-analysis.md` → revisar e aprovar correções → copiar Cursor-ready para o Cursor (Modo Plan).
+
+- **Analisar falhas:** Rodar testes que falharam → `npm run ai:failures` → abrir `ai-reports/failures-analysis.md` → revisar classificação → copiar Cursor-ready para o Cursor (Modo Plan).
+
+- **Analisar incidentes:** Colocar JSONs em `ai-toolkit/inputs/incidents/` → `npm run ai:incidents` → abrir `ai-reports/incidents-analysis.md` → revisar cenários → copiar Cursor-ready para o Cursor (Modo Plan).
 
 ---
 
@@ -441,22 +458,24 @@ Esta seção descreve **como realmente usar e realizar todo o fluxo**, do comand
 - Selecione no relatório desde o título **## Ações Cursor-ready** (e o blockquote de instruções, se quiser) até a **última ação** que você vai enviar. Se tiver removido as rejeitadas, inclua só as ações [APROVADO]; caso contrário, pode incluir todas – o Cursor ignora [REJEITADO].
 - Copie o trecho (Ctrl+C / Cmd+C). Se quiser, cole primeiro em um editor de texto para conferir o conteúdo antes de colar no Cursor.
 
-### Passo 8 – Abrir o Cursor e o chat em modo Agent
+### Passo 8 – Abrir o Cursor e o chat em modo Plan
 
 - Abra o Cursor e o projeto na **raiz** (para que os caminhos dos arquivos nos relatórios batam com o sistema de arquivos).
-- Crie um novo chat ou use um existente e **ative o modo Agent** (geralmente há um seletor ou botão para "Agent" no chat).
+- Crie um novo chat ou use um existente e **ative o modo Plan** (geralmente há um seletor ou botão para "Plan" no chat). Isso garante que o Cursor crie um checklist seguro antes de alterar qualquer código.
 - Garanta que o contexto do chat inclui o projeto (o Agent precisa conseguir acessar e editar os arquivos pelos caminhos relativos à raiz).
 
 ### Passo 9 – Colar e enviar a instrução
 
-- Na **primeira linha** da mensagem, digite a instrução recomendada: **"Implemente as ações aprovadas abaixo."** (ou "Execute as ações Cursor-ready aprovadas abaixo.").
+- Na **primeira linha** da mensagem, digite a instrução gerada no relatório, que incluirá a referência ao arquivo (ex: *"Implemente as ações aprovadas abaixo. Antes de codificar, leia a análise completa e o contexto no arquivo @ai-reports/incidents-analysis.md..."*).
 - Na **linha seguinte**, cole a seção Cursor-ready que você copiou (todo o bloco desde ## Ações Cursor-ready até o fim das ações).
+- Se houver muitas ações (ex: mais de 5 incidentes), **cole em pequenos lotes** para evitar que o Cursor perca o contexto ou estoure o limite de tokens.
 - Envie a mensagem (Enter ou botão de envio).
 
 ### Passo 10 – O que o Cursor faz
 
+- No **modo Plan**, o Cursor vai ler o relatório referenciado, entender o contexto e gerar um plano de ação detalhado com checkboxes.
+- **Revise o plano.** Se estiver correto, mude o chat para o **modo Agent** e diga: *"Execute o plano"*.
 - O Agent **lê** cada bloco `### [APROVADO] Ação N: ...`. Ações com `[REJEITADO]` são ignoradas.
-- Para cada ação aprovada, o Cursor identifica **Tipo** (editar-arquivo, criar-arquivo, explorar-tela), **Arquivo(s)** e o campo **O que fazer** (e opcionalmente **Código sugerido** ou **Estrutura sugerida**).
 - O Cursor **edita ou cria** os arquivos conforme a descrição: abre o arquivo, aplica as alterações sugeridas ou cria o conteúdo com base na estrutura sugerida. Pode fazer várias edições em sequência. Em casos ambíguos, pode pedir confirmação.
 - Para ações do tipo **explorar-tela** (comuns em scenarios), o Cursor pode usar ferramentas de browser se disponíveis para inspecionar a tela, ou orientar você a inspecionar o DOM e atualizar os locators manualmente.
 

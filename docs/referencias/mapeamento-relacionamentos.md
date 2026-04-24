@@ -397,6 +397,29 @@ Cadastro Compra
 
 ---
 
+### Incidentes (regressão)
+
+- `architecture-incidente-compras-nuvem-fiscal.md` ↔ `architecture-nuvem-fiscal.md` (fluxo Nuvem Fiscal existente)
+- `architecture-incidente-compras-importar-nfe-chave.md` ↔ `architecture-cadastro-compra.md` (importação em `/compra`)
+- `architecture-incidente-importacao-nf-compra-multipla.md` ↔ `architecture-cadastro-compra.md`
+- `architecture-incidente-financeiro-recebimento-calendario.md` ↔ `architecture-recebimento.md`
+- `architecture-incidente-relatorios-caixa-pdf-longo.md` ↔ `architecture-relatorio-caixa.md`
+- `ai-reports/incidents-analysis.md` → cada `architecture-incidente-*.md` (origem dos cenários)
+
+---
+
+### Ecossistema AI Toolkit
+
+| Documentação | Relaciona-se com | Tipo de Relação |
+|-------------|------------------|-----------------|
+| `ecossistema-ai-toolkit-melhoria-continua.md` | `ADR-0017` | Implementa decisão arquitetural |
+| `ecossistema-ai-toolkit-melhoria-continua.md` | `architeture.mdc` | Define fluxo de melhoria contínua |
+| `ecossistema-ai-toolkit-melhoria-continua.md` | `guia-uso-ai-toolkit.md` | Guia prático de uso das ferramentas |
+| `guia-uso-ai-toolkit.md` | `ecossistema-ai-toolkit-melhoria-continua.md` | Detalha uso prático do ecossistema |
+| `guia-uso-ai-toolkit.md` | `ADR-0017` | Operacionaliza decisão arquitetural |
+
+---
+
 ## 📋 Checklist ao Criar Nova Documentação
 
 Ao criar `docs/cases/architecture-[novo].md`:

@@ -4,10 +4,6 @@
  * que o Cursor Agent mode pode consumir após validação humana.
  */
 
-const INSTRUCOES_CURSOR = `> Instruções para o Cursor Agent mode. Copie esta seção inteira
-> e cole no chat do Cursor com: "Implemente as ações aprovadas abaixo."
-> Remova ou altere [APROVADO] para [REJEITADO] nas ações que NÃO deseja executar.`;
-
 /**
  * Formata uma ação Cursor-ready em markdown.
  * @param {object} acao - { titulo, tipo, arquivo, descricao, contexto?, codigoAtual?, codigoSugerido? }
@@ -48,13 +44,18 @@ export function formatAcao(acao, index = 1) {
  * Gera a seção "Ações Cursor-ready" a partir de uma lista de ações.
  * @param {Array<object>} acoes - Lista de ações (cada uma com titulo, tipo, arquivo, descricao, etc.)
  * @param {string} [intro] - Texto opcional antes das ações (ex: aviso sobre ordem de execução)
+ * @param {string} [reportPath] - Caminho do relatório gerado para referência no prompt
  * @returns {string} Bloco markdown
  */
-export function formatAcoesCursorReady(acoes, intro = '') {
+export function formatAcoesCursorReady(acoes, intro = '', reportPath = '') {
+  const instrucoes = `> Instruções para o Cursor Agent mode. Copie esta seção inteira
+> e cole no chat do Cursor com: "Implemente as ações aprovadas abaixo. Antes de codificar, leia a análise completa e o contexto no arquivo @${reportPath || '[nome-do-relatorio.md]'} para entender os detalhes, regras e motivos de cada ação."
+> Remova ou altere [APROVADO] para [REJEITADO] nas ações que NÃO deseja executar.`;
+
   const parts = [
     '## Ações Cursor-ready',
     '',
-    INSTRUCOES_CURSOR,
+    instrucoes,
     '',
   ];
   if (intro) {

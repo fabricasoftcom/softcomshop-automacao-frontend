@@ -17,6 +17,13 @@ const RecebimentoLocators = {
     descontoInput: '#desconto',
     valorFinalInput: '.col-md-4 input[disabled]',
     dataRecebimentoInput: '#data_pagamento',
+
+    /** Gatilho visual do datepicker ao lado da data de pagamento (modal Recebimento) */
+    disparadorCalendarioDataPagamento:
+        '.modal #data_pagamento + .input-group-addon, .modal span.glyphicon-calendar',
+
+    /** Dropdown do datepicker visível (Bootstrap) */
+    datepickerDropdownVisivel: '.daterangepicker .drp-calendar.left .month:visible',
     valorRecebidoInput: '#valor',
 
     // Detalhes do pagamento

@@ -18,7 +18,7 @@ const NovaDespesaLocators = {
  // Campo de valor - será localizado dentro de divValor na classe de página
  valorInputDentroDiv: '#valor_parcela',  // Localizador para o input dentro da divValor
 
-  fornecedorAutocomplete: '#fornecedor_id',
+  fornecedorAutocomplete: '.modal #fornecedor_id',
   tipoDocumentoAutocomplete: '#tipo_documento_id',
   numeroDocumentoInput: '#documento',
 

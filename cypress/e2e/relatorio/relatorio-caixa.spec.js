@@ -1,126 +1,62 @@
 import RelatorioCaixaPage from "../../support/pages/relatorios/RelatorioCaixaPage";
-import RelatorioCaixaLocators from "../../support/locators/Relatorios/RelatorioCaixaLocators";
-
-const formatDateTime = (date, time) => {
-  const zeroPad = (value) => String(value).padStart(2, '0');
-  const day = zeroPad(date.getDate());
-  const month = zeroPad(date.getMonth() + 1);
-  const year = date.getFullYear();
-  return `${day}/${month}/${year} ${time}`;
-};
+// import RelatorioCaixaLocators from "../../support/locators/Relatorios/RelatorioCaixaLocators";
+// import RelatoriosDrawerLocators from "../../support/locators/Relatorios/RelatoriosDrawerLocators";
 
 describe('Relatorio de Caixa', { tags: ['@relatorios', '@caixa', '@regressivo'] }, () => {
-  beforeEach(() => {
-    cy.loginArmazenandoSessao();
-    cy.visit('/');
-    RelatorioCaixaPage.acessarRelatorioCaixa();
-    RelatorioCaixaPage.garantirFiltrosVisiveis();
-  });
+  describe('Acesso e Elementos Básicos', () => {
 
-  it('Deve exibir os filtros e acoes disponiveis para o relatorio de Caixa', () => {
-    RelatorioCaixaPage.validarElementosBasicos();
-  });
+    beforeEach(() => {
+      cy.loginArmazenandoSessao();
+      cy.visit('/');
+    });
 
-  it('Deve permitir pesquisar o relatorio de Caixa com periodo diario', () => {
-    const hoje = new Date();
-    const dataInicio = formatDateTime(hoje, '00:00:00');
-    const dataFim = formatDateTime(hoje, '23:59:59');
+    it('Deve acessar via /relatorio-v2 e exibir o drawer com Aplicar Filtros', () => {
+      RelatorioCaixaPage.acessarRelatorioCaixa();
+      RelatorioCaixaPage.validarElementosBasicos();
+    });
 
-    // Atualizado após reformulação: campo tipo foi removido
-    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
-
-    Cypress._.range(1, 7).forEach((turnoNumero) => {
-      RelatorioCaixaPage.preencherTurno(String(turnoNumero));
-      RelatorioCaixaPage.pesquisar();
-      // Atualizado após reformulação: URL mudou para /relatorio-v2/vendas-caixa
-      cy.url().should('contain', '/relatorio-v2/vendas-caixa');
-      cy.verificarErro500Visual();
+    it('Deve acessar via /relatorios-gerais e exibir o painel com Pesquisar', () => {
+      RelatorioCaixaPage.acessarRelatorioCaixaViaRelatoriosGerais();
+      RelatorioCaixaPage.validarElementosBasicosViaRelatoriosGerais();
     });
   });
 
-  it('Deve gerar o relatorio de Caixa do tipo sintetico', () => {
-    const hoje = new Date();
-    const ontem = new Date();
-    ontem.setDate(hoje.getDate() - 1);
+  describe('Pesquisa e Validações Focadas (Acesso Direto)', () => {
+    beforeEach(() => {
+      cy.loginArmazenandoSessao();
+      cy.visit('/');
+      RelatorioCaixaPage.acessarRelatorioCaixa();
+    });
 
-    const dataInicio = formatDateTime(ontem, '00:00:00');
-    const dataFim = formatDateTime(hoje, '23:59:59');
+    it('Cenário 1 (Fluxo Principal): Deve pesquisar no modo Sintético (Hoje) e exibir tabela e botões de exportação', () => {
+      RelatorioCaixaPage.selecionarPeriodoRapido('hoje');
+      RelatorioCaixaPage.selecionarTipo('sintetico');
+      RelatorioCaixaPage.pesquisar();
 
-    // Atualizado após reformulação: campo tipo foi removido
-    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
+      cy.verificarErro500Visual();
+      RelatorioCaixaPage.validarKpisEAcordeonsEFiltrosAtivos();
+      RelatorioCaixaPage.validarBotoesExportacao();
+    });
 
-    RelatorioCaixaPage.pesquisar();
-    // Atualizado após reformulação: URL mudou para /relatorio-v2/vendas-caixa
-    cy.url().should('contain', '/relatorio-v2/vendas-caixa');
-    cy.verificarErro500Visual();
-  });
+    it('Cenário 2 (Filtros Complementares): Deve pesquisar no modo Analítico (Ontem) com filtros extras', () => {
+      RelatorioCaixaPage.selecionarPeriodoRapido('ontem');
+      RelatorioCaixaPage.selecionarTipo('analitico');
+      // RelatorioCaixaPage.preencherTurno('1');
+      // RelatorioCaixaPage.preencherVendedor('a');
+      RelatorioCaixaPage.pesquisar();
 
-  it('Deve pesquisar o periodo atual sem turno e exibir dados em tela', () => {
-    const hoje = new Date();
-    const dataInicio = formatDateTime(hoje, '00:00:00');
-    const dataFim = formatDateTime(hoje, '23:59:59');
+      cy.verificarErro500Visual();
+      RelatorioCaixaPage.validarAcordeonVendasPorPedidoDetalhamentoComVendas();
+    });
 
-    // Atualizado após reformulação: campo tipo foi removido
-    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
-    cy.get(RelatorioCaixaLocators.turnoInput).clear({ force: true }).should('have.value', '');
+    it('Cenário 3 (Edge Case): Deve pesquisar no modo Consolidado sem turno e exibir totalizadores', () => {
+      RelatorioCaixaPage.selecionarPeriodoRapido('hoje');
+      RelatorioCaixaPage.selecionarTipo('consolidado');
+      RelatorioCaixaPage.limparTurno();
+      RelatorioCaixaPage.pesquisar();
 
-    RelatorioCaixaPage.pesquisar();
-    cy.get(RelatorioCaixaLocators.totalizadoresContainer).should('be.visible');
-    cy.get(RelatorioCaixaLocators.totalizadoresContainer)
-      .contains(/totaliza.*caixa/i)
-      .should('be.visible');
-    cy.get(RelatorioCaixaLocators.totalizadoresContainer)
-      .find('table')
-      .should('have.length.greaterThan', 0);
-    cy.verificarErro500Visual();
-  });
-
-  it('Deve listar vendas no relatorio analitico sem informar turno', () => {
-    const hoje = new Date();
-    const dataInicio = formatDateTime(hoje, '00:00:00');
-    const dataFim = formatDateTime(hoje, '23:59:59');
-
-    // Atualizado após reformulação: campo tipo foi removido
-    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioCaixaLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
-    cy.get(RelatorioCaixaLocators.turnoInput).clear({ force: true }).should('have.value', '');
-
-    RelatorioCaixaPage.pesquisar();
-    cy.get(RelatorioCaixaLocators.tabelaResultados).should('be.visible');
-    cy.get(RelatorioCaixaLocators.blocoCabecalhoPedido).should('contain.text', 'Pedido')
-      .and('contain.text', 'Vendedor')
-      .and('contain.text', 'Cliente');
-    cy.get(RelatorioCaixaLocators.linhasTabelaResultados).its('length').should('be.greaterThan', 0);
-    cy.get(RelatorioCaixaLocators.tabelaResultados).contains(/Pagamento/i);
-    cy.verificarErro500Visual();
-  });
-
-  it('Deve exibir estrutura da tabela com colunas após pesquisa', () => {
-    const hoje = new Date();
-    const dataInicio = formatDateTime(hoje, '00:00:00');
-    const dataFim = formatDateTime(hoje, '23:59:59');
-
-    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
-    RelatorioCaixaPage.pesquisar();
-
-    // Valida estrutura da tabela (cabeçalho com colunas)
-    RelatorioCaixaPage.validarEstruturaTabela();
-    cy.verificarErro500Visual();
-  });
-
-  it('Deve exibir botões de exportação PDF e Imprimir 80mm após pesquisa', () => {
-    const hoje = new Date();
-    const dataInicio = formatDateTime(hoje, '00:00:00');
-    const dataFim = formatDateTime(hoje, '23:59:59');
-
-    RelatorioCaixaPage.preencherPeriodo(dataInicio, dataFim);
-    RelatorioCaixaPage.pesquisar();
-
-    // Valida que botões de exportação estão visíveis e clicáveis
-    RelatorioCaixaPage.validarBotoesExportacao();
-    cy.verificarErro500Visual();
+      cy.verificarErro500Visual();
+      RelatorioCaixaPage.validarAcordeonsConsolidadosFormaPagamentoECartao();
+    });
   });
 });

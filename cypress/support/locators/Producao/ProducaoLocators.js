@@ -39,7 +39,7 @@ const ProducaoLocators = {
     observacaoInput: '#observacao',
     produtoAutocompleteCadastro: '#auto_producao_produto_empresa_grade_id',
     produtoIconCadastro: '#auto_icon_producao_produto_empresa_grade_id',
-    produtoResultadoCadastro: '#div_auto_producao_produto_empresa_grade_id .typeahead-list li a, .typeahead-list li a, .typeahead-result li a',
+    produtoResultadoCadastro: '.typeahead-list > :nth-child(1) > a',
     produtoIdHiddenCadastro: '#producao_produto_empresa_grade_id',
     produtoId: '#producao_produto_id',
     quantidadeInput: '#producao_quantidade',

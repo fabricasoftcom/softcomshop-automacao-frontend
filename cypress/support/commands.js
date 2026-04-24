@@ -82,6 +82,18 @@ Cypress.Commands.add('loginArmazenandoSessaoCobranca', () => {
     });
   });
 });
+Cypress.Commands.add('loginArmazenandoSessaoNFSe', () => {
+  cy.session('user_session', () => {
+    cy.fixture('users').then((user) => {
+      LoginPage.visit();
+      LoginPage.preencherCredenciais(user.validNFSe.username, user.validNFSe.password);
+      LoginPage.clicarLogin();
+      // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
+      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
+      cy.contains('Início').should('be.visible')
+    });
+  });
+});
 // verificar erro 500 em tela manualmente para testes que usam laço como wrap
 Cypress.Commands.add('verificarErro500Visual', () => {
   cy.get('body').then(($body) => {

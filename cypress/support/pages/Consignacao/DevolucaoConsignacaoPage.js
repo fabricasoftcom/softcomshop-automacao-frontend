@@ -211,6 +211,11 @@ class DevolucaoConsignacaoPage {
       cy.get(DevolucaoConsignacaoLocators.tabelaItens).should('contain.text', nomeProduto);
     }
   }
+  finalizarDevolucao() {
+    cy.get(DevolucaoConsignacaoLocators.btnFinalizar).click();
+    cy.get(DevolucaoConsignacaoLocators.loading).should('not.exist');
+    cy.get(DevolucaoConsignacaoLocators.btnFinalizar).should('not.be.visible');
+  }
 }
 
 export default new DevolucaoConsignacaoPage();

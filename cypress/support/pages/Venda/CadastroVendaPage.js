@@ -75,6 +75,29 @@ class CadastroVendaPage {
           });
       });
   }
+  selecionarClientePorNome(nomeCliente = 'softcom') {
+    const termo = String(nomeCliente).trim();
+    const matcher = new RegExp(termo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+
+    this.buscarCliente(termo);
+    // this.expandirClienteAutocomplete();
+
+    cy.get(cadastroVendaLocators.listaClienteSugestoes)
+      .should('have.length.at.least', 1)
+      .then(($items) => {
+        const itens = Cypress._.toArray($items);
+        const alvo = itens.find((li) => matcher.test(Cypress.$(li).text().trim()));
+
+        if (!alvo) {
+          throw new Error(`Cliente "${termo}" não encontrado nas sugestões do autocomplete.`);
+        }
+
+        const clickable = Cypress.$(alvo).find('a').length ? Cypress.$(alvo).find('a').get(0) : alvo;
+        cy.wrap(clickable).click({ force: true });
+      });
+
+    cy.get(cadastroVendaLocators.hiddenClienteId).should('not.have.value', '');
+  }
 
   buscarVendedor(termo) {
     cy.get(cadastroVendaLocators.campoVendedor).clear().type(termo);
@@ -152,9 +175,9 @@ class CadastroVendaPage {
       });
   }
 
-  adicionarProdutoPeloAutocomplete(termo, indice = 0) {
+  adicionarProdutoPeloAutocomplete(termo) {
     this.buscarProduto(termo);
-    this.selecionarProdutoPorIndice(indice);
+    this.adicionarProdutoPrimeiroResultado();
     cy.get(cadastroVendaLocators.itensSalvos).should('have.length.at.least', 1);
   }
 
@@ -535,6 +558,9 @@ class CadastroVendaPage {
         cy.log('Modal fechado e removido do DOM.');
       }
     });
+  }
+  adicionarProdutoPrimeiroResultado() {
+    cy.get('#div_auto_produto_empresa_grade_id_ > .typeahead-container > .typeahead-result > .typeahead-list > :nth-child(1) > a').click();
   }
 }
 

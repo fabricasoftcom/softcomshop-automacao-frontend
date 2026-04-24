@@ -21,6 +21,8 @@ cp .env.example .env
 | `npm run ai:rules` | Analisa architeture.mdc, ADRs e guias (redundâncias, gaps, conflitos, melhorias) | `ai-reports/rules-analysis.md` |
 | `npm run ai:scenarios` | Gera cenários a partir de regras de negócio | `ai-reports/scenarios-<nome>.md` |
 | `npm run ai:flaky` | Analisa Allure + specs (flaky, gargalos, anti-padrões) | `ai-reports/flaky-analysis.md` |
+| `npm run ai:failures` | Classifica falhas da última execução (Bug vs Erro no Teste) | `ai-reports/failures-analysis.md` |
+| `npm run ai:incidents` | Analisa JSONs de incidentes e gera cenários de regressão | `ai-reports/incidents-analysis.md` |
 
 ## Uso
 
@@ -68,6 +70,27 @@ npm run ai:flaky
 
 Abra `ai-reports/flaky-analysis.md`, revise as correções sugeridas e use a seção Cursor-ready no Agent para aplicar as aprovadas.
 
+### 4. Analisar falhas (Bug vs Erro no Teste)
+
+Execute após rodar os testes que falharam (para existir `allure-results/`):
+
+```bash
+npm run ai:failures
+```
+
+Abra `ai-reports/failures-analysis.md`, revise a classificação das falhas e use a seção Cursor-ready no Agent para aplicar as correções sugeridas (apenas para Erros no Teste).
+
+### 5. Analisar incidentes (Gerar Testes de Regressão)
+
+1. Coloque os arquivos JSON com os dados dos incidentes (bugs corrigidos) na pasta `ai-toolkit/inputs/incidents/`.
+2. Execute:
+
+```bash
+npm run ai:incidents
+```
+
+Abra `ai-reports/incidents-analysis.md`, revise os cenários de regressão gerados e use a seção Cursor-ready no Agent para automatizá-los.
+
 ## Estrutura
 
 ```
@@ -80,10 +103,15 @@ ai-toolkit/
     rules-prompt.mjs
     scenarios-prompt.mjs
     flaky-prompt.mjs
+    failures-prompt.mjs
+    incidents-prompt.mjs
   analyze-rules.mjs
   generate-scenarios.mjs
   detect-flaky.mjs
+  analyze-failures.mjs
+  analyze-incidents.mjs
   inputs/              # Coloque aqui os arquivos de regras de negócio
+    incidents/         # Coloque aqui os arquivos JSON de incidentes
 ai-reports/            # Relatórios gerados
 ```
 
@@ -92,6 +120,8 @@ ai-reports/            # Relatórios gerados
 - `ai:rules`: ~US$ 0,10–0,15 por execução (contexto grande).
 - `ai:scenarios`: ~US$ 0,05–0,10 por funcionalidade.
 - `ai:flaky`: ~US$ 0,05–0,20 conforme volume de candidatos.
+- `ai:failures`: ~US$ 0,05–0,10 por lote de 10 falhas (pode aumentar se houver muitas falhas processadas).
+- `ai:incidents`: ~US$ 0,05–0,10 conforme volume de incidentes.
 
 ## Troubleshooting
 

@@ -94,7 +94,7 @@ describe('Cadastro de usuário', { tags: ['@configuracoes', '@usuario', '@cadast
     UsuarioCadastroPage.validarAutocompletePerfil('ADMINISTRADOR');
   });
 
-  it.skip('deve editar usuario existente e validar alteracao', () => {
+  it('deve editar usuario existente e validar alteracao', () => {
     // Acessar listagem e editar primeiro usuário
     UsuarioListagemPage.acessarTelaListagem();
     UsuarioListagemPage.validarTabelaCarregada();

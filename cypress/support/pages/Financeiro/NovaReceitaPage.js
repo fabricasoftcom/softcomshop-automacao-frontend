@@ -64,7 +64,7 @@ class NovaReceitaPage {
     cy.get(NovaReceitaLocators.clienteAutocomplete)
       .type(cliente);  // Digita o valor no campo de cliente (se necessário)
     // Seleciona o segundo item na lista de resultados
-    cy.get('.soft-select__option').eq(1).click();
+    cy.get('.soft-select__option').should('be.visible').eq(1).click();
   }
 
   selecionarTipoDocumento(tipo = 'Padrão') {
@@ -72,7 +72,7 @@ class NovaReceitaPage {
     cy.get(NovaReceitaLocators.tipoDocumentoAutocomplete)
       .type(tipo);  // Digita o valor no campo de tipo de documento
     // Seleciona o primeiro item na lista de resultados para o tipo de documento
-    cy.get('.soft-select__option').first().click();
+    cy.get('.soft-select__option').should('be.visible').first().click();
   }
   preencherNumeroDocumento(numero = '12345') {
     cy.get(NovaReceitaLocators.numeroDocumentoInput).clear().type(numero);

@@ -1,5 +1,4 @@
 import RelatorioPeriodoPage from "../../support/pages/relatorios/RelatorioPeriodoPage";
-import RelatorioPeriodoLocators from "../../support/locators/Relatorios/RelatorioPeriodoLocators";
 
 const formatDateTime = (date, time) => {
   const zeroPad = (value) => String(value).padStart(2, '0');
@@ -27,7 +26,7 @@ describe('Relatorio de Periodo', { tags: ['@relatorios', '@vendas', '@periodo', 
     const dataFim = formatDateTime(hoje, '23:59:59');
 
     RelatorioPeriodoPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioPeriodoLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
+    RelatorioPeriodoPage.assertPeriodoNoInputQuandoExiste(`${dataInicio} - ${dataFim}`);
 
     RelatorioPeriodoPage.pesquisar();
     cy.url().should('contain', '/relatorio/periodo');
@@ -84,16 +83,16 @@ describe('Relatorio de Periodo', { tags: ['@relatorios', '@vendas', '@periodo', 
     // Valida que tabela tem dados (pelo menos uma linha)
     // Nota: Este teste pode falhar se não houver dados no período
     // Considerar tornar condicional ou usar período com dados conhecidos
-    cy.get('body').then(($body) => {
-      const linhas = $body.find(RelatorioPeriodoLocators.linhasTabelaResultados);
-      if (linhas.length > 0) {
-        RelatorioPeriodoPage.validarTabelaComDados();
-      } else {
-        // Se não houver dados, valida mensagem ou tabela vazia
-        RelatorioPeriodoPage.validarTabelaResultados();
-        cy.log('Nenhum dado encontrado para o período pesquisado');
-      }
-    });
+    RelatorioPeriodoPage.tabelaListagemVendas()
+      .find('tbody tr')
+      .then(($rows) => {
+        if ($rows.length > 0) {
+          RelatorioPeriodoPage.validarTabelaComDados();
+        } else {
+          RelatorioPeriodoPage.validarTabelaResultados();
+          cy.log('Nenhum dado encontrado para o período pesquisado');
+        }
+      });
     cy.verificarErro500Visual();
   });
 });

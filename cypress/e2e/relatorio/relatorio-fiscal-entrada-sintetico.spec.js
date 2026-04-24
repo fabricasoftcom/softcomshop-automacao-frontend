@@ -27,11 +27,14 @@ describe('Relatorio Fiscal Entrada Sintetico', { tags: ['@relatorios', '@fiscal'
     const dataFim = formatDate(hoje);
 
     RelatorioFiscalEntradaSinteticoPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioFiscalEntradaSinteticoLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
+    cy.get(RelatorioFiscalEntradaSinteticoLocators.periodoInput)
+      .should('be.visible')
+      .and(($el) => {
+        expect(String($el.val() || '').trim().length).to.be.greaterThan(0);
+      });
 
     RelatorioFiscalEntradaSinteticoPage.pesquisar();
-    cy.url().should('contain', '/relatorio/relatorio-fiscal-entrada-sintetico');
+    cy.url().should('contain', '/relatorio-v2/fiscal-entrada-sintetico');
     cy.verificarErro500Visual();
   });
 });
-

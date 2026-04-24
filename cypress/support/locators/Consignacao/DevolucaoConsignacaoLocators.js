@@ -32,6 +32,7 @@ const DevolucaoConsignacaoLocators = {
   btnSalvar: '#btn-salvar',
   btnVoltar: 'a:contains("Voltar")',
   btnExcluir: 'a[href*="/excluir/"]',
+  btnFinalizar: '#finalizar-devolucao',
 
   // Campos do Formulário Principal
   campoClienteCadastro: '#auto_cliente_id',

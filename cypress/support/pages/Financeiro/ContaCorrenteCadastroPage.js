@@ -133,6 +133,7 @@ class ContaCorrenteCadastroPage {
   }
 
   avancarParaProximoPasso() {
+    cy.get(contaCorrenteCadastroLocator.loading, { timeout: 10000 }).should('not.exist');
     cy.get(contaCorrenteCadastroLocator.botaoProximo).click();
   }
 

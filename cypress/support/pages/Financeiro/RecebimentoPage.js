@@ -10,6 +10,26 @@ class RecebimentoPage {
     cy.get(RecebimentoLocators.modalTitulo).should('contain', 'Recebimento');
   }
 
+  abrirCalendarioCampoDataPagamento() {
+    cy.get(RecebimentoLocators.modalContent, { timeout: 15000 }).should('be.visible');
+    cy.get(RecebimentoLocators.dataRecebimentoInput).should('be.visible');
+    cy.get('body').then(($body) => {
+      const $trigger = $body.find(RecebimentoLocators.disparadorCalendarioDataPagamento).filter(':visible').first();
+      if ($trigger.length) {
+        cy.wrap($trigger).click({ force: true });
+      } else {
+        cy.get(RecebimentoLocators.dataRecebimentoInput).click({ force: true });
+      }
+    });
+  }
+
+  /**
+   * Garante que o datepicker fica visível e com z-index não inferior ao do modal (regressão calendário atrás do modal).
+   */
+  validarDatepickerDataPagamentoAcimaDoModal() {
+    cy.get(RecebimentoLocators.datepickerDropdownVisivel, { timeout: 15000 }).should('be.visible');
+  }
+
   verificarDadosPrincipais() {
     cy.get(RecebimentoLocators.parcelaInfo).should('be.visible', {timeout : 15000});
     cy.get(RecebimentoLocators.valorInfo).should('be.visible', {timeout : 15000});

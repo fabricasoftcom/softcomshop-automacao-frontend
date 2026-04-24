@@ -1,11 +1,11 @@
 import RelatorioExibirEstoquePage from "../../support/pages/relatorios/RelatorioExibirEstoquePage";
+import { RELATORIO_EXIBIR_ESTOQUE_ROTA_V2 } from "../../support/locators/Relatorios/RelatorioExibirEstoqueLocators";
 
 describe('Relatorio de Exibir Estoque', { tags: ['@relatorios', '@produtos', '@exibir-estoque', '@regressivo'] }, () => {
   beforeEach(() => {
     cy.loginArmazenandoSessao();
     cy.visit('/');
     RelatorioExibirEstoquePage.acessarRelatorioExibirEstoque();
-    RelatorioExibirEstoquePage.garantirFiltrosVisiveis();
   });
 
   it('Deve exibir os filtros e acoes disponiveis para o relatorio de Exibir Estoque', () => {
@@ -14,7 +14,7 @@ describe('Relatorio de Exibir Estoque', { tags: ['@relatorios', '@produtos', '@e
 
   it('Deve permitir pesquisar o relatorio de Exibir Estoque', () => {
     RelatorioExibirEstoquePage.pesquisar();
-    cy.url().should('contain', '/relatorio/exibir-estoque');
+    cy.url().should('contain', RELATORIO_EXIBIR_ESTOQUE_ROTA_V2);
     cy.verificarErro500Visual();
   });
 

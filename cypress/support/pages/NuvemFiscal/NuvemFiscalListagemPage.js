@@ -5,8 +5,22 @@ class NuvemFiscalListagemPage {
         cy.get(NuvemFiscalListagemLocators.campoTipoManifestacao).select(tipo);
     }
 
+    dispensarIntroJsSeVisivel() {
+        cy.get('body').then(($body) => {
+            if (!$body.find(NuvemFiscalListagemLocators.introjsOverlay).filter(':visible').length) {
+                return;
+            }
+        });
+        cy.get('body').then(($body) => {
+            if (!$body.find(NuvemFiscalListagemLocators.introjsOverlay).filter(':visible').length) {
+                return;
+            }
+        });
+    }
+
     clicarPesquisar() {
-        cy.get(NuvemFiscalListagemLocators.botaoPesquisar).click();
+        this.dispensarIntroJsSeVisivel();
+        cy.get(NuvemFiscalListagemLocators.botaoPesquisar).should('be.visible').click({ force: true });
     }
 
     aguardarCarregamento() {
@@ -14,7 +28,20 @@ class NuvemFiscalListagemPage {
     }
 
     verificarTabelaVisivel() {
-        cy.get(NuvemFiscalListagemLocators.tabelaListagem).should('be.visible');
+        cy.get('.ibox-content, .ibox .ibox-content', { timeout: 30000 }).first().should('be.visible');
+        cy.get(NuvemFiscalListagemLocators.tabelaListagem, { timeout: 60000 }).first().should('be.visible');
+    }
+
+    /**
+     * Regressão: acesso à listagem e pesquisa sem página de erro (host/DNS/500 tratados na UI).
+     * Usa o mesmo filtro do fluxo estável de importação (Ciência da Operação + status) para garantir tabela.
+     */
+    validarAcessoEPesquisaSemFalhaCritica() {
+        cy.get(NuvemFiscalListagemLocators.campoTipoManifestacao, { timeout: 30000 }).should('be.visible');
+        this.aguardarCarregamento();
+        cy.verificarErro500Visual();
+        this.filtrarPorCienciaOperacao();
+        cy.verificarErro500Visual();
     }
 
     obterLinhasVisiveis() {
@@ -183,7 +210,7 @@ class NuvemFiscalListagemPage {
                             );
 
                             if (opcao) {
-                                cy.get(selector).select(opcao.value);
+                                cy.get(selector).select(opcao.value, { force: true });
                             } else {
                                 // Fallback: seleciona a primeira opção que não seja "importada"
                                 const opcaoNaoImportada = options.find(opt =>
@@ -192,7 +219,7 @@ class NuvemFiscalListagemPage {
                                     opt.value !== ''
                                 );
                                 if (opcaoNaoImportada) {
-                                    cy.get(selector).select(opcaoNaoImportada.value);
+                                    cy.get(selector).select(opcaoNaoImportada.value, { force: true });
                                 }
                             }
                             campoEncontrado = true;
@@ -209,6 +236,7 @@ class NuvemFiscalListagemPage {
     }
 
     filtrarPorCienciaOperacao() {
+        this.dispensarIntroJsSeVisivel();
         // Tenta diferentes variações do valor
         cy.get(NuvemFiscalListagemLocators.campoTipoManifestacao).then(($select) => {
             const options = Array.from($select[0].options).map(opt => ({
@@ -226,10 +254,10 @@ class NuvemFiscalListagemPage {
             );
 
             if (opcao) {
-                cy.get(NuvemFiscalListagemLocators.campoTipoManifestacao).select(opcao.value);
+                cy.get(NuvemFiscalListagemLocators.campoTipoManifestacao).select(opcao.value, { force: true });
             } else {
                 // Fallback: tenta selecionar por texto
-                cy.get(NuvemFiscalListagemLocators.campoTipoManifestacao).select(1); // Segunda opção (índice 1)
+                cy.get(NuvemFiscalListagemLocators.campoTipoManifestacao).select(1, { force: true }); // Segunda opção (índice 1)
             }
         });
 

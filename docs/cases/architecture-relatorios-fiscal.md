@@ -20,6 +20,24 @@ Este documento descreve a arquitetura dos testes relacionados aos **Relatórios 
 
 **Observação importante:** Relatórios fiscais utilizam `cy.login()` ao invés de `cy.loginArmazenandoSessao()` (ADR-0004)
 
+### Fiscal Saída Analítico (detalhe)
+
+- **Acesso E2E:** `cy.visit('/relatorio-v2/fiscal-saida-analitico')` (mesmo padrão do Fiscal Entrada Analítico), sem fluxo hub/modal do catálogo.
+- **Locators:** formulário escopado em `#filter-drawer-body` (drawer de filtros).
+- **Manutenção / exploração autônoma (ADR-0016):** o Cypress não executa o MCP do Cursor. Antes de alterar locators ou rota, usar o servidor **cursor-ide-browser** no Cursor (`browser_navigate`, `browser_snapshot`, sessão no mesmo `baseUrl`) ou `docs/referencias/template-exploracao-autonoma.md`. O cabeçalho de `relatorio-fiscal-saida-analitico.spec.js` documenta esse vínculo.
+
+### Fiscal Saída Sintético (detalhe)
+
+- **Acesso E2E:** `cy.visit('/relatorio-v2/relatorio-fiscal-sintetico')`, alinhado ao Fiscal Entrada Sintético e ao spec de Saída Analítico (sem menu catálogo no fluxo principal).
+- **Locators:** `#filter-drawer-body` + `form#form-relatorio-nota-fiscal`.
+- **Pós-pesquisa:** `validarTabelaComDados()` valida grid visível, presença de coluna **CFOP** na tabela e linhas em `tbody` (mesma estratégia do Saída Analítico; ajustar texto de cabeçalho se o DOM sintético divergir).
+- **Manutenção (ADR-0016):** cabeçalho JSDoc em `relatorio-fiscal-saida-sintetico.spec.js` (MCP + template de exploração).
+
+### NFSe (detalhe)
+
+- **Acesso E2E:** menu Relatórios → expandir nicho **Notas Fiscais** → barra `RelatoriosGeraisLocators.campoBuscaPagina` com texto `NFSe` → localizar `.catalogo-relatorio-item` cujo `data-href` contenha `relatorio-nfse` (preferir card **visível**; se só existir cópia em `catalogo-nicho-items-hidden`, usa o `href` e `cy.visit` sem clique).
+- **Pós-pesquisa no relatório:** `pesquisar()` valida `table` visível (sem intercept fixo de URL).
+
 ---
 
 ## Estrutura de arquivos
@@ -97,8 +115,9 @@ Este documento descreve a arquitetura dos testes relacionados aos **Relatórios 
 - **ADR-0004:** Use cy.session for Login Persistence - **Usa `cy.login()` para fiscal**
 - **ADR-0010:** Use Tags for Test Filtering
 - **ADR-0011:** Use Conditional Intercepts
+- **ADR-0016:** Planning Before Implementation (exploração autônoma antes de mudar DOM/locators)
 
 ---
 
-**Última atualização:** 2025-12-12
+**Última atualização:** 2026-04-13
 

@@ -23,6 +23,10 @@ const NuvemFiscalListagemLocators = {
 
     // Loading
     loading: '#loading',
+
+    /** Tour Intro.js pode cobrir filtros na primeira visita */
+    introjsOverlay: '.introjs-overlay',
+    introjsAvancarOuFechar: '.introjs-skipbutton, .introjs-donebutton, .introjs-nextbutton',
 };
 
 export default NuvemFiscalListagemLocators;

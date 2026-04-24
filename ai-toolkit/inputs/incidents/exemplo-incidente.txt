@@ -1,0 +1,16 @@
+{
+  "Datas": "2026-02-23T09:44:38",
+  "Produto": "SOFTCOMSHOP",
+  "VersaoProduto": "3.01.03",
+  "importancia": 10,
+  "DevAtribuido": "Lins",
+  "qa": "Helder",
+  "relator": "Helder",
+  "origem": "REDUCAO SUPORTE",
+  "categoria": "GESTAO INCIDENTE",
+  "Resolucao": "CORRIGIDO",
+  "Estado": "RESOLVIDO",
+  "DescricaoResumo": " Relatórios > Vendas > Período e Forma de Pagamento: no kpi de total de vendas, esta apresentado 4 centavos de diferença em relação ao mesmo kpi do vendas por periodo",
+  "DescricaoCompleta": "1-no kpi de total de vendas, esta apresentado 4 centavos de diferença em relação ao mesmo kpi do vendas por periodo_x000D_\n1.1-Divergencia é apresentada quando aplicado o mesmo filtro de situação_x000D_\n1.2-Utilizar 11/02/2026",
+  "InformacoesAdicionais": "no periodo informado não há vendas fechadas, apenas faturadas"
+}

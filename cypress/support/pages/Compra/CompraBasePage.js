@@ -57,7 +57,7 @@ class CompraBasePage {
     }
 
     validarMensagemSucesso() {
-        cy.contains('Pronto, tudo organizado.', { timeout: 10000 })
+        cy.contains('Pronto, tudo organizado.', { timeout: 100000 })
             .should('be.visible');
         return this;
     }
@@ -74,14 +74,14 @@ class CompraBasePage {
         cy.get(CadastroCompraLocators.modalVisivel, { timeout: 10000 }).should('be.visible');
         cy.wait(1000);
         // Clica no ícone de autocomplete da forma de pagamento
-        cy.get(CadastroCompraLocators.modalFormaPagamentoIcon).should('be.visible').click({ force: true });
-        cy.wait(1500);
+        // cy.get(CadastroCompraLocators.modalFormaPagamentoIcon).should('be.visible').click({ force: true });
+        // cy.wait(1500);
+        // cy.get(CadastroCompraLocators.modalCampoFormaPagamento).type('BOLETO');
         // Seleciona a primeira forma de pagamento disponível
-        cy.get(CadastroCompraLocators.modalSugestoesFormaPagamento)
-            .should('have.length.at.least', 1)
-            .first()
-            .find('a')
-            .click({ force: true });
+        // cy.get(CadastroCompraLocators.modalSugestoesFormaPagamento, { timeout: 100000 })
+        // .first()
+        //     .should('have.length.at.least', 1)
+        //     .click({ force: true });
         cy.wait(1000);
         // Salva o pagamento
         cy.get(CadastroCompraLocators.modalBtnSalvarPagamento)

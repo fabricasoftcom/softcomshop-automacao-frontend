@@ -92,6 +92,17 @@ import RelatorioPeriodoLocators from "../../support/locators/Relatorios/Relatori
 
 ---
 
+## Descobertas UI v2 — Relatório Período
+
+Exploração autônoma no stage (2026-04-13) com o relatório **Vendas por período** (`/relatorio/periodo`):
+
+- A página shell permanece em `/relatorio/periodo`; o conteúdo dinâmico é carregado por **GET** em `/relatorio-v2/vendas-periodo/` (`ajax-filters`, `ajax-table`, `ajax-kpis`, `ajax-summary`).
+- O fluxo atual usa **botão Filtros**, chips de **situação** (Todos, Aberta, Fechada, etc.) e **Limpar todos**; a URL reflete parâmetros como `situacao`, `page`, `per_page`.
+- O drawer `#filter-drawer-body` e o formulário `form#form-relatorio-vendas-periodo` **não foram evidenciados** no snapshot de acessibilidade dessa tela — os locators e o `garantirDrawerAberto` herdados podem estar desatualizados para essa UI.
+- Detalhes, tabela de locators e riscos: [`docs/temp-descobertas-relatorio-periodo.md`](../temp-descobertas-relatorio-periodo.md).
+
+---
+
 ## Padrões e boas práticas
 
 ### Formatação de Data/Hora
@@ -149,9 +160,10 @@ import RelatorioPeriodoLocators from "../../support/locators/Relatorios/Relatori
 ### Documentação relacionada
 - `docs/testes.md` - Inventário de testes
 - `docs/cases/architecture-relatorio-caixa.md` - Documentação de relatório de caixa (padrão)
+- `docs/temp-descobertas-relatorio-periodo.md` - Exploração UI v2 / rede (relatório período)
 - `docs/adr/` - Architecture Decision Records
 
 ---
 
-**Última atualização:** 2025-12-12
+**Última atualização:** 2026-04-13
 

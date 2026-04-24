@@ -27,7 +27,14 @@ class CadastroNfeNormalNfcePage extends CadastroNfeNormalBasePage {
     if (pedido) {
       cy.get(CadastroNfeLocators.nfce.campoPedido).clear().type(pedido);
     }
-    cy.get(CadastroNfeLocators.nfce.botaoPesquisar).click({ force: true });
+    cy.get(CadastroNfeLocators.nfce.form, { timeout: 10000 })
+      .should('exist')
+      .first()
+      .within(() => {
+        cy.get(CadastroNfeLocators.nfce.botaoPesquisar, { timeout: 10000 })
+          .should('be.visible')
+          .click({ force: true });
+      });
     // Aguarda a tabela de resultados aparecer e ter pelo menos uma linha
     cy.get(CadastroNfeLocators.nfce.tabelaResultados, { timeout: 10000 })
       .should('exist')

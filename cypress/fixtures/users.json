@@ -14,6 +14,10 @@
   "validApiCobranca": {
     "username": "suporte@softcomtecnologia.com.br",
     "password": "qaz123"
+  },
+  "validNFSe": {
+    "username": "suporteNfse@softcomtecnologia.com.br",
+    "password": "qaz123"
   }
 }
   

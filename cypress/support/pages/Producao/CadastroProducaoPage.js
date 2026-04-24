@@ -7,7 +7,7 @@ class CadastroProducaoPage {
     cy.wait(1000);
   }
 
-  preencherProduto(produto = '') {
+  preencherProduto() {
     cy.get(ProducaoLocators.produtoAutocompleteCadastro, { timeout: 10000 })
       .should('be.visible')
       .click({ force: true })
@@ -20,11 +20,7 @@ class CadastroProducaoPage {
     cy.wait(500);
     cy.get(ProducaoLocators.produtoIconCadastro).first().click({ force: true });
 
-    const resultado = produto
-      ? cy.contains(ProducaoLocators.produtoResultadoCadastro, produto, { matchCase: false, timeout: 10000 })
-      : cy.get(ProducaoLocators.produtoResultadoCadastro, { timeout: 10000 }).filter(':visible').first();
-
-    resultado.should('be.visible').click({ force: true });
+    cy.get(ProducaoLocators.produtoResultadoCadastro, { timeout: 10000 }).first().click({ force: true });
 
     cy.get(ProducaoLocators.produtoIdHiddenCadastro, { timeout: 10000 })
       .invoke('val')

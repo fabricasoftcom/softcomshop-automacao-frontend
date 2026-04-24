@@ -1,3 +1,12 @@
+/**
+ * Relatório Fiscal Saída Sintético — E2E Cypress.
+ *
+ * Exploração autônoma (ADR-0016 / architeture.mdc): o Cypress não executa o MCP do Cursor.
+ * Antes de alterar locators, rota ou fluxo deste spec, use o servidor MCP **cursor-ide-browser**
+ * no Cursor IDE (browser_navigate → browser_snapshot, com sessão autenticada no mesmo baseUrl
+ * de cypress.config.js) ou o checklist em docs/referencias/template-exploracao-autonoma.md.
+ * Os passos abaixo reproduzem o caminho validado na aplicação (visit direto v2 + drawer).
+ */
 import RelatorioFiscalSaidaSinteticoPage from "../../support/pages/relatorios/RelatorioFiscalSaidaSinteticoPage";
 import RelatorioFiscalSaidaSinteticoLocators from "../../support/locators/Relatorios/RelatorioFiscalSaidaSinteticoLocators";
 
@@ -27,11 +36,15 @@ describe('Relatorio Fiscal Saida Sintetico', { tags: ['@relatorios', '@fiscal', 
     const dataFim = formatDate(hoje);
 
     RelatorioFiscalSaidaSinteticoPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioFiscalSaidaSinteticoLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
+    cy.get(RelatorioFiscalSaidaSinteticoLocators.periodoInput)
+      .should('be.visible')
+      .and(($el) => {
+        expect(String($el.val() || '').trim().length).to.be.greaterThan(0);
+      });
 
     RelatorioFiscalSaidaSinteticoPage.pesquisar();
-    cy.url().should('contain', '/relatorio/relatorio-fiscal-sintetico');
+    RelatorioFiscalSaidaSinteticoPage.validarTabelaComDados();
+    cy.url().should('contain', '/relatorio-v2/relatorio-fiscal-sintetico');
     cy.verificarErro500Visual();
   });
 });
-

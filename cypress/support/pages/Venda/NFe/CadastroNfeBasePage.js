@@ -1,4 +1,5 @@
 import CadastroNfeLocators from "../../../locators/Venda/CadastroNfeLocators";
+import { assertNfeXmlPossuiTagsFcpComNumeros } from "../../../utils/nfeXmlFcpAsserts";
 
 let itensRequestInterceptada = false;
 let destinatarioRequestInterceptada = false;
@@ -20,6 +21,19 @@ class CadastroNfeBasePage {
         'Formulário principal da NFe disponível',
       ).to.be.true;
     });
+  }
+
+  /**
+   * Após abrir a NFe a partir da listagem: aguarda loading, URL de edição e formulário principal.
+   */
+  aguardarTelaEdicaoNfeCarregada(timeout = 30000) {
+    cy.get('body').then(($body) => {
+      if ($body.find('#loading').length > 0) {
+        cy.get('#loading', { timeout: 20000 }).should('not.exist');
+      }
+    });
+    cy.url({ timeout }).should('match', /\/nfe2\/\d+\/editar/);
+    this.aguardarFormularioPrincipalCarregado(timeout);
   }
 
   clicarBotaoContinuarRodape() {
@@ -156,6 +170,41 @@ class CadastroNfeBasePage {
     cy.get(CadastroNfeLocators.emitirNotaIcone).should('exist');
   }
 
+  /**
+   * Na etapa Finalizar o painel #content-finish-step costuma trazer só o botão "Emitir Nota";
+   * o total da nota (incluindo efeitos fiscais do item) aparece no cabeçalho. Valida emissão pronta + total monetário.
+   * O detalhamento FCP no XML é validado em {@link validarXmlAutorizadaPorMaisAcoesContemCamposFcp}.
+   */
+  validarResumoEmissaoExibeFcpSt() {
+    cy.get(CadastroNfeLocators.resumoEmissao.painel, { timeout: 20000 }).should('be.visible');
+    cy.contains(/total\s+da\s+nota/i, { timeout: 15000 })
+      .should('be.visible')
+      .invoke('text')
+      .should('match', /R\$\s*[\d.,]+/);
+  }
+
+  /**
+   * Na tela de edição da NFe autorizada: intercepta GET baixar-xml, aciona Mais ações > Download XML
+   * e valida presença de tags FCP com valores no corpo XML.
+   */
+  validarXmlAutorizadaPorMaisAcoesContemCamposFcp() {
+    cy.intercept('GET', '**/nfe2/**/baixar-xml*').as('nfeIncidente85857Xml');
+    this.clicarOpcaoDownloadXml();
+    cy.wait('@nfeIncidente85857Xml', { timeout: 120000 }).then((interception) => {
+      expect(interception.response.statusCode, 'download XML status').to.eq(200);
+      const { body } = interception.response;
+      let texto = body;
+      if (typeof body !== 'string') {
+        if (body instanceof ArrayBuffer) {
+          texto = Cypress.Buffer.from(body).toString('utf8');
+        } else {
+          texto = String(body);
+        }
+      }
+      assertNfeXmlPossuiTagsFcpComNumeros(texto);
+    });
+  }
+
   emitirNota() {
     cy.get(CadastroNfeLocators.emitirNotaBotao, { timeout: 10000 })
       .should('be.visible')
@@ -224,6 +273,34 @@ class CadastroNfeBasePage {
     });
 
     cy.get(CadastroNfeLocators.itens.produtoResultado, { timeout: 10000 })
+      .filter(':visible')
+      .first()
+      .scrollIntoView()
+      .should('be.visible')
+      .click({ force: true });
+
+    cy.get(CadastroNfeLocators.itens.produtoHiddenId, { timeout: 10000 })
+      .invoke('val')
+      .should('match', /\S+/);
+  }
+
+  selecionarProdutoPorNome(nomeBusca) {
+    cy.get(CadastroNfeLocators.itens.produtoAutocomplete, { timeout: 10000 })
+      .should('exist')
+      .first()
+      .scrollIntoView()
+      .clear({ force: true })
+      .type(nomeBusca, { delay: 120 });
+
+    cy.get('body').then(($body) => {
+      if ($body.find(CadastroNfeLocators.itens.produtoResultado).length === 0) {
+        cy.get(CadastroNfeLocators.itens.produtoIcon, { timeout: 10000 })
+          .first()
+          .click({ force: true });
+      }
+    });
+
+    cy.get(CadastroNfeLocators.itens.produtoResultado, { timeout: 15000 })
       .filter(':visible')
       .first()
       .scrollIntoView()
@@ -323,8 +400,7 @@ class CadastroNfeBasePage {
     ).as('salvarItem');
 
     if (produto) {
-      // Se um produto específico foi fornecido, pode ser implementado depois
-      this.selecionarPrimeiroProdutoDisponivel();
+      this.selecionarProdutoPorNome(produto);
     } else {
       this.selecionarPrimeiroProdutoDisponivel();
     }
@@ -658,19 +734,24 @@ class CadastroNfeBasePage {
 
   clicarCancelarNFe() {
     // Tenta primeiro pelo botão direto
-    cy.get('body').then(($body) => {
-      const botaoDireto = $body.find(CadastroNfeLocators.cancelamento.botaoCancelar).filter(':visible');
-      if (botaoDireto.length > 0) {
-        cy.wrap(botaoDireto.first()).click({ force: true });
-        return;
-      }
+    // cy.get('body').then(($body) => {
+    //   const botaoDireto = $body.find(CadastroNfeLocators.cancelamento.botaoCancelar).filter(':visible');
+    //   // if (botaoDireto.length > 0) {
+    //   //   cy.wrap(botaoDireto.first()).click({ force: true });
+    //   //   return;
+    //   // }
 
-      // Se não encontrar, abre o menu de ações
-      this.abrirMenuAcoes();
-      cy.get(CadastroNfeLocators.cancelamento.opcaoCancelar, { timeout: 10000 })
-        .should('be.visible')
-        .click({ force: true });
-    });
+    //   // Se não encontrar, abre o menu de ações
+    //   this.abrirMenuAcoes();
+    //   cy.get(CadastroNfeLocators.cancelamento.opcaoCancelar, { timeout: 10000 })
+    //     .should('be.visible')
+    //     .click({ force: true });
+    // });
+    // Se não encontrar, abre o menu de ações
+    this.abrirMenuAcoes();
+    cy.get(CadastroNfeLocators.cancelamento.opcaoCancelar, { timeout: 10000 })
+      .should('be.visible')
+      .click({ force: true });
   }
 
   confirmarSweetAlertCancelamento() {
@@ -1080,7 +1161,6 @@ class CadastroNfeBasePage {
   }
 
   validarClonarNFe() {
-    // Intercepta a requisição de clonar com middleware para flag condicional
     let clonarNFeRequestInterceptada = false;
     cy.intercept(
       { method: 'GET', url: '**/nfe2/**/clonar*', middleware: true },
@@ -1089,24 +1169,38 @@ class CadastroNfeBasePage {
         req.continue();
       },
     ).as('clonarNFe');
-    this.clicarOpcaoClonarNFe();// Valida que foi redirecionado para a tela de novo cadastro (clonado)
-    cy.url({ timeout: 10000 })
-      .should('include', '/nfe2/novo')
-      .then(() => {
-        cy.log('NFe clonada com sucesso - redirecionado para novo cadastro');
+
+    cy.window().then((win) => {
+      cy.stub(win, 'open').callsFake((url) => {
+        expect(url, 'URL passada ao window.open').to.be.a('string').and.not.be.empty;
+        const destino = url.startsWith('http')
+          ? url
+          : new URL(url, win.location.origin).href;
+        win.location.href = destino;
       });
-    // Opcionalmente valida a requisição se foi interceptada
+    });
+
+    this.abrirMenuAcoes();
+
+    cy.contains('.dropdown-menu a, [role="menu"] a', /Clonar.*NFe|Clonar/i, { timeout: 10000 })
+      .should('be.visible')
+      .should(($a) => {
+        const href = $a.attr('href');
+        expect(href, 'href do link Clonar').to.be.a('string').and.match(/nfe2/i);
+      })
+      .invoke('removeAttr', 'target')
+      .click({ force: true });
+
+    cy.url({ timeout: 20000 }).should('match', /\/nfe2\/[^/]+\/editar/);
+    cy.log('NFe clonada - URL de edição validada na mesma aba (href + remove target + possível window.open)');
+
     cy.wrap(null).then(() => {
       if (clonarNFeRequestInterceptada) {
-        cy.wait('@clonarNFe', { timeout: 10000 })
-          .then((interception) => {
-            if (interception && interception.response) {
-              const statusCode = interception.response.statusCode;
-              if (statusCode === 200) {
-                cy.log('Requisição de clonar NFe realizada com sucesso (status 200)');
-              }
-            }
-          });
+        cy.wait('@clonarNFe', { timeout: 10000 }).then((interception) => {
+          if (interception?.response?.statusCode === 200) {
+            cy.log('Requisição de clonar NFe realizada com sucesso (status 200)');
+          }
+        });
       }
     });
   }

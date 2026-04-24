@@ -64,8 +64,8 @@ class NovaDespesaPage {
             .type(valor, { force: true });
     }
     selecionarFornecedor() {
-        cy.get(NovaDespesaLocators.fornecedorAutocomplete).click();
-        cy.get('.soft-select__option').first().click();
+        cy.get(NovaDespesaLocators.fornecedorAutocomplete).should('be.visible').click();
+        cy.get('.soft-select__option').should('be.visible').first().click();
     }
 
     selecionarTipoDocumento(tipo) {

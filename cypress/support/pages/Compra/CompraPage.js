@@ -59,6 +59,10 @@ class CompraPage extends CompraBasePage {
         return xmlPage.importarNFePorXML(nomeArquivoXML, usarApenasSemFaturas);
     }
 
+    importarNFePorChaveAcesso(chaveAcesso) {
+        return xmlPage.importarNFePorChaveAcesso(chaveAcesso);
+    }
+
     prepararTelaImportacao(nomeArquivoXML = null, usarApenasSemFaturas = false) {
         return xmlPage.prepararTelaImportacao(nomeArquivoXML, usarApenasSemFaturas);
     }

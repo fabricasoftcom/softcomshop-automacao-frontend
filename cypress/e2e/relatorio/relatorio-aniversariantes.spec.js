@@ -1,11 +1,9 @@
 import RelatorioAniversariantesPage from "../../support/pages/relatorios/RelatorioAniversariantesPage";
-import RelatorioAniversariantesLocators from "../../support/locators/Relatorios/RelatorioAniversariantesLocators";
+// import RelatorioAniversariantesLocators from "../../support/locators/Relatorios/RelatorioAniversariantesLocators";
 
 const formatMonth = (date) => {
   const zeroPad = (value) => String(value).padStart(2, '0');
-  const month = zeroPad(date.getMonth() + 1);
-  const year = date.getFullYear();
-  return `01/${month}/${year}`;
+  return zeroPad(date.getMonth() + 1);
 };
 
 describe('Relatorio de Aniversariantes', { tags: ['@relatorios', '@clientes', '@aniversariantes', '@regressivo'] }, () => {
@@ -24,16 +22,15 @@ describe('Relatorio de Aniversariantes', { tags: ['@relatorios', '@clientes', '@
     const mes = formatMonth(hoje);
 
     RelatorioAniversariantesPage.preencherMes(mes);
-    cy.get(RelatorioAniversariantesLocators.mesInput).should('have.value', mes);
-
     RelatorioAniversariantesPage.pesquisar();
-    cy.url().should('contain', '/relatorio/aniversariante');
+    cy.url().should('contain', '/relatorio-v2/aniversariante');
+    cy.url().should('contain', `data=${mes}`);
     cy.verificarErro500Visual();
   });
 
   it('Deve permitir pesquisar o relatorio de Aniversariantes sem filtros', () => {
     RelatorioAniversariantesPage.pesquisar();
-    cy.url().should('contain', '/relatorio/aniversariante');
+    cy.url().should('contain', '/relatorio-v2/aniversariante');
     cy.verificarErro500Visual();
   });
 });

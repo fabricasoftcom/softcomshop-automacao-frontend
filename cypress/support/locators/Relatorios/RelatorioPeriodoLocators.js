@@ -1,12 +1,29 @@
 // RelatorioPeriodoLocators.js
-// Atualizado após reformulação de layout (2026-01-27)
-// Atualizado com date picker (2026-01-28)
-const RelatorioPeriodoLocators = {
-    titulo: 'h1.relatorio-title', // Atualizado: agora é h1 com classe relatorio-title
-    btnFiltros: 'button.relatorio-btn:contains("Filtros")',
-    filtrosContainer: 'form#form-relatorio-vendas-periodo', // Atualizado: ID específico do formulário
+// UI shell: /relatorio/periodo | Conteúdo: XHR /relatorio-v2/vendas-periodo/* (2026-04)
+/** Rota estável: acesso direto evita card ausente/colapsado no hub de relatórios. */
+export const RELATORIO_PERIODO_ROTA = '/relatorio/periodo';
 
-    // Filtros
+/** Só ajax-table (quando a URL da aplicação bate exatamente neste path). */
+export const RELATORIO_PERIODO_AJAX_TABLE_PATTERN = '**/relatorio-v2/vendas-periodo/ajax-table**';
+
+/**
+ * Qualquer GET do bloco v2 (ajax-filters, ajax-table, ajax-kpis, ajax-summary).
+ * Usar em waits após chips — a ordem dos XHR pode não ser ajax-table primeiro.
+ */
+export const RELATORIO_PERIODO_V2_GET_PATTERN = '**/relatorio-v2/vendas-periodo/**';
+
+const RelatorioPeriodoLocators = {
+    titulo: 'h1.relatorio-title',
+
+    // UI v2 — toolbar (evitar colisão com drawer global "Pesquisa Preços")
+    drawerPesquisaPrecoShell: '#pesquisa-preco-drawer',
+    btnFiltros: 'button.relatorio-btn:contains("Filtros")',
+
+    // Legado — drawer + form (ainda usado se existir no DOM)
+    filtrosContainer: 'form#form-relatorio-vendas-periodo',
+    drawerBody: '#filter-drawer-body',
+
+    // Filtros (form legado / fragmento ajax-filters)
     empresaSelect: '#empresa_id',
     dispositivoAutocomplete: '#auto_api_device_id',
     vendedorAutocomplete: '#auto_funcionario_id',
@@ -19,36 +36,28 @@ const RelatorioPeriodoLocators = {
     turnoSelect: '#turno',
     tagsClassificacao: 'ul.select2-selection__rendered',
 
-    // Campo de período (data)
-    periodoInput: '#data', // Campo de input (pode ser usado com type() ou date picker)
+    periodoInput: '#data',
 
-    // Date Range Picker (Bootstrap DateRangePicker)
-    // Botão que abre o date picker
     botaoCalendarioPeriodo: '.btn-daterangepicker[data-label="data"]',
-    // Container do date picker quando aberto
     datePickerContainer: '.daterangepicker',
-    // Botões de ação do date picker
     datePickerAplicar: 'button:contains("Aplicar"), .daterangepicker .applyBtn',
-    datePickerLimpar: 'button:contains("Limpar")', // Se existir
-    datePickerCancelar: 'button:contains("Cancelar")', // Se existir
+    datePickerLimpar: 'button:contains("Limpar")',
+    datePickerCancelar: 'button:contains("Cancelar")',
 
-    // Botões de ação
     botaoPesquisar: '#btn-pesquisar',
-    // Atualizado após reformulação: botões de exportação mudaram de estrutura
+
     botaoGerarPdf: 'a.relatorio-btn-danger:contains("PDF"), a:contains("PDF")',
     botaoGerarExcel: 'a.relatorio-btn-success:contains("Excel"), a:contains("Excel")',
     botaoPersonalizar: 'button:contains("Personalizar")',
 
-    // Resultados
+    /** Uso legado; preferir RelatorioPeriodoPage.tabelaListagemVendas() na UI v2. */
     tabelaResultados: 'table',
-    linhasTabelaResultados: 'table tbody tr',
-    // Cabeçalho da tabela (para validar colunas)
-    cabecalhoTabela: 'table thead tr th',
-    // Mensagens (sem dados, etc.)
-    mensagemSemDados: 'td:contains("Nenhum"), td:contains("sem resultado"), .alert, .no-results',
-    // Container de resultados (se existir)
+    linhasTabelaResultados: 'tbody tr',
+    cabecalhoTabela: 'thead tr th',
+
+    mensagemSemDados:
+        'td:contains("Nenhum"), td:contains("sem resultado"), .alert, .no-results',
     containerResultados: '.ibox-content, .relatorio-content, .resultados',
 };
 
 export default RelatorioPeriodoLocators;
-

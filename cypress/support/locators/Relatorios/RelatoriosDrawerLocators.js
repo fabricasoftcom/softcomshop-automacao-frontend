@@ -23,7 +23,8 @@ const RelatoriosDrawerLocators = {
     // Botões de ação dentro do drawer (variam por relatório)
     // Alguns relatórios usam "Pesquisar", outros "Aplicar Filtros"
     btnPesquisar: '#btn-pesquisar', // Usado em Período, Forma Pagamento
-    btnAplicarFiltros: 'button:contains("Aplicar Filtros")', // Usado em Caixa
+    // Preferir escopo por formulário no Page Object do relatório (evita 3+ matches).
+    btnAplicarFiltros: 'button:contains("Aplicar Filtros")', // genérico — pode colidir
 
     // Nota: Botão de fechar não identificado (pode não existir ou estar oculto)
     // Drawer fecha automaticamente após aplicar filtros em alguns relatórios

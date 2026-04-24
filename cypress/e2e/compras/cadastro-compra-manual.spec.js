@@ -53,7 +53,7 @@ describe('Cadastro manual de compra', { tags: ['@compras', '@cadastro-compra-man
         termoProduto: 'P',
         indiceProduto: i,
         preco: '10,00',
-        quantidade: '1',
+        quantidade: '2',
         natureza: '1102'
       });
     }

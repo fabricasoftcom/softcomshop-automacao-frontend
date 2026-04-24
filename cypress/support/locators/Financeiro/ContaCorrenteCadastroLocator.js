@@ -1,4 +1,5 @@
 const ContaCorrenteCadastroLocator = {
+  loading: '#loading',
   stepAtivo: '.step-options .step-option.active',
 
   // Inputs e Autocompletes

@@ -38,6 +38,7 @@ const MeuLucroLocators = {
     modalConfiguracoes: '.modal',
     modalTitulo: '.modal h2',
     btnFecharModal: '.modal .close',
+    btnAcaoBox: '#btn-acao-box',
     btnCancelar: '#btn-cancelar',
     btnSalvar: '#btn-salvar',
 

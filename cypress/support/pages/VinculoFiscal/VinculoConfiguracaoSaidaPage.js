@@ -56,7 +56,7 @@ class VinculoConfiguracaoSaidaPage {
         cy.get('#div_auto_icms_modalidade_base > .typeahead-container > .typeahead-result > .typeahead-list').contains(dadosSaida.icmsModalidadeBase).click();
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsAcrescimo).clear().type(dadosSaida.icmsAcrescimo);
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsReducao).clear().type(dadosSaida.icmsReducao);
-        cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsOrigem).select(dadosSaida.icmsOrigem);
+        // cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsOrigem).select(dadosSaida.icmsOrigem);
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsStModalidadeBase).clear().type(dadosSaida.icmsStModalidadeBase);
         cy.get('.typeahead-list > li > a').contains(dadosSaida.icmsStModalidadeBase).click();
         cy.get(VinculoConfiguracaoSaidaLocators.campoIcmsStMva).clear().type(dadosSaida.icmsStMva);

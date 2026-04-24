@@ -3,7 +3,7 @@ import DevolucaoConsignacaoLocators from "../../support/locators/Consignacao/Dev
 import { faker } from '@faker-js/faker';
 
 describe('Cadastro de Devolução/Venda de Consignação', { tags: ['@consignacao', '@devolucao', '@cadastro', '@regressivo'] }, () => {
-  const clienteNome = '1'; // Cliente existente para teste
+  const clienteNome = 'consu'; // Cliente existente para teste
   const observacoes = faker.lorem.sentence();
   const produtoNome = 'PRODUTO'; // Nome parcial para autocomplete
   const quantidadeDevolucao = faker.number.int({ min: 1, max: 11 });
@@ -49,6 +49,7 @@ describe('Cadastro de Devolução/Venda de Consignação', { tags: ['@consignaca
     });
     // Validar que o produto foi adicionado à tabela
     DevolucaoConsignacaoPage.validarItemNaTabela();
+    DevolucaoConsignacaoPage.finalizarDevolucao();
   });
 });
 

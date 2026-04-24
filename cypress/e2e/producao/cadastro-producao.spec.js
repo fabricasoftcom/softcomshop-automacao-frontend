@@ -29,7 +29,7 @@ describe('Cadastro de Produção', { tags: ['@producao', '@regressivo'] }, () =>
   it('deve localizar produção finalizada na listagem, abrir edição e reverter produção', () => {
     ProducaoPage.visit();
     ProducaoPage.validarTabelaVisivel();
-    ProducaoPage.abrirPrimeiraProducaoFinalizada();
+    ProducaoPage.abrirPrimeiraProducaoFinalizadaComFiltro();
     CadastroProducaoPage.reverterProducao();
   });
 });

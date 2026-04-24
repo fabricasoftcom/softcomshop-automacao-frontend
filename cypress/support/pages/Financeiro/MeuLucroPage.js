@@ -59,11 +59,17 @@ class MeuLucroPage {
                 cy.wait(500);
             }
         });
+
+        // Garante que a tab "MEU LUCRO REALIZADO" esteja ativa (alguns ambientes abrem em outra tab)
+        this.clicarTabLucroRealizado();
+        cy.get(MeuLucroLocators.boxRelatorioRealizado, { timeout: 10000 })
+            .should('have.css', 'display', 'block')
+            .and('be.visible');
     }
 
     // Validações gerais
     validarTelaCarregada() {
-        cy.get(MeuLucroLocators.contentLayout).should('be.visible');
+        cy.get(MeuLucroLocators.contentLayout, { timeout: 10000 }).should('be.visible');
         cy.get(MeuLucroLocators.titulo).should('be.visible').and('contain.text', 'Meu Lucro');
     }
 
@@ -85,7 +91,9 @@ class MeuLucroPage {
 
     validarBotaoEditarMeta() {
         // O botão está dentro da tab ativa (box-relatorio-realizado)
-        cy.get('#box-relatorio-realizado').should('be.visible');
+        cy.get('#box-relatorio-realizado')
+            .should('have.css', 'display', 'block')
+            .and('be.visible');
         cy.get(MeuLucroLocators.btnEditarMeta).should('be.visible');
         cy.get(MeuLucroLocators.btnEditarMeta).should('contain.text', 'Editar');
     }
@@ -115,7 +123,9 @@ class MeuLucroPage {
     }
 
     validarTabRealizadoVisivel(timeout = 10000) {
-        cy.get(MeuLucroLocators.boxRelatorioRealizado, { timeout }).should('be.visible');
+        cy.get(MeuLucroLocators.boxRelatorioRealizado, { timeout })
+            .should('have.css', 'display', 'block')
+            .and('be.visible');
         return this;
     }
 
@@ -246,6 +256,8 @@ class MeuLucroPage {
     // Botões do modal
     validarBotaoCancelar() {
         // O botão pode estar dentro de um container que precisa ser scrollado
+        cy.get(MeuLucroLocators.btnAcaoBox, { timeout: 10000 })
+            .should('not.have.css', 'display', 'none');
         cy.get(MeuLucroLocators.btnCancelar).scrollIntoView().should('be.visible');
         cy.get(MeuLucroLocators.btnCancelar).should('contain.text', 'Cancelar');
     }

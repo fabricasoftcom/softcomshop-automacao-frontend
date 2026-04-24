@@ -369,8 +369,8 @@ class CadastroNfeDevolucaoCompraPage extends CadastroNfeDevolucaoBasePage {
     cy.url({ timeout: 30000 }).should('match', /\/nfe2\/\d+\/(editar|novo)/);
 
     // Valida que o formulário foi carregado
-    cy.get(CadastroNfeLocators.formularioPadrao, { timeout: 15000 }).should('exist');
-    cy.get(CadastroNfeLocators.formulario).should('exist');
+    cy.get(CadastroNfeLocators.formularioPadrao, { timeout: 1500000 }).should('exist');
+    cy.get(CadastroNfeLocators.formulario, { timeout: 150000 }).should('exist');
   }
 
   validarFormularioDevolucaoCompra() {

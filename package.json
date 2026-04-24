@@ -19,7 +19,9 @@
     "prepare": "husky",
     "ai:rules": "node ai-toolkit/analyze-rules.mjs",
     "ai:scenarios": "node ai-toolkit/generate-scenarios.mjs",
-    "ai:flaky": "node ai-toolkit/detect-flaky.mjs"
+    "ai:flaky": "node ai-toolkit/detect-flaky.mjs",
+    "ai:failures": "node ai-toolkit/analyze-failures.mjs",
+    "ai:incidents": "node ai-toolkit/analyze-incidents.mjs"
   },
   "lint-staged": {
     "**/*.js": "eslint --fix"

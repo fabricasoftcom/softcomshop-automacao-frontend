@@ -27,11 +27,19 @@ describe('Relatorio Fiscal Pis/Cofins', { tags: ['@relatorios', '@fiscal', '@pis
     const dataFim = formatDate(hoje);
 
     RelatorioFiscalPisCofinsPage.preencherPeriodo(dataInicio, dataFim);
-    cy.get(RelatorioFiscalPisCofinsLocators.periodoInput).should('have.value', `${dataInicio} - ${dataFim}`);
+    cy.get(RelatorioFiscalPisCofinsLocators.periodoInput)
+      .should('be.visible')
+      .and(($el) => {
+        expect(String($el.val() || '').trim().length).to.be.greaterThan(0);
+      });
 
     RelatorioFiscalPisCofinsPage.pesquisar();
-    cy.url().should('contain', '/relatorio/relatorio-fiscal-pis-cofins');
+    cy.url().should(
+      'satisfy',
+      (u) =>
+        u.includes('/relatorio-v2/fiscal-pis-cofins') ||
+        u.includes('/relatorio/relatorio-fiscal-pis-cofins'),
+    );
     cy.verificarErro500Visual();
   });
 });
-

@@ -1,5 +1,6 @@
 import CompraBasePage from "./CompraBasePage";
 import CompraLocators from "../../locators/Compra/CompraLocators";
+import CompraImportacaoNFeLocators from "../../locators/Compra/CompraImportacaoNFeLocators";
 
 class CompraXmlPage extends CompraBasePage {
     // ========== MÉTODOS ESPECÍFICOS PARA IMPORTAÇÃO XML ==========
@@ -15,6 +16,23 @@ class CompraXmlPage extends CompraBasePage {
         cy.get('#option-xml > .block-view-option', { timeout: 10000 })
             .should('be.visible')
             .click();
+        return this;
+    }
+
+    selecionarOpcaoChaveAcesso() {
+        cy.get(CompraImportacaoNFeLocators.optionChaveVisual, { timeout: 10000 })
+            .first()
+            .should('be.visible')
+            .click();
+        return this;
+    }
+
+    preencherChaveNFeNoModalImportacao(chaveAcesso) {
+        cy.get(CompraImportacaoNFeLocators.campoChaveNFeConsulta, { timeout: 15000 })
+            .first()
+            .should('be.visible')
+            .clear({ force: true })
+            .type(String(chaveAcesso), { force: true });
         return this;
     }
 
@@ -604,6 +622,18 @@ class CompraXmlPage extends CompraBasePage {
                 this.aguardarImportacaoCompleta();
             });
         });
+    }
+
+    /**
+     * Importação pela chave de acesso (modal em /compra), seguindo o mesmo pós-processamento da importação XML.
+     */
+    importarNFePorChaveAcesso(chaveAcesso) {
+        this.clicarBotaoImportarNFe();
+        cy.get(CompraImportacaoNFeLocators.painelOpcoesImportacao, { timeout: 15000 }).should('be.visible');
+        this.selecionarOpcaoChaveAcesso();
+        this.preencherChaveNFeNoModalImportacao(chaveAcesso);
+        this.clicarImportar();
+        return this;
     }
 }
 

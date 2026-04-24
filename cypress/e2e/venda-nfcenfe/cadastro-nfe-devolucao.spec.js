@@ -11,7 +11,7 @@ describe('Cadastro NFe Devolução', { tags: ['@nfe', '@vendas', '@regressivo', 
     ListagemNfePage.clicarNovoCadastro();
   });
 
-  it.only('realiza fluxo completo da NFe de devolucao avulsa', () => {
+  it('realiza fluxo completo da NFe de devolucao avulsa', () => {
     CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoAvulsa();
     CadastroNfeDevolucaoPage.validarFormularioDevolucaoAvulsa();
     CadastroNfeDevolucaoPage.preencherNatureza('1202');
@@ -35,6 +35,7 @@ describe('Cadastro NFe Devolução', { tags: ['@nfe', '@vendas', '@regressivo', 
     CadastroNfeDevolucaoPage.validarFormularioDevolucaoCompra();
   });
 
+  // TODO: Corrigir teste, em ambiente de emissão da nfe produção talvez irá falhar
   it('realiza fluxo completo da NFe devolucao compra', () => {
     CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoCompra();
     CadastroNfeDevolucaoPage.pesquisarDevolucaoCompra();
@@ -42,6 +43,7 @@ describe('Cadastro NFe Devolução', { tags: ['@nfe', '@vendas', '@regressivo', 
     CadastroNfeDevolucaoPage.validarModalSelecaoItensDevolucaoCompra();
     CadastroNfeDevolucaoPage.preencherQuantidadeDevolverMetade();
     CadastroNfeDevolucaoPage.gerarNotaDevolucaoCompra();
+    CadastroNfeDevolucaoPage.adicionarNotaReferenciada();
     CadastroNfeDevolucaoPage.finalizarEmissaoDevolucao();
   });
 
@@ -114,7 +116,7 @@ describe('Cadastro NFe Devolução', { tags: ['@nfe', '@vendas', '@regressivo', 
     CadastroNfeDevolucaoPage.validarFormularioDevolucaoTrocas();
   });
 
-  it('realiza fluxo completo da NFe devolucao trocas', () => {
+  it.only('realiza fluxo completo da NFe devolucao trocas', () => {
     CadastroNfeDevolucaoPage.avancarParaCadastroDevolucaoTrocas();
     CadastroNfeDevolucaoPage.pesquisarDevolucaoTrocas();
     CadastroNfeDevolucaoPage.selecionarPrimeiraDevolucaoTrocas();

@@ -29,7 +29,7 @@ describe('Cadastro NFe - Validações Gerais', { tags: ['@nfe', '@vendas', '@reg
 
 describe('Cadastro NFe - Validações Dropdown Mais Ações', { tags: ['@nfe', '@vendas', '@regressivo', '@nfe-geral', '@dropdown-acoes'] }, () => {
   before(() => {
-    cy.login();
+    cy.loginArmazenandoSessao();
     cy.visit('/');
     CadastroNfePage.desabilitarTourFinalidadeNormal();
     ListagemNfePage.visitar();
@@ -48,7 +48,7 @@ describe('Cadastro NFe - Validações Dropdown Mais Ações', { tags: ['@nfe', '
   });
 
   beforeEach(() => {
-    cy.login();
+    cy.loginArmazenandoSessao();
     cy.visit('/');
     CadastroNfePage.desabilitarTourFinalidadeNormal();
     ListagemNfePage.visitar();

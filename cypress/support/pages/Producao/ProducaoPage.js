@@ -310,16 +310,24 @@ class ProducaoPage {
      */
     abrirPrimeiraProducaoFinalizadaComFiltro() {
         this.pesquisar({ status: 'FINALIZADO' });
-        cy.wait(1000);
-        cy.get(ProducaoLocators.tabelaLinhas)
+        cy.get('body').then(($body) => {
+            if ($body.find('#loading').length > 0) {
+                cy.get('#loading', { timeout: 20000 }).should('not.exist');
+            }
+        });
+        cy.get(ProducaoLocators.tabelaLinhas, { timeout: 20000 })
             .should('have.length.at.least', 1)
             .first()
             .find(ProducaoLocators.botaoEditarLinha)
+            .should('be.visible')
             .click();
 
         cy.url({ timeout: 20000 }).should('include', '/producao/').and('include', '/editar');
-        cy.get(ProducaoLocators.loading).should('not.exist');
-        cy.wait(1000);
+        cy.get('body').then(($body) => {
+            if ($body.find('#loading').length > 0) {
+                cy.get('#loading', { timeout: 20000 }).should('not.exist');
+            }
+        });
         return this;
     }
 }

@@ -124,9 +124,9 @@ async function main() {
 
   const introAcoes =
     '> IMPORTANTE: A ação de explorar tela (explorar-tela) deve ser executada ANTES das demais, pois os locators dependem do DOM real.\n\n';
-  const parte2 = formatAcoesCursorReady(output.acoes || [], introAcoes);
-
   const reportPath = `${PATHS.reports}/scenarios-${slug}.md`;
+  const parte2 = formatAcoesCursorReady(output.acoes || [], introAcoes, reportPath);
+
   writeReport(reportPath, parte1 + '\n\n' + parte2);
   console.log('Relatório salvo em', reportPath);
 }
