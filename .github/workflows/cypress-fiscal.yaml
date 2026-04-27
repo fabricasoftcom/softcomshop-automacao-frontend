@@ -1,0 +1,135 @@
+name: Cypress Tests - Fiscal
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Allure
+        run: npm install -g allure-commandline
+
+      - name: Run Cypress tests in parallel
+        uses: cypress-io/github-action@v6
+        with:
+          record: true
+          parallel: true
+          spec: |
+            cypress/e2e/venda-nfcenfe/cadastro-nfe.spec.js,
+            cypress/e2e/venda-nfcenfe/cadastro-nfe-normal.spec.js,
+            cypress/e2e/venda-nfcenfe/cadastro-nfe-ajuste.spec.js,
+            cypress/e2e/venda-nfcenfe/cadastro-nfe-complementar.spec.js,
+            cypress/e2e/venda-nfcenfe/cadastro-nfe-devolucao.spec.js,
+            cypress/e2e/venda-nfcenfe/cancelamento-nfe-normal.spec.js,
+            cypress/e2e/venda-nfcenfe/cancelamento-nfe-ajuste.spec.js,
+            cypress/e2e/venda-nfcenfe/cancelamento-nfe-complementar.spec.js,
+            cypress/e2e/venda-nfcenfe/cancelamento-nfe-devolucao.spec.js,
+            cypress/e2e/venda-nfcenfe/carta-correcao-nfe-normal.spec.js,
+            cypress/e2e/venda-nfcenfe/carta-correcao-nfe-ajuste.spec.js,
+            cypress/e2e/venda-nfcenfe/carta-correcao-nfe-complementar.spec.js,
+            cypress/e2e/venda-nfcenfe/carta-correcao-nfe-devolucao.spec.js,
+            cypress/e2e/venda-nfcenfe/venda-nfce.spec.js,
+            cypress/e2e/venda-nfcenfe/venda-nfe.spec.js,
+            cypress/e2e/venda-nfcenfe/venda-nfse.spec.js,
+            cypress/e2e/nfce/nfce-download-xml.spec.js,
+            cypress/e2e/sped/gerarArquivo.spec.js,
+            cypress/e2e/sintegra/gerarArquivo.spec.js,
+            cypress/e2e/incidentes/85857-NFeFCPSTDuplicidade.spec.js,
+            cypress/e2e/incidentes/ImportacaoNfCompra.spec.js,
+            cypress/e2e/incidentes/RelatoriosCaixa.spec.js
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_username: ${{ secrets.CYPRESS_USERNAME }}
+          CYPRESS_password: ${{ secrets.CYPRESS_PASSWORD }}
+          CYPRESS_username_cobranca: ${{ secrets.CYPRESS_USERNAME_COBRANCA }}
+          CYPRESS_password_cobranca: ${{ secrets.CYPRESS_PASSWORD_COBRANCA }}
+          CYPRESS_username_nfse: ${{ secrets.CYPRESS_USERNAME_NFSE }}
+          CYPRESS_password_nfse: ${{ secrets.CYPRESS_PASSWORD_NFSE }}
+
+      - name: Generate Allure Report
+        if: always()
+        run: npx allure generate allure-results --clean -o allure-report
+
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+
+      - name: Send Success Message to Discord
+        if: ${{ success() }}
+        run: |
+          REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
+          REPORT_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"content\": \"✅ [FISCAL] Todos os testes passaram com sucesso!\",
+              \"embeds\": [{
+                \"title\": \"Allure Test Report - Fiscal\",
+                \"description\": \"A execução dos testes fiscais foi concluída com sucesso!\",
+                \"url\": \"${REPORT_URL}\",
+                \"color\": 3066993,
+                \"fields\": [{
+                  \"name\": \"Data de Execução\",
+                  \"value\": \"${REPORT_TIME}\"
+                }, {
+                  \"name\": \"Branch\",
+                  \"value\": \"${{ github.ref_name }}\"
+                }]
+              }]
+            }"
+
+      - name: Send Failure Message to Discord
+        if: ${{ failure() }}
+        run: |
+          REPORT_TIME=$(TZ='America/Sao_Paulo' date "+%d/%m/%Y %H:%M:%S")
+          REPORT_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"content\": \"❌ [FISCAL] Houveram falhas durante a execução dos testes.\",
+              \"embeds\": [{
+                \"title\": \"Allure Test Report - Fiscal\",
+                \"description\": \"Por favor, verifique o relatório para detalhes sobre as falhas.\",
+                \"url\": \"${REPORT_URL}\",
+                \"color\": 15158332,
+                \"fields\": [{
+                  \"name\": \"Data de Execução\",
+                  \"value\": \"${REPORT_TIME}\"
+                }, {
+                  \"name\": \"Branch\",
+                  \"value\": \"${{ github.ref_name }}\"
+                }]
+              }]
+            }"
