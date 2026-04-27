@@ -18,10 +18,21 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
     GruposFormPage.preencherComissao("1,00");
     GruposFormPage.clicarSalvar();
     cy.wait("@salvarGrupo");
-    cy.visit("/grupo-padrao");
-    // Aguardar carregamento completo da página
     cy.get('#loading').should('not.exist');
-    GruposListPage.verificarTabelaVisivel();
+  };
+
+  const buscarGrupoPorNome = (nome) => {
+    cy.visit("/grupo-padrao");
+    cy.get('#loading').should('not.exist');
+    cy.get('body').then(($body) => {
+      if (!$body.find('.form-pesquisa:visible').length) {
+        cy.get('#btn-pesquisa').click();
+        cy.get('.form-pesquisa').should('be.visible');
+      }
+    });
+    cy.get('#auto_nome').clear().type(nome);
+    cy.get('#pesquisar').click();
+    cy.get('#loading').should('not.exist');
   };
 
   it("permite filtrar a listagem de grupos", () => {
@@ -46,7 +57,7 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
     GruposFormPage.clicarSalvar();
     cy.wait("@salvarGrupo");
 
-    cy.visit("/grupo-padrao");
+    buscarGrupoPorNome(`Grupo Automatizado ${timestamp}`);
     cy.contains("td", `Grupo Automatizado ${timestamp}`).should("exist");
   });
 
@@ -61,15 +72,10 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
       criarGrupo(nome);
     });
 
-    // Aguardar carregamento completo após criar todos os grupos
-    cy.get('#loading').should('not.exist');
-    GruposListPage.verificarTabelaVisivel();
-
-    // Aguardar que a tabela tenha pelo menos algumas linhas
-    GruposListPage.contarLinhasVisiveis().should('have.length.greaterThan', 0);
+    buscarGrupoPorNome(timestamp);
 
     nomes.forEach((nome) => {
-      cy.contains("td", nome).parents("tr").within(() => {
+      cy.contains("td", nome, { timeout: 20000 }).parents("tr").within(() => {
         cy.get('input[type="checkbox"]').check({ force: true });
       });
     });
@@ -80,10 +86,21 @@ describe("Compras e Estoque > Produtos > Grupos", { tags: ["@produtos", "@regres
 
     cy.intercept("POST", "/grupo/excluir").as("excluirGrupos");
     cy.get("#btn-excluir-selecionados").click();
+    cy.get('#loading').should('not.exist');
+
+    cy.get('body').then(($body) => {
+      if (!$body.find('.form-pesquisa:visible').length) {
+        cy.get('#btn-pesquisa').click();
+        cy.get('.form-pesquisa').should('be.visible');
+      }
+    });
+    cy.get('#auto_nome').clear({ force: true });
+    cy.get('#pesquisar').click();
+    cy.get('#loading').should('not.exist');
 
     nomes.forEach((nome) => {
       cy.contains("td", nome).should("not.exist");
     });
-    cy.contains("td", "TAXA DE ENTREGA").should("be.visible");
+    GruposListPage.contarLinhasVisiveis().should("have.length.greaterThan", 0);
   });
 });

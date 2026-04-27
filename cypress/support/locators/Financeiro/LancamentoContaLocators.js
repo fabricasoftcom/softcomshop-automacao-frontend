@@ -36,7 +36,7 @@ const LancamentoContaLocators = {
   tipoDataOptionLancamento: 'option[value*="LANÇAMENTO"], option:contains("LANÇAMENTO")',
 
   // Data - Input
-  dataInput: '#content-plus input[value*="2025"], .modal-content input[value*="2025"], input[type="text"][value*="/"]',
+  dataInput: '#content-plus input[placeholder*="dd/mm" i], #content-plus input[placeholder*="data" i], #content-plus input[name*="data" i], #content-plus input[id*="data" i], .modal-content input[placeholder*="dd/mm" i], .modal-content input[placeholder*="data" i], .modal-content input[name*="data" i], .modal-content input[id*="data" i], input[type="date"], input[type="text"][value*="/"]',
 
   // Valor - Input
   valorInput: '#content-plus input[value*="0,00"], .modal-content input[value*="0,00"]',

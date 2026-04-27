@@ -16,12 +16,15 @@ describe('Listagem de funcionários', { tags: ['@configuracoes', '@funcionario',
   });
 
   it('aplica filtro por nome e limpa o campo apos a pesquisa', () => {
-    const nomeFuncionario = 'Antonio';
-    FuncionarioListagemPage.pesquisarPorNome(nomeFuncionario);
-    FuncionarioListagemPage.validarResultadoPorNome(nomeFuncionario);
+    cy.get(FuncionarioListagemLocators.linhasTabela).first().find('td').then(($colunas) => {
+      const textos = $colunas.toArray().map(td => td.innerText.trim()).filter(t => t.length > 2 && isNaN(t));
+      const nomeFuncionario = textos[0].split(' ')[0];
+      FuncionarioListagemPage.pesquisarPorNome(nomeFuncionario);
+      FuncionarioListagemPage.validarResultadoPorNome(nomeFuncionario);
 
-    FuncionarioListagemPage.limparFiltroNome();
-    cy.get(FuncionarioListagemLocators.inputNome).should('have.value', '');
+      FuncionarioListagemPage.limparFiltroNome();
+      cy.get(FuncionarioListagemLocators.inputNome).should('have.value', '');
+    });
   });
 
   it('seleciona e limpa todos os checkboxes da tabela', () => {
