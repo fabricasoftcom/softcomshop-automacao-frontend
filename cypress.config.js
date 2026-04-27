@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = defineConfig({
+  projectId: "s91p5k",
   e2e: {
     setupNodeEvents(on, config) {
       allureCypress(on, config);
