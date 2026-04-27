@@ -16,8 +16,11 @@ yarn-debug.log*
 yarn-error.log*
 logs/
 
-# Environment variables (se estiver utilizando arquivos .env)
+# Environment variables
 .env
+
+# Credenciais do Cypress (nunca versionar)
+cypress.env.json
 
 # Webstorm
 .idea

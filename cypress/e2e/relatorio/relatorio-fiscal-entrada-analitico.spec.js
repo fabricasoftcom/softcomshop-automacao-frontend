@@ -11,7 +11,7 @@ const formatDate = (date) => {
 
 describe('Relatorio Fiscal Entrada Analitico', { tags: ['@relatorios', '@fiscal', '@entrada-analitico', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.login();
+    cy.loginArmazenandoSessao();
     cy.visit('/');
     RelatorioFiscalEntradaAnaliticoPage.acessarRelatorioFiscalEntradaAnalitico();
     RelatorioFiscalEntradaAnaliticoPage.garantirFiltrosVisiveis();

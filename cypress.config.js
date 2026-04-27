@@ -227,7 +227,7 @@ module.exports = defineConfig({
       // "./cypress/e2e/**/*.{feature,cy.js}",
       // "**/*.spec.js"
     ],
-    testIsolation: false,
+    testIsolation: true,
     baseUrl: 'https://stage-hotfix-2.softcomshop.com.br',
     // baseUrl: 'https://stage-release-2.softcomshop.com.br',
     // baseUrl: 'https://automacaosoftcomshopaws.meusoftcom.com.br',

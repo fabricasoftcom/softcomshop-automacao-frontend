@@ -1,23 +1,6 @@
 {
-  "valid": {
-    "username": "fabrica@softcomtecnologia.com.br",
-    "password": "fab1478"
-  },
   "invalid": {
-    "username": "f4br1c4@softcomtecnologia.com.br",
-    "password": "senha123321"
-  },
-    "validFiscal": {
-    "username": "fabrica@softcomtecnologia.com.br",
-    "password": "fab1478"
-  },
-  "validApiCobranca": {
-    "username": "suporte@softcomtecnologia.com.br",
-    "password": "qaz123"
-  },
-  "validNFSe": {
-    "username": "suporteNfse@softcomtecnologia.com.br",
-    "password": "qaz123"
+    "username": "usuario-invalido@exemplo.com.br",
+    "password": "senha-invalida"
   }
 }
-  

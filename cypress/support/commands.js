@@ -28,70 +28,41 @@ import 'cypress-file-upload';
 
 Cypress.Commands.add('login', () => {
   cy.session('user_session', () => {
-    cy.fixture('users').then((user) => {
-      LoginPage.visit();
-      LoginPage.preencherCredenciais(user.validFiscal.username, user.validFiscal.password);
-      LoginPage.clicarLogin();
-      // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
-      cy.contains('Início').should('be.visible')
-    });
+    LoginPage.visit();
+    LoginPage.preencherCredenciais(Cypress.env('username'), Cypress.env('password'));
+    LoginPage.clicarLogin();
+    cy.contains('Início').should('be.visible');
   });
 });
 
 Cypress.Commands.add('loginRestoreSession', () => {
-  cy.session('user_session', () => {
-    cy.fixture('users').then((user) => {
-      LoginPage.visit();
-      LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
-      LoginPage.clicarLogin();
-      // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
-      cy.contains('Início').should('be.visible')
-    });
-  })
-
-  cy.get('body').then(($body) => {
-    if ($body.find('.sweet-alert').length) {
-      cy.get('button[class="confirm"]').contains('OK').click();
-    }
-  });
+  cy.loginArmazenandoSessao();
 });
 
 Cypress.Commands.add('loginArmazenandoSessao', () => {
   cy.session('user_session', () => {
-    cy.fixture('users').then((user) => {
-      LoginPage.visit();
-      LoginPage.preencherCredenciais(user.valid.username, user.valid.password);
-      LoginPage.clicarLogin();
-      // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
-      cy.contains('Início').should('be.visible')
-    });
+    LoginPage.visit();
+    LoginPage.preencherCredenciais(Cypress.env('username'), Cypress.env('password'));
+    LoginPage.clicarLogin();
+    cy.contains('Início').should('be.visible');
   });
 });
+
 Cypress.Commands.add('loginArmazenandoSessaoCobranca', () => {
-  cy.session('user_session', () => {
-    cy.fixture('users').then((user) => {
-      LoginPage.visit();
-      LoginPage.preencherCredenciais(user.validApiCobranca.username, user.validApiCobranca.password);
-      LoginPage.clicarLogin();
-      // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
-      cy.contains('Início').should('be.visible')
-    });
+  cy.session('user_session_cobranca', () => {
+    LoginPage.visit();
+    LoginPage.preencherCredenciais(Cypress.env('username_cobranca'), Cypress.env('password_cobranca'));
+    LoginPage.clicarLogin();
+    cy.contains('Início').should('be.visible');
   });
 });
+
 Cypress.Commands.add('loginArmazenandoSessaoNFSe', () => {
-  cy.session('user_session', () => {
-    cy.fixture('users').then((user) => {
-      LoginPage.visit();
-      LoginPage.preencherCredenciais(user.validNFSe.username, user.validNFSe.password);
-      LoginPage.clicarLogin();
-      // Selecionar a empresa, necessario pois o ambiente ainda esta sendo compartilhado
-      // cy.get('.cont-grid-empresa > :contains("demais testes")').click();
-      cy.contains('Início').should('be.visible')
-    });
+  cy.session('user_session_nfse', () => {
+    LoginPage.visit();
+    LoginPage.preencherCredenciais(Cypress.env('username_nfse'), Cypress.env('password_nfse'));
+    LoginPage.clicarLogin();
+    cy.contains('Início').should('be.visible');
   });
 });
 // verificar erro 500 em tela manualmente para testes que usam laço como wrap

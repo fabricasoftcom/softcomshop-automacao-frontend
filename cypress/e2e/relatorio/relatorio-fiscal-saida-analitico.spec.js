@@ -20,7 +20,7 @@ const formatDate = (date) => {
 
 describe('Relatorio Fiscal Saida Analitico', { tags: ['@relatorios', '@fiscal', '@saida-analitico', '@regressivo'] }, () => {
   beforeEach(() => {
-    cy.login();
+    cy.loginArmazenandoSessao();
     cy.visit('/');
     RelatorioFiscalSaidaAnaliticoPage.acessarRelatorioFiscalSaidaAnalitico();
     RelatorioFiscalSaidaAnaliticoPage.garantirFiltrosVisiveis();
