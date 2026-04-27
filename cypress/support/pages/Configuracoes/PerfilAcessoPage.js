@@ -1,5 +1,5 @@
 import PerfilAcessoLocators from '../../locators/Configuracoes/PerfilAcessoLocators';
-import MenulateralConfiguracoesPage from '../menulateral/menulateralconfiguracoespage';
+import MenulateralConfiguracoesPage from '../menulateral/MenulateralConfiguracoesPage';
 
 class PerfilAcessoPage {
 

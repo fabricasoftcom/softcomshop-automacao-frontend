@@ -1,6 +1,6 @@
 // MeuLucroPage.js
 import MeuLucroLocators from '../../locators/Financeiro/MeuLucroLocators';
-import MenulateralFinanceiroPage from '../menulateral/menulateralfinanceiropage';
+import MenulateralFinanceiroPage from '../menulateral/MenulateralFinanceiroPage';
 
 class MeuLucroPage {
 

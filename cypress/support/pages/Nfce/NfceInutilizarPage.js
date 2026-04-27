@@ -1,6 +1,6 @@
 // NfceInutilizarPage.js
 import NfceInutilizarLocators from "../../locators/Nfce/NfceInutilizarLocators";
-import MenulateralVendaPage from "../menulateral/menulateralvendapage";
+import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 
 class NfceInutilizarPage {
   acessarViaMenu() {

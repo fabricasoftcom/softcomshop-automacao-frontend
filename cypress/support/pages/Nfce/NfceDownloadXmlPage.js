@@ -1,6 +1,6 @@
 // NfceDownloadXmlPage.js
 import NfceDownloadXmlLocators from "../../locators/Nfce/NfceDownloadXmlLocators";
-import MenulateralVendaPage from "../menulateral/menulateralvendapage";
+import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 
 class NfceDownloadXmlPage {
   acessarViaMenu() {

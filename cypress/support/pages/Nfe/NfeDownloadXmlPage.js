@@ -1,5 +1,5 @@
 import NfeDownloadXmlLocators from "../../locators/Nfe/NfeDownloadXmlLocators";
-import MenulateralVendaPage from "../menulateral/menulateralvendapage";
+import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 
 class NfeDownloadXmlPage {
   acessarViaMenu() {

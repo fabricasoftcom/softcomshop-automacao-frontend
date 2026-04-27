@@ -1,5 +1,5 @@
 import NfceConfiguracoesLocators from "../../locators/Nfce/NfceConfiguracoesLocators";
-import MenulateralVendaPage from "../menulateral/menulateralvendapage";
+import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 
 class NfceConfiguracoesPage {
   acessarViaMenu() {

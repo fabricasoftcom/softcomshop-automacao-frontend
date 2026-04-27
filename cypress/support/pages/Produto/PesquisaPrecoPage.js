@@ -1,5 +1,5 @@
 import Locators from '../../../support/locators/Produto/PesquisaPrecoLocators';
-import MenulateralVendaPage from '../menulateral/menulateralvendapage';
+import MenulateralVendaPage from '../menulateral/MenulateralVendaPage';
 
 /**
  * Page Object para Pesquisa Preço

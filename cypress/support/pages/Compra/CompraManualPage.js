@@ -1,6 +1,6 @@
 import CompraBasePage from "./CompraBasePage";
 import CadastroCompraLocators from "../../locators/Compra/CadastroCompraLocators";
-import MenulateralProdutoPage from "../menulateral/menulateralprodutopage";
+import MenulateralProdutoPage from "../menulateral/MenulateralProdutoPage";
 import { gerarChaveAcessoNFe } from "../../factory/generateRandomData";
 
 class CompraManualPage extends CompraBasePage {

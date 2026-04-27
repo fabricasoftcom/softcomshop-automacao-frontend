@@ -1,5 +1,5 @@
 import SincronizacaoLocators from '../../locators/Configuracoes/SincronizacaoLocators';
-import MenulateralConfiguracoesPage from '../menulateral/menulateralconfiguracoespage';
+import MenulateralConfiguracoesPage from '../menulateral/MenulateralConfiguracoesPage';
 
 class SincronizacaoPage {
 

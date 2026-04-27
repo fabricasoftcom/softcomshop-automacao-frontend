@@ -1,6 +1,6 @@
 import ListagemCategoriasPage from "../../support/pages/Financeiro/ListagemCategoriasPage";
 import CadastroCategoriaPage from "../../support/pages/Financeiro/CadastroCategoriaPage";
-import CategoriasLocators from "../../support/locators/CategoriasLocators";
+import CategoriasLocators from "../../support/locators/Financeiro/CategoriasLocators";
 
 describe('Cadastro de Categorias', { tags: ['@cadastro-categoria', '@financeiro', '@regressivo'] }, () => {
   beforeEach(() => {

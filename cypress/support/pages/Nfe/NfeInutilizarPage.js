@@ -1,5 +1,5 @@
 import NfeInutilizarLocators from "../../locators/Nfe/NfeInutilizarLocators";
-import MenulateralVendaPage from "../menulateral/menulateralvendapage";
+import MenulateralVendaPage from "../menulateral/MenulateralVendaPage";
 
 class NfeInutilizarPage {
   acessarViaMenu() {
