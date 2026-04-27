@@ -14,11 +14,9 @@ class LancamentoContaPage {
       .should('be.visible')
       .click();
 
-    // Aguarda o modal-content estar visível (não valida modal principal que pode ter display: none)
-    cy.get(LancamentoContaLocators.modalContent, { timeout: 15000 })
-      .should('be.visible')
-      .contains('Novo Lançamento')
-      .should('be.visible');
+    // Aguarda o formulário ser carregado via AJAX no modal React (não #content-plus)
+    cy.contains('.modal-title', 'Novo Lançamento', { timeout: 15000 }).should('be.visible');
+    cy.get(LancamentoContaLocators.descricaoInput, { timeout: 10000 }).should('exist');
     cy.get('#loading').should('not.exist');
   }
 
@@ -26,11 +24,7 @@ class LancamentoContaPage {
    * Valida que o modal está visível
    */
   validarTelaVisivel() {
-    // Valida que o modal-content está visível (não valida modal principal que pode ter display: none)
-    cy.get(LancamentoContaLocators.modalContent, { timeout: 10000 })
-      .should('be.visible')
-      .contains('Novo Lançamento')
-      .should('be.visible');
+    cy.contains('.modal-title', 'Novo Lançamento', { timeout: 10000 }).should('be.visible');
   }
 
   /**
@@ -128,10 +122,7 @@ class LancamentoContaPage {
    * @param {string} tipoData - 'VENCIMENTO' ou 'LANÇAMENTO'
    */
   selecionarTipoData(tipoData = 'VENCIMENTO') {
-    // Valida elemento funcional (select) ao invés de container
-    // Tipo data é o segundo select (índice 1)
-    cy.get(LancamentoContaLocators.operacaoSelect, { timeout: 10000 })
-      .eq(1)
+    cy.get(LancamentoContaLocators.tipoDataSelect, { timeout: 10000 })
       .should('be.visible')
       .select(tipoData);
   }
@@ -141,11 +132,11 @@ class LancamentoContaPage {
    * @param {string} data - Data no formato DD/MM/YYYY (ex: '10/12/2025')
    */
   preencherData(data = '10/12/2025') {
-    // Valida elemento funcional ao invés de container (pode ter display: none)
+    // #date_entry é um daterangepicker — usar force:true pois pode ter listeners bloqueando
     cy.get(LancamentoContaLocators.dataInput, { timeout: 10000 })
-      .should('be.visible')
-      .clear()
-      .type(data);
+      .should('exist')
+      .clear({ force: true })
+      .type(data, { force: true });
   }
 
   /**

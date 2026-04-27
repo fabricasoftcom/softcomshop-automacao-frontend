@@ -1,45 +1,43 @@
 const LancamentoContaLocators = {
   // Modal/Dialog
-  // Descoberta: Modal é div#content-plus com classes modal inmodal in (não é dialog)
   modal: '#content-plus.modal.in, .modal.in',
   modalContent: '#content-plus .modal-content, .modal-content',
   modalTitulo: '.modal-content:contains("Novo Lançamento"), #content-plus:contains("Novo Lançamento")',
   closeButton: '#btn-modal-plus-close, .close, button:contains("×")',
 
   // Campos do formulário
-  // Operação - Select (primeiro select no modal)
-  operacaoSelect: '#content-plus select, .modal-content select',
+  operacaoSelect: '#operation',
   operacaoOptionDebito: 'option[value*="DÉBITO"], option:contains("DÉBITO")',
   operacaoOptionCredito: 'option[value*="CRÉDITO"], option:contains("CRÉDITO")',
 
   // Categoria - Autocomplete
-  categoriaAutocomplete: 'input[placeholder*="Selecione uma categoria"], input[placeholder*="categoria"], input[placeholder*="Categoria"]',
+  categoriaAutocomplete: '#autocomplete_category_id',
   categoriaOptionList: 'ul:not(.nav) li, .soft-select__option, [role="option"]',
   categoriaOptionResult: 'ul:not(.nav) li, .soft-select__option, [role="option"]',
 
   // Descrição - Input texto
-  descricaoInput: '#content-plus input[placeholder*="Fatura"], #content-plus input[placeholder*="energia"], .modal-content input[placeholder*="Fatura"], .modal-content input[placeholder*="energia"]',
+  descricaoInput: '#description',
 
   // Conta - Autocomplete
-  contaAutocomplete: 'input[placeholder*="CAIXINHA"], input[placeholder*="caixinha"], input[placeholder*="conta"]',
+  contaAutocomplete: '#autocomplete_bank_account_id',
   contaOptionList: 'ul:not(.nav) li, .soft-select__option, [role="option"]',
   contaOptionResult: 'ul:not(.nav) li, .soft-select__option, [role="option"]',
 
   // Forma de Pagamento - Autocomplete
-  formaPagamentoAutocomplete: 'input[placeholder*="Boleto"], input[placeholder*="boleto"], input[placeholder*="Forma"]',
+  formaPagamentoAutocomplete: '#autocomplete_payment_method_id',
   formaPagamentoOptionList: 'ul:not(.nav) li, .soft-select__option, [role="option"]',
   formaPagamentoOptionResult: 'ul:not(.nav) li, .soft-select__option, [role="option"]',
 
-  // Tipo Data - Select (segundo select no modal)
-  tipoDataSelect: '#content-plus select', // Será filtrado pelo índice
+  // Tipo Data - Select
+  tipoDataSelect: '#type_date',
   tipoDataOptionVencimento: 'option[value*="VENCIMENTO"], option:contains("VENCIMENTO")',
   tipoDataOptionLancamento: 'option[value*="LANÇAMENTO"], option:contains("LANÇAMENTO")',
 
-  // Data - Input
-  dataInput: '#content-plus input[placeholder*="dd/mm" i], #content-plus input[placeholder*="data" i], #content-plus input[name*="data" i], #content-plus input[id*="data" i], .modal-content input[placeholder*="dd/mm" i], .modal-content input[placeholder*="data" i], .modal-content input[name*="data" i], .modal-content input[id*="data" i], input[type="date"], input[type="text"][value*="/"]',
+  // Data - daterangepicker input (não é um input de texto simples)
+  dataInput: '#date_entry',
 
   // Valor - Input
-  valorInput: '#content-plus input[value*="0,00"], .modal-content input[value*="0,00"]',
+  valorInput: '#value',
 
   // Botões
   salvarButton: '#content-plus button:contains("Salvar"), .modal-content button:contains("Salvar")',
@@ -60,4 +58,3 @@ const LancamentoContaLocators = {
 };
 
 export default LancamentoContaLocators;
-
