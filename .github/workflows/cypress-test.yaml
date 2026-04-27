@@ -12,35 +12,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2, 3, 4]
+        containers: [1, 2]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Install Allure
         run: npm install -g allure-commandline
 
       - name: Run Cypress tests in parallel
+        uses: cypress-io/github-action@v6
+        with:
+          record: true
+          parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_username: ${{ secrets.CYPRESS_USERNAME }}
           CYPRESS_password: ${{ secrets.CYPRESS_PASSWORD }}
           CYPRESS_username_cobranca: ${{ secrets.CYPRESS_USERNAME_COBRANCA }}
           CYPRESS_password_cobranca: ${{ secrets.CYPRESS_PASSWORD_COBRANCA }}
           CYPRESS_username_nfse: ${{ secrets.CYPRESS_USERNAME_NFSE }}
           CYPRESS_password_nfse: ${{ secrets.CYPRESS_PASSWORD_NFSE }}
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-        run: npx percy exec -- npx cypress run --record --parallel --ci-build-id "${{ github.run_id }}-${{ github.run_attempt }}"
 
       - name: Generate Allure Report
         if: always()
