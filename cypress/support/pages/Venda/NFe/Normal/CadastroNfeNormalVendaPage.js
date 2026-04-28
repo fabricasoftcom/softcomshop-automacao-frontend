@@ -51,24 +51,11 @@ class CadastroNfeNormalVendaPage extends CadastroNfeNormalBasePage {
       }
     });
 
-    // Aguarda a tabela de resultados aparecer e estar completamente visível
-    cy.get(CadastroNfeLocators.venda.tabelaResultados, { timeout: 15000 })
-      .should('exist')
-      .should('be.visible');
-
-    // Aguarda que existam linhas visíveis na tabela
-    cy.get(CadastroNfeLocators.venda.tabelaResultados)
-      .find('tr')
-      .filter(':visible')
+    // Aguarda linhas reais da tabela de vendas (não o skeleton)
+    cy.get(CadastroNfeLocators.venda.tabelaVendas, { timeout: 15000 })
       .should('have.length.at.least', 1)
-      .then(($linhas) => {
-        // Valida que pelo menos uma linha está completamente visível e tem células
-        cy.wrap($linhas.first())
-          .should('be.visible')
-          .within(() => {
-            cy.get('td').should('have.length.at.least', 1).should('be.visible');
-          });
-      });
+      .first()
+      .should('be.visible');
   }
 
   selecionarPrimeiraVenda() {
@@ -110,15 +97,16 @@ class CadastroNfeNormalVendaPage extends CadastroNfeNormalBasePage {
   }
 
   selecionarVendaClienteDiferenteConsumidor(confirmarEmissao = true) {
-    cy.get(CadastroNfeLocators.venda.tabelaVendas)
-      .filter((index, tr) => {
-        const cliente = Cypress.$(tr).find('td').eq(2).text().trim();
-        return cliente !== 'CONSUMIDOR';
-      })
-      .first()
-      .find('input[type="checkbox"]')
-      .check({ force: true })
-      .should('be.checked');
+    cy.intercept('POST', '**/nfe2/**').as('criarNfeVendaConsumidor');
+    cy.intercept('GET', '**/nfe2/**').as('carregarNfeVendaConsumidor');
+
+    this.selecionarPrimeiraLinhaDaListagem({
+      obterLinhasFn: () => this.obterLinhasTabelaVenda(),
+      ignorarConsumidor: true,
+      colunaCliente: 2,
+    });
+
+    this.validarLinhaVendaSelecionada();
 
     this.prosseguirAposSelecao({
       confirmarEmissao,
@@ -128,17 +116,14 @@ class CadastroNfeNormalVendaPage extends CadastroNfeNormalBasePage {
     if (!confirmarEmissao) {
       this.confirmarAtualizacaoCfopItensSeNecessario({ aguardarVisibilidade: true });
 
-      // Aguarda redirecionamento para a tela de edição
-      cy.url({ timeout: 30000 }).should('match', /\/nfe2\/\d+\/(editar|novo)/);
+      cy.url({ timeout: 30000 }).should('match', /\/nfe2\/(novo|\d+\/(editar|novo))/);
 
-      // Aguarda o loading desaparecer se existir
       cy.get('body').then(($body) => {
         if ($body.find('#loading').length > 0) {
           cy.get('#loading', { timeout: 20000 }).should('not.exist');
         }
       });
 
-      // Aguarda o skeleton desaparecer se existir
       cy.get('body').then(($body) => {
         if ($body.find(CadastroNfeLocators.skeletonForm).length > 0) {
           cy.get(CadastroNfeLocators.skeletonForm, { timeout: 20000 })
@@ -146,7 +131,6 @@ class CadastroNfeNormalVendaPage extends CadastroNfeNormalBasePage {
         }
       });
 
-      // Valida que o formulário foi carregado após a seleção
       this.aguardarFormularioPrincipalCarregado(30000);
       cy.get(CadastroNfeLocators.formulario).should('exist');
     }
